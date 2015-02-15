@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Zone</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Elements of a system protected by a firewall"
+HREF="firewall-items.html"><LINK
+REL="PREVIOUS"
+TITLE="Elements of a system protected by a firewall"
+HREF="firewall-items.html"><LINK
+REL="NEXT"
+TITLE="Net"
+HREF="firewall-items-net.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-items.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Elements of a system protected by a firewall</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-items-net.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FIREWALL-ITEMS-ZONE"
+></A
+>2.2. Zone</H1
+><P
+>A zone is defined by an arbitrary name and the interface used by the firewall
+  to communicate with the hosts of that zone.</P
+><P
+>Usually a common network with a firewall is made up of 3 zones: the internal
+net (usually called <I
+CLASS="EMPHASIS"
+>good</I
+> because we are there, the good  :-)  )
+which  we should assure a high security level to, the external net that is
+generally  Internet (usually called <I
+CLASS="EMPHASIS"
+>bad</I
+> because there are the wicked
+there, who  want <I
+CLASS="EMPHASIS"
+>"certainly" </I
+>enter our <I
+CLASS="EMPHASIS"
+>good </I
+>zone  ;-( ) and
+finally the  zone where we have our public servers, like a web server, which
+cannot be  completely armoured like the good zone because we have to make
+public services  accessible to Internet users  (usually called <I
+CLASS="EMPHASIS"
+>dmz</I
+>,
+demilitarized zone).    Of course a network can be much more complex, so
+there could be a lot of  dmz or good zones but if you want to set a good
+firewall you have to follow   essentially these rules.</P
+><P
+>Clicking on <I
+CLASS="EMPHASIS"
+>"Create new zone"</I
+> you will see a short form with which
+ you'll be able to set the name you want to assign to the new zone (good,
+bad, dmz, my_zone, etc.) and the network interface to use to reach it (eth0,
+eth1, ppp0, etc.).</P
+><P
+>Now you can click on <I
+CLASS="EMPHASIS"
+>Create </I
+>and the new zone will be recorded
+ permanently.</P
+><P
+>In this way, clicking on the zone name, you can modify the network interface
+ the zone is associated to.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-items.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-items-net.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Elements of a system protected by a firewall</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="firewall-items.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Net</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

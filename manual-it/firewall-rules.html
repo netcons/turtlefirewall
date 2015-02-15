@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Regole del firewall</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="L'elemento FIREWALL"
+HREF="firewall-items-firewall.html"><LINK
+REL="NEXT"
+TITLE="Regole NAT (Network Address Translation) e Mascheramento"
+HREF="firewall-nat.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-items-firewall.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-nat.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="FIREWALL-RULES"
+></A
+>Regole del firewall</H1
+><P
+>La policy di base di Turtle Firewall è quella di vietare per default ogni tipo di
+connessione intercettabile dal firewall. A questa politica di base si aggiungono
+poi delle regole che determinano quali tipi di connessioni vogliamo permettere.
+Questa non è l'unica logica applicabile su un firewall ma è quella generalmente
+considerata più prudente e quindi è quella che ho scelto per Turtle Firewall.</P
+><P
+>Per permettere una connessione elementare tra 2 host (A, B), prendiamo per esempio
+una connessione http, dobbiamo definire 2 regole di filtro: una che permette il
+passaggio dei pacchetti che vanno dall'host A all'host B e una che permette il
+ritorno dei pacchetti di risposta da B ad A.</P
+><P
+>Turtle Firewall semplifica questa operazione definendo dei servizi per i quali si
+fa carico di impostare tutte le regole di filtering che sono necessarie per
+garantire quel servizio. In questo modo la regola di filtro di Turtle Firewall è
+più semplice da usare perchè si basa su un servizio internet anzichè sulle
+caratteristiche dei singoli pachetti. Per indicare che vogliamo permettere
+all'host A di comunicare con l'host B attraverso il protocollo http basterà definire
+una sola regola Turtle Firewall che specifica il nome dell'elemento sorgente (A),
+il nome dell'elemento destinazione (B) e il servizio da usare (http).
+Sia chiaro che se definisco una regola per il servizio http da A a B, questo
+non significa che anche B può usufruire dello stesso servizio verso A perchè B
+può solo accettare e rispondere alle richieste http che provengono da A.</P
+><P
+>Per visualizzare l'elenco delle regole attive bisogna cliccare sull'icona "Regole"
+del menù principale del modulo Turtle Firewall.</P
+><P
+>Per creare una nuova regola si deve selezionare "Crea una nuova regola". A questo
+punto bisogna indicare l'elemento sorgente della comunicazione, l'elemento
+destinatario, il servizio da usare (es. http, ssh, ftp, ecc.), un'eventuale
+porta (solo per i servizi generici come tcp o udp) e, per finire, selezionare il
+check-box "Attiva" che rende per l'appunto attiva la regola.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-items-firewall.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Partenza</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-nat.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>L'elemento FIREWALL</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Regole NAT (Network Address Translation) e Mascheramento</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

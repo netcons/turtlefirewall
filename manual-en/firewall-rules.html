@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Firewall rules</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="The item FIREWALL"
+HREF="firewall-items-firewall.html"><LINK
+REL="NEXT"
+TITLE="NAT (Network Address Translation) Rules and Masquerading"
+HREF="firewall-nat.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-items-firewall.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-nat.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="FIREWALL-RULES"
+></A
+>Firewall rules</H1
+><P
+>Turtle Firewall default policy forbids every connection the Firewall monitors.
+You can add to this default policy some rules which determine the connections
+you want to allow. Of course there are other ways to configure a firewall
+but this is considered to be more careful so I chose it for Turtle Firewall.</P
+><P
+>To allow a simple connection between 2 hosts (A, B), consider for example
+a http connection, you have to define two filter rules:    at first one which
+allows the packets that go from the <I
+CLASS="EMPHASIS"
+>A</I
+> host to the <I
+CLASS="EMPHASIS"
+>B</I
+> one, the
+one which allows the return of reply packets from <I
+CLASS="EMPHASIS"
+>B</I
+> to <I
+CLASS="EMPHASIS"
+>A.</I
+></P
+><P
+>Turtle Firewall simplifies this operation defining a series of <I
+CLASS="EMPHASIS"
+>services</I
+>and making itself responsible for setting all the filtering rules needed
+to guarantee those <I
+CLASS="EMPHASIS"
+>services</I
+>. This way a filter rule of Turtle Firewall
+is simply to use because it's based on an Internet service rather than on
+the characteristics of single packets. To indicate that you want to allow
+A to communicate with B through the http protocol, it will be sufficient to
+define only a Turtle Firewall rule in which you'll specify the name of the
+source item (<I
+CLASS="EMPHASIS"
+>A</I
+>), the name of the destination one (<I
+CLASS="EMPHASIS"
+>B</I
+>) and the<I
+CLASS="EMPHASIS"
+>service</I
+>
+to use (http). Remember that if you define a http rule from A to B, B cannot make
+use of the same service but it can only accept and reply to the http requests
+from A.</P
+><P
+>To view the list of active rules you have to click on the "Rules" icon
+from main menu of the Turtle Firewall module.</P
+><P
+>To create a new rule, click on "<I
+CLASS="EMPHASIS"
+>Create new rule</I
+>" from the "<I
+CLASS="EMPHASIS"
+>Rules</I
+>"
+section.      At this point set the communication source item, the destination
+item, the service to use (http, ssh, ftp, etc.),     in case a port (needed
+only for generic services such as tcp or udp) and, finally,    select the
+"<I
+CLASS="EMPHASIS"
+>Active</I
+>" check-box that makes the rule active.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-items-firewall.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-nat.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>The item FIREWALL</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>NAT (Network Address Translation) Rules and Masquerading</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

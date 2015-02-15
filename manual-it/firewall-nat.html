@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Regole NAT (Network Address Translation) e Mascheramento</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Regole del firewall"
+HREF="firewall-rules.html"><LINK
+REL="NEXT"
+TITLE="Nat (Network Address Translation)"
+HREF="firewall-nat-nat.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-rules.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-nat-nat.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="FIREWALL-NAT"
+></A
+>Regole NAT (Network Address Translation) e Mascheramento</H1
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN112"
+></A
+>4.1. Introduzione</H1
+><P
+>Con i nuovi kernel 2.4.x e iptables la gestione del NAT e del mascheramento avviene
+all'interno del modulo netfilter del kernel.
+Con le regole NAT possiamo cambiare l'elemento sorgente o l'elemento destinatario di
+una connessione.</P
+><P
+>Questo è utile quando vogliamo dirottare tutto il traffico destinato ad un host verso
+un altro host. Se ad esempio, il nostro provider ci ha assegnato alcuni indirizzi
+pubblici ma il nostro web server si trova in una dmz con un indirizzo riservato,
+per rendere accessibile il web server all'esterno ci basterà impostare una regola
+NAT che ridirezioni tuttle le connessioni destinate all'indirizzo pubblico, che
+abbiamo scelto per il nostro web server, verso l'indirizzo privato (reale) del
+nostro webserver. Il client che si trova all'altro capo della connessione non si
+accorgerà di nulla e crederà di comunicare effettivamente con un webserver il cui
+indirizzo IP è pubblico.</P
+><P
+>E' possibile anche specificare a quale servizio vogliamo applicare il NAT. In questo modo
+possiamo impostare Turtle Firewall in modo che smisti il traffico ricevuto su un
+indirizzo IP pubblico verso differenti server serali, in funzione del servizio
+utilizzato. Avremo quindi un unico indirizzo IP pubblico che potrà rendere disponibili
+una serie di servizi (http, ftp, smtp, pop3, ecc.) che poi verranno gestiti da
+differenti server interni (Web Server, Ftp Server, Mail Server, ecc.).</P
+><P
+>Il mascheramento è un caso particolare di NATting e si applica quando vogliamo che
+le connessioni che da una zona arrivano ad un'altra zona appaiano a quest'ultima
+come provenienti dal nostro firewall. Il caso più consueto è quello delle
+connessioni verso internet: non vogliamo che gli host interni vengano identificati
+dagli host di internet e così diciamo al nostro firewall di mascherare tutte le
+comunicazioni verso l'esterno. Per gli host internet la connessione apparirà
+provenire solo dal firewall.</P
+><P
+>In questa sezione è anche possibile definire delle regole di Redirezione local, 
+essenziali per la realizzazione di un Transparent Prixy.</P
+><P
+>Per visualizzare l'elenco delle regole di NAT, Mascheramento e Redirezione bisogna
+cliccare sull'icona "NAT e Mascheramento" del menù principale del modulo Turtle Firewall.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-rules.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Partenza</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-nat-nat.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Regole del firewall</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Nat (Network Address Translation)</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

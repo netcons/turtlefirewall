@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Group</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Elements of a system protected by a firewall"
+HREF="firewall-items.html"><LINK
+REL="PREVIOUS"
+TITLE="Host"
+HREF="firewall-items-host.html"><LINK
+REL="NEXT"
+TITLE="The item FIREWALL"
+HREF="firewall-items-firewall.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-items-host.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Elements of a system protected by a firewall</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-items-firewall.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FIREWALL-ITEMS-GROUP"
+></A
+>2.5. Group</H1
+><P
+>With this particular item you can group a series of elements you have previously
+defined; these elements can be zones, nets or hosts. A Group is identified
+by a name and it can be used in the firewall rules like a normal system element.
+This feature makes very simple to define rules which are common to more hosts
+(even nets or zones), thus the firewall configuration is more synthetic,
+readable and simple to maintain. If, for example, we want to give ssh access
+towards a server to our 3 system admins, it will be sufficient to create
+a group called <I
+CLASS="EMPHASIS"
+>"administrators"</I
+> that will be made up of the 3 admin hosts,
+and then apply only a ssh rule to the <I
+CLASS="EMPHASIS"
+>"administrators"</I
+> group.</P
+><P
+>To create a new Group you have to click on <I
+CLASS="EMPHASIS"
+>"Create new group"</I
+>, assign
+it a name (ex. servers, privileged_host, etc.) and finally, checking a series
+of check-box, set which items will belong to the Group we are defining.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-items-host.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-items-firewall.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Host</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="firewall-items.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>The item FIREWALL</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

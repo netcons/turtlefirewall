@@ -1,0 +1,392 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Default services (fwservices.xml)</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Services (fwservices.xml)"
+HREF="firewall-services.html"><LINK
+REL="PREVIOUS"
+TITLE="FILTER"
+HREF="x161.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x161.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 5. Services (fwservices.xml)</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+>&nbsp;</TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FIREWALL-SERVICES-PREDEFINED"
+></A
+>5.3. Default services (fwservices.xml)</H1
+><P
+>fwservices.xml is used by Turtle Firewall as its source of services definitions.
+It contains the definitions of most commonly used services on the web and
+of course it can be integrated with your own services modifying, like we already
+saw, directly the XML code.</P
+><P
+></P
+><P
+><B
+>Default services</B
+></P
+><UL
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>all</I
+>: All services opened</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>tcp</I
+>: Generic TCP protocol</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>udp</I
+>: Generic UDP protocol</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>ftp</I
+>: File Transfer Protocol</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>dns</I
+>: Domain Name Service</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>www</I
+>: World Wide Web HTTP</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>http</I
+>: World Wide Web HTTP</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>https</I
+>: HTTP protocol over TLS/SSL</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>auth</I
+>: Authentication Service</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>smtp</I
+>: Simple Mail Transfer Protocol</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>pop3</I
+>: Post Office Protocol version 3</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>imap</I
+>: Internet Message Access Protocol</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>ssh</I
+>: Secure Shell Protocol</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>ntp</I
+>: Network Time Protocol</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>icmp_acc</I
+>: Essential ICMP messages</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>ping</I
+>: ICMP messages echo-request and echo-reply</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>netbios_ns</I
+>: NETBIOS Name Service</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>netbios</I
+>: NETBIOS complete</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>netbios_ssn</I
+>: NETBIOS Session Service</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>cvs</I
+>: CVS Server Service</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>nntp</I
+>: NNTP Network News Transport Protocol</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>telnet</I
+>: Telnet Protocol</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>webmin</I
+>: Webmin (port 10000)</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>h323</I
+>: H323 Protocol (NetMeeting), Experimental</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>ipsec-ESP</I
+>: VPN IPSec protocol with IKE and ESP</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>ipsec-AH</I
+>: VPN IPSec protocol with IKE and AH</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>ipsec-ESP-AH</I
+>: VPN IPSec protocol with IKE, ESP and AH</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>afp-over-tcp</I
+>: AFP (Apple Filing Protocol) over TCP</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>nfs</I
+>: NFS (experimental)</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>mysql</I
+>: MySQL-Server</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>kazaa</I
+>: KaZaa Filesharing</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>pptp</I
+>: PPTP VPN Service</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>rdp</I
+>: Remote Desktop Protocol</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>pc-anywhere</I
+>: PC-Anywhere service (admin to hosts)</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>x11</I
+>: X Window System service (client to XServer)</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x161.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>FILTER</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="firewall-services.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

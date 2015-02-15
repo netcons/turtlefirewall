@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>NAT (Network Address Translation) Rules and Masquerading</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Firewall rules"
+HREF="firewall-rules.html"><LINK
+REL="NEXT"
+TITLE="Nat (Network Address Translation)"
+HREF="firewall-nat-nat.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-rules.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-nat-nat.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="FIREWALL-NAT"
+></A
+>NAT (Network Address Translation) Rules and Masquerading</H1
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN127"
+></A
+>4.1. Overview</H1
+><P
+>With the new 2.4.x Kernel and iptables, NAT and Masquerade are handled by
+the Netfilter module in the kernel.
+With these rules we can change source and destination item of the connection,
+and this is useful when we want to redirect all the traffic destinated to
+host 'X' to another host 'Y'.</P
+><P
+>If, for example, our provider assigned us some public addresses but our web
+server is situated in a dmz with a private address, to make this server accessible
+from outside we need to set a NAT rule which redirects all the connections
+destinated to the public address we chose for our web server towards its
+private address (real). The client which establishes the connection won't
+notice anything and will believe really to communicate with a web server
+whose IP address is public.</P
+><P
+>Masquerading is a particular case of NATting and it is applied when we want
+that connections between 2 zones seem, to the destination zone, as if they
+came from our firewall. Masquerading is commonly used for connections towards
+Internet: we don't want that our internal hosts are identified by Internet
+hosts so we tell our firewall to masquerade all communications toward outside.
+The connection will appear, to Internet hosts, to come from our firewall.</P
+><P
+>To view a list of NAT and Masquerading rules, click on <I
+CLASS="EMPHASIS"
+>"NAT and Masquerading"</I
+>
+icon from main menu of Turtle Firewall module.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-rules.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-nat-nat.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Firewall rules</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Nat (Network Address Translation)</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

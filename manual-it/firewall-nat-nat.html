@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Nat (Network Address Translation)</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Regole NAT (Network Address Translation) e Mascheramento"
+HREF="firewall-nat.html"><LINK
+REL="PREVIOUS"
+TITLE="Regole NAT (Network Address Translation) e Mascheramento"
+HREF="firewall-nat.html"><LINK
+REL="NEXT"
+TITLE="Mascheramento (Masquerade)"
+HREF="firewall-nat-masquerade.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-nat.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Capitolo 4. Regole NAT (Network Address Translation) e Mascheramento</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-nat-masquerade.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FIREWALL-NAT-NAT"
+></A
+>4.2. Nat (Network Address Translation)</H1
+><P
+>Per creare una nuova regola NAT si deve selezionare <I
+CLASS="EMPHASIS"
+>"crea una nuova regola NAT"</I
+>.
+A questo punto è necessario indicare l'host virtuale (normalmente un host con ip pubblico),
+l'host reale (normalmente un host che si trova in dmz) e il servizio per il
+quale applicare la regola NAT.</P
+><P
+>Gli elementi degli host indicati come "Host virtuale" e "Host reale" devono,
+naturalmente, essere precedentemente definiti.</P
+><P
+>Come host virtuale è anche possibile indicare una zona, in questo caso particolare
+il sistema considera come indirizzo dell'host virtuale qualsisti indirizzo IP
+assegnato all'interfaccia di rete connessa con la zona indicata.
+E' necessario adottare una soluzione simile nelle situazioni in cui il nostro
+IP pubblico è dinamico, ad esempio nel caso di una connessione ppp.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-nat.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Partenza</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-nat-masquerade.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Regole NAT (Network Address Translation) e Mascheramento</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="firewall-nat.html"
+ACCESSKEY="U"
+>Risali</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Mascheramento (Masquerade)</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
