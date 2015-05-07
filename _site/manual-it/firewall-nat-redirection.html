@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Redirezione su porta locale</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Regole NAT (Network Address Translation) e Mascheramento"
+HREF="firewall-nat.html"><LINK
+REL="PREVIOUS"
+TITLE="Mascheramento (Masquerade)"
+HREF="firewall-nat-masquerade.html"><LINK
+REL="NEXT"
+TITLE="I servizi"
+HREF="firewall-services.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-nat-masquerade.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Capitolo 4. Regole NAT (Network Address Translation) e Mascheramento</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-services.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FIREWALL-NAT-REDIRECTION"
+></A
+>4.4. Redirezione su porta locale</H1
+><P
+>Le regole di Redirezione permettono di catturare i pacchetti tcp/ip in transito sul
+Firewall e redirigerli ad una porta locale del Firewall stesso.
+Il client dal quale provengono i pacchetti crederà di comunicare con l'host desiderato,
+senza accorgersi che la comunicazione viene invece catturata e gestita dal Firewall.
+Anche i pacchetti tcp/ip di risposta appariranno al client come provenienti dall'host
+contattato.</P
+><P
+>Questa è una funzionalità essenziale per la realizzazione di un <I
+CLASS="EMPHASIS"
+>Transparent Proxy</I
+>.
+Un Transparen Proxy è u proxy cache server, come ad esempio Squid, che gestisce in modo
+automatico la navigazione dei suoi client. I client non sanno di utilizzare un Proxy, richiedono
+normalmente le loro connessioni http ed ftp utilizzando il Firewall come gateway Internet.
+E' a questo punto che il Firewall, grazie alla redirezione della comunicazione, può inviare
+le richieste al Proxy Server in esecuzione sulla stessa macchina.</P
+><P
+>Per creare una nuove regola di redirezione è necessario cliccare su <I
+CLASS="EMPHASIS"
+>"crea una
+nuova Redirezione"</I
+>.
+Le informazioni da indicare sono: Sorgente, Destinazione, Servizio e Porta locale.</P
+><P
+><I
+CLASS="EMPHASIS"
+>Sorgente</I
+> è l'elemento dal quale proviene la comunicazione
+da redirezionare. Può essere uno qualsiasti degli elementi del Firewall.
+Grazie a questa opzione è possibile definire una redirezione selettiva che ha effetto
+solo su determinate sorgenti della connessione.</P
+><P
+><I
+CLASS="EMPHASIS"
+>Destinazione</I
+> è l'obiettivo della connessione, può essere uno qualsiasi
+degli elementi del Firewall escluse le zone. Indicando <I
+CLASS="EMPHASIS"
+>*</I
+> si ottiene
+il redirezionamento per tutte le destinazioni possibili.</P
+><P
+><I
+CLASS="EMPHASIS"
+>Servizio</I
+> è il servizio tcp/ip per il quale applicare la redirezione.
+Potrebbe essere, ad esempio, il servizio http.</P
+><P
+><I
+CLASS="EMPHASIS"
+>Porta locale</I
+> è la porta del Firewall verso la quale verrà dirottato
+il servizio. Nel caso di un Proxy potrebbe essere la porta 3128 oppure la 8080.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-nat-masquerade.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Partenza</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-services.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Mascheramento (Masquerade)</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="firewall-nat.html"
+ACCESSKEY="U"
+>Risali</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>I servizi</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

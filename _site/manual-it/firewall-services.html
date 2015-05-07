@@ -1,0 +1,394 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>I servizi</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Redirezione su porta locale"
+HREF="firewall-nat-redirection.html"><LINK
+REL="NEXT"
+TITLE="Servizi Predefiniti"
+HREF="firewall-services-predefined.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-nat-redirection.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-services-predefined.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="FIREWALL-SERVICES"
+></A
+>I servizi</H1
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN150"
+></A
+>5.1. Introduzione</H1
+><P
+>Abbiamo già visto in precedenza che Turtle Firewall utilizza regole basate sui
+servizi (http, ftp, ecc.). Questi sono dei servizi predefiniti contenuti nel
+file <I
+CLASS="EMPHASIS"
+>/etc/turtlefirewall/fwservices.xml</I
+>.</P
+><P
+>E' comunque possibile definire i propri servizi da affiancare a quelli predefiniti.
+Per definire nuovi servizi non esiste interfaccia web, bisogna quindi operare
+direttamente sul file <I
+CLASS="EMPHASIS"
+>/etc/turtlefirewall/fwuserdefservices.xml</I
+>,
+riservato alla definizione dei servizi personalizzati.</P
+><P
+>Ora vedremo come definire i nostri servizi per poterli
+poi attivare nel Firewall. Il file <I
+CLASS="EMPHASIS"
+>fwuserdefservices.xml</I
+> deve essere
+scritto seguendo una codifica XML che permette di definire le caratteristiche che ogni
+pacchetto tcp/ip deve possedere per essere considerato valido per lo specifico servizio.
+La logica da seguire per definire un servizio è simile a quella usata per definire
+una regola del firewall. In sostanza si tratta di dichiarare un certo numero di
+filtri che permettono il passaggio dei pacchetti, se un pacchetto non è conforme
+a alcun filtro verrà respinto.</P
+><P
+>Il file XML di definizione dei servizi deve avere il tag radice <I
+CLASS="EMPHASIS"
+>services</I
+>
+(&#60;services&#62;) che contiene al suo interno i tags <I
+CLASS="EMPHASIS"
+>service</I
+> che
+definiscono il singolo servizio. Il tag <I
+CLASS="EMPHASIS"
+>service</I
+> ha gli attributi name
+e description per definire rispettivamente il nome e una breve descrizione del servizio.
+All'interno del tag <I
+CLASS="EMPHASIS"
+>service</I
+> vanno posti filtri <I
+CLASS="EMPHASIS"
+>filter</I
+>
+che indicano come vengono selezionati i pacchetti validi per il servizio.</P
+><DIV
+CLASS="FORMALPARA"
+><P
+><B
+><B
+>Il tag filter. </B
+></B
+>Il tag filter possiede una serie di attributi che vengono usati per definire le caratteristiche che
+il pacchetto deve possedere per essere considerato valido. Se il paccetto non rientra nei parametri
+definiti dal filtro allora il controllo passa al filto successivo e così via fino all'ultimo filtro. Se
+nessun filtro risulta verificato il pacchetto viene respinto.</P
+></DIV
+><P
+></P
+><P
+><B
+>Attributi:</B
+></P
+><UL
+COMPACT="COMPACT"
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>direction</I
+>: definisce la direzione del pacchetto in transito.
+Può assumere il valore <I
+CLASS="EMPHASIS"
+>go</I
+> o il
+valore <I
+CLASS="EMPHASIS"
+>back</I
+>. Con go vengono considerati i soli pacchetti di andata da un ipotetico host
+sorgente ad un host destinazione, con back si considerano invece i pacchetti di ritorno.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>p</I
+>: protocollo, può assumere uno dei seguenti valori: tcp, udp o icmp.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>sport</I
+>: porta usata dal socket dell'host sorgente.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>dport</I
+>: porta di destinazione del pacchetto.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>icmptype</I
+>: tipo di messaggio ICMP (da usare solo con p="icmp", vedi doc. iptables).</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>state</I
+>: stato del pacchetto (vedi direttiva state di iptables).</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>jump</I
+>: salto forzato ad una catena o ad un esito.</P
+><P
+>Può assumere i seguenti valori:  <I
+CLASS="EMPHASIS"
+>ACCEPT</I
+> (il pacchetto
+viene accettato, è la catena di default se direction è <I
+CLASS="EMPHASIS"
+>go</I
+>), <I
+CLASS="EMPHASIS"
+>DROP</I
+> (il pacchetto viene
+considerato non valido, di solito non si usa mai direttamente questo jump perchè non viene segnalato
+sul file di log), <I
+CLASS="EMPHASIS"
+>BACK</I
+> (il controllo passa ad una speciale
+catena che lascia passare solo i pacchetti di ritorno di connessioni già aperte, è la catena di default
+nel caso sia impostato l'attributo direction a <I
+CLASS="EMPHASIS"
+>back</I
+>), <I
+CLASS="EMPHASIS"
+>ICMP-ACC</I
+> (altra speciale catena da
+usare con p="icmp", lascia passare solo i messaggi icmp standard considerati sicuri).</P
+></LI
+></UL
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="./stylesheet-images/note.gif"
+HSPACE="5"
+ALT="Nota"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>Se come sport o dport si indica "PORT" allora la porta verrà impostata durante la generazione
+dello script al valore indicato dall'attributo <I
+CLASS="EMPHASIS"
+>port</I
+> del tag <I
+CLASS="EMPHASIS"
+>rule</I
+> della
+regola del firewall.
+In questo modo si possono definire servizi parametrizzabili.</P
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="FORMALPARA"
+><P
+><B
+><B
+>Sintassi: </B
+></B
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="LITERALLAYOUT"
+>&#60;filter direction="go/back" p="tcp/udp/icmp" sport="nPortaSrc" dport="nPortaDst"
+  icmptype="tipoMsgIcmp" jump="ACCEPT/DROP/BACK/ICMP-ACC"/&#62;</PRE
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN207"
+></A
+><P
+><B
+>Esempio 5-1. Definizione di 3 servizi</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;services&#62;
+  &#60;service name="http" description="Servizio www o http"&#62;
+    &#60;filter direction="go" p="tcp" dport="www"/&#62;
+    &#60;filter direction="back" p="tcp" sport="www"/&#62;
+  &#60;/service&#62;
+
+  &#60;service name="tcp" description="Servizio TCP generico"&#62;
+    &#60;filter direction="go" p="tcp" dport="PORT"/&#62;
+    &#60;filter direction="back" p="tcp" sport="PORT"/&#62;
+  &#60;/service&#62;
+
+  &#60;service name="ping" description="icmp message echo-request and echo-reply"&#62;
+    &#60;filter direction="go" p="icmp" ICMPTYPE="echo-request"/&#62;
+    &#60;filter direction="back" p="icmp" ICMPTYPE="echo-reply"/&#62;
+  &#60;/service&#62;
+&#60;/services&#62;</PRE
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-nat-redirection.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Partenza</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-services-predefined.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Redirezione su porta locale</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Servizi Predefiniti</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

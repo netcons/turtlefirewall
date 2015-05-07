@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>The item FIREWALL</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Elements of a system protected by a firewall"
+HREF="firewall-items.html"><LINK
+REL="PREVIOUS"
+TITLE="Group"
+HREF="firewall-items-group.html"><LINK
+REL="NEXT"
+TITLE="Firewall rules"
+HREF="firewall-rules.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-items-group.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Elements of a system protected by a firewall</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-rules.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FIREWALL-ITEMS-FIREWALL"
+></A
+>2.6. The item FIREWALL</H1
+><P
+>Turtle Firewall considers, apart from the zones we have defined, a further
+default zone called FIREWALL which identifies our linux-box  where the firewall
+itself has been installed. Every packet which is not in transit through the
+firewall but leaves from it or is addressed to it, involves the use of the
+"FIREWALL" zone. FIREWALL isn't a host because a firewall doens't have only
+one ip (it has an IP per interface) therefore it's more appropriate to consider
+it a zone apart.</P
+><P
+>It's extremely important to set rules that protect our firewall. The common
+sense should drive us to make the Firewall completely isolated, denying the
+access to the FIREWALL zone to all, but often we want to modify the firewall
+configuration while we are sitting comfortably in our position ( laziness
+is the most frequent cause of compromising a security system ;-) ) and therefore
+I suggest to make available a number of services as minor as possible to a
+number of hosts as minor as possible; only the ssh service to the network
+administrator host is a good compromise.</P
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="./stylesheet-images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>Turtle Firewall doesn't allow you to define 2 elements with the same name,
+even if they are different items. For example, there cannot be a host which
+has the name of a zone. For this reason you cannot define an element called
+"FIREWALL".</P
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-items-group.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-rules.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Group</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="firewall-items.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Firewall rules</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Services (fwservices.xml)</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Masquerade"
+HREF="firewall-nat-masquerade.html"><LINK
+REL="NEXT"
+TITLE="FILTER"
+HREF="x161.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-nat-masquerade.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x161.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="FIREWALL-SERVICES"
+></A
+>Services (fwservices.xml)</H1
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN151"
+></A
+>5.1. Overview</H1
+><P
+>There isn't any web interface to define a service, so you have to work
+  directly on the fwservices.xml file which is XML-based.</P
+><P
+>We already saw that Turtle Firewall rules are based on services (http,
+  ftp, etc.), now we will see how to define our services that we will be able
+  to use and set in the firewall. In this case the configuration provides
+the use of a separated XML file which allows to define the characteristics
+that every packet must have to be considered valid for a determinate service.
+If you want to define a new service you should use the logic followed to
+define a new firewall rule. Essentially you have to define a certain number
+of filters which allow the packets traffic, if a packet doesn't satisfy any
+filter it will be rejected.</P
+><P
+>The XML definitions file must have the root tag <I
+CLASS="EMPHASIS"
+>services</I
+>     (&#60;services&#62;)
+that has inside the <I
+CLASS="EMPHASIS"
+>service</I
+>tags which define the single service. A
+service tag has two attributes: <I
+CLASS="EMPHASIS"
+>name</I
+> and <I
+CLASS="EMPHASIS"
+>description</I
+>, the former
+to define the name, the latter for a short description of the service. A
+service tag contains the <I
+CLASS="EMPHASIS"
+>filter</I
+> tags, which indicate how the valid
+packets for that service are selected.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-nat-masquerade.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x161.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Masquerade</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>FILTER</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

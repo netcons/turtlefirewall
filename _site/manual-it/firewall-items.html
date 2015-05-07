@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>Elementi di un sistema protetto da firewall</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Requisiti"
+HREF="requisiti.html"><LINK
+REL="NEXT"
+TITLE="Zona (Zone)"
+HREF="firewall-items-zone.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="requisiti.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-items-zone.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="FIREWALL-ITEMS"
+></A
+>Elementi di un sistema protetto da firewall</H1
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FIREWALL-ITEMS-INTRO"
+></A
+>2.1. Elementi del firewall</H1
+><P
+>Un firewall è una macchina dotata di più interfaccie di rete connesse a diversi
+rami di differenti reti. Ogni interfaccia permette al firewall di comunicare con la
+zona a cui è connessa l'interfaccia. La zona può essere costituita da una o più
+sottoreti o addirittura da tutta la rete Internet.</P
+><P
+>Con le sue N interfacce il firewall può comunicare con N zone.
+Se un host di una zona vuole comunicare con un host di un'altra zona sarà
+costretto ad attraversare il firewall. Se esiste un percorso alternativo
+significa che abbiamo sbagliato a costruire la nostra rete poichè il
+firewall risulta inefficace.</P
+><P
+>Detto questo, nel firewall possiamo inpostare una serie di regole per determinare
+quali pacchetti debbano passare da una zona all'altra e queste regole possono
+tener conto di una serie di caratteristiche del pacchetto da filtrare:
+zona/sottorete/host di provenienza, zona/sottorete/host di destinazione,
+tipo di protocollo (tcp/udp/icmp), porta di destinazione e provenienza, ecc.</P
+><P
+>Con Turtle Firewall è possibile definire gli elementi che possono essere origine
+o destinazione di una connessione, assegnargli un nome e in seguito usare
+il nome per definire le regole del firewall.</P
+><P
+>Per visualizzare l'elenco degli elementi del firewall si deve cliccare sull'icona
+<I
+CLASS="EMPHASIS"
+>Elementi</I
+> del menù principale del modulo Turtle Firewall
+di Webmin. Divisi in quattro tabella si possono vedere gli elementi di tipo
+ZONA (zone), RETE (net), HOST e GRUPPO (group).</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="requisiti.html"
+ACCESSKEY="P"
+>Indietro</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Partenza</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-items-zone.html"
+ACCESSKEY="N"
+>Avanti</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Requisiti</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Zona (Zone)</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

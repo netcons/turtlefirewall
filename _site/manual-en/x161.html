@@ -1,0 +1,342 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML
+><HEAD
+><TITLE
+>FILTER</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="Manuale Turtle Firewall"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Services (fwservices.xml)"
+HREF="firewall-services.html"><LINK
+REL="PREVIOUS"
+TITLE="Services (fwservices.xml)"
+HREF="firewall-services.html"><LINK
+REL="NEXT"
+TITLE="Default services (fwservices.xml)"
+HREF="firewall-services-predefined.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Manuale Turtle Firewall</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="firewall-services.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 5. Services (fwservices.xml)</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="firewall-services-predefined.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN161"
+></A
+>5.2. FILTER</H1
+><P
+>The filter tag has a series of attributes which are used to define
+the characteristics that a packet must have to be considered valid. If the
+packet doesn't satisfy the parameters defined by the filter, the control
+passes to the following filter and so on. If no filter is verified, the packet
+is rejected.</P
+><P
+></P
+><P
+><B
+>Attributes:</B
+></P
+><UL
+COMPACT="COMPACT"
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>direction</I
+>: defines the direction of the packet in transit.
+   It can assume the <I
+CLASS="EMPHASIS"
+>go</I
+> or the <I
+CLASS="EMPHASIS"
+>back </I
+>value. Using go only the
+packets from an ipotetic source host to a destination host are considered,
+on the contrary using back the reply packets are considered.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>p</I
+>: protocol, it can assume one of the following values:
+tcp,  udp   or  icmp.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>sport</I
+>: the port used by the source host socket.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>dport</I
+>: destination port of the packet.</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>icmptype</I
+>: ICMP message type (you should use it only with
+p="icmp",    see iptables doc.).</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>state</I
+>: packet state (see "state" instruction of iptables).</P
+></LI
+><LI
+><P
+><I
+CLASS="EMPHASIS"
+>jump</I
+>: forced jump to a chain or a issue.</P
+><P
+>It can assume
+the following values:  <I
+CLASS="EMPHASIS"
+>ACCEPT</I
+> (tha packet is accepted, it's the default
+chain if direction is set to <I
+CLASS="EMPHASIS"
+>go</I
+>), <I
+CLASS="EMPHASIS"
+>DROP</I
+> (the packet is not considerated
+valid, usually this jump is not used directly because it's not reported to
+the log file), <I
+CLASS="EMPHASIS"
+>BACK</I
+> (the control passes to a special chain that allows
+only reply packets in transit of connections already established, it's the
+default chain if direction is set to <I
+CLASS="EMPHASIS"
+>back</I
+>), <I
+CLASS="EMPHASIS"
+>ICMP-ACC</I
+> (another
+special chain that has to be used with p="icmp",    allows only standard
+icmp messages considered secure).</P
+></LI
+></UL
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="./stylesheet-images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>If you set sport or dport as "PORT", the port will be
+set during the script generation as the value indicated by the <I
+CLASS="EMPHASIS"
+>port</I
+>
+attribute of the <I
+CLASS="EMPHASIS"
+>rule</I
+> tag in the firewall rule you have defined. This
+way you can define services with parameters.</P
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="FORMALPARA"
+><P
+><B
+><B
+>Syntax: </B
+></B
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="LITERALLAYOUT"
+>&#60;filter direction="go/back" p="tcp/udp/icmp" sport="nPortaSrc" dport="nPortaDst"
+  icmptype="tipoMsgIcmp" jump="ACCEPT/DROP/BACK/ICMP-ACC"/&#62;</PRE
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN204"
+></A
+><P
+><B
+>Example 5-1. Definition of 3 services</B
+></P
+><TABLE
+BORDER="0"
+BGCOLOR="#E0E0E0"
+WIDTH="100%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#60;services&#62;
+  &#60;service name="http" description="Servizio www o http"&#62;
+    &#60;filter direction="go" p="tcp" dport="www"/&#62;
+    &#60;filter direction="back" p="tcp" sport="www"/&#62;
+  &#60;/service&#62;
+
+  &#60;service name="tcp" description="Servizio TCP generico"&#62;
+    &#60;filter direction="go" p="tcp" dport="PORT"/&#62;
+    &#60;filter direction="back" p="tcp" sport="PORT"/&#62;
+  &#60;/service&#62;
+
+  &#60;service name="ping" description="icmp message echo-request and echo-reply"&#62;
+    &#60;filter direction="go" p="icmp" ICMPTYPE="echo-request"/&#62;
+    &#60;filter direction="back" p="icmp" ICMPTYPE="echo-reply"/&#62;
+  &#60;/service&#62;
+&#60;/services&#62;</PRE
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="firewall-services.html"
+ACCESSKEY="P"
+>&#60;&#60;&#60; Previous</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="firewall-services-predefined.html"
+ACCESSKEY="N"
+>Next &#62;&#62;&#62;</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Services (fwservices.xml)</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="firewall-services.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Default services (fwservices.xml)</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

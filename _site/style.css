@@ -1,0 +1,22 @@
+A:link, A:visited { text-decoration: underline; color: #ffffff }
+A:active, A:hover { color: #ffffff }
+body { font-family: Arial, sans-serif; font-size: 12px; color: #ffffff; margin: 0; background-color: #2E4EED; }
+td { font-family: Arial, sans-serif; font-size: 12px; color: #ffffff; }
+tr { font-family: Arial, sans-serif; font-size: 12px; color: #ffffff; }
+p { font-family: Arial, sans-serif; font-size: 12px; color: #ffffff; }
+h1 { font-family: Arial, sans-serif; font-size: 26px; color: #ffffff; font-weight: bold }
+h2 { font-family: Arial, sans-serif; font-size: 20px; color: #ffffff; font-weight: bold }
+h3 { font-family: Arial, sans-serif; font-size: 15px; color: #ffffff; font-weight: bold }
+h4 { font-family: Arial, sans-serif; font-size: 14px; color: #ffffff; font-weight: bold }
+h5 { font-family: Arial, sans-serif; font-size: 13px; color: #0221BD; font-weight: bold }
+h6 { font-family: Arial, sans-serif; font-size: 10px; color: #ffffff; font-weight: bold }
+img { border-style: none }
+
+input { border-width: 1px; }
+
+ul { 
+	list-style: none; 
+	text-align: left;
+	margin-left: 0px;
+	padding-left: 10px;
+}

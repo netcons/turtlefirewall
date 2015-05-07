@@ -1,0 +1,421 @@
+<html>
+  <head>
+    <title>Turtle Firewall ChengeLog</title>
+    <meta content=""/>
+    <!--
+    <style>
+                 h1 {font-family: "Helvetica"; color: darkblue;}
+                 h2 {font-family: "Helvetica"; color: #BB3333;}
+                 h3 {font-family: "Helvetica"; color: #BB3333;}
+                 body {font-family: "Helvetica";}
+                 table {font-family: "Helvetica";}
+    </style>-->
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-159124-3";
+urchinTracker();
+</script>
+  </head>
+  <body>
+	<table border="0" width="100%" cellpadding="0" cellspacing="0">
+
+		<!--<td bgcolor="#889CFF" align="center"></td>-->
+
+		<tr>
+		<td  style="width: 1%; background-color: #889CFF; background-image: url(images/bg_left.gif);" align="center" valign="top" >
+
+		<a href="index.it.html">
+		<img src="images/tortuga.png" style="padding-top: 20px; padding-bottom: 20px" alt="Turtle Firewall"/></a>
+
+		<a href="index.en.html"><img src="images/flag-en.png" style="padding-right: 5px" alt="ita"/></a>
+		<a href="index.it.html"><img src="images/flag-it.png" style="padding-left: 5px" alt="eng"/></a>
+		<br/>
+
+		<table border="0" cellspacing="10" cellpadding="0">
+		<tr><td align="left">
+			<br/>
+			<a href="index.it.html" style="color: #0221BD"><b>Home</b></a><br/>
+			<a href="screenshots.it.html" style="color: #0221BD"><b>Screenshots</b></a><br/>
+			<a href="docs.it.html" style="color: #0221BD">
+			<b>Documentazione</b></a><br/>
+			<a href="download.it.html" style="color: #0221BD"><b>Download</b></a><br/>
+			<a href="portscanner.it.html" style="color: #0221BD"><b>Port Scanner</b></a> <i><span style="color: yellow; font-weight: bold;">new</span></i><br/>
+			<a href="vulnerabilities.it.html" style="color: #0221BD"><b>Ultime vulnerabilit&agrave;</b></a><br/>
+			<a target="_new" href="http://lists.sourceforge.net/lists/listinfo/turtlefirewall-announce" style="color: #0221BD">
+			<b>Newsletter</b></a><br/>
+			<a href="changelog.it.html" style="color: #0221BD"><b>ChangeLog</b></a><br/>
+			<a href="credits.it.html" style="color: #0221BD"><b>Ringraziamenti</b></a><br/>
+			<!--<a href="commercial.it.html" style="color: #0221BD"><b>Assistenza</b></a><br/>-->
+		</td></tr>
+		</table>
+
+		<br>
+		<!-- Donattion PayPal -->
+		<!--
+		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+		<input type="hidden" name="cmd" value="_xclick">
+		<input type="hidden" name="business" value="info@frisoft.it">
+		<input type="hidden" name="item_name" value="Donate to Turtle Firewall Project">
+		<input type="hidden" name="item_number" value="01">
+		<input type="hidden" name="no_note" value="1">
+		<input type="hidden" name="currency_code" value="USD">
+		<input type="hidden" name="tax" value="0">
+
+		<span style="color: #0221BD">
+		Supporta il progetto Turtle Firewall:
+		
+		</span>
+		<br>
+
+		<input type="image" src="https://www.paypal.com/images/x-click-but04.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+		</form>
+		-->
+		<!-- FINE Donattion PayPal -->
+		
+		<? include('textLinkAds.html'); ?>
+
+		<br/>
+
+		<div style="text-align: center"><a href="http://www.nuts-games.com" style="color: #fff; text-weight: bold;">Nuts Games</a></div>
+		<br/>
+
+		<div style="text-align: center"><a href="http://www.myeurobill.com" style="color: #fff; text-weight: bold;">MyEuroBill.com</a></div>
+		<br/><br/>
+
+		<!--<a href="http://www.frisoft.it/index_prezzi.shtml">-->
+		<a href="commercial.it.html">
+		<img src="images/assistenza_open.gif" style="padding-top: 10px; padding-bottom: 10px" alt="Assistenza"/></a>
+
+
+		</td>
+
+
+		<!--<td bgcolor="#889CFF"></td>-->
+
+		<td bgcolor="#0221BD" width="1"><img src="images/spacer.gif" width="1" height="1" alt="-"/></td>
+
+		<td align="center" width="100%" valign="top">
+
+		<table width="90%" border="0">
+			<tr><td align="left" valign="top">
+			<!--
+			<img broder="0" src="images/logo2.gif" hspace="0" />
+			-->
+			<br/>
+			<h1>Turtle Firewall Project</h1>
+			<br/>
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-7612088018248760";
+google_ad_width = 468;
+google_ad_height = 15;
+google_ad_format = "468x15_0ads_al";
+google_ad_channel ="";
+google_color_border = "2E4EED";
+google_color_bg = "2E4EED";
+google_color_link = "FFFFFF";
+google_color_url = "FFFFFF";
+google_color_text = "FFFFFF";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+			<br/><br/>
+
+
+<p align="center">
+<h2>ChangeLog</h2>
+</p>
+
+
+<b>20-05-2011 v.1.38</b>
+<ul>
+	<li>Debian 6.0 compatibility (chocolateboy).</li>
+</ul>
+
+<b>02-02-2006 v.1.37</b>
+<ul>
+	<li>New service definitions were added:<br/>
+		igmp (Internet Group Management Protocol).<br/>
+		bpalogin (BPALogin).<br/>
+		&nbsp;&nbsp;Thanks to Rene Cunningham for this two services.<br/>
+		openvpn (OpenVPN protocolo, www.openvpn.net).</li>
+	<li>Bugs were fixed.</li>
+</ul>
+
+<b>11-01-2006 v.1.36</b>
+<ul>
+	<li>Add multisources and multidestinations in firewall rules.</li>
+	<li>Add service attribute in filter xml tag of services definition files.</li>
+	<li>Eliminate drop_unclean option, doesn't work with kernel 2.6.x</li>
+	<li>Bugsfix.</li>
+</ul>
+
+<b>14-05-2003 v.1.27</b>
+<ul>
+	<li>Small Bug-fix.</li>
+</ul>
+
+<b>07-05-2003 v.1.26</b>
+<ul>
+	<li>Fix "de" language file (Frank F&ouml;rster).</li>
+	<li>NAT Improved, now you can change rules order.</li>
+	<li>NAT rules bugfix.</li>
+	<li>Configuration backup download bugfix.</li>
+</ul>
+
+<b>14-04-2003 v.1.25</b>
+<ul>
+	<li>Fix bugs.</li>
+</ul>
+
+<b>14-04-2003 v.1.24</b>
+<ul>
+	<li>Change Turtle Firewall stop process, ping will be reenabled.</li>
+	<li>Add AIM/ICQ and Soulseek std services (Frank F&ouml;rster).</li>
+	<li>Add Oracle, VNC, VNC-http services.</li>
+	<li>Add rip, syslog, icecast, icp, irc (Karl Lovink).</li>
+	<li>Local Redirection Improved.</li>
+	<li>Now you can rename all firewall items.</li>
+	<li>More options.</li>
+</ul>
+
+
+<b>18-02-2003 v.1.23</b>
+<ul>
+	<li>Add proxy, ssh21, dhcp, snmptrap, socks and eDonkey services (Karl Lovink).</li>
+	<li>Fix a bug into log viewer (Fredrik Tuomas).</li>
+	<li>Add Configuration Backup/Restore.</li>
+</ul>
+
+<b>12-02-2003 v.1.22</b>
+<ul>
+	<li>Firewall and NAT rules with multiple services.</li>
+	<li>Change LOG prefix from "TFW DROP" to "TFW".</li>
+	<li>Add --start, --stop and --status options to turtlefirewall main script.</li>
+	<li>Add stop button in the webmin turtlefirewall index page.</li>
+	<li>Translate error messages (english and italian).</li>
+	<li>Add icmp_all service for all messages (request+reply).</li>
+	<li>Add all icmp messages in the special service "all".</li>
+</ul>
+
+
+<b>16-01-2003 v.1.21</b>
+<ul>
+	<li>Fix a bug in Redirection.</li>
+</ul>
+
+<b>15-01-2003 v.1.20</b>
+<ul>
+	<li>Add optional MAC address field in host edit form.</li>
+	<li>Add target field (ACCEPT/DROP/REJECT) in rule edit form.</li>
+	<li>Fix bug in Log prefix string, it must be up to 29 chars length.</li>
+	<li>Add x11: X Window System service.</li>
+	<li>Use numerical notation for ports in fwservices.xml.</li>
+	<li>Add Active flag to NAT, Masquerade and Redirect rules.</li>
+</ul>
+
+<b>26-11-2002 v.1.19</b>
+<ul>
+	<li>Fix bug in Zone deletion.</li>
+	<li>Fix a bug using aliased interfaces (signaled by Torsten)</li>
+	<li>Add German translation (Jimmy Collins)</li>
+	<li>Add mysql and kazaa services (Jimmy Collins)</li>
+	<li>Add pptp (vpn) and rdp services (Joe MacDonald)</li>
+	<li>Add PC-Anyware service (Chris Carter)</li>
+	<li>Change setup script for Slackware Linux distribution (A.Frigido, Patrik)</li>
+</ul>
+
+<b>13-11-2002 v.1.18</b>
+<ul>
+	<li>Add Firewall Configuration Options.</li>
+	<li>Now you can change firewall rules order (more readable).</li>
+	<li>Add fwuserdefservices.xml file for userdefined services. With this file you can write your own
+              services filter without changing official fwservices.xml file.
+              The structure of this new file is identical of fwservices.xml file structure.
+              If you write a service with a name used by fwservices.xml, this new service definition overwrite
+              the original service definition so, if you want, you can rewrite all services.
+              IMPORTANT: I invite all to send me your userdefined service filter definitions, so I can add them into
+              the predefined services list (fwservices.xml) for all Turtle Firewall users.</li>
+</ul>
+
+<b>16-10-2002 v.1.17</b>
+<ul>
+	<li>Fix bug with "--log-level info" iptables option.</li>
+	<li>Enhanced log report.</li>
+	<li>Enhanced interface.</li>
+	<li>Add afp-over-tcp service: AFP (Apple Filing Protocol) over TCP.
+                  (Alain Terriault)</li>
+	<li>Add nfs (experimental)</li>
+</ul>
+
+<b>26-09-2002 v.1.16</b>
+<ul>
+	<li>Change webmin category from System to Networking.</li>
+	<li>Fix a bug on tcp/udp Local Redirection (Soep).</li>
+</ul>
+
+<b>13-09-2002 v.1.15</b>
+<ul>
+	<li>Fix "DROP INVALID unclean" bug.</li>
+</ul>
+
+<b>10-09-2002 v.1.14</b>
+<ul>
+	<li>The configurable options contains now the option to select the logfile (Karl Lovink).</li>
+	<li>The dutch language has been added (Karl Lovink).</li>
+</ul>
+
+<b>03-09-2002 v.1.13</b>
+<ul>
+	<li>Add NAT from a zone interface to a real host (etc. modem interface ip to my pc host).</li>
+	<li>Add Redirect module (For Transparent Proxy).</li>
+	<li>Fix security hole with INVALID packets filter code by Mark Francis.</li>
+	<li>Enhanced Log.</li>
+	<li>Add firewall rules for IPsec VPN service.</li>
+	<li>Add firewall rules for Webmin service.</li>
+</ul>
+
+<b>09-07-2002 v.1.12</b>
+<ul>
+	<li>Fix bug in XML::Parser module checking.</li>
+</ul>
+
+<b>08-07-2002 v.1.11</b>
+<ul>
+	<li>Setup procedure into webmin module, now Turtle Firewall installation is very easy.</li>
+	<li>Removed chkconfig command for setup, it isn't availabe in all GNU/Linux distributions.</li>
+	<li>Fix bug in "Create Nat" web interface.</li>
+	<li>Other minor changes.</li>
+</ul>
+
+<b>26-06-2002 v.1.10</b>
+<ul>
+	<li>Add description field for rules and items.</li>
+	<li>Add experimental H.323 service.</li>
+	<li>Fix bugs.</li>
+</ul>
+
+<b>20-06-2002 v.1.00</b>
+<ul>
+	<li>Change SystemV service start/stop order from 00/99 to 08/92.</li>
+	<li>Change TurtleFirewall package file name.</li>
+	<li>Check if XML::Parser perl module is installed.</li>
+	<li>Add Telnet service.</li>
+</ul>
+
+<b>14-06-2002 v.0.99</b>
+<ul>
+	<li>Fix turtlefirewall privileges bug.</li>
+	<li>Use iptables from PATH (iptables directory need to be in PATH env. var.)</li>
+	<li>PreLoad modules for ftp connections and NAT.</li>
+	<li>Add CVS, NNTP services.</li>
+</ul>
+
+<b>23-05-2002 v.0.98</b> Giampaolo Tomassoni &lt;g.tomassoni at ar-tel.it&gt;
+<ul>
+	<li>Do you need port-based natting? Here it is...</li>
+	<li>Fixed the I-Wanna-Reply-To-Pings-But-It-Doesn't bug: when
+              the fw accepts pings on a "somewere" => FIREWALL base,
+              don't turn the /proc/sys/net/ipv4/icmp_echo_ignore_all
+              kernel flag on...</li>
+	<li>Applied few ahestetic make-ups</li>
+</ul>
+
+<b>17-05-2002 v.0.97</b>
+<ul>
+	<li>Add franch webmin language file.</li>
+	<li>Fix bugs.</li>
+</ul>
+
+<b>17-04-2002 v.0.96</b>
+<ul>
+	<li>Add webmin module languages files for English and Italian.</li>
+	<li>Fix Masquerade and NAT bug.</li>
+</ul>
+
+<b>02-04-2002 v.0.95</b>
+<ul>
+	<li>Aggiunto il file setup al tarball.</li>
+</ul>
+
+<b>22-03-2002 v.0.94</b>
+<ul>
+	<li>Aggiunto supporto dell'attributo ACTIVE delle rule.</li>
+</ul>
+
+<b>19-03-2002 v.0.93</b>
+<ul>
+	<li>Aggiunto l'uso del modulo turtlefirewall.pm (/usr/lib)</li>
+</ul>
+
+<b>10-01-2002 v.0.92</b>
+<ul>
+	<li>Inserite le regole di accesso da/verso interfaccia lo
+              che precedentemente impedivano l'accesso a se stesso.</li>
+	<li>Impostati i diritti sul file sh generato per l'esecuzione.</li>
+	<li>Corretta la definizione delle lan nei file di configurazione
+              di esempio (samples).</li>
+</ul>
+
+<b>05-12-2001 v.0.91</b>
+<ul>
+	<li>Modificato il nome da fwconf in Turtle Firewall (turtlefw)</li>
+</ul>
+
+<br/>
+
+<p align="center">
+<a href="index.it.html">torna alla home page</a>
+</p>
+
+
+	</td>
+	
+	<td valign="top" width="120">
+	<br><br><br><br><br><br>
+<script type="text/javascript"><!--
+google_ad_client = "pub-7612088018248760";
+google_ad_width = 120;
+google_ad_height = 600;
+google_ad_format = "120x600_as";
+google_ad_type = "text";
+google_ad_channel ="";
+google_color_border = "2E4EED";
+google_color_bg = "2E4EED";
+google_color_link = "FFFFFF";
+google_color_url = "FFFFFF";
+google_color_text = "FFFFFF";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+	</td>
+	
+	
+	</tr></table>
+
+	<br/><br/><br/><br/>
+
+	<table width="100%" border="0">
+		<tr><td height="100%" valign="bottom" align="center">
+		<br/>
+		<b>Copyright (c) 2001-2004 Frisoft di Frigido Andrea - P.IVA 03142480247 (<a href="http://www.frisoft.it">www.frisoft.it</a>)</b>
+		<br/>
+		Traduzione dall'italiano all'inglese a cura di Emanuele Tatti.
+		
+		<br/>
+		<br/>
+		<a href="http://sourceforge.net/projects/turtlefirewall/"><img src="http://sourceforge.net/sflogo.php?group_id=49697" alt="SourceForge Logo"/></a>
+
+		</td></tr>
+	</table>
+
+	</td></tr></table>
+
+  </body>
+</html>
+
+
