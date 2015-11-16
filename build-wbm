@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ ! -d "build" ]; then
+  mkdir build
+fi
+cd ./src
+VERSION=`cat turtlefirewall/VERSION`
+echo $VERSION
+tar czvf ../build/turtlefirewall-$VERSION.wbm.gz turtlefirewall

@@ -1,0 +1,4 @@
+fw_file=/etc/turtlefirewall/fw.xml
+fwservices_file=/etc/turtlefirewall/fwservices.xml
+fwuserdefservices_file=/etc/turtlefirewall/fwuserdefservices.xml
+fw_logfile=/var/log/messages
