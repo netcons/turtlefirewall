@@ -1,0 +1,52 @@
+<firewall>
+
+<options>
+<option name="pptp_modules" value="on"/>
+<option value="on" name="drop_invalid_fragment"/>
+<option value="on" name="log_martians"/>
+<option value="off" name="rp_filter"/>
+<option name="ftp_modules" value="on"/>
+<option name="log_limit" value="60"/>
+<option name="h323_modules" value="on"/>
+<option value="off" name="drop_invalid_state"/>
+<option value="on" name="blacklist_feature"/>
+<option value="off" name="drop_unclean"/>
+<option name="drop_invalid_none" value="off"/>
+<option name="drop_invalid_all" value="off"/>
+<option name="netflow_feature" value="off"/>
+<option value="on" name="drop_invalid_syn_fin"/>
+<option name="drop_invalid_fin_notack" value="off"/>
+<option value="on" name="sip_modules"/>
+<option value="on" name="tftp_modules"/>
+<option name="log_limit_burst" value="5"/>
+<option value="on" name="flowinfo_logging"/>
+<option name="nf_conntrack_max" value="262144"/>
+<option value="on" name="drop_invalid_syn_rst"/>
+</options>
+
+<zone description="" name="lan" if="eth0"/>
+<zone if="eth1" name="primarywan" description=""/>
+
+
+
+
+
+<group name="internet" description="Internet">
+	<item name="primarywan"/>
+</group>
+
+
+
+
+<masquerade service="all" src="*" dst="primarywan"/>
+<masquerade service="all" src="*" dst="lan" active="NO"/>
+
+
+<rule dst="*" src="FIREWALL" service="all" target="ACCEPT" description="Firewall to Anyware"/>
+<rule service="icmp_all,openvpn" description="Internet to Firewall" target="ACCEPT" dst="FIREWALL" src="internet"/>
+<rule service="dns,http,icmp_all,imap,logio,ntop,ntp,pop3,proxy8080,shellinabox,smtp,ssh,unifi,webmin" target="ACCEPT" description="Lan To Firewall" dst="FIREWALL" src="lan"/>
+<rule description="Lan to Internet" target="ACCEPT" log="YES" service="ftp,http,https,icmp_all,imap,imaps,ntp,pop3,pop3s,smtp587,smtps" src="lan" dst="internet"/>
+
+
+
+</firewall>
