@@ -48,7 +48,7 @@ xt_ndpi, ( https://github.com/vel21ripn/nDPI ) <br>
 xt_geoip, ( https://inai.de/projects/xtables-addons ) <br>
 ipt_NETFLOW. ( https://github.com/aabc/ipt-netflow )
 
-## Install EL8
+## Install EL9
 
 Activate Repos.
 ```
