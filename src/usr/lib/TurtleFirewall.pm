@@ -1410,16 +1410,14 @@ sub getIptablesRules {
 	my $chains_nat = '';
 	my $rules_nat = '';
 	
-	my $mangle_chains = '';
-	my $mangle_rules = '';
+	my $chains_mangle = '';
+	my $rules_mangle = '';
 
-	my $rules_connmarkpreroute = ''; 
-	my $mangle_connmarkpreroutechains = '';
-	my $mangle_connmarkprerouterules = ''; 
+	my $chains_mangle_connmarkpreroute = '';
+	my $rules_mangle_connmarkpreroute = ''; 
 
-	my $rules_connmark = ''; 
-	my $mangle_connmarkchains = '';
-	my $mangle_connmarkrules = ''; 
+	my $chains_mangle_connmark = '';
+	my $rules_mangle_connmark = ''; 
 
 	my $log_limit=60;
 	my $log_limit_burst=5;
@@ -1447,7 +1445,7 @@ sub getIptablesRules {
 			":OUTPUT ACCEPT [0:0]\n";
 
 	# Chains for mangle table
-	$mangle_chains .= "*mangle\n".
+	$chains_mangle .= "*mangle\n".
 			":PREROUTING ACCEPT [0:0]\n".
 			":INPUT ACCEPT [0:0]\n".
 			":FORWARD ACCEPT [0:0]\n".
@@ -1455,8 +1453,8 @@ sub getIptablesRules {
 			":POSTROUTING ACCEPT [0:0]\n";
 
 	# Copy packet mark to connection mark and vice versa
-	$mangle_rules .= "-A PREROUTING -j CONNMARK --restore-mark\n";
-	$mangle_rules .= "-A POSTROUTING -j CONNMARK --save-mark\n";
+	$rules_mangle .= "-A PREROUTING -j CONNMARK --restore-mark\n";
+	$rules_mangle .= "-A POSTROUTING -j CONNMARK --save-mark\n";
 	
 	# abilito l'accesso da/verso l'interfaccia lo.
 	$rules .= "-A INPUT -i lo -j ACCEPT\n";
@@ -1628,15 +1626,15 @@ sub getIptablesRules {
 			my %zone1 = $this->GetZone($z1);
 			if( $z1 ne 'FIREWALL' ) {
 				# Add FWMARK chain
-				$mangle_connmarkpreroutechains .= ":$z1-FWMARK - [0:0]\n";
-				$mangle_connmarkprerouterules .= "-A PREROUTING -i ".$zone1{'IF'}." -j $z1-FWMARK\n";
+				$chains_mangle_connmarkpreroute .= ":$z1-FWMARK - [0:0]\n";
+				$rules_mangle_connmarkpreroute .= "-A PREROUTING -i ".$zone1{'IF'}." -j $z1-FWMARK\n";
 			}
 		}
 		for( my $i=1; $i <= $connmarkpreroutesCount; $i++ ) {
-			$rules_connmarkpreroute .= $this->applyRule( 1, 1, $this->GetConnmarkPreroute($i) );
+			$rules_mangle_connmarkpreroute .= $this->applyRule( 1, 1, $this->GetConnmarkPreroute($i) );
 		}
-		$mangle_chains .= $mangle_connmarkpreroutechains;
-		$mangle_rules .= $rules_connmarkpreroute.$mangle_connmarkprerouterules;
+		$chains_mangle .= $chains_mangle_connmarkpreroute;
+		$rules_mangle .= $rules_mangle_connmarkpreroute;
 	}
 
 	# Applicazione delle CONNMARKs
@@ -1656,24 +1654,24 @@ sub getIptablesRules {
 					# origine lo stesso firewall.
 					# Notare che escludo la coppia FIREWALL -> FIREWALL
 					if( $z1 eq 'FIREWALL' && $z2 ne 'FIREWALL' ) {
-						$mangle_connmarkchains .= ":$z1-$z2 - [0:0]\n";
-						$mangle_connmarkrules .= "-A OUTPUT -o \"".$zone2{'IF'}."\" -j $z1-$z2\n";
+						$chains_mangle_connmark .= ":$z1-$z2 - [0:0]\n";
+						$rules_mangle_connmark .= "-A OUTPUT -o \"".$zone2{'IF'}."\" -j $z1-$z2\n";
 					}
 					if( $z1 ne 'FIREWALL' && $z2 eq 'FIREWALL' ) {
-						$mangle_connmarkchains .= ":$z1-$z2 - [0:0]\n";
-						$mangle_connmarkrules .= "-A INPUT -i ".$zone1{'IF'}." -j $z1-$z2\n";
+						$chains_mangle_connmark .= ":$z1-$z2 - [0:0]\n";
+						$rules_mangle_connmark .= "-A INPUT -i ".$zone1{'IF'}." -j $z1-$z2\n";
 					}
 				} else {
-					$mangle_connmarkchains .= ":$z1-$z2 - [0:0]\n";
-					$mangle_connmarkrules .= "-A FORWARD -i ".$zone1{'IF'}." -o ".$zone2{'IF'}." -j $z1-$z2\n";
+					$chains_mangle_connmark .= ":$z1-$z2 - [0:0]\n";
+					$rules_mangle_connmark .= "-A FORWARD -i ".$zone1{'IF'}." -o ".$zone2{'IF'}." -j $z1-$z2\n";
 				}
 			}
 		}
 		for( my $i=1; $i <= $connmarksCount; $i++ ) {
-			$rules_connmark .= $this->applyRule( 1, 2, $this->GetConnmark($i) );
+			$rules_mangle_connmark .= $this->applyRule( 1, 2, $this->GetConnmark($i) );
 		}
-		$mangle_chains .= $mangle_connmarkchains;
-		$mangle_rules .= $rules_connmark.$mangle_connmarkrules;
+		$chains_mangle .= $chains_mangle_connmark;
+		$rules_mangle .= $rules_mangle_connmark;
 	}
 
 	# Applicazione delle NATs
@@ -1770,7 +1768,7 @@ sub getIptablesRules {
 	}
 	print "DROP any other connections and LOG Action\n";
 	
-	return ($rules_connmark || $rules_connmarkpreroute ? $mangle_chains.$mangle_rules."COMMIT\n" : "*mangle\nCOMMIT\n").
+	return ($rules_mangle_connmarkpreroute || $rules_mangle_connmark ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").
 		$chains.$rules."COMMIT\n".$chains_nat.$rules_nat."COMMIT\n";
 }
 
@@ -2648,9 +2646,9 @@ sub _applyService {
                         }
 		}
 
-		if( $p ne '' ) {  $cmd .= "-p $p "; }
+		if( $p ne '' ) { $cmd .= "-p $p "; }
 		if( $icmptype ne '' ) { $cmd .= "--icmp-type $icmptype "; }
-		if( $sport ne '' ) {  $cmd .= "--sport $sport "; }
+		if( $sport ne '' ) { $cmd .= "--sport $sport "; }
 		if( $dport ne '' ) { $cmd .= "--dport $dport "; }
 	
 		if( $ndpi ne '' ) { 
