@@ -574,6 +574,11 @@ sub RenameItem {
 					$this->{fw}{NET}{$k}{ZONE} = $newname;
 				}
 			}
+			foreach $k (@{$this->{fwKeys}{GEOIP}}) {
+				if( $this->{fw}{GEOIP}{$k}{ZONE} eq $oldname ) {
+					$this->{fw}{GEOIP}{$k}{ZONE} = $newname;
+				}
+			}
 		}
 
 		# change itme name in groups

@@ -6,6 +6,7 @@
 	<ndpiprotocol name="afp" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="aimini" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="ajp" category="infrastructure"> </ndpiprotocol>
+	<ndpiprotocol name="alibaba" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="amazon" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="amazonalexa" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="amazonaws" category="other"> </ndpiprotocol>
@@ -21,8 +22,9 @@
 	<ndpiprotocol name="applesiri" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="applestore" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="armagetron" category="gaming"> </ndpiprotocol>
-	<ndpiprotocol name="avast" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="avastsecuredns" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ayiya" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="azure" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="bgp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="bittorrent" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="bjnp" category="printing"> </ndpiprotocol>
@@ -39,6 +41,7 @@
 	<ndpiprotocol name="collectd" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="corba" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="cpha" category="infrastructure"> </ndpiprotocol>
+	<ndpiprotocol name="crashlytics" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="crossfire" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="csgo" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="datasaver" category="other"> </ndpiprotocol>
@@ -63,7 +66,9 @@
 	<ndpiprotocol name="ebay" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="edonkey" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="egp" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="ethernetip" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="facebook" category="social-mdeia"> </ndpiprotocol>
+	<ndpiprotocol name="facebookvoip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="fasttrack" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="fiesta" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="fix" category="financial"> </ndpiprotocol>
@@ -71,6 +76,7 @@
 	<ndpiprotocol name="forticlient" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="ftp_control" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="ftp_data" category="storage-backup"> </ndpiprotocol>
+	<ndpiprotocol name="fuze" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="genshinimpact" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="git" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="github" category="other"> </ndpiprotocol>
@@ -86,18 +92,22 @@
 	<ndpiprotocol name="googleservices" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="gre" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="gtp" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="gtp_c" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="gtp_prime" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="gtp_u" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="guildwars" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="h323" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="halflife2" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="hotmail" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="hotspotshield" category="tunnelling"> </ndpiprotocol>
-	<ndpiprotocol name="hp" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="hp_virtgrp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="http" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="http_connect" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="http_proxy" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="hulu" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="iax" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="icecast" category="video-audio"> </ndpiprotocol>
+	<ndpiprotocol name="icloudprivaterelay" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="icmp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="icmpv6" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="iec60870" category="other"> </ndpiprotocol>
@@ -183,11 +193,13 @@
 	<ndpiprotocol name="rtsp" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rx" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="s7comm" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="salesforce" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="sap" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="sctp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="sflow" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="shoutcast" category="video-audio"> </ndpiprotocol>
-	<ndpiprotocol name="signal" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="signal" category="instant-messaging"> </ndpiprotocol>
+	<ndpiprotocol name="signalvoip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="sina(weibo)" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="sip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="skype" category="collaboration"> </ndpiprotocol>
@@ -240,6 +252,7 @@
 	<ndpiprotocol name="vevo" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="vhua" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="viber" category="collaboration"> </ndpiprotocol>
+	<ndpiprotocol name="vimeo" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="vmware" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="vnc" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="vrrp" category="networking"> </ndpiprotocol>
