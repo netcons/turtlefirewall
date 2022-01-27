@@ -48,14 +48,16 @@ xt_ndpi, ( https://github.com/vel21ripn/nDPI ) <br>
 xt_geoip, ( https://inai.de/projects/xtables-addons ) <br>
 ipt_NETFLOW. ( https://github.com/aabc/ipt-netflow )
 
-## Install EL9
+## Install EL8/EL9
 
-Activate Repos.
+Activate Repos EL8.
 ```
 dnf install epel-release
 
 dnf config-manager --set-enabled powertools
-
+```
+Activate Repos EL8/EL9.
+```
 echo "[Webmin]
 name=Webmin Distribution Neutral
 #baseurl=https://download.webmin.com/download/yum
@@ -73,7 +75,7 @@ gpgckeck=0" > /etc/yum.repos.d/tfw.repo
 dnf -y install createrepo
 mkdir -p /tmp/tfw
 cd /tmp/tfw
-# Download all rpm's here, from : https://github.com/netcons/turtlefirewall/releases/latest
+# Download all rpm's here, from : https://github.com/netcons/turtlefirewall/releases
 createrepo ./
  ```
 
