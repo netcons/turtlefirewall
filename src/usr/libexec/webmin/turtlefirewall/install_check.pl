@@ -8,6 +8,6 @@ do 'turtlefirewall-lib.pl';
 # For mode 0, returns 1 if installed, 0 if not
 sub is_installed
 {
-return 0 if (!-f $tfwlib && !-d $config{'fw_file'});
+return 0 if (!-f $tfwlib && !-f $config{'fw_file'});
 return $_[0] ? 2 : 1;
 }
