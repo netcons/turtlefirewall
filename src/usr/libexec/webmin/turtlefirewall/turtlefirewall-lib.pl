@@ -30,7 +30,7 @@ if( ! $gotXmlParser ) {
 	exit;
 }
 
-my $tfwlib = '/usr/lib/TurtleFirewall.pm';
+my $tfwlib = '/usr/lib/turtlefirewall/TurtleFirewall.pm';
 if( ! -f $tfwlib ) {
 	error( 'Turtle Firewall Library not found. Install Turtle Firewall.' );
 }

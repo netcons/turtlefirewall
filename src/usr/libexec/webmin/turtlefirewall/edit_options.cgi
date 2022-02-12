@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 &ui_print_header( $text{'edit_options_title'}, $text{'title'}, "" );
 

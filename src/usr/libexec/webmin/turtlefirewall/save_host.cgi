@@ -9,7 +9,7 @@
 #======================================================================
 
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 my $host = $in{'host'};
 my $newhost = $in{'newhost'};

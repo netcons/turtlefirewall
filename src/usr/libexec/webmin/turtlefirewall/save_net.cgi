@@ -9,7 +9,7 @@
 #======================================================================
 
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 my $net = $in{'net'};
 my $newnet = $in{'newnet'};

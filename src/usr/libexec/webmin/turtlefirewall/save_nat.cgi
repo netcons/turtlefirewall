@@ -9,7 +9,7 @@
 #======================================================================
 
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 my $idx = $in{'idx'};
 my $virtual = $in{'virtual'};

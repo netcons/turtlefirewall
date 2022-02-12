@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 $new = $in{'new'};
 $timegroup = $in{'timegroup'};

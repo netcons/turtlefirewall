@@ -9,7 +9,7 @@
 #======================================================================
 
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 my $group = $in{'group'};
 my $newgroup = $in{'newgroup'};

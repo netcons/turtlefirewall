@@ -9,7 +9,7 @@
 #======================================================================
 
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 if( $in{'zone'} eq 'FIREWALL' ) {
 	redirect('list_items.cgi');

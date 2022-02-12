@@ -158,16 +158,7 @@
                 <filter direction="go" p="50"/>
                 <filter direction="back" p="50" jump="ACCEPT"/>
         </service>
-        <service name="3CX-sip" description="3CX SIP and RTP">
-                <filter direction="go" p="tcp" dport="5060"/>
-                <filter direction="back" p="tcp" sport="5060"/>
-                <filter direction="go" p="udp" dport="5060"/>
-                <filter direction="back" p="udp" sport="5060"/>
-                <filter direction="go" p="udp" dport="9000:10999"/>
-                <filter direction="back" p="udp" sport="9000:10999"/>
-
-        </service>
-        <service name="3CX" description="3CX">
+        <service name="3cx" description="3CX">
                 <filter direction="go" p="tcp" dport="5000"/>
                 <filter direction="back" p="tcp" sport="5000"/>
                 <filter direction="go" p="tcp" dport="5001"/>
@@ -179,21 +170,29 @@
                 <filter direction="go" p="udp" dport="5090"/>
                 <filter direction="back" p="udp" sport="5090"/>
 	</service>
+	<service name="3cx-rtp-wan" description="3CX RTP WAN">
+                <filter direction="go" p="udp" dport="9000:10999"/>
+                <filter direction="back" p="udp" sport="9000:10999"/>
+        </service>
+        <service name="3cx-rtp-lan" description="3CX RTP LAN">
+                <filter direction="go" p="udp" dport="7000:8999"/>
+                <filter direction="back" p="udp" sport="7000:8999"/>
+        </service>
         <service name="veeam-transfer" description="veeam-transfer">
-            <filter direction="go" p="tcp" dport="2500:5000"/>
-            <filter direction="back" p="tcp" sport="2500:5000"/>
+                <filter direction="go" p="tcp" dport="2500:5000"/>
+                <filter direction="back" p="tcp" sport="2500:5000"/>
         </service>
 	<service name="steam" description="Steam">
-            <filter direction="go" p="udp" dport="27000:27037"/>
-            <filter direction="back" p="udp" sport="27000:27037"/>
-            <filter direction="go" p="tcp" dport="27036:27037"/>
-            <filter direction="back" p="tcp" sport="27036:27037"/>
-            <filter direction="go" p="udp" dport="4380"/>
-            <filter direction="back" p="udp" sport="4380"/>
+                <filter direction="go" p="udp" dport="27000:27037"/>
+                <filter direction="back" p="udp" sport="27000:27037"/>
+                <filter direction="go" p="tcp" dport="27036:27037"/>
+                <filter direction="back" p="tcp" sport="27036:27037"/>
+                <filter direction="go" p="udp" dport="4380"/>
+                <filter direction="back" p="udp" sport="4380"/>
 	</service>
 	<service name="mssql" description="Microsoft SQL (tcp 1433)">
-            <filter direction="go" p="tcp" dport="1433"/>
-            <filter direction="back" p="tcp" sport="1433"/>
+                <filter direction="go" p="tcp" dport="1433"/>
+                <filter direction="back" p="tcp" sport="1433"/>
         </service>
 	<service name="tftp" description="TFTP (tcp 69)">
                 <filter direction="go" p="udp" dport="69"/>

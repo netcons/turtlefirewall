@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 &ui_print_header( $text{'list_manglerules_title'}, $text{'title'}, "" );
 

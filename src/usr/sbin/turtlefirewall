@@ -17,7 +17,7 @@
 if( -f 'TurtleFirewall.pm' ) {
 	require 'TurtleFirewall.pm';
 } else {
-	require '/usr/lib/TurtleFirewall.pm';
+	require '/usr/lib/turtlefirewall/TurtleFirewall.pm';
 }
 
 $firewall = new TurtleFirewall();

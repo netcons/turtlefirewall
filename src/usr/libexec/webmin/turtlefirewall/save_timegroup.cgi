@@ -9,7 +9,7 @@
 #======================================================================
 
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 my $timegroup = $in{'timegroup'};
 my $newtimegroup = $in{'newtimegroup'};

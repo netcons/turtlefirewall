@@ -9,7 +9,7 @@
 #======================================================================
 
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 my $geoip = $in{'geoip'};
 my $newgeoip = $in{'newgeoip'};

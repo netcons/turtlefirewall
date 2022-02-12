@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 if( $in{download} ) {
 	backup_download();

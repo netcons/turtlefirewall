@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 my $idx = $in{'idx'};
 my $src = $in{'src'};

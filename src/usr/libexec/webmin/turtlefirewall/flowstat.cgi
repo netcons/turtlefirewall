@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 use Tie::File;
 
 &ui_print_header( $text{'flowstat_title'}, $text{'title'}, "" );

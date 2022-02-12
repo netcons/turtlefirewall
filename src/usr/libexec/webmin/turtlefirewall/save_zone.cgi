@@ -9,7 +9,7 @@
 #======================================================================
 
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
 
 $newzone = $in{'newzone'};
 $zone = $in{'zone'};
