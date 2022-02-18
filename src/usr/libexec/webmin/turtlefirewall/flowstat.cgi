@@ -34,7 +34,7 @@ for my $k (@tops) {
 	$options_top .= '<option'.($k eq $top ? ' selected' : '').'>'.$k;
 }
 
-@types = ('source','destination','protocol','hostname','certificate');
+@types = ('source','destination','protocol','hostname');
 for my $k (@types) {
 	$options_type .= '<option'.($k eq $type ? ' selected' : '').'>'.$k;
 }

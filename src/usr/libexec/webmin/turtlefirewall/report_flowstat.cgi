@@ -24,7 +24,7 @@ my $flowtotal = 0;
 my %type_list = ();
 my @flows = getflows();
 
-my %type_index = ( 'source' => '4', 'destination' => '6', 'protocol' => '16', 'hostname' => '17', 'certificate' => '18');
+my %type_index = ( 'source' => '4', 'destination' => '6', 'protocol' => '16', 'hostname' => '17' );
 my @stats = getstats($type_index{$type},\%type_list,\@flows);
 
 $type_name = "flowstat_type_$type";
@@ -77,7 +77,6 @@ sub getflows {
 		my $dstnat = '';
 		my $protocol = '';
 		my $hostname = '';
-		my $certificate = '';
 
 		if( $l =~ /^(.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) / ) {
 			$stime = $1;
@@ -100,19 +99,17 @@ sub getflows {
 		if( $l =~ /DN=(.*?)( |$)/ ) { $dstnat = $1; }
 		if( $l =~ /P=(.*?)( |$)/ ) { $protocol = $1; }
 		if( $l =~ /H=(.*?)( |$)/ ) { $hostname = $1; }
-		if( $l =~ /C=(.*?)( |$)/ ) { $certificate = $1; }
 
 		if( $type eq 'source' && $source ne '' ) {$type_list{$source} = '0';}
 		if( $type eq 'destination' && $destination ne '' ) {$type_list{$destination} = '0';}
 		if( $type eq 'protocol' && $protocol ne '') {$type_list{$protocol} = '0';}
 		if( $type eq 'hostname' && $hostname ne '') {$type_list{$hostname} = '0';}
-		if( $type eq 'certificate' && $certificate ne '') {$type_list{$certificate} = '0';}
 
 		$flowtotal = ($flowtotal + $ubytes + $dbytes);
 
 		push @flows, [$stime, $etime, $l3proto, $l4proto, $source, $sport, $destination, $dport,
 		      		$ubytes, $dbytes, $upackets, $dpackets, $ifindex,
-			       	$connmark, $srcnat, $dstnat, $protocol, $hostname, $certificate];
+			       	$connmark, $srcnat, $dstnat, $protocol, $hostname];
 	}
 	return @flows;
 }

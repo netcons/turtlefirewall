@@ -45,7 +45,6 @@ sub showLog {
 	#my %dstnat_list = ('*'=>'x');
 	#my %proto_list = ('*'=>'x');
 	#my %host_list = ('*'=>'x');
-	#my %cert_list = ('*'=>'x');
 
 	open( LOG, "<", $log );
 	while( <LOG> ) {
@@ -69,7 +68,6 @@ sub showLog {
 			my $dstnat = '';
 			my $proto = '';
 			my $host = '';
-			my $cert = '';
 
 			if( $l =~ /^(.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) / ) {
 				$stime = $1;
@@ -92,7 +90,6 @@ sub showLog {
 			if( $l =~ /DN=(.*?)( |$)/ ) { $dstnat = $1; }
 			if( $l =~ /P=(.*?)( |$)/ ) { $proto = $1; }
 			if( $l =~ /H=(.*?)( |$)/ ) { $host = $1; }
-			if( $l =~ /C=(.*?)( |$)/ ) { $cert = $1; }
 
 			#if( $l3proto ne '' ) {$l3proto_list{$l3proto} = 'x';}
 			#if( $l4proto ne '' ) {$l4proto_list{$l4proto} = 'x';}
@@ -110,7 +107,6 @@ sub showLog {
 			#if( $dstnat ne '' ) {$dstnat_list{$dstnat} = 'x';}
 			#if( $proto ne '') {$proto_list{$proto} = 'x';}
 			#if( $host ne '') {$host_list{$host} = 'x';}
-			#if( $cert ne '') {$cert_list{$cert} = 'x';}
 
 			if( ($in{l3proto} eq '' || $in{l3proto} eq '*' || $in{l3proto} eq $l3proto) &&
 			    ($in{l4proto} eq '' || $in{l4proto} eq '*' || $in{l4proto} eq $l4proto) &&
@@ -127,14 +123,13 @@ sub showLog {
 			    ($in{srcnat} eq '' || $in{srcnat} eq '*' || $in{srcnat} eq $srcnat) &&
 			    ($in{dstnat} eq '' || $in{dstnat} eq '*' || $in{dstnat} eq $dstnat) &&
 			    ($in{proto} eq '' || $in{proto} eq '*' || $in{proto} eq $proto) &&
-			    ($in{host} eq '' || $in{host} eq '*' || $in{host} eq $host) &&
-			    ($in{cert} eq '' || $in{cert} eq '*' || $in{cert} eq $cert) ) {
+			    ($in{host} eq '' || $in{host} eq '*' || $in{host} eq $host) ) {
 				$count++;
 
 				if( $count >= ($pag-1) * $pagelen && $count < $pag * $pagelen) {
 					push @buffer, [$stime, $etime, $l3proto, $l4proto, $src, $sport, $dst, $dport,
 					      		$ubytes, $dbytes, $upackets, $dpackets, $ifindex,
-						       	$connmark, $srcnat, $dstnat, $proto, $host, $cert];
+						       	$connmark, $srcnat, $dstnat, $proto, $host];
 				}
 			}
 	}
@@ -145,7 +140,7 @@ sub showLog {
 			'&src='.$in{src}.'&sport='.$in{sport}.'&dst='.$in{dst}.'&dport='.$in{dport}.'&ubytes='.$in{ubytes}.'&dbytes='.$in{dbytes}.
 			'&upackets='.$in{upackets}.'&dpackets='.$in{dpackets}.'&ifindex='.$in{ifindex}.
 			'&connmark='.$in{connmark}.'&srcnat='.$in{srcnat}.'&dstnat='.$in{dstnat}.
-			'&proto='.$in{proto}.'&host='.$in{host}.'&cert='.$in{cert};
+			'&proto='.$in{proto}.'&host='.$in{host};
 	my $pageindex = '';
 	if( $pag > 1 ) {
 		$pageindex .= "&nbsp;<a href=\"flowlog.cgi?pag=1&$urlparam\">&lt;&lt;</a>&nbsp;";
@@ -188,10 +183,6 @@ sub showLog {
 	local $hhost;
 	$hhost .= "<b>HOSTNAME<br></b>";
 	push(@head, $hhost );
-
-	local $hcert;
-	$hcert .= "<b>CERT<br></b>";
-	push(@head, $hcert );
 
 	local $hsrc;
 	$hsrc .= "<b>srcADDR<br><select name='src' size='1'>";
@@ -259,12 +250,11 @@ sub showLog {
 	       	 "style='white-space: nowrap;'",
 		 "align=center",
 		 "align=center",
-		 "",
 		 "style='white-space: nowrap;'",
 		 "style='white-space: nowrap;'",
 		 "",
 		 "",
-		 "",
+		 "style='white-space: nowrap;'",
 		 "",
 		 "",
 		 "",
@@ -272,21 +262,20 @@ sub showLog {
 		 "align=center",
 		 "align=center",
 		 "",
-		 "",
-		 "" );
+		 "style='white-space: nowrap;'",
+		 "style='white-space: nowrap;'" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
 	foreach my $l (@buffer) {
 		local @cols;
 		my ($stime, $etime, $l3proto, $l4proto, $src, $sport, $dst, $dport, $ubytes, $dbytes, $upackets, $dpackets, $ifindex,
-		    $connmark, $srcnat, $dstnat, $proto, $host, $cert) = @$l;
+		    $connmark, $srcnat, $dstnat, $proto, $host) = @$l;
 	    	showTD( localtime($stime)->strftime('%b %d %X') );
 	    	showTD( localtime($etime)->strftime('%b %d %X') );
 		showTD( l3protoname($l3proto) );
 		showTD( l4protoname($l4proto) );
 		showTD( $proto );
 		showTD( $host );
-		showTD( $cert );
 		showTD( $src );
 		showTD( $sport );
 		showTD( $dst );

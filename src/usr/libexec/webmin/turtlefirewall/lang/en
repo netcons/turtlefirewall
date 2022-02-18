@@ -173,7 +173,6 @@ flowstat_type_source=Top Sources
 flowstat_type_destination=Top Destinations
 flowstat_type_protocol=Top Protocols
 flowstat_type_hostname=Top Hostnames
-flowstat_type_certificate=Top Certificates
 flowstat_percent=Percent
 flowstat_usage=Usage
 edit_flowstat_title_create=Flow Statistics Report
