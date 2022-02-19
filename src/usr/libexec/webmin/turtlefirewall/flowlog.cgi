@@ -252,7 +252,7 @@ sub showLog {
 		 "align=center",
 		 "style='white-space: nowrap;'",
 		 "style='white-space: nowrap;'",
-		 "",
+		 "style='white-space: nowrap;'",
 		 "",
 		 "style='white-space: nowrap;'",
 		 "",
@@ -261,6 +261,8 @@ sub showLog {
 		 "",
 		 "align=center",
 		 "align=center",
+		 "",
+		 "",
 		 "",
 		 "style='white-space: nowrap;'",
 		 "style='white-space: nowrap;'" );
