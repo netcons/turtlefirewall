@@ -2,6 +2,7 @@
 
 <ndpiprotocols>
 
+	<ndpiprotocol name="accuweather" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="activision" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="afp" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="aimini" category="video-audio"> </ndpiprotocol>
@@ -25,6 +26,7 @@
 	<ndpiprotocol name="avastsecuredns" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ayiya" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="azure" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="badoo" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="bgp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="bittorrent" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="bjnp" category="printing"> </ndpiprotocol>
@@ -44,8 +46,8 @@
 	<ndpiprotocol name="crashlytics" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="crossfire" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="csgo" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="cybersec" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="datasaver" category="other"> </ndpiprotocol>
-	<ndpiprotocol name="dce_rpc" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="deezer" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="dhcp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="dhcpv6" category="networking"> </ndpiprotocol>
@@ -67,7 +69,7 @@
 	<ndpiprotocol name="edonkey" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="egp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="ethernetip" category="networking"> </ndpiprotocol>
-	<ndpiprotocol name="facebook" category="social-mdeia"> </ndpiprotocol>
+	<ndpiprotocol name="facebook" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="facebookvoip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="fasttrack" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="fiesta" category="other"> </ndpiprotocol>
@@ -84,6 +86,8 @@
 	<ndpiprotocol name="gmail" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="gnutella" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="google" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="googleclassroom" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="googlecloud" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="googledocs" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="googledrive" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="googlehangoutduo" category="collaboration"> </ndpiprotocol>
@@ -98,9 +102,9 @@
 	<ndpiprotocol name="guildwars" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="h323" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="halflife2" category="gaming"> </ndpiprotocol>
-	<ndpiprotocol name="hotmail" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="hotspotshield" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="hp_virtgrp" category="infrastructure"> </ndpiprotocol>
+	<ndpiprotocol name="hsrp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="http" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="http_connect" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="http_proxy" category="proxy"> </ndpiprotocol>
@@ -167,6 +171,7 @@
 	<ndpiprotocol name="openvpn" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="oracle" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="ospf" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="outlook" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="pandora" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="pastebin" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="pinterest" category="social-media"> </ndpiprotocol>
@@ -177,7 +182,6 @@
 	<ndpiprotocol name="postgresql" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="ppstream" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="pptp" category="tunnelling"> </ndpiprotocol>
-	<ndpiprotocol name="ps_vue" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="qq" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="qqlive" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="quic" category="browsing"> </ndpiprotocol>
@@ -186,6 +190,7 @@
 	<ndpiprotocol name="reddit" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="redis" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="remotescan" category="infrastructure"> </ndpiprotocol>
+	<ndpiprotocol name="rpc" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="rsync" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="rtcp" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rtmp" category="video-audio"> </ndpiprotocol>
@@ -256,6 +261,7 @@
 	<ndpiprotocol name="vmware" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="vnc" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="vrrp" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="vxlan" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="warcraft3" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="waze" category="navigation"> </ndpiprotocol>
 	<ndpiprotocol name="webex" category="collaboration"> </ndpiprotocol>
