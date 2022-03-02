@@ -2662,7 +2662,7 @@ sub _applyService {
 			} else {
 				$cmd .= "-m ndpi --proto $ndpi ";
 			}
-			if( $hostname ne '' ) { $cmd .= "--host-or-cert /$hostname/ "; }
+			if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
 		} else {
 			# Only valid for non encrypted packets
 			if( $hostname ne '' ) { $cmd .= "-m string --algo bm --string $hostname "; }
