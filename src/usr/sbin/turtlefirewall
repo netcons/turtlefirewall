@@ -78,6 +78,8 @@ if( $ndpiprotocolsFile eq '' ) { $ndpiprotocolsFile = "/etc/turtlefirewall/fwndp
 
 $firewall->LoadFirewall( $fwFile );
 $firewall->LoadServices( $servicesFile, $userdefServicesFile );
+#$firewall->LoadCountryCodes( $countrycodesFile ); # Only required within Webmin
+$firewall->LoadNdpiProtocols( $ndpiprotocolsFile );
 
 ####
 # Nuovo 

@@ -132,7 +132,7 @@ sub formService {
 	print '<option'.($service eq 'tcp' ? ' SELECTED' : '').'>tcp</option>';
 	print '<option'.($service eq 'udp' ? ' SELECTED' : '').'>udp</option>';
 	print '</select>';
-	print " $text{rule_port} :  <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"5\"> <small><i>$text{port_help}</i></small></td></tr></table>";
+	print " $text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"5\"> <small><i>$text{port_help}</i></small></td></tr></table>";
 }
 
 ###
@@ -156,9 +156,11 @@ sub formServiceParse {
 ###
 # Generates html for ndpiprotocol input
 sub formNdpiProtocol {
-	my( $ndpiprotocol, $multiple ) = @_;
+	my( $ndpiprotocol, $category, $multiple ) = @_;
 
 	my @ndpiprotocols = split( /,/, $ndpiprotocol );
+
+	my @categorys = ();
 
 	my $options_ndpiprotocol = '';
 	LoadNdpiProtocols( $fw );
@@ -173,7 +175,20 @@ sub formNdpiProtocol {
 				}
 			}
 			$options_ndpiprotocol .= qq~<option value="$k"~.($selected ? ' SELECTED' : '').">$k - $ndpiprotocol{CATEGORY}";
+			push(@categorys, $ndpiprotocol{CATEGORY});
 		}
+	}
+
+	# sort
+	@categorys = sort(@categorys);
+	# unique values
+	my $prev = '***none***';
+	@categorys = grep($_ ne $prev && (($prev) = $_), @categorys);
+
+	for my $k (@categorys) {
+		my $selected = 0;
+		if( $k eq $category ) { $selected = 1; }
+		$options_category .= qq~<option value="$k"~.($selected ? ' SELECTED' : '').">$k";
 	}
 
 	print '<table border="0" cellpadding="0">';
@@ -186,22 +201,31 @@ sub formNdpiProtocol {
 		print '<td><select name="ndpiprotocol2" size="1">';
 	}
 	print $options_ndpiprotocol;
+	print '</select></td></tr>';
+
+	print '<tr><td><input type="RADIO" name="ndpiprotocoltype" value="3"'.($category ne '' ? ' CHECKED' : '').'></td>';
+	print "<td>$text{category} : ";
+	print '<select name="category" size="1">';
+	print $options_category;
 	print '</select></td></tr></table>';
 }
 
 ###
 # Parse ndpiprotocol inputs and return name of ndpiprotocol choosen
 sub formNdpiProtocolParse {
-	my ($ndpiprotocoltype, $ndpiprotocol2 ) = @_;
+	my ($ndpiprotocoltype, $ndpiprotocol2, $category ) = @_;
 
 	if( $ndpiprotocoltype == 1 ) {
-		return ('all');
+		return ('all', '');
 	} elsif( $ndpiprotocoltype == 2 ) {
 		# specific ndpiprotocol or ndpiprotocol list
 		$ndpiprotocol2 =~ s/\0/,/g;
-		return ($ndpiprotocol2);
+		return ($ndpiprotocol2, '');
+	} elsif( $ndpiprotocoltype == 3 ) {
+		# ndpiprotocol category
+		return ('', $category);
 	}
-	return ('');
+	return ('','');
 }
 
 sub getOptionsList {

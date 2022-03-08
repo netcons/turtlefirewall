@@ -21,6 +21,7 @@ if( $new ) {
 	$service = '';
 	$port = '';
 	$ndpi = '';
+	$category = '';
 	$set = '';
 	$time = '';
 	$mark = '';
@@ -34,6 +35,7 @@ if( $new ) {
 	$service = $rule{'SERVICE'};
 	$port = $rule{'PORT'};
 	$ndpi = $rule{'NDPI'};
+	$category = $rule{'CATEGORY'};
 	$set = $rule{'SET'};
 	$time = $rule{'TIME'};
 	$mark = $rule{'MARK'};
@@ -122,7 +124,7 @@ print				"<br>
 			<tr>
 				<td><b>$text{rule_ndpiprotocol}</b></td>
 				<td><br>";
-				formNdpiProtocol( $ndpi, 1 );
+				formNdpiProtocol( $ndpi, $category, 1 );
 print				"<br>
 				<td>
 			</tr>

@@ -342,12 +342,13 @@ sub AddRedirectAttr {
 		%{$this->{fw}{'REDIRECT'}[$idx-1]} = %attr;
 	}
 }
-# AddRule( $idx, $src, $dst, $service, $ndpi, $set, $port, $time, $target, $active, $log, $description );
+# AddRule( $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $target, $active, $log, $description );
 sub AddRule {
-	my ($this, $idx, $src, $dst, $service, $ndpi, $set, $port, $time, $target, $active, $log, $description ) = @_;
+	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $target, $active, $log, $description ) = @_;
 	if( $service eq '' ) { $service = 'all'; }
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
 	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; }
+	if( $category ne '' ) { $attr{CATEGORY} = $category; }
 	if( $set ne '' ) { $attr{SET} = $set; }
 	if( $port ne '' ) { $attr{PORT} = $port; }
 	if( $time ne '' ) { $attr{TIME} = $time; }
@@ -373,12 +374,13 @@ sub MoveRule {
 	splice @{$this->{fw}{RULE}}, $idxSrc-1, 1;
 	splice @{$this->{fw}{RULE}}, $idxDst-1, 0, \%attr;
 }
-# AddConnmarkPreroute( $idx, $src, $dst, $service, $ndpi, $set, $port, $time, $mark, $active );
+# AddConnmarkPreroute( $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $mark, $active );
 sub AddConnmarkPreroute {
-	my ($this, $idx, $src, $dst, $service, $ndpi, $set, $port, $time, $mark, $active ) = @_;
+	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $mark, $active ) = @_;
 	if( $service eq '' ) { $service = 'all'; }
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
 	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; }
+	if( $category ne '' ) { $attr{CATEGORY} = $category; }
 	if( $set ne '' ) { $attr{SET} = $set; }
 	if( $port ne '' ) { $attr{PORT} = $port; }
 	if( $time ne '' ) { $attr{TIME} = $time; }
@@ -402,12 +404,13 @@ sub MoveConnmarkPreroute {
 	splice @{$this->{fw}{CONNMARKPREROUTE}}, $idxSrc-1, 1;
 	splice @{$this->{fw}{CONNMARKPREROUTE}}, $idxDst-1, 0, \%attr;
 }
-# AddConnmark( $idx, $src, $dst, $service, $ndpi, $set, $port, $time, $mark, $active );
+# AddConnmark( $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $mark, $active );
 sub AddConnmark {
-	my ($this, $idx, $src, $dst, $service, $ndpi, $set, $port, $time, $mark, $active ) = @_;
+	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $mark, $active ) = @_;
 	if( $service eq '' ) { $service = 'all'; }
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
 	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; }
+	if( $category ne '' ) { $attr{CATEGORY} = $category; }
 	if( $set ne '' ) { $attr{SET} = $set; }
 	if( $port ne '' ) { $attr{PORT} = $port; }
 	if( $time ne '' ) { $attr{TIME} = $time; }
@@ -2337,6 +2340,7 @@ sub applyRule {
 	my $target = $rule{TARGET};
 	my $service = $rule{SERVICE};
 	my $ndpi = $rule{NDPI};
+	my $category = $rule{CATEGORY};
 	my $set = $rule{SET};
 	my $hostname = $rule{HOSTNAME};
 	my $port = $rule{PORT};
@@ -2356,9 +2360,13 @@ sub applyRule {
 		print " port($service";
 		if( $service eq 'tcp' || $service eq 'udp' ) { 
 			if( $port ne '' ) { print "/$port"; } else { print "/all";}
-	       	}
+		}
 		print ")";
-		if( $ndpi ne '' ) { print ",ndpi($ndpi)"; }
+		if( $ndpi ne '' ) { 
+			print ",ndpi($ndpi)"; 
+		} elsif( $category ne '' ) {
+			print ",ndpi category($category)";
+		}
 		if( $set ne '' ) { print " when hostname($set)"; }
 		print " $src --> $dst";
 		#if( $src_mac ne '' ) { print "(mac:$src_mac)"; }
@@ -2460,6 +2468,19 @@ sub applyRule {
 		return $rules;
 	} 
 
+	# ndpi services within category
+	if( $category ne '' ) { 
+		my @items = ();
+       		my @ndpiprotocols = $this->GetNdpiProtocolsList();
+		foreach my $k (@ndpiprotocols) {
+			my %ndpiprotocol = $this->GetNdpiProtocol($k);
+			if( $ndpiprotocol{CATEGORY} eq $category ) {
+				push(@items, $k);
+			}
+		}
+		$ndpi = join(",", @items);
+	}
+
 	# set items
 	if( $set ne '' ) { 
 		my ($hostnameset) = $this->expand_hostnameset_item( $set );
@@ -2532,7 +2553,6 @@ sub applyRule {
 	#command( "" );
 	#comment( "# service $service: $src --> $dst  ($src_peer -> $dst_peer) [$src_zone -> $dst_zone]" );
 
-
 	# I create the 2 return chains
 	my $andata = "$src_zone-$dst_zone";
 	my $ritorno = "$dst_zone-$src_zone";
@@ -2541,10 +2561,10 @@ sub applyRule {
 		if( $mark ne '' ) {
 			# Connmark Preroute requirement
 			if( $mangle eq '1' ) { $andata = "$src_zone-FWMARK"; $ritorno = '';}
-			$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer, $port, $ndpi, $hostname, $t_days, $t_start, $t_stop, '', $target, $mark );
+			$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer, $port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', $target, $mark );
 		}
 	} else {
-		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer, $port, $ndpi, $hostname, $t_days, $t_start, $t_stop, $log, $target, '' );
+		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer, $port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, $log, $target, '' );
 	}
 	
 	return $rules;
@@ -2559,7 +2579,7 @@ sub applyService {
 # Applica un servizio
 sub _applyService {
 	my $this = shift;
-	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $hostname, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark ) = @_;
+	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark ) = @_;
 
 	my %service = %{$ref_services->{$serviceName}};
 
@@ -2580,7 +2600,7 @@ sub _applyService {
 		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyService( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $hostname, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark );
+				$goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark );
 			next;
 		}
 
@@ -2680,7 +2700,9 @@ sub _applyService {
 			if( $target =~ /DROP|REJECT/ ) {
 				if( $hostname ne '' ) {
 					$logprefix = "TFW $hostname";
-			       	} elsif( $ndpi ne '' ) {
+				} elsif( $category ne '') { 
+					$logprefix = "TFW $category";
+				} elsif( $ndpi ne '' ) {
 					$logprefix = "TFW $ndpi";
 				} elsif( $src =~ /^[A-Z1-2]{2}$/ || $dst =~ /^[A-Z1-2]{2}$/ ) {
 					$logprefix = "TFW GEO ".( $src =~ /^[A-Z1-2]{2}$/ ? $src : $dst );

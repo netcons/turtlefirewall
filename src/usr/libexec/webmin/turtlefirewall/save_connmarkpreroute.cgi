@@ -14,7 +14,7 @@ my $idx = $in{'idx'};
 my $src = $in{'src'};
 my $dst = $in{'dst'};
 my ($service, $port) = formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
-my $ndpi = formNdpiProtocolParse( $in{'ndpiprotocoltype'}, $in{'ndpiprotocol2'} );
+my ($ndpi, $category) = formNdpiProtocolParse( $in{'ndpiprotocoltype'}, $in{'ndpiprotocol2'}, $in{'category'} );
 my $set = $in{'set'};
 if( $set eq 'any' ) { $set = ''; }
 my $time = $in{'time'};
@@ -54,7 +54,7 @@ if( $in{'delete'} ) {
 		error( $text{save_connmark_error3} );
 	}
 
-	$fw->AddConnmarkPreroute( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $set, $port, $time, $mark, $active );
+	$fw->AddConnmarkPreroute( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $mark, $active );
 }
 
 $fw->SaveFirewall();

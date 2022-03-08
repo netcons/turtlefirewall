@@ -16,7 +16,7 @@ $src =~ s/\0/,/g;
 my $dst = $in{'dst'};
 $dst =~ s/\0/,/g;
 my ($service, $port) = formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
-my $ndpi = formNdpiProtocolParse( $in{'ndpiprotocoltype'}, $in{'ndpiprotocol2'} );
+my ($ndpi, $category) = formNdpiProtocolParse( $in{'ndpiprotocoltype'}, $in{'ndpiprotocol2'}, $in{'category'} );
 my $set = $in{'set'};
 if( $set eq 'any' ) { $set = ''; }
 my $time = $in{'time'};
@@ -62,7 +62,7 @@ if( $in{'delete'} ) {
 		error( $text{save_rule_error5} );
 	}
 
-	$fw->AddRule( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $set, $port, $time, $target, $active, $log, $description );
+	$fw->AddRule( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $target, $active, $log, $description );
 }
 
 $fw->SaveFirewall();

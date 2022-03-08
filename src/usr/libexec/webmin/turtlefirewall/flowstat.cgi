@@ -21,22 +21,22 @@ my $string = '';
 
 my @logs = glob("/var/log/flowinfo.log*");
 for my $k (@logs) {
-	$options_log .= '<option'.($k eq $log ? ' selected' : '').'>'.$k;
+	$options_log .= '<option'.($k eq $log ? ' selected' : '').'>'.$k.'</option>';
 }
 
 @maxs = ('all','100','1000','10000','100000');
 for my $k (@maxs) {
-	$options_max .= '<option'.($k eq $max ? ' selected' : '').'>'.$k;
+	$options_max .= '<option'.($k eq $max ? ' selected' : '').'>'.$k.'</option>';
 }
 
 @tops = ('5','10','15','20');
 for my $k (@tops) {
-	$options_top .= '<option'.($k eq $top ? ' selected' : '').'>'.$k;
+	$options_top .= '<option'.($k eq $top ? ' selected' : '').'>'.$k.'</option>';
 }
 
 @types = ('source','destination','protocol','hostname');
 for my $k (@types) {
-	$options_type .= '<option'.($k eq $type ? ' selected' : '').'>'.$k;
+	$options_type .= '<option'.($k eq $type ? ' selected' : '').'>'.$k.'</option>';
 }
 
 $td = "width=20% style='white-space: nowrap;'";
