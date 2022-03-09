@@ -106,11 +106,11 @@ sub showRule {
 		$serviceline .= ")";
 		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
-		if( $attr{'NDPI'} ne '' ) { 
+		if( $attr{'CATEGORY'} ne '' ) { 
+			$serviceline .= ", ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
+		} elsif( $attr{'NDPI'} ne  '' ) {
 			$attr{'NDPI'} =~ s/,/, /g;
 			$serviceline .= ", ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
-		} elsif( $attr{'CATEGORY'} ne  '' ) {
-			$serviceline .= ", ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
 		}
 		push(@cols, "${sb}${bb}".$serviceline."${be}${se}");
 		if( $attr{'SET'} eq '' ) { $attr{'SET'} = 'any'; }

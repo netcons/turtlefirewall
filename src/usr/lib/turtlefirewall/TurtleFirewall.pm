@@ -2362,10 +2362,10 @@ sub applyRule {
 			if( $port ne '' ) { print "/$port"; } else { print "/all";}
 		}
 		print ")";
-		if( $ndpi ne '' ) { 
-			print ",ndpi($ndpi)"; 
-		} elsif( $category ne '' ) {
+		if( $category ne '' ) { 
 			print ",ndpi category($category)";
+		} elsif( $ndpi ne '' ) {
+			print ",ndpi($ndpi)"; 
 		}
 		if( $set ne '' ) { print " when hostname($set)"; }
 		print " $src --> $dst";
