@@ -347,7 +347,7 @@ sub AddRule {
 	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $target, $active, $log, $description ) = @_;
 	if( $service eq '' ) { $service = 'all'; }
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
-	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; }
+	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; } elsif( $set ne '' ) { $attr{NDPI} = 'all'; }
 	if( $category ne '' ) { $attr{CATEGORY} = $category; }
 	if( $set ne '' ) { $attr{SET} = $set; }
 	if( $port ne '' ) { $attr{PORT} = $port; }
@@ -1259,10 +1259,6 @@ sub startFirewall {
 	$this->command('modprobe xt_time', '/dev/null');
 	print "time_feature: on\n";
 
-	# PreLoad module for String
-	$this->command('modprobe xt_string', '/dev/null');
-	print "string_feature: on\n";
-
 	# PreLoad module for GeoIP 
 	$this->command('modprobe xt_geoip', '/dev/null');
 	print "geoip_feature: on\n";
@@ -1274,18 +1270,6 @@ sub startFirewall {
 	$this->command('modprobe xt_ndpi ndpi_enable_flow=1', '/dev/null');
 	print "nDPI_feature: on\n";
 	
-	# PreLoad modules for Netflow
-	if( $this->{fw}{OPTION}{netflow_feature} ne 'off' ) {
-		print "netflow_feature: on\n";
-		if(! -e '/etc/modprobe.d/ipt_NETFLOW.conf' ) {
-			$this->command('echo "options ipt_NETFLOW destination=127.0.0.1:2055 protocol=9 natevents=1"', '/etc/modprobe.d/ipt_NETFLOW.conf');
-		}
-		$this->command('modprobe ipt_NETFLOW', '/dev/null');
-	} else {
-		print "netflow_feature: off\n";
-		$this->command('rmmod ipt_NETFLOW', '/dev/null 2>&1');
-	}
-
 	# Verify Blacklist
 	if( $this->{fw}{OPTION}{blacklist_feature} ne 'off' ) {
                 print "blacklist_feature: on\n";
@@ -1472,20 +1456,6 @@ sub getIptablesRules {
 	$chains .= ":INVALID - [0:0]\n";
 	$chains .= ":CHECK_INVALID - [0:0]\n";
 	
-	###
-	# Deprecated (doesn't work with kernel 2.6,x)
-	#print "drop_unclean: ";
-	#if( $this->{fw}{OPTION}{drop_unclean} eq 'on' ) {
-	#	# 13-09-2002 It doesn't work, wait stable version of unclean module (Andrea Frigido)
-	#	# This next rule is marked experimental but does not appear to block legitimite traffic
-	#	$rules .= "-A CHECK_INVALID -m unclean -j INVALID\n";
-	#	$rules .= "-A INVALID -m unclean ".
-	#		" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW INVALID unclean:\"\n";
-	#	print "on\n";
-	#} else {
-	#	print "off\n";
-	#}
-	
 	print "drop_invalid_state: ";
 	if( $this->{fw}{OPTION}{drop_invalid_state} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -m conntrack --ctstate INVALID -j INVALID\n";
@@ -1554,25 +1524,6 @@ sub getIptablesRules {
 		print "on\n";
 	} else {
 		print "off\n";
-	}
-
-	# Netflow Feature
-	if( $this->{fw}{OPTION}{netflow_feature} ne 'off' ) {
-		$chains .= ":INPUT-NETFLOW - [0:0]\n";
-                $rules .= "-A INPUT-NETFLOW -j NETFLOW\n";
-
-		$chains .= ":OUTPUT-NETFLOW - [0:0]\n";
-                $rules .= "-A OUTPUT-NETFLOW -j NETFLOW\n";
-		
-		$chains .= ":FORWARD-NETFLOW - [0:0]\n";
-                $rules .= "-A FORWARD-NETFLOW -j NETFLOW\n";
-
-                $rules .= "-A INPUT -j INPUT-NETFLOW\n";
-                print "NETFLOW export all * --> FIREWALL\n";
-                $rules .= "-A OUTPUT -j OUTPUT-NETFLOW\n";
-                print "NETFLOW export all FIREWALL --> *\n";
-                $rules .= "-A FORWARD -j FORWARD-NETFLOW\n";
-                print "NETFLOW export all * <--> FIREWALL <--> *\n";
 	}
 
 	# Blacklist Feature
@@ -2683,9 +2634,6 @@ sub _applyService {
 				$cmd .= "-m ndpi --proto $ndpi ";
 			}
 			if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
-		} else {
-			# Only valid for non encrypted packets
-			if( $hostname ne '' ) { $cmd .= "-m string --algo bm --string $hostname "; }
 	       	}
 
 		if( $state ne '' ) { $cmd .= "-m conntrack --ctstate $state "; }

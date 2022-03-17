@@ -181,8 +181,8 @@ CHANGELOG
 23-04-2020 v.2.0
            - CentOS/RHEL 8/9
            	OS : Systemd support, RPM package, Ensure running via cron.
-           	Feature : Added Time, GeoIP, String and nDPI support.
-		Feature : Added Optional Blacklist and Netflow support.
+           	Feature : Added Time, GeoIP and nDPI support.
+		Feature : Added Optional Blacklist.
            	Feature : Added NAT Map to Port.
            	Feature : Added HostName Set and IP Set items.
            	Feature : Added pptp, sip, h323 and tftp kernel module options.

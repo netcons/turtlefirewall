@@ -19,9 +19,7 @@ REQUIREMENTS
    nf_conntrack,
    xt_connmark,
    xt_connlabel,
-   xt_string,
    xt_time.
 - Extra Netfilter kernel modules :
    xt_ndpi, ( https://github.com/vel21ripn/nDPI )
    xt_geoip, ( https://inai.de/projects/xtables-addons )
-   ipt_NETFLOW. ( https://github.com/aabc/ipt-netflow )

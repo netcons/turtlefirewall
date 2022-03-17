@@ -140,7 +140,7 @@ print				"<br>
                         </tr>
 			<tr>
 				<td><b>$text{rule_hostname_set}</b></td>
-				<td><select name=\"set\">$options_hostnameset</select> <small><i>$text{hostname_help}</i></small></td>
+				<td><select name=\"set\">$options_hostnameset</select></td>
 			</tr>
 			<tr>
 				<td><b>$text{rule_time}</b></td>

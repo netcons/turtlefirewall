@@ -40,11 +40,10 @@ print "<br><br>
 				<b>".$text{'name'}."</b></td>
 			<td>";
 if( $new ) {
-	print "		<input type=\"text\" name=\"zone\">";
+	print "		<input type=\"text\" size=\"13\" maxlength=\"13\" name=\"zone\">";
 } else {
-	#print '		<tt>'.$in{'zone'}.'</tt><input type="hidden" name="zone" value="'.$in{'zone'}.'">';
-	print '		<input type="text" name="newzone" value="'.$in{'zone'}.'">';
-	print '		<input type="hidden" name="zone" value="'.$in{'zone'}.'">';
+	print '		<input type="text" name="newzone" size="13" maxlength="13" value="'.$in{'zone'}.'">';
+	print '		<input type="hidden" name="zone" size="13" maxlength="13" value="'.$in{'zone'}.'">';
 }
 print			'</td></tr>
 			<tr>

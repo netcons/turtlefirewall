@@ -9,8 +9,8 @@ Turtle Firewall is an Open Source project written using the perl language and re
 ## New Features
 
 - OS : Systemd support, RPM package, Ensure running via cron.
-- Feature : Added Time, GeoIP, String and nDPI support.
-- Feature : Added Optional Blacklist and Netflow support.
+- Feature : Added Time, GeoIP and nDPI support.
+- Feature : Added Optional Blacklist support.
 - Feature : Added NAT Map to Port.
 - Feature : Added HostName Set and IP Set items.
 - Feature : Added pptp, sip, h323 and tftp kernel module options.
@@ -41,12 +41,10 @@ nf_tables, <br>
 nf_conntrack, <br>
 xt_connmark, <br>
 xt_connlabel, <br>
-xt_string, <br>
 xt_time. <br>
 - Extra Netfilter kernel modules : <br>
 xt_ndpi, ( https://github.com/vel21ripn/nDPI ) <br>
 xt_geoip, ( https://inai.de/projects/xtables-addons ) <br>
-ipt_NETFLOW. ( https://github.com/aabc/ipt-netflow )
 
 ## Install EL8/EL9
 
