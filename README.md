@@ -23,6 +23,7 @@ Turtle Firewall is an Open Source project written using the perl language and re
 - Bug : Fixed MAC filtering. ( no ip required )
 - Bug : Fixed mangle table flush on firewall stop.
 - Bug : Migrated ip_conntrack_max to nf_conntrack_max.
+- Bug : Limit zone name max charcaters.
 - Connection Tracking : Replaced "-m state --state" with "-m conntrack --ctstate".
 - Connection Tracking : Enabled automatic helpers. ( Todo : migrate to CT target )
 - Connection Tracking : Enabled connection marking.
