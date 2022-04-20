@@ -1,25 +1,24 @@
 <firewall>
 
 <options>
-<option name="ftp_modules" value="on"/>
 <option name="drop_invalid_syn_rst" value="on"/>
-<option name="log_limit_burst" value="5"/>
-<option value="on" name="blacklist_feature"/>
-<option name="flowinfo_logging" value="on"/>
-<option name="log_limit" value="60"/>
-<option name="tftp_modules" value="on"/>
-<option name="pptp_modules" value="on"/>
-<option value="off" name="drop_invalid_none"/>
+<option name="drop_invalid_none" value="off"/>
 <option name="log_martians" value="on"/>
 <option name="drop_invalid_fragment" value="on"/>
-<option value="off" name="drop_invalid_state"/>
+<option name="drop_invalid_state" value="off"/>
 <option name="drop_invalid_syn_fin" value="on"/>
-<option value="off" name="drop_invalid_fin_notack"/>
-<option value="on" name="sip_modules"/>
-<option value="off" name="drop_invalid_all"/>
-<option value="off" name="rp_filter"/>
-<option value="on" name="h323_modules"/>
-<option value="262144" name="nf_conntrack_max"/>
+<option name="drop_invalid_fin_notack" value="off"/>
+<option name="drop_invalid_all" value="off"/>
+<option name="rp_filter" value="off"/>
+<option name="ftp_modules" value="on"/>
+<option name="tftp_modules" value="on"/>
+<option name="sip_modules" value="on"/>
+<option name="pptp_modules" value="on"/>
+<option name="h323_modules" value="on"/>
+<option name="blacklist_feature" value="on"/>
+<option name="nf_conntrack_max" value="262144"/>
+<option name="log_limit" value="60"/>
+<option name="log_limit_burst" value="5"/>
 </options>
 
 <zone description="" name="primarywan" if="eth1"/>

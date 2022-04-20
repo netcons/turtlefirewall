@@ -445,8 +445,31 @@ sub DeleteItem {
 	my $name = shift;
 	my $type = $this->{fwItems}{$name};
 
-	# Now I check if this item is included into a group
 	my $found = 0;
+
+	# If it's a zone, I need to check all items that use this zone.
+	if( $type eq 'ZONE' ) {
+		for my $k (@{$this->{fwKeys}{HOST}}) {
+			if( $this->{fw}{HOST}{$k}{ZONE} eq $name ) {
+				$found = 1;
+				last;
+			}
+		}
+		for my $k (@{$this->{fwKeys}{NET}}) {
+			if( $this->{fw}{NET}{$k}{ZONE} eq $name ) {
+				$found = 1;
+				last;
+			}
+		}
+		for my $k (@{$this->{fwKeys}{GEOIP}}) {
+			if( $this->{fw}{GEOIP}{$k}{ZONE} eq $name ) {
+				$found = 1;
+				last;
+			}
+		}
+	}
+
+	# Now I check if this item is included in a group
 	for my $g (@{$this->{fwKeys}{GROUP}}) {
 		for my $i (@{$this->{fw}{GROUP}{$g}{ITEMS}}) {
 			if( $i eq $name ) {
@@ -456,8 +479,7 @@ sub DeleteItem {
 		}
 	}
 
-	# Now I check if this item is included into a timegroup
-	my $found = 0;
+	# Now I check if this item is included in a timegroup
 	for my $g (@{$this->{fwKeys}{TIMEGROUP}}) {
 		for my $i (@{$this->{fw}{TIMEGROUP}{$g}{ITEMS}}) {
 			if( $i eq $name ) {
