@@ -31,6 +31,7 @@
 	<ndpiprotocol name="bittorrent" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="bjnp" category="printing"> </ndpiprotocol>
 	<ndpiprotocol name="bloomberg" category="financial"> </ndpiprotocol>
+	<ndpiprotocol name="cachefly" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="cassandra" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="capwap" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="checkmk" category="infrastructure"> </ndpiprotocol>
@@ -40,7 +41,6 @@
 	<ndpiprotocol name="cloudflare" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="cnn" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="coap" category="infrastructure"> </ndpiprotocol>
-	<ndpiprotocol name="collectd" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="corba" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="cpha" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="crashlytics" category="other"> </ndpiprotocol>
@@ -48,6 +48,7 @@
 	<ndpiprotocol name="csgo" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="cybersec" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="datasaver" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="dazn" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="deezer" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="dhcp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="dhcpv6" category="networking"> </ndpiprotocol>
@@ -66,6 +67,7 @@
 	<ndpiprotocol name="dtls" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="eaq" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="ebay" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="edgecast" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="edonkey" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="egp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="ethernetip" category="networking"> </ndpiprotocol>
@@ -149,6 +151,7 @@
 	<ndpiprotocol name="modbus" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="mongodb" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="mpeg_ts" category="video-audio"> </ndpiprotocol>
+	<ndpiprotocol name="mpegdash" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="mqtt" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="ms_onedrive" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="mssql-tds" category="database"> </ndpiprotocol>
@@ -177,19 +180,19 @@
 	<ndpiprotocol name="pinterest" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="playstation" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="playstore" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="pluralsight" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="pop3" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="pops" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="postgresql" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="ppstream" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="pptp" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="qq" category="other"> </ndpiprotocol>
-	<ndpiprotocol name="qqlive" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="quic" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="radius" category="authentication"> </ndpiprotocol>
+	<ndpiprotocol name="raknet" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="rdp" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="reddit" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="redis" category="database"> </ndpiprotocol>
-	<ndpiprotocol name="remotescan" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="rpc" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="rsync" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="rtcp" category="video-audio"> </ndpiprotocol>
@@ -201,6 +204,7 @@
 	<ndpiprotocol name="salesforce" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="sap" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="sctp" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="sd-rtn" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="sflow" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="shoutcast" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="signal" category="instant-messaging"> </ndpiprotocol>
@@ -208,7 +212,7 @@
 	<ndpiprotocol name="sina(weibo)" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="sip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="skype" category="collaboration"> </ndpiprotocol>
-	<ndpiprotocol name="skypecall" category="telephony"> </ndpiprotocol>
+	<ndpiprotocol name="skype_teamscall" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="slack" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="smbv1" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="smbv23" category="storage-backup"> </ndpiprotocol>
@@ -220,6 +224,7 @@
 	<ndpiprotocol name="snmp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="soap" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="socks" category="proxy"> </ndpiprotocol>
+	<ndpiprotocol name="softether" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="someip" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="sopcast" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="soundcloud" category="video-audio"> </ndpiprotocol>
@@ -238,12 +243,14 @@
 	<ndpiprotocol name="teamviewer" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="telegram" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="telnet" category="remote-access"> </ndpiprotocol>
+	<ndpiprotocol name="tencent" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="teredo" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="tftp" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="thunder" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="tiktok" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="tinc" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="tls" category="browsing"> </ndpiprotocol>
+	<ndpiprotocol name="tocaboca" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="tor" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="truphone" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="tuenti" category="telephony"> </ndpiprotocol>
@@ -277,6 +284,7 @@
 	<ndpiprotocol name="worldofkungfu" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="worldofwarcraft" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="wsd" category="infrastructure"> </ndpiprotocol>
+	<ndpiprotocol name="xiaomi" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="xbox" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="xdmcp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="yahoo" category="other"> </ndpiprotocol>
