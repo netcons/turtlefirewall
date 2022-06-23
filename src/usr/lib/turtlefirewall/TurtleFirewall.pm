@@ -2650,19 +2650,24 @@ sub _applyService {
 		if( $dport ne '' ) { $cmd .= "--dport $dport "; }
 	
 		if( $ndpi ne '' ) { 
-			if( $ndpi eq 'all' ) {
-				$cmd .= "-m ndpi --all ";
-			} else {
-				if( $target =~ /DROP|REJECT/ ) {
+			if( $target =~ /DROP|REJECT/ ) {
+				if( $ndpi eq 'all' ) {
+					$cmd .= "-m ndpi --all ";
+				} else {
 					$cmd .= "-m ndpi --proto $ndpi ";
+                                }
+				if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
+			} else {
+				if( $ndpi eq 'all' ) {
+					print "** all nDPI service ignored on target $target **\n";
 				} else {
 					my $cmddpi = $cmd;
-					$cmddpi .= "-m ndpi --inprogress $ndpi -j ACCEPT";
+					$cmddpi .= "-m ndpi --inprogress $ndpi -j $target ";
 					$rules .= "$cmddpi\n";
 					$cmd .= "-m ndpi --clevel dpi --proto $ndpi ";
                                 }
+				if( $hostname ne '' ) { print "** $hostname nDPI hostname ignored on target $target **\n"; }
 			}
-			if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
 	       	}
 
 		if( $state ne '' ) { $cmd .= "-m conntrack --ctstate $state "; }
