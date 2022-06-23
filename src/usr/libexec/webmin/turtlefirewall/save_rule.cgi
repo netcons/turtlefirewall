@@ -58,7 +58,7 @@ if( $in{'delete'} ) {
 		error( $text{save_rule_error4} );
 	}
 
-	if( $target eq 'ACCEPT' && ($ndpi ne '' || $set ne '' || $category ne '') ) {
+	if( $target eq 'ACCEPT' && ($ndpi eq 'all' || $set ne '') ) {
 		error( $text{save_rule_error5} );
 	}
 

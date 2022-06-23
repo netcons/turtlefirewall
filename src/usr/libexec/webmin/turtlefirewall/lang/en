@@ -347,7 +347,7 @@ save_rule_error1=wrong Port value (0-65535 or empty).
 save_rule_error2=port is valid only for tcp and udp services.
 save_rule_error3=source and destination cannot both be "FIREWALL".
 save_rule_error4=source and destination are required.
-save_rule_error5=nDPI Services and Hostname only valid for DROP or REJECT target
+save_rule_error5=All nDPI Services and Hostname, only valid for DROP or REJECT target
 
 save_connmark_error_title1=Fail to delete Connmark Rule
 save_connmark_error_title2=Fail to create new Connmark Rule
