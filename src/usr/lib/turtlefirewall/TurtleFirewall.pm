@@ -2650,14 +2650,7 @@ sub _applyService {
 		if( $dport ne '' ) { $cmd .= "--dport $dport "; }
 	
 		if( $ndpi ne '' ) { 
-			if( $target =~ /DROP|REJECT/ ) {
-				if( $ndpi eq 'all' ) {
-					$cmd .= "-m ndpi --all ";
-				} else {
-					$cmd .= "-m ndpi --proto $ndpi ";
-                                }
-				if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
-			} else {
+			if( $target eq 'ACCEPT' ) {
 				if( $ndpi eq 'all' ) {
 					print "** all nDPI service ignored on target $target **\n";
 				} else {
@@ -2667,6 +2660,13 @@ sub _applyService {
 					$cmd .= "-m ndpi --clevel dpi --proto $ndpi ";
                                 }
 				if( $hostname ne '' ) { print "** $hostname nDPI hostname ignored on target $target **\n"; }
+			} else {
+				if( $ndpi eq 'all' ) {
+					$cmd .= "-m ndpi --all ";
+				} else {
+					$cmd .= "-m ndpi --proto $ndpi ";
+                                }
+				if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
 			}
 	       	}
 
