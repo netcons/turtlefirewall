@@ -211,7 +211,6 @@
 	<ndpiprotocol name="signalvoip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="sina(weibo)" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="sip" category="telephony"> </ndpiprotocol>
-	<ndpiprotocol name="skype" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="skype_teamscall" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="slack" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="smbv1" category="storage-backup"> </ndpiprotocol>
