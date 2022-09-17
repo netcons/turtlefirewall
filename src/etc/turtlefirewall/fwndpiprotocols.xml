@@ -2,12 +2,14 @@
 
 <ndpiprotocols>
 
+	<ndpiprotocol name="1kxun" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="accuweather" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="activision" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="afp" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="aimini" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="ajp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="alibaba" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="alicloud" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="amazon" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="amazonalexa" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="amazonaws" category="other"> </ndpiprotocol>
@@ -23,6 +25,7 @@
 	<ndpiprotocol name="applesiri" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="applestore" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="armagetron" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="avast" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="avastsecuredns" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ayiya" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="azure" category="other"> </ndpiprotocol>
@@ -39,8 +42,10 @@
 	<ndpiprotocol name="ciscovpn" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="citrix" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="cloudflare" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="cloudflarewarp" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="cnn" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="coap" category="infrastructure"> </ndpiprotocol>
+	<ndpiprotocol name="collectd" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="corba" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="cpha" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="crashlytics" category="other"> </ndpiprotocol>
@@ -73,6 +78,7 @@
 	<ndpiprotocol name="ethernetip" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="facebook" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="facebookvoip" category="telephony"> </ndpiprotocol>
+	<ndpiprotocol name="fastcgi" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="fasttrack" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="fiesta" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="fix" category="financial"> </ndpiprotocol>
@@ -80,6 +86,7 @@
 	<ndpiprotocol name="forticlient" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="ftp_control" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="ftp_data" category="storage-backup"> </ndpiprotocol>
+	<ndpiprotocol name="ftps" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="fuze" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="genshinimpact" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="git" category="other"> </ndpiprotocol>
@@ -96,6 +103,7 @@
 	<ndpiprotocol name="googlemaps" category="navigation"> </ndpiprotocol>
 	<ndpiprotocol name="googleplus" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="googleservices" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="goto" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="gre" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="gtp" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="gtp_c" category="tunnelling"> </ndpiprotocol>
@@ -111,6 +119,7 @@
 	<ndpiprotocol name="http_connect" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="http_proxy" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="hulu" category="video-audio"> </ndpiprotocol>
+	<ndpiprotocol name="i3d" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="iax" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="icecast" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="icloudprivaterelay" category="proxy"> </ndpiprotocol>
@@ -124,6 +133,7 @@
 	<ndpiprotocol name="imo" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="instagram" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="ip_in_ip" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="ip_pim" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ipp" category="printing"> </ndpiprotocol>
 	<ndpiprotocol name="ipsec" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="irc" category="instant-messaging"> </ndpiprotocol>
@@ -131,6 +141,7 @@
 	<ndpiprotocol name="kakaotalk" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="kakaotalk_voice" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="kerberos" category="authentication"> </ndpiprotocol>
+	<ndpiprotocol name="kismet" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="kontiki" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="lastfm" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="ldap" category="authentication"> </ndpiprotocol>
@@ -177,6 +188,7 @@
 	<ndpiprotocol name="outlook" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="pandora" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="pastebin" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="pgm" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="pinterest" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="playstation" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="playstore" category="other"> </ndpiprotocol>
@@ -186,6 +198,7 @@
 	<ndpiprotocol name="postgresql" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="ppstream" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="pptp" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="psiphon" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="qq" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="quic" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="radius" category="authentication"> </ndpiprotocol>
@@ -193,7 +206,9 @@
 	<ndpiprotocol name="rdp" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="reddit" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="redis" category="database"> </ndpiprotocol>
+	<ndpiprotocol name="riotgames" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="rpc" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="rsh" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="rsync" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="rtcp" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rtmp" category="video-audio"> </ndpiprotocol>
@@ -245,20 +260,24 @@
 	<ndpiprotocol name="tencent" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="teredo" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="tftp" category="storage-backup"> </ndpiprotocol>
+	<ndpiprotocol name="threema" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="thunder" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="tiktok" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="tinc" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="tivoconnect" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="tls" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="tocaboca" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="tor" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="truphone" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="tuenti" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="tumblr" category="social-media"> </ndpiprotocol>
+	<ndpiprotocol name="tunnelbear" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="tvuplayer" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="twitch" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="twitter" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="ubntac2" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="ubuntuone" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="ultrasurf" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="usenet" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="vevo" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="vhua" category="collaboration"> </ndpiprotocol>
@@ -289,10 +308,10 @@
 	<ndpiprotocol name="yahoo" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="youtube" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="youtubeupload" category="storage-backup"> </ndpiprotocol>
+	<ndpiprotocol name="z3950" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="zabbix" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="zattoo" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="zeromq" category="infrastructure"> </ndpiprotocol>
-	<ndpiprotocol name="z39.50" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="zoom" category="collaboration"> </ndpiprotocol>
 
 </ndpiprotocols>
