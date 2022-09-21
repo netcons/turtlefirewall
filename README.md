@@ -48,14 +48,15 @@ xt_time. <br>
 xt_ndpi, ( https://github.com/vel21ripn/nDPI ) <br>
 xt_geoip, ( https://inai.de/projects/xtables-addons ) <br>
 
-## Install EL8
+## Install CentOS/RHEL
 
-Activate Repos.
+Activate Repos el8.
 ```
-dnf install epel-release
-
 dnf config-manager --set-enabled powertools
+```
 
+Activate Repos el8 & el9.
+```
 echo "[Webmin]
 name=Webmin Distribution Neutral
 #baseurl=https://download.webmin.com/download/yum
