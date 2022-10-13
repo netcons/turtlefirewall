@@ -109,8 +109,7 @@ print			qq~	<br></td>
 				<input type="radio" name="redirect" value="0" ~.($is_redirect ? '' : 'checked').qq~>
 				$text{NO}<br>
 				<input type="radio" name="redirect" value="1" ~.($is_redirect ? 'checked' : '').qq~>
-				$text{YES} : $text{redirect_toport}
-				: <input type=\"text\" name=\"toport\" size=\"5\" value=\"$toport\">
+				$text{YES} : $text{redirect_toport} : <input type=\"text\" name=\"toport\" size=\"5\" value=\"$toport\">
 				</td>
 			</tr>
 			<tr>

@@ -29,12 +29,12 @@ sub showConnmarkPreroute {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-		"valign=top",
-		"valign=top",
+		 "width=10% valign=top",
+		 "width=10% valign=top",
 		"align=center valign=top",
-		"align=center valign=top",
-		"align=center valign=top",
-		"align=center valign=top",
+		 "width=1% align=center valign=center",
+		 "width=1% align=center valign=center",
+		 "width=1% align=center valign=center",
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',
@@ -167,12 +167,12 @@ sub showConnmark {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-		"valign=top",
-		"valign=top",
+		 "width=10% valign=top",
+		 "width=10% valign=top",
 		"align=center valign=top",
-		"align=center valign=top",
-		"align=center valign=top",
-		"align=center valign=top",
+		 "width=1% align=center valign=center",
+		 "width=1% align=center valign=center",
+		 "width=1% align=center valign=center",
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',

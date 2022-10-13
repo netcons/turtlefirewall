@@ -179,7 +179,7 @@ CHANGELOG
 20-05-2011 v.1.38
            - Debian 6.0 compatibility (chocolateboy).
 23-04-2020 v.2.0
-           - CentOS/RHEL 8/9
+           - CentOS/RHEL 8
            	OS : Systemd support, RPM package, Ensure running via cron.
            	Feature : Added Time, GeoIP and nDPI support.
 		Feature : Added Optional Blacklist.
@@ -203,3 +203,9 @@ CHANGELOG
 		Connection Tracking : Flush conntrack table on firewall stop.
 		Connection Tracking : Added conntrack tools.
                 Theme : New Webmin support. ( Todo : Translate new features )
+09-10-2022 v.2.1
+           - CentOS/RHEL 9
+		OS : Kernel 6.0 compatibility.
+           	Feature : Removed pptp, sip, h323 and tftp kernel module options.
+		Feature : Added Preroute Raw Rules. ( Conntrack : Helper )
+		Connection Tracking : Migrated helpers to CT target.

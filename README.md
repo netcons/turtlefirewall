@@ -1,4 +1,4 @@
-## Turtle Firewall 2.0
+## Turtle Firewall 2.1
 
 Turtle Firewall allows you to configure a Linux firewall in a simple and fast way.
 It's based on Linux iptables. Its way of working is easy to understand: you can define the different firewall elements (zones, hosts, networks) and then set the services you want to enable among the different elements or groups of elements.
@@ -9,14 +9,15 @@ Turtle Firewall is an Open Source project written using the perl language and re
 ## New Features
 
 - OS : Systemd support, RPM package, Ensure running via cron.
+- OS : Kernel 6.0 compatibility.
 - Feature : Added Time, GeoIP and nDPI support.
 - Feature : Added Optional Blacklist support.
 - Feature : Added NAT Map to Port.
 - Feature : Added HostName Set and IP Set items.
-- Feature : Added pptp, sip, h323 and tftp kernel module options.
 - Feature : Added Flow Statistics.
 - Feature : Moved Marking to Mangle Rules. ( Connmark : for use with tc )
 - Feature : Added Preroute Mangle Rules. ( Connmark Preroute : for use with iproute )
+- Feature : Added Preroute Raw Rules. ( Conntrack Helper )
 - Logging : Added Logging per rule and Flowinfo logging for target ACCEPT.
 - Services : Removed www service. ( duplicate of http service ) 
 - Services : Added Google QUIC, Ubiquiti Unifi, Whatsapp, Zoom, Teams, etc.
@@ -26,7 +27,7 @@ Turtle Firewall is an Open Source project written using the perl language and re
 - Bug : Limit zone name max characters.
 - Bug : Fixed zone deletion verification.
 - Connection Tracking : Replaced "-m state --state" with "-m conntrack --ctstate".
-- Connection Tracking : Enabled automatic helpers. ( Todo : migrate to CT target )
+- Connection Tracking : Migrated helpers to CT target.
 - Connection Tracking : Enabled connection marking.
 - Connection Tracking : Flush conntrack table on firewall stop.
 - Connection Tracking : Added conntrack tools.

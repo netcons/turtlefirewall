@@ -19,22 +19,26 @@ my $max = 100;
 my $top = 5;
 my $string = '';
 
+my $options_log = '';
 my @logs = glob("/var/log/flowinfo.log*");
 for my $k (@logs) {
 	$options_log .= '<option'.($k eq $log ? ' selected' : '').'>'.$k.'</option>';
 }
 
-@maxs = ('all','100','1000','10000','100000');
+my $options_max = '';
+my @maxs = ('all','100','1000','10000','100000');
 for my $k (@maxs) {
 	$options_max .= '<option'.($k eq $max ? ' selected' : '').'>'.$k.'</option>';
 }
 
-@tops = ('5','10','15','20');
+my $options_top = '';
+my @tops = ('5','10','15','20');
 for my $k (@tops) {
 	$options_top .= '<option'.($k eq $top ? ' selected' : '').'>'.$k.'</option>';
 }
 
-@types = ('source','destination','protocol','hostname');
+my $options_type = '';
+my @types = ('source','destination','protocol','hostname');
 for my $k (@types) {
 	$options_type .= '<option'.($k eq $type ? ' selected' : '').'>'.$k.'</option>';
 }

@@ -14,31 +14,23 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_connmarkpreroute_title_create'}, $text{'title'}, "" );
+	&ui_print_header( $text{'edit_conntrackpreroute_title_create'}, $text{'title'}, "" );
 	$idx = '';
 	$src = '';
 	$dst = '';
 	$service = '';
 	$port = '';
-	$ndpi = '';
-	$category = '';
-	$set = '';
-	$time = '';
-	$mark = '';
+	$helper = '';
 	$active = 1;
 } else {
-	&ui_print_header( $text{'edit_connmarkpreroute_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( $text{'edit_conntrackpreroute_title_edit'}, $text{'title'}, "" );
 	$idx = $in{'idx'};
-	%rule = $fw->GetConnmarkPreroute($idx);
+	%rule = $fw->GetConntrackPreroute($idx);
 	$src = $rule{'SRC'};
 	$dst = $rule{'DST'};
 	$service = $rule{'SERVICE'};
 	$port = $rule{'PORT'};
-	$ndpi = $rule{'NDPI'};
-	$category = $rule{'CATEGORY'};
-	$set = $rule{'SET'};
-	$time = $rule{'TIME'};
-	$mark = $rule{'MARK'};
+	$helper = $rule{'HELPER'};
 	$active = $rule{'ACTIVE'} ne 'NO';
 }
 
@@ -69,33 +61,24 @@ for my $k (@items_dst) {
 	$options_dst .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
 }
 
-my $options_hostnameset = '';
-if( $set eq '' ) { $set = 'any'; }
-my @sets = ('any');
-push @sets, $fw->GetHostNameSetList();
-for my $k (@sets) {
-	my $selected = 0;
-	if( $k eq $set ) { $selected = 1; }
-	$options_hostnameset .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
+my $options_service = '';
+my @services = ('tcp','udp');
+for my $k (@services) {
+	$options_service .= '<option'.($k eq $service ? ' selected' : '').'>'.$k.'</option>';
 }
 
-my $options_time = '';
-if( $time eq '' ) { $time = 'always'; }
-my @times = ('always');
-push @times, $fw->GetTimeList();
-push @times, $fw->GetTimeGroupList();
-for my $k (@times) {
-	my $selected = 0;
-	if( $k eq $time ) { $selected = 1; }
-	$options_time .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
+my $options_helper = '';
+my @helpers = ('amanda','ftp','irc','netbios-ns','pptp','RAS','sane','sip','snmp','tftp','Q.931');
+for my $k (@helpers) {
+	$options_helper .= '<option'.($k eq $helper ? ' selected' : '').'>'.$k.'</option>';
 }
 
 print "<br>
-	<form action=\"save_connmarkpreroute.cgi\">
+	<form action=\"save_conntrackpreroute.cgi\">
 	<input type=\"hidden\" name=\"idx\" value=\"$idx\">
 	<table border width=\"100%\">
 		<tr $tb>
-			<th>".($new ? $text{edit_connmarkpreroute_title_create} : $text{edit_connmarkpreroute_title_edit})."</th>
+			<th>".($new ? $text{edit_conntrackpreroute_title_create} : $text{edit_conntrackpreroute_title_edit})."</th>
 		</tr>
 		<tr $cb>
 			<td>
@@ -116,32 +99,15 @@ print			"<tr>
 			</tr>
 			<tr>
 				<td><b>$text{rule_service}</b></td>
-				<td><br>";
-				formService( $service, $port, 1 );
-print				"<br>
-				</td>
-			</tr>
-			<tr>
-				<td><b>$text{rule_ndpiprotocol}</b></td>
-				<td><br>";
-				formNdpiProtocol( $ndpi, $category, 1 );
-print				"<br>
-				<td>
+				<td><select name=\"service\">$options_service</select>
+				$text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"5\"> <small><i>$text{port_help}</i></small></td>
 			</tr>
 			<tr>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><b>$text{rule_hostname_set}</b></td>
-				<td><select name=\"set\">$options_hostnameset</select></td>
-			</tr>
-			<tr>
-				<td><b>$text{rule_time}</b></td>
-				<td><select name=\"time\">$options_time</select></td>
-			</tr>
-			<tr>
-				<td><b>$text{rule_mark}</b></td>
-				<td><input type=\"text\" name=\"mark\" value=\"$mark\" size=\"13\"></td>
+				<td><b>$text{rule_helper}</b></td>
+				<td><select name=\"helper\">$options_helper</select></td>
 			</tr>
 			<tr>
                                 <td><br></td><td></td>
@@ -166,4 +132,4 @@ print "</tr></table>";
 print "</form>";
 
 print "<br><br>";
-&ui_print_footer("list_manglerules.cgi?idx=$idx",'Mangle Rules list');
+&ui_print_footer("list_rawrules.cgi?idx=$idx",'Raw Rules list');

@@ -230,12 +230,9 @@ sub formNdpiProtocolParse {
 
 sub getOptionsList {
 	@optionkeys = ('rp_filter','log_martians',
-			'drop_invalid_state',
-			'drop_invalid_all', 'drop_invalid_none', 'drop_invalid_fin_notack',
-			'drop_invalid_syn_fin', 'drop_invalid_syn_rst', 
-			'drop_invalid_fragment',
-		       	'blacklist_feature', 'ftp_modules', 'pptp_modules', 'sip_modules', 'h323_modules', 'tftp_modules',
-		       	'nf_conntrack_max', 'log_limit', 'log_limit_burst' );
+			'drop_invalid_state', 'drop_invalid_all', 'drop_invalid_none', 'drop_invalid_fin_notack',
+			'drop_invalid_syn_fin', 'drop_invalid_syn_rst', 'drop_invalid_fragment',
+		       	'blacklist_feature', 'nf_conntrack_max', 'log_limit', 'log_limit_burst' );
 	%options = ();
 	%{$options{rp_filter}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>1 );
 	%{$options{log_martians}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>1 );
@@ -247,11 +244,6 @@ sub getOptionsList {
 	%{$options{drop_invalid_syn_rst}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{drop_invalid_fragment}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{blacklist_feature}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
-	%{$options{ftp_modules}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
-	%{$options{pptp_modules}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
-	%{$options{sip_modules}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
-	%{$options{h323_modules}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
-	%{$options{tftp_modules}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{nf_conntrack_max}} = ( 'type'=>'text', 'default'=>262144, 'addunchangeopz'=>0 );
 	%{$options{log_limit}} = ( 'type'=>'text', 'default'=>60, 'addunchangeopz'=>0 );
 	%{$options{log_limit_burst}} = ( 'type'=>'text', 'default'=>5, 'addunchangeopz'=>0 );

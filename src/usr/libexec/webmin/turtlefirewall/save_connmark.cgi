@@ -47,11 +47,11 @@ if( $in{'delete'} ) {
 	}
 
 	if( $src eq '' || $dst eq '' ) {
-		error( $text{save_connmark_error4} );
+		error( $text{save_connmark_error3} );
 	}
 
 	if( $mark !~ /^(0x[A-Fa-f0-9]+|[0-9]+)$/ ) {
-		error( $text{save_connmark_error3} );
+		error( $text{save_connmark_error4} );
 	}
 
 	$fw->AddConnmark( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $mark, $active );

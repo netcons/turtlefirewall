@@ -17,6 +17,7 @@ my @links = ('list_items.cgi',
 	     'list_rules.cgi',
 	     'list_nat.cgi',
 	     'list_manglerules.cgi',
+	     'list_rawrules.cgi',
 	     'list_services.cgi',
 	     'list_ndpiprotocols.cgi',
 	     'geoip.cgi',
@@ -30,6 +31,7 @@ my @titles = ($text{'index_icon_firewall_items'},
               $text{'index_icon_firewall_rules'},
               $text{'index_icon_firewall_nat'},
               $text{'index_icon_firewall_manglerules'},
+              $text{'index_icon_firewall_rawrules'},
 	      $text{'index_icon_firewall_services'},
 	      $text{'index_icon_firewall_ndpiprotocols'},
 	      $text{'index_icon_firewall_geoip'},
@@ -43,6 +45,7 @@ my @icons = ('images/items.png',
 	     'images/rules.png',
 	     'images/nats.png',
 	     'images/manglerules.png',
+	     'images/rawrules.png',
 	     'images/services.png',
 	     'images/ndpiprotocols.png',
 	     'images/geoip.png',
@@ -53,7 +56,7 @@ my @icons = ('images/items.png',
 	     'images/flowstat.png',
 	     'images/backup.png');
 
-&icons_table(\@links, \@titles, \@icons, 13);
+&icons_table(\@links, \@titles, \@icons, 14);
 
 # $status == 1 if Firewall is ON
 $status = $fw->GetStatus();
@@ -87,6 +90,7 @@ print '<td>';
 print &ui_submit( $text{'index_showiptfilter'}, "showiptfilter");
 print &ui_submit( $text{'index_showiptnat'}, "showiptnat");
 print &ui_submit( $text{'index_showiptmangle'}, "showiptmangle");
+print &ui_submit( $text{'index_showiptraw'}, "showiptraw");
 print '</td>';
 print '<td align="right">';
 print &ui_submit( $text{'index_showconntrack'}, "showconntrack");
@@ -124,6 +128,17 @@ if( $in{showiptmangle} ne '' ) {
 	print "<pre><tt><small>";
 	print qx{iptables -t mangle -L -n -v -x 2>&1};
 	#print qx{nft list table ip mangle 2>&1};
+	print "</small></tt></pre>";
+	print "</td></tr></table>";
+}
+
+if( $in{showiptraw} ne '' ) {
+	print "<br><table border width=\"100%\">
+		<tr $tb><th>RAW</th></tr>
+		<tr $cb><td>";
+	print "<pre><tt><small>";
+	print qx{iptables -t raw -L -n -v -x 2>&1};
+	#print qx{nft list table ip raw 2>&1};
 	print "</small></tt></pre>";
 	print "</td></tr></table>";
 }

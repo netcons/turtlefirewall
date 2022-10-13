@@ -16,7 +16,7 @@ use XML::Parser;
 
 # Turtle Firewall Version
 sub Version {
-	return '2.0';
+	return '2.1';
 }
 
 sub new {
@@ -207,6 +207,14 @@ sub GetConnmarksCount {
 sub GetConnmark {
 	my ($this,$n) = @_;
 	return %{ $this->{fw}{CONNMARK}[$n-1] };
+}
+sub GetConntrackPreroutesCount {
+	my $this = shift;
+	return $#{$this->{fw}{CONNTRACKPREROUTE}}+1;
+}
+sub GetConntrackPreroute {
+	my ($this,$n) = @_;
+	return %{ $this->{fw}{CONNTRACKPREROUTE}[$n-1] };
 }
 # Get Firewall Configuration Specific Option
 sub GetOption {
@@ -434,6 +442,31 @@ sub MoveConnmark {
 	splice @{$this->{fw}{CONNMARK}}, $idxSrc-1, 1;
 	splice @{$this->{fw}{CONNMARK}}, $idxDst-1, 0, \%attr;
 }
+# AddConntrackPreroute( $idx, $src, $dst, $service, $port, $helper, $active );
+sub AddConntrackPreroute {
+	my ($this, $idx, $src, $dst, $service, $port, $helper, $active ) = @_;
+	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
+	if( $port ne '' ) { $attr{PORT} = $port; }
+	if( $helper ne '' ) { $attr{HELPER} = $helper; }
+	if( ! $active ) { $attr{ACTIVE} = 'NO'; }
+	$this->AddConntrackPrerouteAttr( $idx, %attr );
+}
+sub AddConntrackPrerouteAttr {
+	my $this = shift;
+	my $idx = shift;
+	my %attr = @_;
+	if( $idx == 0 ) {
+		%{$this->{fw}{'CONNTRACKPREROUTE'}[$#{$this->{fw}{'CONNTRACKPREROUTE'}}+1]} = %attr;
+	} else {
+		%{$this->{fw}{'CONNTRACKPREROUTE'}[$idx-1]} = %attr;
+	}
+}
+sub MoveConntrackPreroute {
+	my ($this, $idxSrc, $idxDst) = @_;
+	my %attr = %{$this->{fw}{CONNTRACKPREROUTE}[$idxSrc-1]};
+	splice @{$this->{fw}{CONNTRACKPREROUTE}}, $idxSrc-1, 1;
+	splice @{$this->{fw}{CONNTRACKPREROUTE}}, $idxDst-1, 0, \%attr;
+}
 # AddOption( $name, $value );
 sub AddOption {
 	my ($this, $name, $value) = @_;
@@ -514,6 +547,16 @@ sub DeleteItem {
 	for( my $r=0; $r<$connmarks; $r++ ) {
 		my %connmark = $this->GetConnmark( $r );
 		if( $connmark{SRC} eq $name || $connmark{DST} eq $name || $connmark{TIME} eq $name || $connmark{SET} eq $name ) {
+			$found = 1;
+			last;
+		}
+	}
+
+	# Now I check if this item is used by a conntrackpreroute rule
+	my $conntrackpreroutes = $this->GetConntrackPreroutesCount();
+	for( my $r=0; $r<$conntrackpreroutes; $r++ ) {
+		my %conntrackpreroute = $this->GetConntrackPreroute( $r );
+		if( $conntrackpreroute{SRC} eq $name || $conntrackpreroute{DST} eq $name ) {
 			$found = 1;
 			last;
 		}
@@ -625,7 +668,7 @@ sub RenameItem {
 		}
 
 		# Change item name in all rules
-		foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','NAT','MASQUERADE','REDIRECT') {
+		foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','NAT','MASQUERADE','REDIRECT') {
 			for( my $i=0; $i<=$#{$this->{fw}{$ruletype}}; $i++ ) {
 				foreach $field ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','SET') {
 					if( $this->{fw}{$ruletype}[$i]{$field} eq $oldname ) {
@@ -708,6 +751,11 @@ sub DeleteConnmark {
 	my ($this, $idx) = @_;
 	splice( @{$this->{fw}{'CONNMARK'}}, $idx-1, 1 );
 }
+# DeleteConntrackPreroute( $idx );
+sub DeleteConntrackPreroute {
+	my ($this, $idx) = @_;
+	splice( @{$this->{fw}{'CONNTRACKPREROUTE'}}, $idx-1, 1 );
+}
 # DeleteOption( $name );
 sub DeleteOption {
 	my ($this, $name) = @_;
@@ -758,6 +806,7 @@ sub LoadFirewall {
 				if( $name2 eq 'RULE' ) { $this->_LoadFirewallRule( @{$list[$j+1]} ); }
 				if( $name2 eq 'CONNMARKPREROUTE' ) { $this->_LoadFirewallConnmarkPreroute( @{$list[$j+1]} ); }
 				if( $name2 eq 'CONNMARK' ) { $this->_LoadFirewallConnmark( @{$list[$j+1]} ); }
+				if( $name2 eq 'CONNTRACKPREROUTE' ) { $this->_LoadFirewallConntrackPreroute( @{$list[$j+1]} ); }
 				if( $name2 eq 'OPTIONS' ) { $this->_LoadFirewallOptions( @{$list[$j+1]} ); }
 			}
 		}
@@ -899,6 +948,26 @@ sub _LoadFirewallConnmark {
 	}
 
 	%{$this->{fw}{'CONNMARK'}[$#{$this->{fw}{'CONNMARK'}}+1]} = %attrs;
+}
+
+###
+# Internal method for add CONNTRACKPREROUTE to firewall object
+sub _LoadFirewallConntrackPreroute {
+	my $this = shift;
+	my @list = @_;
+	my %attrs = upperKeys( %{shift @list} );
+
+	my $src = $attrs{'SRC'};
+	if( $this->{fwItems}{$src} eq '' && $src ne '*' ) {
+		print STDERR "Error: rule number ".($#{$this->{fw}{CONNTRACKPREROUTE}}+2)." has an invalid source item ($src).\n";
+	}
+
+	my $dst = $attrs{'DST'};
+	if( $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
+		print STDERR "Error: rule number ".($#{$this->{fw}{CONNTRACKPREROUTE}}+2)." has an invalid destination item ($dst).\n";
+	}
+
+	%{$this->{fw}{'CONNTRACKPREROUTE'}[$#{$this->{fw}{'CONNTRACKPREROUTE'}}+1]} = %attrs;
 }
 
 ###
@@ -1165,6 +1234,11 @@ sub SaveFirewallAs {
 		$xml .= $this->attr2xml( 'connmark', %{$connmarks[$i]} );
 	}
 	$xml .= "\n";
+	my @conntrackpreroutes = @{$fw{'CONNTRACKPREROUTE'}};
+	for my $i (0..$#conntrackpreroutes) {
+		$xml .= $this->attr2xml( 'conntrackpreroute', %{$conntrackpreroutes[$i]} );
+	}
+	$xml .= "\n";
 	$xml .= "</firewall>\n";
 
 	open( FWFILE, ">$fwFile" );
@@ -1212,85 +1286,60 @@ sub startFirewall {
 	my $this = shift;
 	
 	# PreLoad modules
+	print "nftables_module: on\n";
 	$this->command('modprobe nf_tables', '/dev/null');
 
 	# Enable connection tracking
+	print "conntrack_modules: on\n";
 	$this->command('modprobe nf_conntrack', '/dev/null');
-	# Enable connection tracking - automatic helpers ( to be migrated to CT target )
-	$this->command( 'echo 1', '/proc/sys/net/netfilter/nf_conntrack_helper' );
+
+	# PreLoad connection tracking modules
+	$this->command('modprobe nf_conntrack_amanda', '/dev/null');
+	$this->command('modprobe nf_nat_amanda', '/dev/null');
+
+	$this->command('modprobe nf_conntrack_ftp', '/dev/null');
+	$this->command('modprobe nf_nat_ftp', '/dev/null');
+
+	$this->command('modprobe nf_conntrack_h323', '/dev/null');
+	$this->command('modprobe nf_nat_h323', '/dev/null');
+
+	$this->command('modprobe nf_conntrack_irc', '/dev/null');
+	$this->command('modprobe nf_nat_irc', '/dev/null');
+
+	$this->command('modprobe nf_conntrack_netbios_ns', '/dev/null');
+
+	$this->command('modprobe nf_conntrack_pptp', '/dev/null');
+	$this->command('modprobe nf_nat_pptp', '/dev/null');
+
+	$this->command('modprobe nf_conntrack_sane', '/dev/null');
+
+	$this->command('modprobe nf_conntrack_sip', '/dev/null');
+	$this->command('modprobe nf_nat_sip', '/dev/null');
+
+	$this->command('modprobe nf_conntrack_snmp', '/dev/null');
+
+	$this->command('modprobe nf_conntrack_tftp', '/dev/null');
+	$this->command('modprobe nf_nat_tftp', '/dev/null');
 
 	# Enable connection marking
+	print "connmark_modules: on\n";
 	$this->command('modprobe xt_connmark', '/dev/null');
 
-	# PreLoad modules for ftp connections and NAT
-	if( $this->{fw}{OPTION}{ftp_modules} ne 'off' ) {
-		print "ftp_modules: on\n";
-		$this->command('modprobe nf_conntrack_ftp', '/dev/null');
-		$this->command('modprobe nf_nat_ftp', '/dev/null');
-	} else {
-		print "ftp_modules: off\n";
-		$this->command('rmmod nf_nat_ftp', '/dev/null 2>&1');
-		$this->command('rmmod nf_conntrack_ftp', '/dev/null 2>&1');
-	}
-
-	# PreLoad modules for tftp connections and NAT
-	if( $this->{fw}{OPTION}{tftp_modules} ne 'off' ) {
-		print "tftp_modules: on\n";
-		$this->command('modprobe nf_conntrack_tftp', '/dev/null');
-		$this->command('modprobe nf_nat_tftp', '/dev/null');
-	} else {
-		print "tftp_modules: off\n";
-		$this->command('rmmod nf_nat_tftp', '/dev/null 2>&1');
-		$this->command('rmmod nf_conntrack_tftp', '/dev/null 2>&1');
-	}
-
-	# PreLoad modules for pptp connections and NAT
-	if( $this->{fw}{OPTION}{pptp_modules} ne 'off' ) {
-		print "pptp_modules: on\n";
-		$this->command('modprobe nf_conntrack_pptp', '/dev/null');
-		$this->command('modprobe nf_nat_pptp', '/dev/null');
-	} else {
-		print "pptp_modules: off\n";
-		$this->command('rmmod nf_nat_pptp', '/dev/null 2>&1');
-		$this->command('rmmod nf_conntrack_pptp', '/dev/null 2>&1');
-	}
-
-	# Preload modules for sip connections and NAT
-	if( $this->{fw}{OPTION}{sip_modules} ne 'off' ) {
-		print "sip_modules: on\n";
-		$this->command('modprobe nf_conntrack_sip', '/dev/null');
-		$this->command('modprobe nf_nat_sip', '/dev/null');
-	} else {
-		print "sip_modules: off\n";
-		$this->command('rmmod nf_nat_sip', '/dev/null 2>&1');
-		$this->command('rmmod nf_conntrack_sip', '/dev/null 2>&1');
-	}
-
-	# Preload modules for h323 connections and NAT
-	if( $this->{fw}{OPTION}{h323_modules} ne 'off' ) {
-		print "h323_modules: on\n";
-		$this->command('modprobe nf_conntrack_h323', '/dev/null');
-		$this->command('modprobe nf_nat_h323', '/dev/null');
-	} else {
-		print "h323_modules: off\n";
-		$this->command('rmmod nf_nat_h323', '/dev/null 2>&1');
-		$this->command('rmmod nf_conntrack_h323', '/dev/null 2>&1');
-	}
+	# Enable connection labels
+	print "connlabel_module: on\n";	
+	$this->command('modprobe xt_connlabel', '/dev/null');
 
 	# PreLoad module for time based rules
+	print "time_module: on\n";
 	$this->command('modprobe xt_time', '/dev/null');
-	print "time_feature: on\n";
 
 	# PreLoad module for GeoIP 
+	print "geoip_module: on\n";	
 	$this->command('modprobe xt_geoip', '/dev/null');
-	print "geoip_feature: on\n";
-
-	# Enable connection labels
-        $this->command('modprobe xt_connlabel', '/dev/null');
 
 	# PreLoad module for nDPI
+	print "ndpi_module: on\n";	
 	$this->command('modprobe xt_ndpi ndpi_enable_flow=1', '/dev/null');
-	print "nDPI_feature: on\n";
 	
 	# Verify Blacklist
 	if( $this->{fw}{OPTION}{blacklist_feature} ne 'off' ) {
@@ -1402,6 +1451,8 @@ sub stopFirewall {
 		"iptables -t nat -X; ".
 		"iptables -t mangle -F; ".
 		"iptables -t mangle -X; ".
+		"iptables -t raw -F; ".
+		"iptables -t raw -X; ".
 		"iptables -P INPUT ACCEPT; ".
 		"iptables -P OUTPUT ACCEPT; ".
 		"iptables -P FORWARD ACCEPT" );
@@ -1432,6 +1483,12 @@ sub getIptablesRules {
 
 	my $chains_mangle_connmark = '';
 	my $rules_mangle_connmark = ''; 
+
+	my $chains_raw = '';
+	my $rules_raw = '';
+
+	my $chains_raw_conntrackpreroute = '';
+	my $rules_raw_conntrackpreroute = ''; 
 
 	my $log_limit=60;
 	my $log_limit_burst=5;
@@ -1465,6 +1522,11 @@ sub getIptablesRules {
 			":FORWARD ACCEPT [0:0]\n".
 			":OUTPUT ACCEPT [0:0]\n".
 			":POSTROUTING ACCEPT [0:0]\n";
+
+	# Chains for raw table
+	$chains_raw .= "*raw\n".
+			":PREROUTING ACCEPT [0:0]\n".
+			":OUTPUT ACCEPT [0:0]\n";
 
 	# Copy packet mark to connection mark and vice versa
 	$rules_mangle .= "-A PREROUTING -j CONNMARK --restore-mark\n";
@@ -1612,7 +1674,7 @@ sub getIptablesRules {
 			}
 		}
 		for( my $i=1; $i <= $connmarkpreroutesCount; $i++ ) {
-			$rules_mangle_connmarkpreroute .= $this->applyRule( 1, 1, $this->GetConnmarkPreroute($i) );
+			$rules_mangle_connmarkpreroute .= $this->applyRule( 1, 1, 1, $this->GetConnmarkPreroute($i) );
 		}
 		$chains_mangle .= $chains_mangle_connmarkpreroute;
 		$rules_mangle .= $rules_mangle_connmarkpreroute;
@@ -1649,10 +1711,32 @@ sub getIptablesRules {
 			}
 		}
 		for( my $i=1; $i <= $connmarksCount; $i++ ) {
-			$rules_mangle_connmark .= $this->applyRule( 1, 2, $this->GetConnmark($i) );
+			$rules_mangle_connmark .= $this->applyRule( 1, 1, 0, $this->GetConnmark($i) );
 		}
 		$chains_mangle .= $chains_mangle_connmark;
 		$rules_mangle .= $rules_mangle_connmark;
+	}
+
+	# Applicazione delle CONNTRACKPREROUTEs
+	#$conntrackpreroutes .= "#=====================================\n".
+	#	"# Regole di forwarding.\n";
+	my $conntrackpreroutesCount = $this->GetConntrackPreroutesCount();
+	if( $conntrackpreroutesCount > 0 ) {
+		my @zone = $this->GetZoneList();
+		for( my $i=0; $i<=$#zone; $i++ ) {
+			my $z1 = $zone[$i];
+			my %zone1 = $this->GetZone($z1);
+			if( $z1 ne 'FIREWALL' ) {
+				# Add CTHELPER chain
+				$chains_raw_conntrackpreroute .= ":$z1-CTHELPER - [0:0]\n";
+				$rules_raw_conntrackpreroute .= "-A PREROUTING -i ".$zone1{'IF'}." -j $z1-CTHELPER\n";
+			}
+		}
+		for( my $i=1; $i <= $conntrackpreroutesCount; $i++ ) {
+			$rules_raw_conntrackpreroute .= $this->applyRule( 1, 0, 1, $this->GetConntrackPreroute($i) );
+		}
+		$chains_raw .= $chains_raw_conntrackpreroute;
+		$rules_raw .= $rules_raw_conntrackpreroute;
 	}
 
 	# Applicazione delle NATs
@@ -1724,7 +1808,7 @@ sub getIptablesRules {
 	#	"# Regole di forwarding.\n";
 	my $rulesCount = $this->GetRulesCount();
 	for( my $i=1; $i <= $rulesCount; $i++ ) {
-		$rules .= $this->applyRule( 1, 0, $this->GetRule($i) );
+		$rules .= $this->applyRule( 1, 0, 0, $this->GetRule($i) );
 	}
 	
 	# chiudo le catene delle zone
@@ -1749,7 +1833,8 @@ sub getIptablesRules {
 	}
 	print "DROP any other connections and LOG Action\n";
 	
-	return ($rules_mangle_connmarkpreroute || $rules_mangle_connmark ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").
+	return	($rules_raw_conntrackpreroute ? $chains_raw.$rules_raw."COMMIT\n" : "*raw\nCOMMIT\n").
+		($rules_mangle_connmarkpreroute || $rules_mangle_connmark ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").
 		$chains.$rules."COMMIT\n".$chains_nat.$rules_nat."COMMIT\n";
 }
 
@@ -2293,8 +2378,8 @@ sub _applyServiceRedirect {
 sub applyRule {
 	my $this = shift;
 	my $display = shift;
-	# ConnmarkPreroute : $mangle = 1, Connmark : $mangle = 2
 	my $mangle = shift; 
+	my $preroute = shift; 
 	my %rule = @_;
 
 	if( $rule{ACTIVE} eq 'NO' ) {
@@ -2318,17 +2403,16 @@ sub applyRule {
 	my $hostname = $rule{HOSTNAME};
 	my $port = $rule{PORT};
 	my $mark = $rule{MARK};
+	my $helper = $rule{HELPER};
 	my $log = $rule{LOG};
 
 	if( $display ) {
 		if( $target ne '' ) { 
 			print "$target"; 
 		} else {
-			if( $mangle eq '1' ) {
-				print "CONNMARK PREROUTE";
-			} else {
-				print "CONNMARK";
-			}
+			if( $mark ne '' ) { print "CONNMARK"; }
+			if( $helper ne '' ) { print "CONNTRACK"; }
+			if( $preroute ) { print " PREROUTE"; }
 		}
 		print " port($service";
 		if( $service eq 'tcp' || $service eq 'udp' ) { 
@@ -2345,6 +2429,7 @@ sub applyRule {
 		#if( $src_mac ne '' ) { print "(mac:$src_mac)"; }
 		if( $time ne '' ) { print " AT $time"; }
 		if( $mark ne '' ) { print " WITH mark($mark)"; }
+		if( $helper ne '' ) { print " WITH helper($helper)"; }
 		if( $log eq 'YES' ) {
 			if( $target=~ /DROP|REJECT/ ) {
 				print " and LOG Action\n";
@@ -2385,7 +2470,7 @@ sub applyRule {
 		my %newrule = %rule;
 		foreach my $s (@srcs) {
 			$newrule{SRC} = $s;
-			$rules .= $this->applyRule( 0, $mangle, %newrule );
+			$rules .= $this->applyRule( 0, $mangle, $preroute, %newrule );
 		}
 		return $rules;
 	} else {
@@ -2395,9 +2480,7 @@ sub applyRule {
 	my @dsts = ();
 	my @dst_list = split( /,/, $dst );
 	foreach my $d (@dst_list) {
-		#if( $d eq '*' ) {
-		# Connmark Preroute requirement
-		if( $d eq '*' && $mangle ne '1' ) {
+		if( $d eq '*' && not $preroute ) {
 			# all zones
 			foreach my $item ( sort(keys(%{$fw{ZONE}})) ) {
 				if( $item ne 'FIREWALL' ) {
@@ -2423,7 +2506,7 @@ sub applyRule {
 		my %newrule = %rule;
 		foreach my $d (@dsts) {
 			$newrule{DST} = $d;
-			$rules .= $this->applyRule( 0, $mangle, %newrule );
+			$rules .= $this->applyRule( 0, $mangle, $preroute, %newrule );
 		}
 		return $rules;
 	} else {
@@ -2436,7 +2519,7 @@ sub applyRule {
 		my %newrule = %rule;
 		foreach my $serv (@services) {
 			$newrule{SERVICE} = $serv;
-			$rules .= $this->applyRule( 0, $mangle, %newrule );
+			$rules .= $this->applyRule( 0, $mangle, $preroute, %newrule );
 		}
 		return $rules;
 	} 
@@ -2471,7 +2554,7 @@ sub applyRule {
 			foreach my $u (@hostnames) {
 				$newrule{HOSTNAME} = $u;
 				$newrule{SET} = '';
-				$rules .= $this->applyRule( 0, $mangle, %newrule );
+				$rules .= $this->applyRule( 0, $mangle, $preroute, %newrule );
 			}
 			return $rules;
 		} else {
@@ -2514,7 +2597,7 @@ sub applyRule {
 			my %newrule = %rule;
 			foreach my $t (@times) {
 				$newrule{TIME} = $t;
-				$rules .= $this->applyRule( 0, $mangle, %newrule );
+				$rules .= $this->applyRule( 0, $mangle, $preroute, %newrule );
 			}
 			return $rules;
 		} else {
@@ -2525,19 +2608,26 @@ sub applyRule {
 
 	#command( "" );
 	#comment( "# service $service: $src --> $dst  ($src_peer -> $dst_peer) [$src_zone -> $dst_zone]" );
-
+	
 	# I create the 2 return chains
 	my $andata = "$src_zone-$dst_zone";
 	my $ritorno = "$dst_zone-$src_zone";
 
 	if( $mangle ) {
-		if( $mark ne '' ) {
-			# Connmark Preroute requirement
-			if( $mangle eq '1' ) { $andata = "$src_zone-FWMARK"; $ritorno = '';}
-			$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer, $port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', $target, $mark );
+		if( $preroute ) {
+			$andata = "$src_zone-FWMARK";
+			$ritorno = '';
 		}
-	} else {
-		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer, $port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, $log, $target, '' );
+		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
+		   	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', '', $mark, '' );
+	}  elsif( $preroute ) {
+		$andata = "$src_zone-CTHELPER";
+ 		$ritorno = '';
+		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
+		       	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', '', '', $helper );
+	}  else {
+		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
+		       	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, $log, $target, '', '' );
 	}
 	
 	return $rules;
@@ -2552,7 +2642,8 @@ sub applyService {
 # Applica un servizio
 sub _applyService {
 	my $this = shift;
-	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark ) = @_;
+	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_mac, $dst,
+	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper ) = @_;
 
 	my %service = %{$ref_services->{$serviceName}};
 
@@ -2573,7 +2664,8 @@ sub _applyService {
 		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyService( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark );
+				$goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $category, $hostname,
+			       	$t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper );
 			next;
 		}
 
@@ -2590,7 +2682,7 @@ sub _applyService {
 			next;
 		}
 
-		# Connmark Preroute requirement
+		# Preroute requirement
 		if( $backChain eq '' && $direction ne 'go' ) {
 			# Don't process Back filters
 			next;
@@ -2711,7 +2803,12 @@ sub _applyService {
 		if( $mangle_mark eq '' ) {
 			# filter rule
 			if( $jump eq '' ) {
-				$cmd .= "-j ".( $direction eq 'go' ? 'ACCEPT' : 'BACK' );
+				# helper rule
+				if( $helper ne '' ) { 
+					$cmd .= "-j CT --helper $helper "; 
+				} else {
+					$cmd .= "-j ".( $direction eq 'go' ? 'ACCEPT' : 'BACK' );
+				}
 			} else {
 				$cmd .= "-j $jump";
 			}
