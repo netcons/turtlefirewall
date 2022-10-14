@@ -2614,6 +2614,7 @@ sub applyRule {
 	my $ritorno = "$dst_zone-$src_zone";
 
 	if( $mangle ) {
+		# Mangle Rule
 		if( $preroute ) {
 			$andata = "$src_zone-FWMARK";
 			$ritorno = '';
@@ -2621,11 +2622,13 @@ sub applyRule {
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
 		   	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', '', $mark, '' );
 	}  elsif( $preroute ) {
+		# Raw Rule
 		$andata = "$src_zone-CTHELPER";
  		$ritorno = '';
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
 		       	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', '', '', $helper );
 	}  else {
+		# Filter Rule
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
 		       	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, $log, $target, '', '' );
 	}
