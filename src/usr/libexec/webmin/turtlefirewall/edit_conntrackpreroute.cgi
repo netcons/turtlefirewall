@@ -35,7 +35,7 @@ if( $new ) {
 }
 
 my $options_src = '';
-my @items_src = ();
+my @items_src = ('*');
 push @items_src, $fw->GetZoneList();
 push @items_src, $fw->GetGeoipList();
 push @items_src, $fw->GetNetList();

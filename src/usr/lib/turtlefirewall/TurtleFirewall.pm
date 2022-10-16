@@ -1322,7 +1322,7 @@ sub startFirewall {
 	$this->command('modprobe nf_nat_tftp', '/dev/null');
 
 	# Enable connection marking
-	print "connmark_modules: on\n";
+	print "connmark_module: on\n";
 	$this->command('modprobe xt_connmark', '/dev/null');
 
 	# Enable connection labels
@@ -1403,13 +1403,25 @@ sub startFirewall {
 	# Enable bad error message protection.
 	$this->command( 'echo 1', '/proc/sys/net/ipv4/icmp_ignore_bogus_error_responses' );
 	
-	####
 	# Other options
 	if( $this->{fw}{OPTION}{nf_conntrack_max} > 0 ) {
 		open( FILE, ">/proc/sys/net/netfilter/nf_conntrack_max" );
 		print FILE $this->{fw}{OPTION}{nf_conntrack_max};
 		close FILE;
 		print "nf_conntrack_max: ",$this->{fw}{OPTION}{nf_conntrack_max},"\n";
+	}
+
+	# Connection tracking - automatic helpers 
+	if( -e '/proc/sys/net/netfilter/nf_conntrack_helper' ) {
+		if( $this->{fw}{OPTION}{nf_conntrack_helper} ne 'off' ) {
+			print "nf_conntrack_helper: on\n";
+			$this->command( 'echo 1', '/proc/sys/net/netfilter/nf_conntrack_helper' );
+		} else {
+			print "nf_conntrack_helper: off\n";
+			$this->command( 'echo 0', '/proc/sys/net/netfilter/nf_conntrack_helper' );
+		}
+	} else {
+		print "nf_conntrack_helper: not supported\n";
 	}
 
 	my $rules = $this->getIptablesRules();
