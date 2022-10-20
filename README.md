@@ -89,6 +89,7 @@ curl -s https://api.github.com/repos/netcons/turtlefirewall/releases/latest \
 | tr -d \" \
 | wget -qi -
 createrepo ./
+sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/yum.conf
  ```
 
 Install Turtle Firewall.
