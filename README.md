@@ -93,7 +93,7 @@ createrepo ./
 
 Install Turtle Firewall.
 ```
-dnf install turtlefirewall
+dnf -y install turtlefirewall
 systemctl enable dkms --now
 reboot
 ```
