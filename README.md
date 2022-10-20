@@ -54,6 +54,14 @@ xt_geoip, ( https://inai.de/projects/xtables-addons ) <br>
 Activate Repos el8.
 ```
 dnf config-manager --set-enabled powertools
+dnf config-manager --set-enabled extras
+dnf -y install epel-release
+```
+
+Activate Repos el9.
+```
+dnf config-manager --set-enabled extras-common
+dnf -y install epel-release
 ```
 
 Activate Repos el8 & el9.
