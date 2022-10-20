@@ -83,7 +83,11 @@ gpgckeck=0" > /etc/yum.repos.d/tfw.repo
 dnf -y install createrepo
 mkdir -p /tmp/tfw
 cd /tmp/tfw
-# Download all rpm's here, from : https://github.com/netcons/turtlefirewall/releases
+curl -s https://api.github.com/repos/netcons/turtlefirewall/releases/latest \
+| grep "browser_download_url.*rpm" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
 createrepo ./
  ```
 
