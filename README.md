@@ -84,6 +84,7 @@ sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/yum.conf
 
 Install Turtle Firewall.
 ```
+dnf -y upgrade kernel kernel-devel kernel-headers
 dnf -y install turtlefirewall
 systemctl enable dkms --now
 reboot
