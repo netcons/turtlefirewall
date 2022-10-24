@@ -17,7 +17,7 @@ Turtle Firewall is an Open Source project written using the perl language and re
 - Feature : Added Flow Statistics.
 - Feature : Moved Marking to Mangle Rules. ( Connmark : for use with tc )
 - Feature : Added Preroute Mangle Rules. ( Connmark Preroute : for use with iproute )
-- Feature : Added Preroute Raw Rules. ( Conntrack Helper )
+- Feature : Added Preroute Raw Rules. ( Conntrack Preroute : for use with CT helpers )
 - Logging : Added Logging per rule and Flowinfo logging for target ACCEPT.
 - Services : Removed www service. ( duplicate of http service ) 
 - Services : Added Google QUIC, Ubiquiti Unifi, Whatsapp, Zoom, Teams, etc.
