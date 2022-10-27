@@ -17,7 +17,7 @@ Turtle Firewall is an Open Source project written using the perl language and re
 - Feature : Added Flow Statistics.
 - Feature : Moved Marking to Mangle Rules. ( Connmark : for use with tc )
 - Feature : Added Preroute Mangle Rules. ( Connmark Preroute : for use with iproute )
-- Feature : Added Preroute Raw Rules. ( Conntrack Helper )
+- Feature : Added Preroute Raw Rules. ( Conntrack Preroute : for use with CT helpers )
 - Logging : Added Logging per rule and Flowinfo logging for target ACCEPT.
 - Services : Removed www service. ( duplicate of http service ) 
 - Services : Added Google QUIC, Ubiquiti Unifi, Whatsapp, Zoom, Teams, etc.
@@ -49,15 +49,13 @@ xt_time. <br>
 xt_ndpi, ( https://github.com/vel21ripn/nDPI ) <br>
 xt_geoip, ( https://inai.de/projects/xtables-addons ) <br>
 
-## Install CentOS/RHEL
+## Install CentOS/RHEL 9
 
-Activate Repos el8.
+Activate Repos.
 ```
-dnf config-manager --set-enabled powertools
-```
+dnf config-manager --set-enabled extras-common
+dnf -y install epel-release
 
-Activate Repos el8 & el9.
-```
 echo "[Webmin]
 name=Webmin Distribution Neutral
 #baseurl=https://download.webmin.com/download/yum
@@ -75,13 +73,19 @@ gpgckeck=0" > /etc/yum.repos.d/tfw.repo
 dnf -y install createrepo
 mkdir -p /tmp/tfw
 cd /tmp/tfw
-# Download all rpm's here, from : https://github.com/netcons/turtlefirewall/releases
+curl -s https://api.github.com/repos/netcons/turtlefirewall/releases/latest \
+| grep "browser_download_url.*rpm" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
 createrepo ./
+sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/yum.conf
  ```
 
 Install Turtle Firewall.
 ```
-dnf install turtlefirewall
+dnf -y upgrade kernel kernel-devel kernel-headers
+dnf -y install turtlefirewall
 systemctl enable dkms --now
 reboot
 ```
