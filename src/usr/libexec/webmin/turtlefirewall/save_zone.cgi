@@ -8,8 +8,8 @@
 # License
 #======================================================================
 
-
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 $newzone = $in{'newzone'};
 $zone = $in{'zone'};

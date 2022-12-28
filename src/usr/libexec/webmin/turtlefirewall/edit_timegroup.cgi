@@ -9,6 +9,7 @@
 #======================================================================
 
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 $new = $in{'new'};
 $timegroup = $in{'timegroup'};

@@ -8,8 +8,8 @@
 # License
 #======================================================================
 
-
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 my $geoip = $in{'geoip'};
 my $newgeoip = $in{'newgeoip'};

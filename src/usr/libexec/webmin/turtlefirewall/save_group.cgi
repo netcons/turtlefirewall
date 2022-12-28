@@ -8,8 +8,8 @@
 # License
 #======================================================================
 
-
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 my $group = $in{'group'};
 my $newgroup = $in{'newgroup'};

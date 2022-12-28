@@ -8,8 +8,8 @@
 # License
 #======================================================================
 
-
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 if( $in{'zone'} eq 'FIREWALL' ) {
 	redirect('list_items.cgi');

@@ -1,7 +1,7 @@
 os_support=*-linux
-version=1.960
+version=2.1
 longdesc=Realize a Linux firewall in a simple and fast way.
 name=turtlefirewall
 desc=Turtle Firewall
 category=net
-depends=1.960
+depends=2.010

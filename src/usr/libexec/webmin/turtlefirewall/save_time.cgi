@@ -8,8 +8,8 @@
 # License
 #======================================================================
 
-
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 my $time = $in{'time'};
 my $newtime = $in{'newtime'};

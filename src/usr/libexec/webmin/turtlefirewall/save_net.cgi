@@ -8,8 +8,8 @@
 # License
 #======================================================================
 
-
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 my $net = $in{'net'};
 my $newnet = $in{'newnet'};

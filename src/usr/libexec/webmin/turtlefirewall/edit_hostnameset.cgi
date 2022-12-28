@@ -9,6 +9,7 @@
 #======================================================================
 
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 $new = $in{'new'};
 $hostnameset = $in{'hostnameset'};

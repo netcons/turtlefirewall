@@ -9,6 +9,7 @@
 #======================================================================
 
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 &ui_print_header( $text{'blacklist_title'}, $text{'title'}, "" );
 

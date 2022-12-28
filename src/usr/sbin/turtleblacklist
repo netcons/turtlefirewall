@@ -1,6 +1,6 @@
 #!/bin/bash
 echo -e "\nTurtle Firewall 2.1 - Blacklist";
-echo -e "Copyright (c) 2001-2022 Andrea Frigido\n";
+echo -e "Copyright (c) 2001-2023 Andrea Frigido\n";
 
 grep -E 'blacklist_feature.*="on"|="on".*blacklist_feature' /etc/turtlefirewall/fw.xml > /dev/null
 if [ $? = 0 ]

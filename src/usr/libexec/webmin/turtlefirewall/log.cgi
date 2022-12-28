@@ -9,6 +9,7 @@
 #======================================================================
 
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 &ui_print_header( $text{'log_title'}, $text{'title'}, "" );
 

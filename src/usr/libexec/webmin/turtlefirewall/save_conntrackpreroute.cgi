@@ -9,6 +9,7 @@
 #======================================================================
 
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 my $idx = $in{'idx'};
 my $src = $in{'src'};

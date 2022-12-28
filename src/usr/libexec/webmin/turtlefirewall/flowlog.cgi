@@ -9,6 +9,7 @@
 #======================================================================
 
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 use Time::Piece;
 
 &ui_print_header( $text{'flowlog_title'}, $text{'title'}, "" );

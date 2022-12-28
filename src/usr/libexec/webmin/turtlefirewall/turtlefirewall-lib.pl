@@ -12,8 +12,6 @@ BEGIN { push(@INC, ".."); };
 use WebminCore;
 &init_config();
 
-ReadParse();
-
 # if XML::Parser is not present
 $gotXmlParser = 0;
 foreach my $d (@INC) {
@@ -245,7 +243,7 @@ sub getOptionsList {
 	%{$options{drop_invalid_fragment}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{blacklist_feature}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{nf_conntrack_max}} = ( 'type'=>'text', 'default'=>262144, 'addunchangeopz'=>0 );
-	%{$options{nf_conntrack_helper}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
+	%{$options{nf_conntrack_helper}} = ( 'type'=>'radio', 'default'=>'off', 'addunchangeopz'=>0 );
 	%{$options{log_limit}} = ( 'type'=>'text', 'default'=>60, 'addunchangeopz'=>0 );
 	%{$options{log_limit_burst}} = ( 'type'=>'text', 'default'=>5, 'addunchangeopz'=>0 );
 }
@@ -279,3 +277,5 @@ sub GetIpSets {
 	}
 return @rv;
 }
+
+1;

@@ -8,8 +8,8 @@
 # License
 #======================================================================
 
-
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 my $hostnameset = $in{'hostnameset'};
 my $newhostnameset = $in{'newhostnameset'};

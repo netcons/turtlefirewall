@@ -9,6 +9,7 @@
 #======================================================================
 
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 &ui_print_header( $text{'list_rawrules_title'}, $text{'title'}, "" );
 
@@ -99,12 +100,12 @@ sub showConntrackPreroute {
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nConntrackPreroutes-1 ) {
-		#			$mover .= "<td width=50%><a href='list_conntrackpreroutes.cgi?idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
+		#			$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
 		#		} else {
 		#			$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'></td>";
 		#		}
 		if( $i < $nConntrackPreroutes ) {
-			$mover .= "<td width=50%><a href='list_conntrackpreroutes.cgi?idx=$i&down=1'>
+			$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
 				   </td>";
 		} else {
@@ -113,7 +114,7 @@ sub showConntrackPreroute {
 				   </td>";
 		}
 		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_conntrackpreroutes.cgi?idx=$i&up=1'>
+			$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&up=1'>
 				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='^'></a>
 				   </td>";
 		} else {
@@ -122,7 +123,7 @@ sub showConntrackPreroute {
 				   </td>";
 		}
 		#		if( $i > 2 ) {
-		#		$mover .= "<td width=50%><a href='list_conntrackpreroutes.cgi?idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
+		#		$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
 		#	} else {
 		#		$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'></td>";
 		#	}

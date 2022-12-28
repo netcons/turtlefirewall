@@ -9,6 +9,7 @@
 #======================================================================
 
 do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 &ui_print_header( $text{'list_manglerules_title'}, $text{'title'}, "" );
 
