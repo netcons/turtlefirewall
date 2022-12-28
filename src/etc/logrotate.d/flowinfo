@@ -1,6 +1,6 @@
 /var/log/flowinfo.log {
         daily
         missingok
-        rotate 7
+        rotate 31
         copytruncate
 }
