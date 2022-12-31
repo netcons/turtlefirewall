@@ -207,5 +207,5 @@ CHANGELOG
            - CentOS/RHEL 9
 		OS : Kernel 6.0 compatibility.
            	Feature : Removed pptp, sip, h323 and tftp kernel module options.
-		Feature : Added Preroute Raw Rules. ( Conntrack : Helper )
+		Feature : Added Preroute Raw Rules. ( Conntrack Preroute : for use with CT helpers )
 		Connection Tracking : Migrated helpers to CT target.
