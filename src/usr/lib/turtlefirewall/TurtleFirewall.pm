@@ -1412,16 +1412,18 @@ sub startFirewall {
 	}
 
 	# Connection tracking - automatic helpers 
-	if( -e '/proc/sys/net/netfilter/nf_conntrack_helper' ) {
-		if( $this->{fw}{OPTION}{nf_conntrack_helper} ne 'off' ) {
-			print "nf_conntrack_helper: on\n";
+	if( $this->{fw}{OPTION}{nf_conntrack_helper} ne 'off' ) {
+		print "nf_conntrack_helper: on\n";
+		if( -e '/proc/sys/net/netfilter/nf_conntrack_helper' ) {
 			$this->command( 'echo 1', '/proc/sys/net/netfilter/nf_conntrack_helper' );
 		} else {
-			print "nf_conntrack_helper: off\n";
-			$this->command( 'echo 0', '/proc/sys/net/netfilter/nf_conntrack_helper' );
+			print "nf_conntrack_helper: not supported\n";
 		}
 	} else {
-		print "nf_conntrack_helper: not supported\n";
+		print "nf_conntrack_helper: off\n";
+		if( -e '/proc/sys/net/netfilter/nf_conntrack_helper' ) {
+			$this->command( 'echo 0', '/proc/sys/net/netfilter/nf_conntrack_helper' );
+		}
 	}
 
 	my $rules = $this->getIptablesRules();
