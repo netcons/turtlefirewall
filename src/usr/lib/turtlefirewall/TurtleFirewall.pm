@@ -1411,21 +1411,6 @@ sub startFirewall {
 		print "nf_conntrack_max: ",$this->{fw}{OPTION}{nf_conntrack_max},"\n";
 	}
 
-	# Connection tracking - automatic helpers 
-	if( $this->{fw}{OPTION}{nf_conntrack_helper} ne 'off' ) {
-		print "nf_conntrack_helper: on\n";
-		if( -e '/proc/sys/net/netfilter/nf_conntrack_helper' ) {
-			$this->command( 'echo 1', '/proc/sys/net/netfilter/nf_conntrack_helper' );
-		} else {
-			print "nf_conntrack_helper: not supported\n";
-		}
-	} else {
-		print "nf_conntrack_helper: off\n";
-		if( -e '/proc/sys/net/netfilter/nf_conntrack_helper' ) {
-			$this->command( 'echo 0', '/proc/sys/net/netfilter/nf_conntrack_helper' );
-		}
-	}
-
 	my $rules = $this->getIptablesRules();
 	
 	my $use_iptables_restore = 1;

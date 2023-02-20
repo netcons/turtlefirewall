@@ -40,6 +40,7 @@ push @items_src, $fw->GetZoneList();
 push @items_src, $fw->GetGeoipList();
 push @items_src, $fw->GetNetList();
 push @items_src, $fw->GetHostList();
+push @items_src, $fw->GetGroupList();
 @items_src = sort(@items_src);
 for my $k (@items_src) {
 	if( $k ne 'FIREWALL' ) {
