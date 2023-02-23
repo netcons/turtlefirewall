@@ -216,6 +216,14 @@ sub GetConntrackPreroute {
 	my ($this,$n) = @_;
 	return %{ $this->{fw}{CONNTRACKPREROUTE}[$n-1] };
 }
+sub GetConntracksCount {
+	my $this = shift;
+	return $#{$this->{fw}{CONNTRACK}}+1;
+}
+sub GetConntrack {
+	my ($this,$n) = @_;
+	return %{ $this->{fw}{CONNTRACK}[$n-1] };
+}
 # Get Firewall Configuration Specific Option
 sub GetOption {
 	my ($this,$name) = @_;
@@ -467,6 +475,31 @@ sub MoveConntrackPreroute {
 	splice @{$this->{fw}{CONNTRACKPREROUTE}}, $idxSrc-1, 1;
 	splice @{$this->{fw}{CONNTRACKPREROUTE}}, $idxDst-1, 0, \%attr;
 }
+# AddConntrack( $idx, $src, $dst, $service, $port, $helper, $active );
+sub AddConntrack {
+	my ($this, $idx, $src, $dst, $service, $port, $helper, $active ) = @_;
+	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
+	if( $port ne '' ) { $attr{PORT} = $port; }
+	if( $helper ne '' ) { $attr{HELPER} = $helper; }
+	if( ! $active ) { $attr{ACTIVE} = 'NO'; }
+	$this->AddConntrackAttr( $idx, %attr );
+}
+sub AddConntrackAttr {
+	my $this = shift;
+	my $idx = shift;
+	my %attr = @_;
+	if( $idx == 0 ) {
+		%{$this->{fw}{'CONNTRACK'}[$#{$this->{fw}{'CONNTRACK'}}+1]} = %attr;
+	} else {
+		%{$this->{fw}{'CONNTRACK'}[$idx-1]} = %attr;
+	}
+}
+sub MoveConntrack {
+	my ($this, $idxSrc, $idxDst) = @_;
+	my %attr = %{$this->{fw}{CONNTRACK}[$idxSrc-1]};
+	splice @{$this->{fw}{CONNTRACK}}, $idxSrc-1, 1;
+	splice @{$this->{fw}{CONNTRACK}}, $idxDst-1, 0, \%attr;
+}
 # AddOption( $name, $value );
 sub AddOption {
 	my ($this, $name, $value) = @_;
@@ -557,6 +590,16 @@ sub DeleteItem {
 	for( my $r=0; $r<$conntrackpreroutes; $r++ ) {
 		my %conntrackpreroute = $this->GetConntrackPreroute( $r );
 		if( $conntrackpreroute{SRC} eq $name || $conntrackpreroute{DST} eq $name ) {
+			$found = 1;
+			last;
+		}
+	}
+
+	# Now I check if this item is used by a conntrack rule
+	my $conntracks = $this->GetConntracksCount();
+	for( my $r=0; $r<$conntracks; $r++ ) {
+		my %conntrack = $this->GetConntrack( $r );
+		if( $conntrack{SRC} eq $name || $conntrack{DST} eq $name ) {
 			$found = 1;
 			last;
 		}
@@ -668,7 +711,7 @@ sub RenameItem {
 		}
 
 		# Change item name in all rules
-		foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','NAT','MASQUERADE','REDIRECT') {
+		foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','CONNTRACK','NAT','MASQUERADE','REDIRECT') {
 			for( my $i=0; $i<=$#{$this->{fw}{$ruletype}}; $i++ ) {
 				foreach $field ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','SET') {
 					if( $this->{fw}{$ruletype}[$i]{$field} eq $oldname ) {
@@ -756,6 +799,11 @@ sub DeleteConntrackPreroute {
 	my ($this, $idx) = @_;
 	splice( @{$this->{fw}{'CONNTRACKPREROUTE'}}, $idx-1, 1 );
 }
+# DeleteConntrack( $idx );
+sub DeleteConntrack {
+	my ($this, $idx) = @_;
+	splice( @{$this->{fw}{'CONNTRACK'}}, $idx-1, 1 );
+}
 # DeleteOption( $name );
 sub DeleteOption {
 	my ($this, $name) = @_;
@@ -807,6 +855,7 @@ sub LoadFirewall {
 				if( $name2 eq 'CONNMARKPREROUTE' ) { $this->_LoadFirewallConnmarkPreroute( @{$list[$j+1]} ); }
 				if( $name2 eq 'CONNMARK' ) { $this->_LoadFirewallConnmark( @{$list[$j+1]} ); }
 				if( $name2 eq 'CONNTRACKPREROUTE' ) { $this->_LoadFirewallConntrackPreroute( @{$list[$j+1]} ); }
+				if( $name2 eq 'CONNTRACK' ) { $this->_LoadFirewallConntrack( @{$list[$j+1]} ); }
 				if( $name2 eq 'OPTIONS' ) { $this->_LoadFirewallOptions( @{$list[$j+1]} ); }
 			}
 		}
@@ -968,6 +1017,26 @@ sub _LoadFirewallConntrackPreroute {
 	}
 
 	%{$this->{fw}{'CONNTRACKPREROUTE'}[$#{$this->{fw}{'CONNTRACKPREROUTE'}}+1]} = %attrs;
+}
+
+###
+# Internal method for add CONNTRACK to firewall object
+sub _LoadFirewallConntrack {
+	my $this = shift;
+	my @list = @_;
+	my %attrs = upperKeys( %{shift @list} );
+
+	my $src = $attrs{'SRC'};
+	if( $this->{fwItems}{$src} eq '' && $src ne '*' ) {
+		print STDERR "Error: rule number ".($#{$this->{fw}{CONNTRACK}}+2)." has an invalid source item ($src).\n";
+	}
+
+	my $dst = $attrs{'DST'};
+	if( $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
+		print STDERR "Error: rule number ".($#{$this->{fw}{CONNTRACK}}+2)." has an invalid destination item ($dst).\n";
+	}
+
+	%{$this->{fw}{'CONNTRACK'}[$#{$this->{fw}{'CONNTRACK'}}+1]} = %attrs;
 }
 
 ###
@@ -1239,6 +1308,11 @@ sub SaveFirewallAs {
 		$xml .= $this->attr2xml( 'conntrackpreroute', %{$conntrackpreroutes[$i]} );
 	}
 	$xml .= "\n";
+	my @conntracks = @{$fw{'CONNTRACK'}};
+	for my $i (0..$#conntracks) {
+		$xml .= $this->attr2xml( 'conntrack', %{$conntracks[$i]} );
+	}
+	$xml .= "\n";
 	$xml .= "</firewall>\n";
 
 	open( FWFILE, ">$fwFile" );
@@ -1489,6 +1563,9 @@ sub getIptablesRules {
 	my $chains_raw_conntrackpreroute = '';
 	my $rules_raw_conntrackpreroute = ''; 
 
+	my $chains_raw_conntrack = '';
+	my $rules_raw_conntrack = ''; 
+
 	my $log_limit=60;
 	my $log_limit_burst=5;
 	if( $this->{fw}{OPTION}{log_limit} > 0 ) {
@@ -1673,7 +1750,7 @@ sub getIptablesRules {
 			}
 		}
 		for( my $i=1; $i <= $connmarkpreroutesCount; $i++ ) {
-			$rules_mangle_connmarkpreroute .= $this->applyRule( 1, 1, 1, $this->GetConnmarkPreroute($i) );
+			$rules_mangle_connmarkpreroute .= $this->applyRule( 1, 1, 0, 1, $this->GetConnmarkPreroute($i) );
 		}
 		$chains_mangle .= $chains_mangle_connmarkpreroute;
 		$rules_mangle .= $rules_mangle_connmarkpreroute;
@@ -1710,7 +1787,7 @@ sub getIptablesRules {
 			}
 		}
 		for( my $i=1; $i <= $connmarksCount; $i++ ) {
-			$rules_mangle_connmark .= $this->applyRule( 1, 1, 0, $this->GetConnmark($i) );
+			$rules_mangle_connmark .= $this->applyRule( 1, 1, 0, 0, $this->GetConnmark($i) );
 		}
 		$chains_mangle .= $chains_mangle_connmark;
 		$rules_mangle .= $rules_mangle_connmark;
@@ -1732,10 +1809,31 @@ sub getIptablesRules {
 			}
 		}
 		for( my $i=1; $i <= $conntrackpreroutesCount; $i++ ) {
-			$rules_raw_conntrackpreroute .= $this->applyRule( 1, 0, 1, $this->GetConntrackPreroute($i) );
+			$rules_raw_conntrackpreroute .= $this->applyRule( 1, 0, 1, 1, $this->GetConntrackPreroute($i) );
 		}
 		$chains_raw .= $chains_raw_conntrackpreroute;
 		$rules_raw .= $rules_raw_conntrackpreroute;
+	}
+
+	# Applicazione delle CONNTRACKs
+	#$conntracks .= "#=====================================\n".
+	#	"# Regole di forwarding.\n";
+	my $conntracksCount = $this->GetConntracksCount();
+	if( $conntracksCount > 0 ) {
+		my @zone = $this->GetZoneList();
+		for( my $i=0; $i<=$#zone; $i++ ) {
+			my $z2 = $zone[$i];
+			my %zone2 = $this->GetZone($z2);
+			if( $z2 ne 'FIREWALL' ) {
+				$chains_raw_conntrack .= ":FIREWALL-$z2 - [0:0]\n";
+				$rules_raw_conntrack .= "-A OUTPUT -o ".$zone2{'IF'}." -j FIREWALL-$z2\n";
+			}
+		}
+		for( my $i=1; $i <= $conntracksCount; $i++ ) {
+			$rules_raw_conntrack .= $this->applyRule( 1, 0, 1, 0, $this->GetConntrack($i) );
+		}
+		$chains_raw .= $chains_raw_conntrack;
+		$rules_raw .= $rules_raw_conntrack;
 	}
 
 	# Applicazione delle NATs
@@ -1807,7 +1905,7 @@ sub getIptablesRules {
 	#	"# Regole di forwarding.\n";
 	my $rulesCount = $this->GetRulesCount();
 	for( my $i=1; $i <= $rulesCount; $i++ ) {
-		$rules .= $this->applyRule( 1, 0, 0, $this->GetRule($i) );
+		$rules .= $this->applyRule( 1, 0, 0, 0, $this->GetRule($i) );
 	}
 	
 	# chiudo le catene delle zone
@@ -1832,7 +1930,7 @@ sub getIptablesRules {
 	}
 	print "DROP any other connections and LOG Action\n";
 	
-	return	($rules_raw_conntrackpreroute ? $chains_raw.$rules_raw."COMMIT\n" : "*raw\nCOMMIT\n").
+	return	($rules_raw_conntrackpreroute || $rules_raw_conntrack ? $chains_raw.$rules_raw."COMMIT\n" : "*raw\nCOMMIT\n").
 		($rules_mangle_connmarkpreroute || $rules_mangle_connmark ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").
 		$chains.$rules."COMMIT\n".$chains_nat.$rules_nat."COMMIT\n";
 }
@@ -2378,6 +2476,7 @@ sub applyRule {
 	my $this = shift;
 	my $display = shift;
 	my $mangle = shift; 
+	my $raw = shift; 
 	my $preroute = shift; 
 	my %rule = @_;
 
@@ -2469,7 +2568,7 @@ sub applyRule {
 		my %newrule = %rule;
 		foreach my $s (@srcs) {
 			$newrule{SRC} = $s;
-			$rules .= $this->applyRule( 0, $mangle, $preroute, %newrule );
+			$rules .= $this->applyRule( 0, $mangle, $raw, $preroute, %newrule );
 		}
 		return $rules;
 	} else {
@@ -2505,7 +2604,7 @@ sub applyRule {
 		my %newrule = %rule;
 		foreach my $d (@dsts) {
 			$newrule{DST} = $d;
-			$rules .= $this->applyRule( 0, $mangle, $preroute, %newrule );
+			$rules .= $this->applyRule( 0, $mangle, $raw, $preroute, %newrule );
 		}
 		return $rules;
 	} else {
@@ -2518,7 +2617,7 @@ sub applyRule {
 		my %newrule = %rule;
 		foreach my $serv (@services) {
 			$newrule{SERVICE} = $serv;
-			$rules .= $this->applyRule( 0, $mangle, $preroute, %newrule );
+			$rules .= $this->applyRule( 0, $mangle, $raw, $preroute, %newrule );
 		}
 		return $rules;
 	} 
@@ -2553,7 +2652,7 @@ sub applyRule {
 			foreach my $u (@hostnames) {
 				$newrule{HOSTNAME} = $u;
 				$newrule{SET} = '';
-				$rules .= $this->applyRule( 0, $mangle, $preroute, %newrule );
+				$rules .= $this->applyRule( 0, $mangle, $raw, $preroute, %newrule );
 			}
 			return $rules;
 		} else {
@@ -2596,7 +2695,7 @@ sub applyRule {
 			my %newrule = %rule;
 			foreach my $t (@times) {
 				$newrule{TIME} = $t;
-				$rules .= $this->applyRule( 0, $mangle, $preroute, %newrule );
+				$rules .= $this->applyRule( 0, $mangle, $raw, $preroute, %newrule );
 			}
 			return $rules;
 		} else {
@@ -2620,10 +2719,14 @@ sub applyRule {
 		}
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
 		   	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', '', $mark, '' );
-	}  elsif( $preroute ) {
+	}  elsif( $raw ) {
 		# Raw Rule
-		$andata = "$src_zone-CTHELPER";
- 		$ritorno = '';
+		if( $preroute ) {
+			$andata = "$src_zone-CTHELPER";
+			$ritorno = '';
+		} else {
+			$ritorno = '';
+		}
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
 		       	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', '', '', $helper );
 	}  else {
