@@ -8,30 +8,13 @@ Turtle Firewall is an Open Source project written using the perl language and re
 
 ## New Features
 
-- OS : Systemd support, RPM package, Ensure running via cron.
-- OS : Kernel 6.0 compatibility.
-- Feature : Added Time, GeoIP and nDPI support.
-- Feature : Added Optional Blacklist support.
-- Feature : Added NAT Map to Port.
-- Feature : Added HostName Set and IP Set items.
-- Feature : Added Flow Statistics.
-- Feature : Moved Marking to Mangle Rules. ( Connmark : for use with tc )
-- Feature : Added Preroute Mangle Rules. ( Connmark Preroute : for use with iproute )
-- Feature : Added Preroute Raw Rules. ( Conntrack Preroute : for use with CT helpers )
-- Logging : Added Logging per rule and Flowinfo logging for target ACCEPT.
-- Services : Removed www service. ( duplicate of http service ) 
-- Services : Added Google QUIC, Ubiquiti Unifi, Whatsapp, Zoom, Teams, etc.
-- Bug : Fixed MAC filtering. ( no ip required )
-- Bug : Fixed mangle table flush on firewall stop.
-- Bug : Migrated ip_conntrack_max to nf_conntrack_max.
-- Bug : Limit zone name max characters.
-- Bug : Fixed zone deletion verification.
-- Connection Tracking : Replaced "-m state --state" with "-m conntrack --ctstate".
-- Connection Tracking : Migrated helpers to CT target.
-- Connection Tracking : Enabled connection marking.
-- Connection Tracking : Flush conntrack table on firewall stop.
-- Connection Tracking : Added conntrack tools.
-- Theme : New Webmin support. ( Todo : Translate new features )
+- Time, GeoIP and nDPI support.
+- Optional Blacklist support.
+- NAT Map to Port.
+- Flow Statistics.
+- Logging per rule for Allow and Deny.
+- Connection marking rules.
+- Connection tracking rules.
 
 ## Requirements
 
