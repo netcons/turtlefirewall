@@ -1744,9 +1744,8 @@ sub getIptablesRules {
 			my $z1 = $zone[$i];
 			my %zone1 = $this->GetZone($z1);
 			if( $z1 ne 'FIREWALL' ) {
-				# Add FWMARK chain
-				$chains_mangle_connmarkpreroute .= ":$z1-FWMARK - [0:0]\n";
-				$rules_mangle_connmarkpreroute .= "-A PREROUTING -i ".$zone1{'IF'}." -j $z1-FWMARK\n";
+				$chains_mangle_connmarkpreroute .= ":$z1-IN - [0:0]\n";
+				$rules_mangle_connmarkpreroute .= "-A PREROUTING -i ".$zone1{'IF'}." -j $z1-IN\n";
 			}
 		}
 		for( my $i=1; $i <= $connmarkpreroutesCount; $i++ ) {
@@ -1803,9 +1802,8 @@ sub getIptablesRules {
 			my $z1 = $zone[$i];
 			my %zone1 = $this->GetZone($z1);
 			if( $z1 ne 'FIREWALL' ) {
-				# Add CTHELPER chain
-				$chains_raw_conntrackpreroute .= ":$z1-CTHELPER - [0:0]\n";
-				$rules_raw_conntrackpreroute .= "-A PREROUTING -i ".$zone1{'IF'}." -j $z1-CTHELPER\n";
+				$chains_raw_conntrackpreroute .= ":$z1-IN - [0:0]\n";
+				$rules_raw_conntrackpreroute .= "-A PREROUTING -i ".$zone1{'IF'}." -j $z1-IN\n";
 			}
 		}
 		for( my $i=1; $i <= $conntrackpreroutesCount; $i++ ) {
@@ -2707,26 +2705,29 @@ sub applyRule {
 	#command( "" );
 	#comment( "# service $service: $src --> $dst  ($src_peer -> $dst_peer) [$src_zone -> $dst_zone]" );
 	
-	# I create the 2 return chains
-	my $andata = "$src_zone-$dst_zone";
-	my $ritorno = "$dst_zone-$src_zone";
+	# Create the Chains
+	my $andata = '';
+	my $ritorno = '';
 
+	if( $preroute ) {
+	       	$andata = "$src_zone-IN"; 
+	} else {
+	       	$andata = "$src_zone-$dst_zone";
+       	}
+
+	if( $preroute || $raw ) {
+	       	$ritorno = '';
+       	} else {
+	       	$ritorno = "$dst_zone-$src_zone";
+      	}
+	
+        # Create the Rules
 	if( $mangle ) {
 		# Mangle Rule
-		if( $preroute ) {
-			$andata = "$src_zone-FWMARK";
-			$ritorno = '';
-		}
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
 		   	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', '', $mark, '' );
 	}  elsif( $raw ) {
 		# Raw Rule
-		if( $preroute ) {
-			$andata = "$src_zone-CTHELPER";
-			$ritorno = '';
-		} else {
-			$ritorno = '';
-		}
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
 		       	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', '', '', $helper );
 	}  else {
@@ -2787,7 +2788,6 @@ sub _applyService {
 			next;
 		}
 
-		# Preroute requirement
 		if( $backChain eq '' && $direction ne 'go' ) {
 			# Don't process Back filters
 			next;

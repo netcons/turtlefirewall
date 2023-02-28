@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-
 #
 # TurtleFw: Turtle Firewall
 #
@@ -14,11 +13,7 @@
 #======================================================================
 #
 
-if( -f 'TurtleFirewall.pm' ) {
-	require 'TurtleFirewall.pm';
-} else {
-	require '/usr/lib/turtlefirewall/TurtleFirewall.pm';
-}
+require '/usr/lib/turtlefirewall/TurtleFirewall.pm';
 
 $firewall = new TurtleFirewall();
 
