@@ -27,6 +27,7 @@ my $servicesFile;
 my $userdefServicesFile;
 my $countrycodesFile;
 my $ndpiprotocolsFile;
+my $ndpirisksFile;
 foreach my $arg (@ARGV) {
 	if( $arg =~ /^(-o|--output)\=(.*)/ ) {
 		$outputFile = $2;
@@ -40,6 +41,8 @@ foreach my $arg (@ARGV) {
 		$countrycodesFile = $2;
 	} elsif( $arg =~ /^--ndpiprotocols\=(.*)/ ) {
 		$ndpiprotocolsFile = $2;
+	} elsif( $arg =~ /^--ndpirisks\=(.*)/ ) {
+		$ndpirisksFile = $2;
 	} elsif( $arg eq '--start' ) {
 		# Start Firewall (optional)
 	} elsif( $arg eq '--stop' ) {
@@ -55,7 +58,7 @@ foreach my $arg (@ARGV) {
 			print "Wrong parameters...\n";
 		}
 
-		print "Use: turtlefirewall [--start|--stop|--status] [--output=outputfile] [--firewall=firewallfile] [--services=servicesfile] [--userdefservices=userdefservicesfile] [--countrycodes=countrycodesfile] [--ndpiprotocols=ndpiprotocolsfile]\n";
+		print "Use: turtlefirewall [--start|--stop|--status] [--output=outputfile] [--firewall=firewallfile] [--services=servicesfile] [--userdefservices=userdefservicesfile] [--countrycodes=countrycodesfile] [--ndpiprotocols=ndpiprotocolsfile] [--ndpirisks=ndpirisksfile]\n";
 		print "or turtlefirewall [--start|--stop|--status] [-o=outputfile] [-f=firewallfile] [-s=servicesfile]\n";
 		print "Example: turtlefirewall --start -o=fw.sh -f=fw.xml -s=services.xml\n";
 		exit(1);
@@ -67,6 +70,7 @@ if( $servicesFile eq '' ) { $servicesFile = "/etc/turtlefirewall/fwservices.xml"
 if( $userdefServicesFile eq '' ) { $userdefServicesFile = "/etc/turtlefirewall/fwuserdefservices.xml"; }
 if( $countrycodesFile eq '' ) { $countrycodesFile = "/etc/turtlefirewall/fwcountrycodes.xml"; }
 if( $ndpiprotocolsFile eq '' ) { $ndpiprotocolsFile = "/etc/turtlefirewall/fwndpiprotocols.xml"; }
+if( $ndpirisksFile eq '' ) { $ndpirisksFile = "/etc/turtlefirewall/fwndpirisks.xml"; }
 
 #===================================
 # Carico le regole del firewall
@@ -75,6 +79,7 @@ $firewall->LoadFirewall( $fwFile );
 $firewall->LoadServices( $servicesFile, $userdefServicesFile );
 #$firewall->LoadCountryCodes( $countrycodesFile ); # Only required within Webmin
 $firewall->LoadNdpiProtocols( $ndpiprotocolsFile );
+#$firewall->LoadNdpiRisks( $ndpirisksFile ); # Only required within Webmin
 
 ####
 # Nuovo 

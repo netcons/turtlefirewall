@@ -80,6 +80,16 @@ sub LoadNdpiProtocols {
 	$firewall->LoadNdpiProtocols( $fwndpiprotocols_file );
 }
 
+sub LoadNdpiRisks {
+	my $firewall = shift;
+	my $fwndpirisks_file = $config{'fwndpirisks_file'};
+
+	if( ! -f $fwndpirisks_file ) {
+		$fwndpirisks_file = "/etc/turtlefirewall/fwndpirisks.xml";
+	}
+	$firewall->LoadNdpiRisks( $fwndpirisks_file );
+}
+
 sub LoadCountryCodes {
 	my $firewall = shift;
 	my $fwcountrycodes_file = $config{'fwcountrycodes_file'};

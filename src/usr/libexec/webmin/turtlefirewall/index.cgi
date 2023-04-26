@@ -15,12 +15,13 @@ do 'turtlefirewall-lib.pl';
         &help_search_link("iptables", "man", "doc"));
 
 my @links = ('list_items.cgi',
-	     'list_rules.cgi',
 	     'list_nat.cgi',
+	     'list_rules.cgi',
 	     'list_manglerules.cgi',
 	     'list_rawrules.cgi',
 	     'list_services.cgi',
 	     'list_ndpiprotocols.cgi',
+	     'list_ndpirisks.cgi',
 	     'geoip.cgi',
 	     'blacklist.cgi',
 	     'edit_options.cgi',
@@ -29,12 +30,13 @@ my @links = ('list_items.cgi',
 	     'flowstat.cgi',
 	     'backup.cgi');
 my @titles = ($text{'index_icon_firewall_items'},
-              $text{'index_icon_firewall_rules'},
               $text{'index_icon_firewall_nat'},
+              $text{'index_icon_firewall_rules'},
               $text{'index_icon_firewall_manglerules'},
               $text{'index_icon_firewall_rawrules'},
 	      $text{'index_icon_firewall_services'},
 	      $text{'index_icon_firewall_ndpiprotocols'},
+	      $text{'index_icon_firewall_ndpirisks'},
 	      $text{'index_icon_firewall_geoip'},
 	      $text{'index_icon_blacklist'},
               $text{'index_icon_edit_options'},
@@ -43,12 +45,13 @@ my @titles = ($text{'index_icon_firewall_items'},
 	      $text{'index_icon_flowstat'},
               $text{'index_icon_backup'});
 my @icons = ('images/items.png',
-	     'images/rules.png',
 	     'images/nats.png',
+	     'images/rules.png',
 	     'images/manglerules.png',
 	     'images/rawrules.png',
 	     'images/services.png',
 	     'images/ndpiprotocols.png',
+	     'images/ndpirisks.png',
 	     'images/geoip.png',
 	     'images/blacklist.png',
 	     'images/options.png',
@@ -57,7 +60,7 @@ my @icons = ('images/items.png',
 	     'images/flowstat.png',
 	     'images/backup.png');
 
-&icons_table(\@links, \@titles, \@icons, 14);
+&icons_table(\@links, \@titles, \@icons, 15);
 
 # $status == 1 if Firewall is ON
 $status = $fw->GetStatus();

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<ndpirisks>
+
+	<ndpirisk name="1" description="XSS Attack"> </ndpirisk>
+	<ndpirisk name="2" description="SQL Injection"> </ndpirisk>
+	<ndpirisk name="3" description="RCE Injection"> </ndpirisk>
+	<ndpirisk name="4" description="Binary App Transfer"> </ndpirisk>
+	<ndpirisk name="5" description="Known Proto on Non Std Port"> </ndpirisk>
+	<ndpirisk name="6" description="Self-signed Cert"> </ndpirisk>
+	<ndpirisk name="7" description="Obsolete TLS (v1.1 or older)"> </ndpirisk>
+	<ndpirisk name="8" description="Weak TLS Cipher"> </ndpirisk>
+	<ndpirisk name="9" description="TLS Cert Expired"> </ndpirisk>
+	<ndpirisk name="10" description="TLS Cert Mismatch"> </ndpirisk>
+	<ndpirisk name="11" description="HTTP Susp User-Agent"> </ndpirisk>
+	<ndpirisk name="12" description="HTTP/TLS/QUIC Numeric Hostname/SNI"> </ndpirisk>
+	<ndpirisk name="13" description="HTTP Susp URL"> </ndpirisk>
+	<ndpirisk name="14" description="HTTP Susp Header"> </ndpirisk>
+	<ndpirisk name="15" description="TLS (probably) Not Carrying HTTPS"> </ndpirisk>
+	<ndpirisk name="16" description="Susp DGA Domain name"> </ndpirisk>
+	<ndpirisk name="17" description="Malformed Packet"> </ndpirisk>
+	<ndpirisk name="18" description="SSH Obsolete Cli Vers/Cipher"> </ndpirisk>
+	<ndpirisk name="19" description="SSH Obsolete Ser Vers/Cipher"> </ndpirisk>
+	<ndpirisk name="20" description="SMB Insecure Vers"> </ndpirisk>
+	<ndpirisk name="21" description="TLS Susp ESNI Usage"> </ndpirisk>
+	<ndpirisk name="22" description="Unsafe Protocol"> </ndpirisk>
+	<ndpirisk name="23" description="Susp DNS Traffic"> </ndpirisk>
+	<ndpirisk name="24" description="Missing SNI TLS Extn"> </ndpirisk>
+	<ndpirisk name="25" description="HTTP Susp Content"> </ndpirisk>
+	<ndpirisk name="26" description="Risky ASN"> </ndpirisk>
+	<ndpirisk name="27" description="Risky Domain Name"> </ndpirisk>
+	<ndpirisk name="28" description="Malicious JA3 Fingerp."> </ndpirisk>
+	<ndpirisk name="29" description="Malicious SSL Cert/SHA1 Fingerp"> </ndpirisk>
+	<ndpirisk name="30" description="Desktop/File Sharing"> </ndpirisk>
+	<ndpirisk name="31" description="Uncommon TLS ALPN"> </ndpirisk>
+	<ndpirisk name="32" description="TLS Cert Validity Too Long"> </ndpirisk>
+	<ndpirisk name="33" description="TLS Susp Extn"> </ndpirisk>
+	<ndpirisk name="34" description="TLS Fatal Alert"> </ndpirisk>
+	<ndpirisk name="35" description="Susp Entropy"> </ndpirisk>
+	<ndpirisk name="36" description="Clear-Text Credentials"> </ndpirisk>
+	<ndpirisk name="37" description="Large DNS Packet (512+ bytes)"> </ndpirisk>
+	<ndpirisk name="38" description="Fragmented DNS Message"> </ndpirisk>
+	<ndpirisk name="39" description="Text With Non-Printable Chars"> </ndpirisk>
+	<ndpirisk name="40" description="Possible Exploit"> </ndpirisk>
+	<ndpirisk name="41" description="TLS Cert About To Expire"> </ndpirisk>
+	<ndpirisk name="42" description="IDN Domain Name"> </ndpirisk>
+	<ndpirisk name="43" description="Error Code"> </ndpirisk>
+	<ndpirisk name="44" description="Crawler/Bot"> </ndpirisk>
+	<ndpirisk name="45" description="Anonymous Subscriber"> </ndpirisk>
+	<ndpirisk name="46" description="Unidirectional Traffic"> </ndpirisk>
+	<ndpirisk name="47" description="HTTP Obsolete Server"> </ndpirisk>
+	<ndpirisk name="48" description="Periodic Flow"> </ndpirisk>
+	<ndpirisk name="49" description="Minor Issues"> </ndpirisk>
+	<ndpirisk name="50" description="TCP Connection Issues"> </ndpirisk>
+
+</ndpirisks>

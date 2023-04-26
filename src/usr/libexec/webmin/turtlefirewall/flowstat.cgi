@@ -44,44 +44,43 @@ for my $k (@types) {
 }
 
 $td = "width=20% style='white-space: nowrap;'";
-print qq~<br><br>
-	<form action=\"report_flowstat.cgi\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>$text{'edit_flowstat_title_create'}</th>
+print &ui_form_start("report_flowstat.cgi", "post");
+print qq~<table border width=\"100%\">
+	<tr $tb>
+		<th>$text{'edit_flowstat_title_create'}</th>
+	</tr>
+	<tr $cb>
+		<td>
+		<table width=\"100%\">
+		<tr>
+			<td $td><b>$text{'edit_flowstat_log'}</b></td>
+			<td><select name="log">$options_log</select></td>
 		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\">
-			<tr>
-				<td $td><b>$text{'edit_flowstat_log'}</b></td>
-				<td><select name="log">$options_log</select></td>
-			</tr>
-			<tr>
-				<td $td><b>$text{'edit_flowstat_type'}</b></td>
-				<td><select name="type">$options_type</select></td>
-			</tr>
-  			<tr>
-				<td $td><b>$text{'edit_flowstat_max'}</b></td>
-				<td><select name="max">$options_max</select> <small><i>$text{flowstat_max_help}</i></small></td>
-			</tr>
-			<tr>
-				<td $td><b>$text{'edit_flowstat_top'}</b></td>
-				<td><select name="top">$options_top</select></td>
-			</tr>
-			<tr>
-				<td><b>$text{'edit_flowstat_string'}</b></td>
-				<td><input type="text" size="60" name="string" value="$string"></td>
-			</tr>
-			</table>
-			</td>
+		<tr>
+			<td $td><b>$text{'edit_flowstat_type'}</b></td>
+			<td><select name="type">$options_type</select></td>
 		</tr>
-	</table>~;
+  		<tr>
+			<td $td><b>$text{'edit_flowstat_max'}</b></td>
+			<td><select name="max">$options_max</select> <small><i>$text{flowstat_max_help}</i></small></td>
+		</tr>
+		<tr>
+			<td $td><b>$text{'edit_flowstat_top'}</b></td>
+			<td><select name="top">$options_top</select></td>
+		</tr>
+		<tr>
+			<td><b>$text{'edit_flowstat_string'}</b></td>
+			<td><input type="text" size="60" name="string" value="$string"></td>
+		</tr>
+		</table>
+		</td>
+	</tr>
+</table>~;
 
 print "<table width=\"100%\"><tr>";
 print '<td>'.&ui_submit( $text{'button_create'}, "create").'</td>';
 print "</tr></table>";
-print "</form>";
-
+print &ui_form_end();
 print "<br><br>";
+
 &ui_print_footer('','turtle firewall index');

@@ -46,6 +46,11 @@ sub showLog {
 	#my %dstnat_list = ('*'=>'x');
 	#my %proto_list = ('*'=>'x');
 	#my %host_list = ('*'=>'x');
+	#my %ja3s_list = ('*'=>'x');
+	#my %ja3c_list = ('*'=>'x');
+	#my %tlsfp_list = ('*'=>'x');
+	#my %tlsv_list = ('*'=>'x');
+	#my %risk_list = ('*'=>'x');
 
 	open( LOG, "<", $log );
 	while( <LOG> ) {
@@ -69,6 +74,11 @@ sub showLog {
 			my $dstnat = '';
 			my $proto = '';
 			my $host = '';
+			my $ja3s = '';
+			my $ja3c = '';
+			my $tlsfp = '';
+			my $tlsv = '';
+			my $risk = '';
 
 			if( $l =~ /^(.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) / ) {
 				$stime = $1;
@@ -91,6 +101,11 @@ sub showLog {
 			if( $l =~ /DN=(.*?)( |$)/ ) { $dstnat = $1; }
 			if( $l =~ /P=(.*?)( |$)/ ) { $proto = $1; }
 			if( $l =~ /H=(.*?)( |$)/ ) { $host = $1; }
+			if( $l =~ /S=(.*?)( |$)/ ) { $ja3s = $1; }
+			if( $l =~ /C=(.*?)( |$)/ ) { $ja3c = $1; }
+			if( $l =~ /F=(.*?)( |$)/ ) { $tlsfp = $1; }
+			if( $l =~ /V=(.*?)( |$)/ ) { $tlsv = $1; }
+			if( $l =~ /R=(.*?)( |$)/ ) { $risk = $1; }
 
 			#if( $l3proto ne '' ) {$l3proto_list{$l3proto} = 'x';}
 			#if( $l4proto ne '' ) {$l4proto_list{$l4proto} = 'x';}
@@ -108,6 +123,11 @@ sub showLog {
 			#if( $dstnat ne '' ) {$dstnat_list{$dstnat} = 'x';}
 			#if( $proto ne '') {$proto_list{$proto} = 'x';}
 			#if( $host ne '') {$host_list{$host} = 'x';}
+			#if( $ja3s ne '') {$ja3s_list{$ja3s} = 'x';}
+			#if( $ja3c ne '') {$ja3c_list{$ja3c} = 'x';}
+			#if( $tlsfp ne '') {$tlsfp_list{$tlsfp} = 'x';}
+			#if( $tlsv ne '') {$tlsv_list{$tlsv} = 'x';}
+			#if( $risk ne '') {$risk_list{$risk} = 'x';}
 
 			if( ($in{l3proto} eq '' || $in{l3proto} eq '*' || $in{l3proto} eq $l3proto) &&
 			    ($in{l4proto} eq '' || $in{l4proto} eq '*' || $in{l4proto} eq $l4proto) &&
@@ -124,13 +144,19 @@ sub showLog {
 			    ($in{srcnat} eq '' || $in{srcnat} eq '*' || $in{srcnat} eq $srcnat) &&
 			    ($in{dstnat} eq '' || $in{dstnat} eq '*' || $in{dstnat} eq $dstnat) &&
 			    ($in{proto} eq '' || $in{proto} eq '*' || $in{proto} eq $proto) &&
-			    ($in{host} eq '' || $in{host} eq '*' || $in{host} eq $host) ) {
+			    ($in{host} eq '' || $in{host} eq '*' || $in{host} eq $host) &&
+			    ($in{ja3s} eq '' || $in{ja3s} eq '*' || $in{ja3s} eq $ja3s) &&
+			    ($in{ja3c} eq '' || $in{ja3c} eq '*' || $in{ja3c} eq $ja3c) &&
+			    ($in{tlsfp} eq '' || $in{tlsfp} eq '*' || $in{tlsfp} eq $tlsfp) &&
+			    ($in{tlsv} eq '' || $in{tlsv} eq '*' || $in{tlsv} eq $tlsv) &&
+			    ($in{risk} eq '' || $in{risk} eq '*' || $in{risk} eq $risk) ) {
 				$count++;
 
 				if( $count >= ($pag-1) * $pagelen && $count < $pag * $pagelen) {
 					push @buffer, [$stime, $etime, $l3proto, $l4proto, $src, $sport, $dst, $dport,
 					      		$ubytes, $dbytes, $upackets, $dpackets, $ifindex,
-						       	$connmark, $srcnat, $dstnat, $proto, $host];
+						       	$connmark, $srcnat, $dstnat, $proto, $host,
+						       	$ja3s, $ja3c, $tlsfp, $tlsv, $risk];
 				}
 			}
 	}
@@ -141,7 +167,8 @@ sub showLog {
 			'&src='.$in{src}.'&sport='.$in{sport}.'&dst='.$in{dst}.'&dport='.$in{dport}.'&ubytes='.$in{ubytes}.'&dbytes='.$in{dbytes}.
 			'&upackets='.$in{upackets}.'&dpackets='.$in{dpackets}.'&ifindex='.$in{ifindex}.
 			'&connmark='.$in{connmark}.'&srcnat='.$in{srcnat}.'&dstnat='.$in{dstnat}.
-			'&proto='.$in{proto}.'&host='.$in{host};
+			'&proto='.$in{proto}.'&host='.$in{host}.'&ja3s='.$in{ja3s}.'&ja3c='.$in{ja3c}.
+			'&tlsfp='.$in{tlsfp}.'&tlsv='.$in{tlsv}.'&risk='.$in{risk};
 	my $pageindex = '';
 	if( $pag > 1 ) {
 		$pageindex .= "&nbsp;<a href=\"flowlog.cgi?pag=1&$urlparam\">&lt;&lt;</a>&nbsp;";
@@ -243,6 +270,26 @@ sub showLog {
 	$hdstnat .= "<b>dstNAT<br></b>";
 	push(@head, $hdstnat );
 
+	local $hja3s;
+	$hja3s .= "<b>ja3sFINGERPRINT<br></b>";
+	push(@head, $hja3s );
+
+	local $hja3c;
+	$hja3c .= "<b>ja3cFINGERPRINT<br></b>";
+	push(@head, $hja3c );
+
+	local $htlsfp;
+	$htlsfp .= "<b>tlsFINGERPRINT<br></b>";
+	push(@head, $htlsfp );
+
+	local $htlsv;
+	$htlsv .= "<b>tlsVERSION<br></b>";
+	push(@head, $htlsv );
+
+	local $hrisk;
+	$hrisk .= "<b>RISK<br></b>";
+	push(@head, $hrisk );
+
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_submit( $text{'log_refresh'} ).'</td>';
 	print "</tr></table>";
@@ -266,13 +313,18 @@ sub showLog {
 		 "",
 		 "",
 		 "style='white-space: nowrap;'",
-		 "style='white-space: nowrap;'" );
+		 "style='white-space: nowrap;'",
+		 "style='white-space: nowrap;'",
+		 "style='white-space: nowrap;'",
+		 "style='white-space: nowrap;'",
+		 "align=center",
+		 "align=center" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
 	foreach my $l (@buffer) {
 		local @cols;
 		my ($stime, $etime, $l3proto, $l4proto, $src, $sport, $dst, $dport, $ubytes, $dbytes, $upackets, $dpackets, $ifindex,
-		    $connmark, $srcnat, $dstnat, $proto, $host) = @$l;
+		    $connmark, $srcnat, $dstnat, $proto, $host, $ja3s, $ja3c, $tlsfp, $tlsv, $risk) = @$l;
 	    	showTD( localtime($stime)->strftime('%b %d %X') );
 	    	showTD( localtime($etime)->strftime('%b %d %X') );
 		showTD( l3protoname($l3proto) );
@@ -296,6 +348,11 @@ sub showLog {
 		showTD( $connmark );
 		showTD( $srcnat );
 		showTD( $dstnat );
+		showTD( $ja3s );
+		showTD( $ja3c );
+		showTD( $tlsfp );
+		showTD( $tlsv );
+		showTD( $risk );
 	        print &ui_columns_row(\@cols, \@tds);
 	}
 	print &ui_columns_end();

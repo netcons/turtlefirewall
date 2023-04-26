@@ -70,7 +70,7 @@
 	<ndpiprotocol name="dropbox" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="dtls" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="eaq" category="telephony"> </ndpiprotocol>
-	<ndpiprotocol name="ebay" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="ebay" category="shopping"> </ndpiprotocol>
 	<ndpiprotocol name="edgecast" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="edonkey" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="egp" category="networking"> </ndpiprotocol>
@@ -317,6 +317,14 @@
 	<ndpiprotocol name="xbox" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="xdmcp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="yahoo" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="yandex" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="yandexcloud" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="yandexdirect" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="yandexdisk" category="storage-backup"> </ndpiprotocol>
+	<ndpiprotocol name="yandexmail" category="email"> </ndpiprotocol>
+	<ndpiprotocol name="yandexmarket" category="shopping"> </ndpiprotocol>
+	<ndpiprotocol name="yandexmetrika" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="yandexmusic" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="youtube" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="youtubeupload" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="z3950" category="database"> </ndpiprotocol>

@@ -108,15 +108,15 @@ sub showRule {
 		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
 		if( $attr{'CATEGORY'} ne '' ) { 
-			$serviceline .= ", ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
+			$serviceline .= " ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
 			$attr{'NDPI'} =~ s/,/, /g;
-			$serviceline .= ", ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
+			$serviceline .= " ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
 		}
 		push(@cols, "${sb}${bb}".$serviceline."${be}${se}");
 		if( $attr{'SET'} eq '' ) { $attr{'SET'} = 'any'; }
-		my $cb = $attr{'SET'} ne 'any' && $attr{'NDPI'} ne '' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
-		my $ce = $attr{'SET'} ne 'any' && $attr{'NDPI'} ne '' && $se eq '' ? '</font>' : '';			# ColourEnd
+		my $cb = $attr{'SET'} ne 'any' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
+		my $ce = $attr{'SET'} ne 'any' && $se eq '' ? '</font>' : '';			# ColourEnd
 		push(@cols, "${sb}${bb}${cb}".$attr{'SET'}."${ce}${be}${se}" );
 		if( $attr{'TIME'} eq '' ) { $attr{'TIME'} = 'always'; $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );

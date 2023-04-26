@@ -28,7 +28,7 @@ my @flows = getflows();
 my %type_index = ( 'source' => '4', 'destination' => '6', 'protocol' => '16', 'hostname' => '17' );
 my @stats = getstats($type_index{$type},\%type_list,\@flows);
 
-$type_name = "flowstat_type_$type";
+$type_name = "flowstat_type_${type}";
 showstats($type_name,@stats);
 
 &ui_print_footer("flowstat.cgi",'flow statistics');

@@ -29,11 +29,12 @@ sub new {
 	$this->{fwservices_file} = '';
 	$this->{userdef_fwservices_file} = '';
 	$this->{fwndpiprotocols_file} = '';
+	$this->{fwndpirisks_file} = '';
 	$this->{fwcountrycodes_file} = '';
 	$this->{log_limit} = undef;
 	$this->{log_limit_burst} = undef;
 	bless $this;
-	return $this
+	return $this;
 }
 
 ##
@@ -149,6 +150,15 @@ sub GetNdpiProtocol {
 	my $this = shift;
 	my $name = shift;
 	return %{ $this->{ndpiprotocols}{$name} };
+}
+sub GetNdpiRisksList {
+	my $this = shift;
+	return sort( keys %{ $this->{ndpirisks} } );
+}
+sub GetNdpiRisk {
+	my $this = shift;
+	my $name = shift;
+	return %{ $this->{ndpirisks}{$name} };
 }
 sub GetCountryCodesList {
 	my $this = shift;
@@ -1195,6 +1205,46 @@ sub LoadNdpiProtocols {
 	}
 }
 
+sub LoadNdpiRisks {
+	my $this = shift;
+	my $ndpirisksFile = shift;
+
+	$this->{fwndpirisks_file} = $ndpirisksFile;
+
+	my $xml = new XML::Parser( Style=>'Tree' );
+
+	if( -f $ndpirisksFile ) {
+
+		my @tree = @{ $xml->parsefile( $ndpirisksFile ) };
+
+		#------
+		# Ciclo sui tag di primo livello (NDPIRISKS)
+		for( my $i=0; $i<=$#tree; $i+=2 ) {
+			my $name = uc($tree[$i]);
+			if ($name eq 'NDPIRISKS') {
+				my @list = @{$tree[$i+1]};
+				shift @list;
+
+				#------
+				# Ciclo sui tag di secondo livello (NDPIRISK)
+				for( my $j=0; $j<=$#list; $j+=2 ) {
+					my $name2 = uc($list[$j]);
+					if( $name2 eq 'NDPIRISK' ) {
+						my %attrs = upperKeys( %{ shift @{$list[$j+1]} } );
+
+						my $ndpirisk = $attrs{'NAME'};
+
+						%{ $this->{ndpirisks}{$ndpirisk} } = (
+							'DESCRIPTION' => $attrs{'DESCRIPTION'}
+						);
+
+					}
+				}
+			}
+		}
+	}
+}
+
 ###
 # Funzione di servizio.
 # Passato un hash come parametro ne converte le chiavi in maiuscolo.
@@ -1413,7 +1463,7 @@ sub startFirewall {
 
 	# PreLoad module for nDPI
 	print "ndpi_module: on\n";	
-	$this->command('modprobe xt_ndpi ndpi_enable_flow=1', '/dev/null');
+	$this->command('modprobe xt_ndpi ndpi_enable_flow=1 ndpi_flow_opt=SCFVR', '/dev/null');
 	
 	# Verify Blacklist
 	if( $this->{fw}{OPTION}{blacklist_feature} ne 'off' ) {
@@ -2516,9 +2566,9 @@ sub applyRule {
 		}
 		print ")";
 		if( $category ne '' ) { 
-			print ",ndpi category($category)";
+			print " ndpi category($category)";
 		} elsif( $ndpi ne '' ) {
-			print ",ndpi($ndpi)"; 
+			print " ndpi($ndpi)"; 
 		}
 		if( $set ne '' ) { print " when hostname($set)"; }
 		print " $src --> $dst";
