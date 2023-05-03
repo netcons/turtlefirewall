@@ -30,12 +30,13 @@ sub showConnmarkPreroute {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-		 "width=10% valign=top",
-		 "width=10% valign=top",
+		"width=10% valign=top",
+		"width=10% valign=top",
 		"align=center valign=top",
-		 "width=1% align=center valign=center",
-		 "width=1% align=center valign=center",
-		 "width=1% align=center valign=center",
+		"width=1% align=center valign=center",
+		"width=1% align=center valign=center",
+		"width=1% align=center valign=center",
+		"width=1% align=center valign=center",
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',
@@ -44,6 +45,7 @@ sub showConnmarkPreroute {
 			"<b>$text{'rule_dst'}</b>",
 			"<b>$text{'rule_service_head'}</b>",
 			"<b>$text{'rule_hostname_set'}</b>",
+			"<b>$text{'rule_risk_set'}</b>",
 			"<b>$text{'rule_time'}</b>",
 			"<b>$text{'rule_mark'}</b>",
 			"<b>$text{'rule_move'}</b>" ], 100, 0, \@tds);
@@ -110,10 +112,14 @@ sub showConnmarkPreroute {
 			$serviceline .= ", ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
 		}
 		push(@cols, "${sb}${bb}".$serviceline."${be}${se}");
-		if( $attr{'SET'} eq '' ) { $attr{'SET'} = 'any'; }
-		my $cb = $attr{'SET'} ne 'any' && $attr{'NDPI'} ne '' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
-		my $ce = $attr{'SET'} ne 'any' && $attr{'NDPI'} ne '' && $se eq '' ? '</font>' : '';			# ColourEnd
-		push(@cols, "${sb}${bb}${cb}".$attr{'SET'}."${ce}${be}${se}" );
+		if( $attr{'HOSTNAMESET'} eq '' ) { $attr{'HOSTNAMESET'} = 'any'; }
+		my $cb = $attr{'HOSTNAMESET'} ne 'any' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
+		my $ce = $attr{'HOSTNAMESET'} ne 'any' && $se eq '' ? '</font>' : '';			# ColourEnd
+		push(@cols, "${sb}${bb}${cb}".$attr{'HOSTNAMESET'}."${ce}${be}${se}" );
+		if( $attr{'RISKSET'} eq '' ) { $attr{'RISKSET'} = 'none'; }
+		my $cb = $attr{'RISKSET'} ne 'none' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
+		my $ce = $attr{'RISKSET'} ne 'none' && $se eq '' ? '</font>' : '';		# ColourEnd
+		push(@cols, "${sb}${bb}${cb}".$attr{'RISKSET'}."${ce}${be}${se}" );
 		if( $attr{'TIME'} eq '' ) { $attr{'TIME'} = 'always'; $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
 		push(@cols, "${sb}${bb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${be}${se}" );
@@ -168,12 +174,13 @@ sub showConnmark {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-		 "width=10% valign=top",
-		 "width=10% valign=top",
+	 	"width=10% valign=top",
+		"width=10% valign=top",
 		"align=center valign=top",
-		 "width=1% align=center valign=center",
-		 "width=1% align=center valign=center",
-		 "width=1% align=center valign=center",
+		"width=1% align=center valign=center",
+		"width=1% align=center valign=center",
+		"width=1% align=center valign=center",
+		"width=1% align=center valign=center",
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',
@@ -182,6 +189,7 @@ sub showConnmark {
 			"<b>$text{'rule_dst'}</b>",
 			"<b>$text{'rule_service_head'}</b>",
 			"<b>$text{'rule_hostname_set'}</b>",
+			"<b>$text{'rule_risk_set'}</b>",
 			"<b>$text{'rule_time'}</b>",
 			"<b>$text{'rule_mark'}</b>",
 			"<b>$text{'rule_move'}</b>" ], 100, 0, \@tds);
@@ -248,10 +256,14 @@ sub showConnmark {
 			$serviceline .= ", ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
 		}
 		push(@cols, "${sb}${bb}".$serviceline."${be}${se}");
-		if( $attr{'SET'} eq '' ) { $attr{'SET'} = 'any'; }
-		my $cb = $attr{'SET'} ne 'any' && $attr{'NDPI'} ne '' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
-		my $ce = $attr{'SET'} ne 'any' && $attr{'NDPI'} ne '' && $se eq '' ? '</font>' : '';			# ColourEnd
-		push(@cols, "${sb}${bb}${cb}".$attr{'SET'}."${ce}${be}${se}" );
+		if( $attr{'HOSTNAMESET'} eq '' ) { $attr{'HOSTNAMESET'} = 'any'; }
+		my $cb = $attr{'HOSTNAMESET'} ne 'any' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
+		my $ce = $attr{'HOSTNAMESET'} ne 'any' && $se eq '' ? '</font>' : '';			# ColourEnd
+		push(@cols, "${sb}${bb}${cb}".$attr{'HOSTNAMESET'}."${ce}${be}${se}" );
+		if( $attr{'RISKSET'} eq '' ) { $attr{'RISKSET'} = 'none'; }
+		my $cb = $attr{'RISKSET'} ne 'none' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
+		my $ce = $attr{'RISKSET'} ne 'none' && $se eq '' ? '</font>' : '';		# ColourEnd
+		push(@cols, "${sb}${bb}${cb}".$attr{'RISKSET'}."${ce}${be}${se}" );
 		if( $attr{'TIME'} eq '' ) { $attr{'TIME'} = 'always'; $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
 		push(@cols, "${sb}${bb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${be}${se}" );

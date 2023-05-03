@@ -25,6 +25,7 @@ showHost();
 
 $form++;
 print "<br><br>";
+LoadCountryCodes( $fw );
 showGeoip();
 
 $form++;
@@ -42,6 +43,11 @@ showTimeGroup();
 $form++;
 print "<br><br>";
 showHostNameSet();
+
+$form++;
+print "<br><br>";
+LoadNdpiRisks( $fw );
+showRiskSet();
 
 print "<br><br>";
 showIpSet();
@@ -177,7 +183,8 @@ sub showGeoip {
 		local @cols;
 		my $href = &ui_link("edit_geoip.cgi?geoip=$k",$k);
 		push(@cols, $href );
-		push(@cols, "$geoip{'IP'}" );
+		my %g = $fw->GetCountryCode($geoip{'IP'});
+		push(@cols, "$geoip{'IP'} - $g{'DESCRIPTION'}" );
 	        push(@cols, "$geoip{'ZONE'}" );
 		push(@cols, "".($geoip{'DESCRIPTION'} ne '' ? $geoip{'DESCRIPTION'} : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
@@ -305,7 +312,7 @@ sub showHostNameSet {
         print &ui_columns_start([
 			  "",
                           "<b>$text{'hostnameset'}</b>",
-                          "<b>$text{'hostnameset_elem'}</b>",
+                          "<b>$text{'hostnames'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
 	for my $k ($fw->GetHostNameSetList()) {
 		my %hostnameset = $fw->GetHostNameSet($k);
@@ -318,6 +325,41 @@ sub showHostNameSet {
 		}
         	push(@cols, $hostnamesetlist );
 	        push(@cols, "".($hostnameset{'DESCRIPTION'} ne '' ? $hostnameset{'DESCRIPTION'} : '&nbsp;')."" );
+		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
+	}
+	print &ui_columns_end();
+	print "<table width=\"100%\"><tr>";
+	print '<td>'.&ui_links_row(\@links).'</td>';
+	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print "</tr></table>";
+	print &ui_form_end();
+}
+sub showRiskSet {
+	print &ui_form_start("save_riskset.cgi", "post");
+	@links = ( &select_all_link("d", $form),
+       		   &select_invert_link("d", $form),
+		   "<a href=\"edit_riskset.cgi?new=1\">$text{'list_items_create_riskset'}</a>" );
+        @tds = ( "width=1% valign=top",
+		 "",
+		 "",
+		 "" );
+        print &ui_columns_start([
+			  "",
+                          "<b>$text{'riskset'}</b>",
+                          "<b>$text{'risks'}</b>",
+                          "<b>$text{'description'}</b>" ], 100, 0, \@tds);
+	for my $k ($fw->GetRiskSetList()) {
+		my %riskset = $fw->GetRiskSet($k);
+		local @cols;
+		my $href = &ui_link("edit_riskset.cgi?riskset=$k",$k);
+		push(@cols, $href );
+		my $risksetlist;
+		for my $i (split(/,/, $riskset{'RISKS'})) {
+			my %ndpirisk = $fw->GetNdpiRisk($i);
+			$risksetlist .= "$i - $ndpirisk{'DESCRIPTION'}<br>";
+		}
+		push(@cols, $risksetlist );
+		push(@cols, "".($riskset{'DESCRIPTION'} ne '' ? $riskset{'DESCRIPTION'} : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();

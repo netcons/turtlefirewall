@@ -43,7 +43,7 @@ for my $k (@zones) {
 	if( $k ne 'FIREWALL' ) {
 		$options_src .= '<option'.($k eq $src ? ' selected' : '').'>'.$k.'</option>';
 		# I cannot specify a zone as destination (iptables PREROUTING can have -o oprion)
-		#$options_dst .= '<option'.($k eq $dst ? ' selected' : '').'>'.$k;
+		#$options_dst .= '<option'.($k eq $dst ? ' selected' : '').'>'.$k.'</option>';
 	}
 }
 

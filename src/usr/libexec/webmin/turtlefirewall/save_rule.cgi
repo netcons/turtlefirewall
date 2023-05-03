@@ -18,8 +18,10 @@ my $dst = $in{'dst'};
 $dst =~ s/\0/,/g;
 my ($service, $port) = formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
 my ($ndpi, $category) = formNdpiProtocolParse( $in{'ndpiprotocoltype'}, $in{'ndpiprotocol2'}, $in{'category'} );
-my $set = $in{'set'};
-if( $set eq 'any' ) { $set = ''; }
+my $hostnameset = $in{'hostnameset'};
+if( $hostnameset eq 'any' ) { $hostnameset = ''; }
+my $riskset = $in{'riskset'};
+if( $riskset eq 'none' ) { $riskset = ''; }
 my $time = $in{'time'};
 if( $time eq 'always' ) { $time = ''; }
 my $target = $in{'target'};
@@ -59,11 +61,11 @@ if( $in{'delete'} ) {
 		error( $text{save_rule_error4} );
 	}
 
-	if( $target eq 'ACCEPT' && ($ndpi eq 'all' || $set ne '') ) {
+	if( $target eq 'ACCEPT' && ($ndpi eq 'all' || $hostnameset ne '' || $riskset ne '') ) {
 		error( $text{save_rule_error5} );
 	}
 
-	$fw->AddRule( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $target, $active, $log, $description );
+	$fw->AddRule( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $target, $active, $log, $description );
 }
 
 $fw->SaveFirewall();

@@ -119,7 +119,7 @@ sub formService {
 					last;
 				}
 			}
-			$options_service .= qq~<option value="$k"~.($selected ? ' SELECTED' : '').">$k - $service{DESCRIPTION}";
+			$options_service .= qq~<option value="$k"~.($selected ? ' SELECTED' : '').">$k - $service{DESCRIPTION}</option>";
 		}
 	}
 
@@ -182,7 +182,7 @@ sub formNdpiProtocol {
 					last;
 				}
 			}
-			$options_ndpiprotocol .= qq~<option value="$k"~.($selected ? ' SELECTED' : '').">$k - $ndpiprotocol{CATEGORY}";
+			$options_ndpiprotocol .= qq~<option value="$k"~.($selected ? ' SELECTED' : '').">$k - $ndpiprotocol{CATEGORY}</option>";
 			push(@categorys, $ndpiprotocol{CATEGORY});
 		}
 	}
@@ -267,7 +267,7 @@ sub roundbytes {
 ###
 # return a list of active ipsets
 sub GetIpSets {
-	local (@rv, $name, $set={});
+	local (@rv, $name, $ipset={});
 	open(FILE, "ipset list -t 2>/dev/null |");
 	LINE:
 	while(<FILE>) {
@@ -277,11 +277,11 @@ sub GetIpSets {
      		($n) = $n =~ /(\S+)/;
      		# get values from name to number
      		$name=$v if ($n eq "Name");
-     		$set->{$n}=$v;
+     		$ipset->{$n}=$v;
 
      		if ($n eq "Number") {
-              		push(@rv, $set);
-              		$set={};
+              		push(@rv, $ipset);
+              		$ipset={};
      		}
 	}
 return @rv;

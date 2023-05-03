@@ -30,7 +30,7 @@ $options_zone = '';
 @zones = $fw->GetZoneList();
 for my $k (@zones) {
 	if( $k ne 'FIREWALL' ) {
-		$options_zone .= '<option'.($k eq $zone ? ' selected' : '').'>'.$k;
+		$options_zone .= '<option'.($k eq $zone ? ' selected' : '').'>'.$k.'</option>';
 	}
 }
 
@@ -39,7 +39,7 @@ $options_countrycode = '';
 @countrycodes = $fw->GetCountryCodesList();
 for my $k (@countrycodes) {
 	my %country = $fw->GetCountryCode($k);
-	$options_countrycode .= qq~<option value="$k"~.($k eq $ip ? ' selected' : '').">$k - $country{DESCRIPTION}";
+	$options_countrycode .= qq~<option value="$k"~.($k eq $ip ? ' selected' : '').">$k - $country{DESCRIPTION}</option>";
 }
 
 print "<br><br>

@@ -52,8 +52,8 @@ if( $in{'delete'} ) {
 	if ( $hostnamesetlist eq '' ) { 
 		error( $text{save_hostnameset_error4} );
 	} else {
-		for my $elem (split(/\s+/, $hostnamesetlist)) {
-			if ( $elem ne '' && $elem !~ /^[A-z0-9\-\.]+$/ ) { 
+		for my $hostname (split(/\s+/, $hostnamesetlist)) {
+			if ( $hostname ne '' && $hostname !~ /^[A-z0-9\-\.]+$/ ) { 
 				error( $text{save_hostnameset_error7} );
 	       		}
 		}

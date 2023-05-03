@@ -18,7 +18,7 @@ my $ip = $in{'ip'};
 @countrycodes = $fw->GetCountryCodesList();
 for my $k (@countrycodes) {
 	my %country = $fw->GetCountryCode($k);
-	$options_countrycode .= qq~<option value="$k"~.($k eq $ip ? ' selected' : '').">$k - $country{DESCRIPTION}";
+	$options_countrycode .= qq~<option value="$k"~.($k eq $ip ? ' selected' : '').">$k - $country{DESCRIPTION}</option>";
 }
 
 &ui_print_header( $text{'list_geoip_title'}, $text{'title'}, "" );

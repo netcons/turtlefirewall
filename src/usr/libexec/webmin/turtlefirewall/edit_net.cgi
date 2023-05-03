@@ -31,7 +31,7 @@ $options_zone = '';
 @zones = $fw->GetZoneList();
 for my $k (@zones) {
 	if( $k ne 'FIREWALL' ) {
-		$options_zone .= '<option'.($k eq $zone ? ' selected' : '').'>'.$k;
+		$options_zone .= '<option'.($k eq $zone ? ' selected' : '').'>'.$k.'</option>';
 	}
 }
 

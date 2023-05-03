@@ -22,7 +22,8 @@ if( $new ) {
 	$port = '';
 	$ndpi = '';
 	$category = '';
-	$set = '';
+	$hostnameset = '';
+	$riskset = '';
 	$time = '';
 	$mark = '';
 	$active = 1;
@@ -36,7 +37,8 @@ if( $new ) {
 	$port = $rule{'PORT'};
 	$ndpi = $rule{'NDPI'};
 	$category = $rule{'CATEGORY'};
-	$set = $rule{'SET'};
+	$hostnameset = $rule{'HOSTNAMESET'};
+	$riskset = $rule{'RISKSET'};
 	$time = $rule{'TIME'};
 	$mark = $rule{'MARK'};
 	$active = $rule{'ACTIVE'} ne 'NO';
@@ -73,13 +75,23 @@ for my $k (@items) {
 }
 
 my $options_hostnameset = '';
-if( $set eq '' ) { $set = 'any'; }
-my @sets = ('any');
-push @sets, $fw->GetHostNameSetList();
-for my $k (@sets) {
+if( $hostnameset eq '' ) { $hostnameset = 'any'; }
+my @hostnamesets = ('any');
+push @hostnamesets, $fw->GetHostNameSetList();
+for my $k (@hostnamesets) {
 	my $selected = 0;
-	if( $k eq $set ) { $selected = 1; }
+	if( $k eq $hostnameset ) { $selected = 1; }
 	$options_hostnameset .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
+}
+
+my $options_riskset = '';
+if( $riskset eq '' ) { $riskset = 'none'; }
+my @risksets = ('none');
+push @risksets, $fw->GetRiskSetList();
+for my $k (@risksets) {
+	my $selected = 0;
+	if( $k eq $riskset ) { $selected = 1; }
+	$options_riskset .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
 }
 
 my $options_time = '';
@@ -136,7 +148,11 @@ print				"<br>
                         </tr>
 			<tr>
 				<td><b>$text{rule_hostname_set}</b></td>
-				<td><select name=\"set\">$options_hostnameset</select></td>
+				<td><select name=\"hostnameset\">$options_hostnameset</select></td>
+			</tr>
+			<tr>
+				<td><b>$text{rule_risk_set}</b></td>
+				<td><select name=\"riskset\">$options_riskset</select></td>
 			</tr>
 			<tr>
 				<td><b>$text{rule_time}</b></td>

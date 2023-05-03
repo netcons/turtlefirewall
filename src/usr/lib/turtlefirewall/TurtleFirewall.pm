@@ -71,6 +71,10 @@ sub GetHostNameSetList {
 	my $this = shift;
 	return sort( keys %{ $this->{fw}{HOSTNAMESET} } );
 }
+sub GetRiskSetList {
+	my $this = shift;
+	return sort( keys %{ $this->{fw}{RISKSET} } );
+}
 sub GetZone {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{ZONE}{$name} };
@@ -102,6 +106,10 @@ sub GetTimeGroup {
 sub GetHostNameSet {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{HOSTNAMESET}{$name} };
+}
+sub GetRiskSet {
+	my ($this,$name) = @_;
+	return %{ $this->{fw}{RISKSET}{$name} };
 }
 sub GetAllItemsList {
 	my $this = shift;
@@ -157,8 +165,8 @@ sub GetNdpiRisksList {
 }
 sub GetNdpiRisk {
 	my $this = shift;
-	my $name = shift;
-	return %{ $this->{ndpirisks}{$name} };
+	my $id = shift;
+	return %{ $this->{ndpirisks}{$id} };
 }
 sub GetCountryCodesList {
 	my $this = shift;
@@ -275,6 +283,12 @@ sub AddHostNameSet {
 	%{ $this->{fw}{HOSTNAMESET}{$name} } = ('NAME'=>$name, 'HOSTNAMES'=>$hostnames, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'HOSTNAMESET';
 }
+# AddRiskSet( $name, $risks, $description )
+sub AddRiskSet {
+	my ($this, $name, $risks, $description) = @_;
+	%{ $this->{fw}{RISKSET}{$name} } = ('NAME'=>$name, 'RISKS'=>$risks, 'DESCRIPTION'=>$description );
+	$this->{fwItems}{$name} = 'RISKSET';
+}
 # AddHost( $name, $ip, $mac, $zone, $description )
 sub AddHost {
 	my ($this, $name, $ip, $mac, $zone, $description) = @_;
@@ -368,14 +382,15 @@ sub AddRedirectAttr {
 		%{$this->{fw}{'REDIRECT'}[$idx-1]} = %attr;
 	}
 }
-# AddRule( $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $target, $active, $log, $description );
+# AddRule( $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $target, $active, $log, $description );
 sub AddRule {
-	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $target, $active, $log, $description ) = @_;
+	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $target, $active, $log, $description ) = @_;
 	if( $service eq '' ) { $service = 'all'; }
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
-	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; } elsif( $set ne '' ) { $attr{NDPI} = 'all'; }
+	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; } elsif( $hostnameset ne '' || $riskset ne '' ) { $attr{NDPI} = 'all'; }
 	if( $category ne '' ) { $attr{CATEGORY} = $category; }
-	if( $set ne '' ) { $attr{SET} = $set; }
+	if( $hostnameset ne '' ) { $attr{HOSTNAMESET} = $hostnameset; }
+	if( $riskset ne '' ) { $attr{RISKSET} = $riskset; }
 	if( $port ne '' ) { $attr{PORT} = $port; }
 	if( $time ne '' ) { $attr{TIME} = $time; }
 	if( $target ne '' ) { $attr{TARGET} = $target; }
@@ -400,14 +415,15 @@ sub MoveRule {
 	splice @{$this->{fw}{RULE}}, $idxSrc-1, 1;
 	splice @{$this->{fw}{RULE}}, $idxDst-1, 0, \%attr;
 }
-# AddConnmarkPreroute( $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $mark, $active );
+# AddConnmarkPreroute( $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active );
 sub AddConnmarkPreroute {
-	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $mark, $active ) = @_;
+	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active ) = @_;
 	if( $service eq '' ) { $service = 'all'; }
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
-	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; }
+	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; } elsif( $hostnameset ne '' || $riskset ne '' ) { $attr{NDPI} = 'all'; }
 	if( $category ne '' ) { $attr{CATEGORY} = $category; }
-	if( $set ne '' ) { $attr{SET} = $set; }
+	if( $hostnameset ne '' ) { $attr{HOSTNAMESET} = $hostnameset; }
+	if( $riskset ne '' ) { $attr{RISKSET} = $riskset; }
 	if( $port ne '' ) { $attr{PORT} = $port; }
 	if( $time ne '' ) { $attr{TIME} = $time; }
 	if( $mark ne '' ) { $attr{MARK} = $mark; }
@@ -430,14 +446,15 @@ sub MoveConnmarkPreroute {
 	splice @{$this->{fw}{CONNMARKPREROUTE}}, $idxSrc-1, 1;
 	splice @{$this->{fw}{CONNMARKPREROUTE}}, $idxDst-1, 0, \%attr;
 }
-# AddConnmark( $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $mark, $active );
+# AddConnmark( $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active );
 sub AddConnmark {
-	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $set, $port, $time, $mark, $active ) = @_;
+	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active ) = @_;
 	if( $service eq '' ) { $service = 'all'; }
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
-	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; }
+	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; } elsif( $hostnameset ne '' || $riskset ne '' ) { $attr{NDPI} = 'all'; }
 	if( $category ne '' ) { $attr{CATEGORY} = $category; }
-	if( $set ne '' ) { $attr{SET} = $set; }
+	if( $hostnameset ne '' ) { $attr{HOSTNAMESET} = $hostnameset; }
+	if( $riskset ne '' ) { $attr{RISKSET} = $riskset; }
 	if( $port ne '' ) { $attr{PORT} = $port; }
 	if( $time ne '' ) { $attr{TIME} = $time; }
 	if( $mark ne '' ) { $attr{MARK} = $mark; }
@@ -569,7 +586,7 @@ sub DeleteItem {
 	my $rules = $this->GetRulesCount();
 	for( my $r=0; $r<$rules; $r++ ) {
 		my %rule = $this->GetRule( $r );
-		if( $rule{SRC} eq $name || $rule{DST} eq $name || $rule{TIME} eq $name || $rule{SET} eq $name ) {
+		if( $rule{SRC} eq $name || $rule{DST} eq $name || $rule{TIME} eq $name || $rule{HOSTNAMESET} eq $name || $rule{RISKSET} eq $name ) {
 			$found = 1;
 			last;
 		}
@@ -579,7 +596,7 @@ sub DeleteItem {
 	my $connmarkpreroutes = $this->GetConnmarkPreroutesCount();
 	for( my $r=0; $r<$connmarkpreroutes; $r++ ) {
 		my %connmarkpreroute = $this->GetConnmarkPreroute( $r );
-		if( $connmarkpreroute{SRC} eq $name || $connmarkpreroute{DST} eq $name || $connmarkpreroute{TIME} eq $name || $connmarkpreroute{SET} eq $name ) {
+		if( $connmarkpreroute{SRC} eq $name || $connmarkpreroute{DST} eq $name || $connmarkpreroute{TIME} eq $name || $connmarkpreroute{HOSTNAMESET} eq $name || $connmarkpreroute{RISKSET} eq $name ) {
 			$found = 1;
 			last;
 		}
@@ -589,7 +606,7 @@ sub DeleteItem {
 	my $connmarks = $this->GetConnmarksCount();
 	for( my $r=0; $r<$connmarks; $r++ ) {
 		my %connmark = $this->GetConnmark( $r );
-		if( $connmark{SRC} eq $name || $connmark{DST} eq $name || $connmark{TIME} eq $name || $connmark{SET} eq $name ) {
+		if( $connmark{SRC} eq $name || $connmark{DST} eq $name || $connmark{TIME} eq $name || $connmark{HOSTNAMESET} eq $name || $connmark{RISKSET} eq $name ) {
 			$found = 1;
 			last;
 		}
@@ -723,7 +740,7 @@ sub RenameItem {
 		# Change item name in all rules
 		foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','CONNTRACK','NAT','MASQUERADE','REDIRECT') {
 			for( my $i=0; $i<=$#{$this->{fw}{$ruletype}}; $i++ ) {
-				foreach $field ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','SET') {
+				foreach $field ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET') {
 					if( $this->{fw}{$ruletype}[$i]{$field} eq $oldname ) {
 						$this->{fw}{$ruletype}[$i]{$field} = $newname;
 					}
@@ -748,6 +765,11 @@ sub DeleteTimeGroup {
 sub DeleteHostNameSet {
 	my ($this, $hostnameset) = @_;
 	return $this->DeleteItem( $hostnameset );
+}
+# DeleteRiskSet( $riskset );
+sub DeleteRiskSet {
+	my ($this, $riskset) = @_;
+	return $this->DeleteItem( $riskset );
 }
 # DeleteHost( $host );
 sub DeleteHost {
@@ -858,6 +880,7 @@ sub LoadFirewall {
 				if( $name2 eq 'TIMEGROUP' ) { $this->_LoadFirewallItem( 'TIMEGROUP', @{$list[$j+1]} ); }
 				if( $name2 eq 'GROUP' ) { $this->_LoadFirewallItem( 'GROUP', @{$list[$j+1]} ); }
 				if( $name2 eq 'HOSTNAMESET' ) { $this->_LoadFirewallItem( 'HOSTNAMESET', @{$list[$j+1]} ); }
+				if( $name2 eq 'RISKSET' ) { $this->_LoadFirewallItem( 'RISKSET', @{$list[$j+1]} ); }
 				if( $name2 eq 'MASQUERADE' ) { $this->_LoadFirewallNat( 'MASQUERADE', @{$list[$j+1]} ); }
 				if( $name2 eq 'NAT' ) { $this->_LoadFirewallNat( 'NAT', @{$list[$j+1]} ); }
 				if( $name2 eq 'REDIRECT' ) { $this->_LoadFirewallNat( 'REDIRECT', @{$list[$j+1]} ); }
@@ -1220,19 +1243,19 @@ sub LoadNdpiRisks {
 		#------
 		# Ciclo sui tag di primo livello (NDPIRISKS)
 		for( my $i=0; $i<=$#tree; $i+=2 ) {
-			my $name = uc($tree[$i]);
-			if ($name eq 'NDPIRISKS') {
+			my $id = uc($tree[$i]);
+			if ($id eq 'NDPIRISKS') {
 				my @list = @{$tree[$i+1]};
 				shift @list;
 
 				#------
 				# Ciclo sui tag di secondo livello (NDPIRISK)
 				for( my $j=0; $j<=$#list; $j+=2 ) {
-					my $name2 = uc($list[$j]);
-					if( $name2 eq 'NDPIRISK' ) {
+					my $id2 = uc($list[$j]);
+					if( $id2 eq 'NDPIRISK' ) {
 						my %attrs = upperKeys( %{ shift @{$list[$j+1]} } );
 
-						my $ndpirisk = $attrs{'NAME'};
+						my $ndpirisk = $attrs{'ID'};
 
 						%{ $this->{ndpirisks}{$ndpirisk} } = (
 							'DESCRIPTION' => $attrs{'DESCRIPTION'}
@@ -1321,6 +1344,10 @@ sub SaveFirewallAs {
 	$xml .= "\n";
 	foreach my $k (keys %{$fw{'HOSTNAMESET'}}) {
 		$xml .= $this->attr2xml( 'hostnameset', %{$fw{'HOSTNAMESET'}{$k}} );
+	}
+	$xml .= "\n";
+	foreach my $k (keys %{$fw{'RISKSET'}}) {
+		$xml .= $this->attr2xml( 'riskset', %{$fw{'RISKSET'}{$k}} );
 	}
 	$xml .= "\n";
 	my @nats = @{$fw{'NAT'}};
@@ -2545,7 +2572,8 @@ sub applyRule {
 	my $service = $rule{SERVICE};
 	my $ndpi = $rule{NDPI};
 	my $category = $rule{CATEGORY};
-	my $set = $rule{SET};
+	my $hostnameset = $rule{HOSTNAMESET};
+	my $riskset = $rule{RISKSET};
 	my $hostname = $rule{HOSTNAME};
 	my $port = $rule{PORT};
 	my $mark = $rule{MARK};
@@ -2570,7 +2598,8 @@ sub applyRule {
 		} elsif( $ndpi ne '' ) {
 			print " ndpi($ndpi)"; 
 		}
-		if( $set ne '' ) { print " when hostname($set)"; }
+		if( $hostnameset ne '' ) { print " hostname($hostnameset)"; }
+		if( $riskset ne '' ) { print " risk($riskset)"; }
 		print " $src --> $dst";
 		#if( $src_mac ne '' ) { print "(mac:$src_mac)"; }
 		if( $time ne '' ) { print " AT $time"; }
@@ -2683,12 +2712,12 @@ sub applyRule {
 		$ndpi = join(",", @items);
 	}
 
-	# set items
-	if( $set ne '' ) { 
-		my ($hostnameset) = $this->expand_hostnameset_item( $set );
+	# hostnameset items
+	if( $hostnameset ne '' ) { 
+		my ($hostname_list) = $this->expand_hostnameset_item( $hostnameset );
 
 		my @hostnames = ();
-		my @hostnames = split( /,/, $hostnameset );
+		my @hostnames = split( /,/, $hostname_list );
 		# sort
 		@hostnames = sort(@hostnames);
 		# unique values
@@ -2699,7 +2728,7 @@ sub applyRule {
 			my %newrule = %rule;
 			foreach my $u (@hostnames) {
 				$newrule{HOSTNAME} = $u;
-				$newrule{SET} = '';
+				$newrule{HOSTNAMESET} = '';
 				$rules .= $this->applyRule( 0, $mangle, $raw, $preroute, %newrule );
 			}
 			return $rules;
@@ -2707,6 +2736,12 @@ sub applyRule {
 			$hostname = shift @hostnames;
 		}
 	} 
+
+	# riskset items
+	if( $riskset ne '' ) { 
+		my %riskset_list = $this->GetRiskSet($riskset);
+		$risk = $riskset_list{'RISKS'};
+	}
 
 	my ($src_zone, $src_peer, $src_mac) = $this->expand_item( $src );
 	my ($dst_zone, $dst_peer) = $this->expand_item( $dst );
@@ -2775,15 +2810,15 @@ sub applyRule {
 	if( $mangle ) {
 		# Mangle Rule
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
-		   	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', '', $mark, '' );
+		   	$port, $ndpi, $category, $hostname, $risk, $t_days, $t_start, $t_stop, '', '', $mark, '' );
 	}  elsif( $raw ) {
 		# Raw Rule
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
-		       	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, '', '', '', $helper );
+		       	$port, $ndpi, $category, $hostname, $risk, $t_days, $t_start, $t_stop, '', '', '', $helper );
 	}  else {
 		# Filter Rule
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
-		       	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, $log, $target, '', '' );
+		       	$port, $ndpi, $category, $hostname, $risk, $t_days, $t_start, $t_stop, $log, $target, '', '' );
 	}
 	
 	return $rules;
@@ -2799,7 +2834,7 @@ sub applyService {
 sub _applyService {
 	my $this = shift;
 	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_mac, $dst,
-	$port, $ndpi, $category, $hostname, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper ) = @_;
+	$port, $ndpi, $category, $hostname, $risk, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper ) = @_;
 
 	my %service = %{$ref_services->{$serviceName}};
 
@@ -2820,7 +2855,7 @@ sub _applyService {
 		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyService( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $category, $hostname,
+				$goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $category, $hostname, $risk,
 			       	$t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper );
 			next;
 		}
@@ -2906,7 +2941,8 @@ sub _applyService {
 					$rules .= "$cmddpi\n";
 					$cmd .= "-m ndpi --clevel dpi --proto $ndpi ";
                                 }
-				if( $hostname ne '' ) { print "** $hostname nDPI hostname ignored on target $target **\n"; }
+				if( $hostname ne '' ) { print "** nDPI hostname ignored on target $target **\n"; }
+				if( $risk ne '' ) { print "** nDPI risk ignored on target $target **\n"; }
 			} else {
 				if( $ndpi eq 'all' ) {
 					$cmd .= "-m ndpi --all ";
@@ -2914,6 +2950,7 @@ sub _applyService {
 					$cmd .= "-m ndpi --proto $ndpi ";
                                 }
 				if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
+				if( $risk ne '' ) { $cmd .= "--risk $risk "; }
 			}
 	       	}
 
@@ -2927,7 +2964,9 @@ sub _applyService {
 		if( $log eq "YES" ) {
 			my $cmdlog = $cmd;
 			if( $target =~ /DROP|REJECT/ ) {
-				if( $hostname ne '' ) {
+				if( $risk ne '' ) {
+					$logprefix = "TFW RISK";
+				} elsif( $hostname ne '') { 
 					$logprefix = "TFW $hostname";
 				} elsif( $category ne '') { 
 					$logprefix = "TFW $category";

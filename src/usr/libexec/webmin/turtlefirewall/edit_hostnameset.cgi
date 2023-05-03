@@ -21,9 +21,9 @@ if( $new ) {
 	&ui_print_header( $text{'edit_hostnameset_title_edit'}, $text{'title'}, "" );
 }
 
-my %u = $fw->GetHostNameSet($hostnameset);
-my $hostnames = $u{'HOSTNAMES'};
-my $description = $u{DESCRIPTION};
+my %h = $fw->GetHostNameSet($hostnameset);
+my $hostnames = $h{'HOSTNAMES'};
+my $description = $h{'DESCRIPTION'};
 
 my @hostnamesetlist = split(/,/, $hostnames);
 
@@ -47,7 +47,7 @@ if( $new ) {
 }
 print			'</td></tr>
 			<tr>
-				<td valign="top"><b>'.$text{'hostnameset_elem'}.'</b></td>
+				<td valign="top"><b>'.$text{'hostnames'}.'</b></td>
 				<td valign="top">
 			<table width="100%">
                    	<tr><td>';
