@@ -113,10 +113,10 @@ fi
 }
 
 case $1 in
- -I|--initialise) Initialise;;
- -f|--flush) Flush;;
+ -I|--initialise) Verify;Initialise;;
+ -f|--flush) Verify;Flush;;
  -d|--download) Download;;
- -i|--import) Import;;
+ -i|--import) Verify;Import;;
  -h|--help) Help;;
  -x|--exclude-download) Initialise;Flush;Import;;
  *) Initialise;Flush;Download;Import;;
