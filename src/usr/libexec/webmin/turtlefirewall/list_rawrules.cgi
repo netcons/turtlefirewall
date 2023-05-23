@@ -22,7 +22,7 @@ showConntrack();
 #============================================================================
 
 sub showConntrackPreroute {
-	print "<br><big><b>$text{conntrack_preroute}</b></big>";
+	print &ui_subheading($text{'conntrack_preroute'});
 	print &ui_form_start("save_conntrackpreroute.cgi", "post");
 	@links = ( &select_all_link("d"),
        		   &select_invert_link("d"),
@@ -142,7 +142,7 @@ sub showConntrackPreroute {
 }
 
 sub showConntrack {
-	print "<br><big><b>$text{conntrack}</b></big>";
+	print &ui_subheading($text{'conntrack'});
 	print &ui_form_start("save_conntrack.cgi", "post");
 	@links = ( &select_all_link("d"),
        		   &select_invert_link("d"),

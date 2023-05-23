@@ -16,7 +16,7 @@ use XML::Parser;
 
 # Turtle Firewall Version
 sub Version {
-	return '2.1';
+	return '2.2';
 }
 
 sub new {
@@ -1492,14 +1492,6 @@ sub startFirewall {
 	print "ndpi_module: on\n";	
 	$this->command('modprobe xt_ndpi ndpi_enable_flow=1 ndpi_flow_opt=SCFVR', '/dev/null');
 	
-	# Verify Blacklist
-	if( $this->{fw}{OPTION}{blacklist_feature} ne 'off' ) {
-                print "blacklist_feature: on\n";
-                $this->command('turtleblacklist --verify', '/dev/null');
-	} else {
-		print "blacklist_feature: off\n";
-	}
-		
 	# Abilitiamo l'IP forwarding
 	$this->command('echo "1"', '/proc/sys/net/ipv4/ip_forward');
 	
@@ -1560,6 +1552,11 @@ sub startFirewall {
 		print FILE $this->{fw}{OPTION}{nf_conntrack_max};
 		close FILE;
 		print "nf_conntrack_max: ",$this->{fw}{OPTION}{nf_conntrack_max},"\n";
+	}
+
+	# Ensure ipset item present for IP Blacklist
+	if( $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
+                $this->command('/usr/lib/turtlefirewall/ip_blacklist --initialise', '/dev/null');
 	}
 
 	my $rules = $this->getIptablesRules();
@@ -1763,26 +1760,48 @@ sub getIptablesRules {
 		print "off\n";
 	}
 
-	# Blacklist Feature
-	if( $this->{fw}{OPTION}{blacklist_feature} ne 'off' ) {
-		$chains .= ":INPUT-BLACKLIST - [0:0]\n";
-                $rules .= "-A INPUT-BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW INPUT-BLACKLIST:\"\n";
-                $rules .= "-A INPUT-BLACKLIST -j DROP\n";
+	print "drop_ip_blacklist: ";
+	if( $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
+		$chains .= ":INPUT-IP-BL - [0:0]\n";
+                $rules .= "-A INPUT-IP-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW input-ip-bl(DRO):\"\n";
+                $rules .= "-A INPUT-IP-BL -j DROP\n";
 
-                $chains .= ":OUTPUT-BLACKLIST - [0:0]\n";
-                $rules .= "-A OUTPUT-BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW OUTPUT-BLACKLIST:\"\n";
-                $rules .= "-A OUTPUT-BLACKLIST -j DROP\n";
+                $chains .= ":OUTPUT-IP-BL - [0:0]\n";
+                $rules .= "-A OUTPUT-IP-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW output-ip-bl(DRO):\"\n";
+                $rules .= "-A OUTPUT-IP-BL -j DROP\n";
 
-                $chains .= ":FORWARD-BLACKLIST - [0:0]\n";
-                $rules .= "-A FORWARD-BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW FORWARD-BLACKLIST:\"\n";
-                $rules .= "-A FORWARD-BLACKLIST -j DROP\n";
+                $chains .= ":FORWARD-IP-BL - [0:0]\n";
+                $rules .= "-A FORWARD-IP-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW forward-ip-bl(DRO):\"\n";
+                $rules .= "-A FORWARD-IP-BL -j DROP\n";
 
-                $rules .= "-A INPUT -m set --match-set blacklist src -j INPUT-BLACKLIST\n";
-                print "DROP all blacklist --> FIREWALL and LOG Action\n";
-                $rules .= "-A OUTPUT -m set --match-set blacklist dst -j OUTPUT-BLACKLIST\n";
-                print "DROP all FIREWALL --> blacklist and LOG Action\n";
-                $rules .= "-A FORWARD -m set --match-set blacklist src,dst -j FORWARD-BLACKLIST\n";
-                print "DROP all blacklist <--> FIREWALL <--> * and LOG Action\n";
+                $rules .= "-A INPUT -m set --match-set drop_ip_blacklist src -j INPUT-IP-BL\n";
+                $rules .= "-A OUTPUT -m set --match-set drop_ip_blacklist dst -j OUTPUT-IP-BL\n";
+                $rules .= "-A FORWARD -m set --match-set drop_ip_blacklist src,dst -j FORWARD-IP-BL\n";
+		print "on\n";
+	} else {
+		print "off\n";
+	}
+
+	print "drop_domain_blacklist: ";
+	if( $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
+		$chains .= ":INPUT-DOMAIN-BL - [0:0]\n";
+                $rules .= "-A INPUT-DOMAIN-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW input-domain-bl(DRO):\"\n";
+                $rules .= "-A INPUT-DOMAIN-BL -j DROP\n";
+
+                $chains .= ":OUTPUT-DOMAIN-BL - [0:0]\n";
+                $rules .= "-A OUTPUT-DOMAIN-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW output-domain-bl(DRO):\"\n";
+                $rules .= "-A OUTPUT-DOMAIN-BL -j DROP\n";
+
+                $chains .= ":FORWARD-DOMAIN-BL - [0:0]\n";
+                $rules .= "-A FORWARD-DOMAIN-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW forward-domain-bl(DRO):\"\n";
+                $rules .= "-A FORWARD-DOMAIN-BL -j DROP\n";
+
+                $rules .= "-A INPUT -m ndpi --all --risk 27 -j INPUT-DOMAIN-BL\n";
+                $rules .= "-A OUTPUT -m ndpi --all --risk 27 -j OUTPUT-DOMAIN-BL\n";
+                $rules .= "-A FORWARD -m ndpi --all --risk 27 -j FORWARD-DOMAIN-BL\n";
+		print "on\n";
+	} else {
+		print "off\n";
 	}
 
 	$rules .= "-A CHECK_INVALID -j RETURN\n";
@@ -2965,7 +2984,7 @@ sub _applyService {
 			my $cmdlog = $cmd;
 			if( $target =~ /DROP|REJECT/ ) {
 				if( $risk ne '' ) {
-					$logprefix = "TFW RISK";
+					$logprefix = "TFW RISK $risk";
 				} elsif( $hostname ne '') { 
 					$logprefix = "TFW $hostname";
 				} elsif( $category ne '') { 

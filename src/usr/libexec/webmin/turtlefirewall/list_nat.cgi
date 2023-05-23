@@ -29,7 +29,7 @@ showRedirect();
 #============================================================================
 
 sub showNat {
-	print "<br><big><b>$text{nat}</b></big>";
+	print &ui_subheading($text{'nat'});
 	print &ui_form_start("save_nat.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -128,7 +128,7 @@ sub showNat {
 }
 
 sub showMasquerade {
-	print "<br><big><b>$text{masquerade}</b></big>";
+	print &ui_subheading($text{'masquerade'});
 	print &ui_form_start("save_masq.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -229,7 +229,7 @@ sub showMasquerade {
 }
 
 sub showRedirect {
-	print "<br><big><b>$text{redirect_redirect}</b></big>";
+	print &ui_subheading($text{'redirect_redirect'});
 	print &ui_form_start("save_redirect.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),

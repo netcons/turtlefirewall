@@ -39,6 +39,8 @@ if( -f $config{fw_logfile} ) {
 	$SysLogFile =  "/var/log/messages";
 }
 
+$FlowLogFile = "/var/log/flowinfo.log";
+
 require $tfwlib;
 $fw = new TurtleFirewall();
 if( -f $config{fw_file} ) {
@@ -55,6 +57,11 @@ sub confdir {
 		return '/etc/turtlefirewall';
 	}
 }
+
+%blacklists = ( 'ip' => { INDEX => '4', LOCATION => '/etc/turtlefirewall/ip_blacklist.dat', CRON => '/etc/cron.daily/ip_blacklist', DESCRIPTION => 'IP Address' },
+	 'domain' => { INDEX => '17', LOCATION => '/etc/turtlefirewall/domain_blacklist.dat', CRON => '/etc/cron.daily/domain_blacklist', DESCRIPTION => 'DNS Domain Name' },
+	 'ja3' => { INDEX => '19', LOCATION => '/etc/turtlefirewall/ja3_blacklist.dat', CRON => '/etc/cron.daily/ja3_blacklist', DESCRIPTION => 'SSL Handshake Fingerprint' },
+	 'sha1' => { INDEX => '20', LOCATION => '/etc/turtlefirewall/sha1_blacklist.dat', CRON => '/etc/cron.daily/sha1_blacklist', DESCRIPTION => 'SSL Certificate Fingerprint' } );
 
 sub LoadServices {
 	my $firewall = shift;
@@ -240,7 +247,7 @@ sub getOptionsList {
 	@optionkeys = ('rp_filter','log_martians',
 			'drop_invalid_state', 'drop_invalid_all', 'drop_invalid_none', 'drop_invalid_fin_notack',
 			'drop_invalid_syn_fin', 'drop_invalid_syn_rst', 'drop_invalid_fragment',
-		       	'blacklist_feature', 'nf_conntrack_max', 'log_limit', 'log_limit_burst' );
+		       	'drop_ip_blacklist', 'drop_domain_blacklist', 'nf_conntrack_max', 'log_limit', 'log_limit_burst' );
 	%options = ();
 	%{$options{rp_filter}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>1 );
 	%{$options{log_martians}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>1 );
@@ -251,7 +258,8 @@ sub getOptionsList {
 	%{$options{drop_invalid_syn_fin}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{drop_invalid_syn_rst}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{drop_invalid_fragment}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
-	%{$options{blacklist_feature}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
+	%{$options{drop_ip_blacklist}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
+	%{$options{drop_domain_blacklist}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{nf_conntrack_max}} = ( 'type'=>'text', 'default'=>262144, 'addunchangeopz'=>0 );
 	%{$options{log_limit}} = ( 'type'=>'text', 'default'=>60, 'addunchangeopz'=>0 );
 	%{$options{log_limit_burst}} = ( 'type'=>'text', 'default'=>5, 'addunchangeopz'=>0 );
@@ -262,29 +270,6 @@ sub roundbytes {
 	my $n = 0;
 	++$n and $bytes /= 1024 until $bytes < 1024;
 	return sprintf "%.1f %s", $bytes, ( qw[ B KB MB GB TB ] )[ $n ];
-}
-
-###
-# return a list of active ipsets
-sub GetIpSets {
-	local (@rv, $name, $ipset={});
-	open(FILE, "ipset list -t 2>/dev/null |");
-	LINE:
-	while(<FILE>) {
-     		# remove newlines, get arg and value
-	        s/\r|\n//g;
-     		local ($n, $v) = split(/: /, $_);
-     		($n) = $n =~ /(\S+)/;
-     		# get values from name to number
-     		$name=$v if ($n eq "Name");
-     		$ipset->{$n}=$v;
-
-     		if ($n eq "Number") {
-              		push(@rv, $ipset);
-              		$ipset={};
-     		}
-	}
-return @rv;
 }
 
 1;

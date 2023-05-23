@@ -23,7 +23,7 @@ my $string = $in{'string'};
 
 my $flowtotal = 0;
 my %type_list = ();
-my @flows = getflows();
+my @flows = getflows($log);
 
 my %type_index = ( 'source' => '4', 'destination' => '6', 'protocol' => '16', 'hostname' => '17' );
 my @stats = getstats($type_index{$type},\%type_list,\@flows);
@@ -36,6 +36,8 @@ showstats($type_name,@stats);
 #============================================================================
 
 sub getflows {
+
+	my $log = shift;
 
 	my @last_log_lines = ();
 

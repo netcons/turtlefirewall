@@ -5,6 +5,8 @@
 	<ndpiprotocol name="1kxun" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="accuweather" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="activision" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="ads_analytic_track" category="advertisement"> </ndpiprotocol>
+	<ndpiprotocol name="adultcontent" category="adult-content"> </ndpiprotocol>
 	<ndpiprotocol name="afp" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="ajp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="alibaba" category="other"> </ndpiprotocol>
@@ -27,6 +29,7 @@
 	<ndpiprotocol name="avast" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="avastsecuredns" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="azure" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="bacnet" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="badoo" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="bgp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="bittorrent" category="storage-backup"> </ndpiprotocol>
@@ -110,6 +113,7 @@
 	<ndpiprotocol name="h323" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="halflife2" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="hbo" category="video-audio"> </ndpiprotocol>
+	<ndpiprotocol name="heroes_of_the_storm" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="hotspotshield" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="hp_virtgrp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="hsrp" category="networking"> </ndpiprotocol>
@@ -184,6 +188,7 @@
 	<ndpiprotocol name="ntp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="ocs" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ocsp" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="oicq" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="ookla" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="opendns" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="openvpn" category="tunnelling"> </ndpiprotocol>
@@ -246,6 +251,7 @@
 	<ndpiprotocol name="softether" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="someip" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="soundcloud" category="video-audio"> </ndpiprotocol>
+	<ndpiprotocol name="source_engine" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="spotify" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="ssdp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="ssh" category="remote-access"> </ndpiprotocol>
@@ -319,7 +325,7 @@
 	<ndpiprotocol name="yahoo" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="yandex" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="yandexcloud" category="other"> </ndpiprotocol>
-	<ndpiprotocol name="yandexdirect" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="yandexdirect" category="advertisement"> </ndpiprotocol>
 	<ndpiprotocol name="yandexdisk" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="yandexmail" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="yandexmarket" category="shopping"> </ndpiprotocol>

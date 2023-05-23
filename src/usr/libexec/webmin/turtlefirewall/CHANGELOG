@@ -182,7 +182,7 @@ CHANGELOG
            - CentOS/RHEL 8
            	OS : Systemd support, RPM package, Ensure running via cron.
            	Feature : Added Time, GeoIP and nDPI support.
-		Feature : Added Optional Blacklist.
+		Feature : Added Optional IP Blacklist.
            	Feature : Added NAT Map to Port.
            	Feature : Added HostName Set and IP Set items.
            	Feature : Added pptp, sip, h323 and tftp kernel module options.
@@ -202,12 +202,15 @@ CHANGELOG
 		Connection Tracking : Enabled connection marking.
 		Connection Tracking : Flush conntrack table on firewall stop.
 		Connection Tracking : Added conntrack tools.
-                Theme : New Webmin support. ( Todo : Translate new features )
 09-10-2022 v.2.1
            - CentOS/RHEL 9
 		OS : Kernel 6 compatibility.
            	Feature : Removed pptp, sip, h323 and tftp kernel module options.
 		Feature : Added Preroute Raw Rules. ( Conntrack Preroute : for use with CT helpers )
 		Feature : Added Raw Rules. ( Conntrack : for use with CT helpers )
-		Feature : Added Flow Risk support.
 		Connection Tracking : Migrated helpers to CT target.
+03-05-2023 v.2.2
+           	Bug : Code cleanup.
+		Feature : Added Flow Risk support.
+		Feature : Added Optional Domain Blacklist.
+                Theme : New Webmin support. ( Todo : Translate new features )

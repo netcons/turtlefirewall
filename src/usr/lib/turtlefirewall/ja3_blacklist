@@ -1,0 +1,29 @@
+#!/bin/bash
+echo -e "\nTurtle Firewall 2.2 - JA3 Blacklist";
+echo -e "Copyright (c) 2001-2023 Andrea Frigido\n";
+
+blacklist_file="/etc/turtlefirewall/ja3_blacklist.dat"
+
+echo -e "Download : \c"
+systemctl is-enabled turtlefirewall > /dev/null 2>&1
+if [ $? = 0 ]
+ then
+  wget -q -O - https://sslbl.abuse.ch/blacklist/ja3_fingerprints.csv \
+   | dos2unix \
+   | awk -F "," '(!/^#/ && $1~/^[a-z0-9]{32}$/){print $1","$4}' \
+   | sort -u \
+   > $blacklist_file
+   if [ $? = 0 ]
+    then
+     echo -e "OK"
+   else
+     echo -e "FAIL"
+   fi
+  chmod 600 $blacklist_file
+ else
+  echo -e "turtlefirewall not enabled"
+  echo
+  exit 1
+fi
+
+echo

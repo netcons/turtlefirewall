@@ -1,0 +1,129 @@
+#!/bin/bash
+echo -e "\nTurtle Firewall 2.2 - Domain Blacklist";
+echo -e "Copyright (c) 2001-2023 Andrea Frigido\n";
+
+fw_file="/etc/turtlefirewall/fw.xml"
+
+grep -E 'drop_domain_blacklist.*="on"|="on".*drop_domain_blacklist' $fw_file > /dev/null
+if [ $? = 0 ]
+ then
+
+blacklist_file="/etc/turtlefirewall/domain_blacklist.dat"
+
+Help () {
+ echo "Usage :  domain_blacklist [OPTION]"
+ echo " "
+ echo "  -I, --initialise"
+ echo "     initialise blacklist firewall item"
+ echo " "
+ echo "  -f, --flush"
+ echo "     flush blacklist firewall item"
+ echo " "
+ echo "  -d, --download"
+ echo "     download blacklist file"
+ echo " "
+ echo "  -i, --import"
+ echo "     import blacklist file into firewall item"
+ echo " "
+ echo "  -h, --help"
+ echo "     this menu"
+ echo " "
+ echo "  -x, --exclude-download"
+ echo "     do intialise, flush and import"
+ echo " "
+ exit 0
+}
+
+Verify () {
+if [ ! -d /proc/net/xt_ndpi ]
+ then
+  echo "xt_ndpi kernel module not loaded"
+  echo
+  exit 1
+fi
+}
+
+Initialise () {
+echo -e "Initialise : \c"
+cat /proc/net/xt_ndpi/proto | grep drop_domain_blacklist > /dev/null 2>&1
+if [ $? = 0 ]
+ then
+  echo -e "OK"
+ else
+  echo "add_custom drop_domain_blacklist" > /proc/net/xt_ndpi/proto
+  if [ $? = 0 ]
+   then
+    echo -e "CREATED"
+  else
+    echo -e "FAIL"
+  fi
+fi
+}
+
+Flush () {
+echo -e "Flush : \c"
+echo "reset" > /proc/net/xt_ndpi/host_proto
+ if [ $? = 0 ]
+  then
+   echo -e "OK"
+ else
+   echo -e "FAIL"
+ fi
+}
+
+Download () {
+echo -e "Download : \c"
+systemctl is-enabled turtlefirewall > /dev/null 2>&1
+if [ $? = 0 ]
+ then
+   wget -q -O - https://threatfox.abuse.ch/downloads/hostfile \
+   | dos2unix \
+   | awk -F "\t" '(!/^#/ && $2~/^[A-z0-9\-\.]+$/){print $2}' \
+   | sort -u \
+   > $blacklist_file
+   if [ $? = 0 ]
+    then
+     echo -e "OK"
+   else
+     echo -e "FAIL"
+   fi
+  chmod 600 $blacklist_file
+else
+  echo -e "turtlefirewall not enabled"
+  echo
+  exit 1
+fi
+}
+
+Import () {
+echo -e "Import : \c"
+if [ -s $blacklist_file ]
+ then
+   sed "s/^/drop_domain_blacklist:RISK_DOMAIN_/" $blacklist_file > /proc/net/xt_ndpi/host_proto
+   count=`wc -l < $blacklist_file`
+   if [ $? = 0 ]
+    then
+     echo -e "$count"
+   else
+     echo -e "FAIL"
+   fi
+ else
+   echo -e "$blacklist_file empty"
+fi
+}
+
+case $1 in
+ -I|--initialise) Initialise;;
+ -f|--flush) Flush;;
+ -d|--download) Download;;
+ -i|--import) Import;;
+ -h|--help) Help;;
+ -x|--exclude-download) Initialise;Flush;Import;;
+ *) Initialise;Flush;Download;Import;;
+esac
+
+else
+ echo -e "drop_domain_blacklist disabled in $fw_file"
+fi
+
+echo

@@ -49,9 +49,6 @@ print "<br><br>";
 LoadNdpiRisks( $fw );
 showRiskSet();
 
-print "<br><br>";
-showIpSet();
-
 &ui_print_footer('','turtle firewall index');
 
 #============================================================================
@@ -368,27 +365,4 @@ sub showRiskSet {
 	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
-}
-sub showIpSet {
-        @ipsets = &GetIpSets();
-        if (@ipsets) {
-        @tds = ( "", "", "", "", "" );
-        print &ui_columns_start([
-			"<b>$text{'ipset'}</b>",
-			"<b>$text{'ipset_name'}</b>",
-			"<b>$text{'ipset_type'}</b>",
-			"<b>$text{'ipset_elem'}</b>",
-			"<b>$text{'ipset_maxe'}</b>",
-			"<b>$text{'ipset_size'}</b>" ], 100, 0, \@tds);
-            foreach my $s (@ipsets) {
-                local @cols;
-                local @h= split(/ /, $s->{'Header'});
-                if ($h[1] =~ /inet${ipvx}$/) {
-                        push(@cols, "&nbsp;&nbsp;$h[0] $h[1]", "&nbsp;&nbsp;<b>$s->{'Name'}</b>",
-                                        $s->{'Type'}, $s->{'Number'}, $h[5], $s->{'Size'});
-                        print &ui_columns_row(\@cols, \@tds);
-                        }
-                }
-            print &ui_columns_end();
-        }
 }

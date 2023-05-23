@@ -22,7 +22,7 @@ showConnmark();
 #============================================================================
 
 sub showConnmarkPreroute {
-	print "<br><big><b>$text{connmark_preroute}</b></big>";
+	print &ui_subheading($text{'connmark_preroute'});
 	print &ui_form_start("save_connmarkpreroute.cgi", "post");
 	@links = ( &select_all_link("d"),
        		   &select_invert_link("d"),
@@ -166,7 +166,7 @@ sub showConnmarkPreroute {
 }
 
 sub showConnmark {
-	print "<br><big><b>$text{connmark}</b></big>";
+	print &ui_subheading($text{'connmark'});
 	print &ui_form_start("save_connmark.cgi", "post");
 	@links = ( &select_all_link("d"),
        		   &select_invert_link("d"),

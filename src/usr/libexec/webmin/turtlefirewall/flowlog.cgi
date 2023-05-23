@@ -14,15 +14,13 @@ use Time::Piece;
 
 &ui_print_header( $text{'flowlog_title'}, $text{'title'}, "" );
 
-my $log = '/var/log/flowinfo.log';
-
 showLog();
 
 &ui_print_footer('','turtle firewall index');
 
 sub showLog {
 
-	print "Using logfile $log";
+	print "Using logfile $FlowLogFile";
 
 	my $pag = $in{pag};
 	if( $pag == 0 ) { $pag = 1; }
@@ -52,7 +50,7 @@ sub showLog {
 	#my %tlsv_list = ('*'=>'x');
 	#my %risk_list = ('*'=>'x');
 
-	open( LOG, "<", $log );
+	open( LOG, "<", $FlowLogFile );
 	while( <LOG> ) {
 			my $l = $_;
 

@@ -5,7 +5,8 @@ Requires=network.target
 
 [Service]
 ExecStart=/usr/sbin/turtlefirewall --start
-ExecStartPost=/usr/sbin/turtleblacklist --all
+ExecStartPost=/usr/lib/turtlefirewall/ip_blacklist -x
+ExecStartPost=/usr/lib/turtlefirewall/domain_blacklist -x
 ExecStop=/usr/sbin/turtlefirewall --stop
 ExecStopPost=/bin/rm -f /etc/turtlefirewall/iptables.dat
 Type=oneshot

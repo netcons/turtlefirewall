@@ -15,57 +15,64 @@ do 'turtlefirewall-lib.pl';
         &help_search_link("iptables", "man", "doc"));
 
 my @links = ('list_items.cgi',
-	     'list_nat.cgi',
-	     'list_rules.cgi',
-	     'list_manglerules.cgi',
-	     'list_rawrules.cgi',
 	     'list_services.cgi',
 	     'list_ndpiprotocols.cgi',
 	     'list_ndpirisks.cgi',
-	     'geoip.cgi',
-	     'blacklist.cgi',
+	     'list_countrycodes.cgi',
+	     'list_blacklists.cgi',
 	     'edit_options.cgi',
-	     'log.cgi',
-	     'flowlog.cgi',
-	     'flowstat.cgi',
 	     'backup.cgi');
 my @titles = ($text{'index_icon_firewall_items'},
-              $text{'index_icon_firewall_nat'},
-              $text{'index_icon_firewall_rules'},
-              $text{'index_icon_firewall_manglerules'},
-              $text{'index_icon_firewall_rawrules'},
 	      $text{'index_icon_firewall_services'},
 	      $text{'index_icon_firewall_ndpiprotocols'},
 	      $text{'index_icon_firewall_ndpirisks'},
-	      $text{'index_icon_firewall_geoip'},
-	      $text{'index_icon_blacklist'},
+	      $text{'index_icon_firewall_countrycodes'},
+	      $text{'index_icon_firewall_blacklists'},
               $text{'index_icon_edit_options'},
-	      $text{'index_icon_log'},
-	      $text{'index_icon_flowlog'},
-	      $text{'index_icon_flowstat'},
               $text{'index_icon_backup'});
 my @icons = ('images/items.png',
-	     'images/nats.png',
-	     'images/rules.png',
-	     'images/manglerules.png',
-	     'images/rawrules.png',
 	     'images/services.png',
 	     'images/ndpiprotocols.png',
 	     'images/ndpirisks.png',
-	     'images/geoip.png',
-	     'images/blacklist.png',
+	     'images/countrycodes.png',
+	     'images/blacklists.png',
 	     'images/options.png',
-	     'images/log.png',
-	     'images/flowlog.png',
-	     'images/flowstat.png',
 	     'images/backup.png');
 
-&icons_table(\@links, \@titles, \@icons, 15);
+&icons_table(\@links, \@titles, \@icons, 11);
+print &ui_hr();
+
+my @rlinks = ('list_rules.cgi',
+	      'list_nat.cgi',
+	      'list_manglerules.cgi',
+	      'list_rawrules.cgi');
+my @rtitles = ($text{'index_icon_firewall_rules'},
+               $text{'index_icon_firewall_nat'},
+               $text{'index_icon_firewall_manglerules'},
+               $text{'index_icon_firewall_rawrules'});
+my @ricons = ('images/rules.png',
+	      'images/nats.png',
+	      'images/manglerules.png',
+	      'images/rawrules.png');
+
+&icons_table(\@rlinks, \@rtitles, \@ricons, 4);
+print &ui_hr();
+
+my @rlinks = ('log.cgi',
+	      'flowlog.cgi',
+	      'flowstat.cgi');
+my @rtitles = ($text{'index_icon_log'},
+	       $text{'index_icon_flowlog'},
+               $text{'index_icon_flowstat'});
+my @ricons = ('images/log.png',
+ 	      'images/flowlog.png',
+	      'images/flowstat.png');
+
+&icons_table(\@rlinks, \@rtitles, \@ricons, 4);
+print &ui_hr();
 
 # $status == 1 if Firewall is ON
 $status = $fw->GetStatus();
-
-print &ui_hr();
 
 print '<table width="100%"><tr>';
 print '<td>';

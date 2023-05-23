@@ -1,4 +1,4 @@
-## Turtle Firewall 2.1
+## Turtle Firewall 2.2
 
 Turtle Firewall allows you to configure a Linux firewall in a simple and fast way.
 It's based on Linux iptables. Its way of working is easy to understand: you can define the different firewall elements (zones, hosts, networks) and then set the services you want to enable among the different elements or groups of elements.
@@ -9,7 +9,7 @@ Turtle Firewall is an Open Source project written using the perl language and re
 ## New Features
 
 - Time, GeoIP and nDPI support.
-- Optional Blacklist support.
+- Optional IP and Domain Blacklist support.
 - NAT Map to Port.
 - Flow Statistics.
 - Logging per rule for Allow and Deny.
