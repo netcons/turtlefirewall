@@ -14,6 +14,7 @@ use Time::Piece;
 
 &ui_print_header( $text{'flowlog_title'}, $text{'title'}, "" );
 
+LoadNdpiRisks( $fw );
 showLog();
 
 &ui_print_footer('','turtle firewall index');
@@ -316,7 +317,7 @@ sub showLog {
 		 "style='white-space: nowrap;'",
 		 "style='white-space: nowrap;'",
 		 "align=center",
-		 "align=center" );
+		 "style='white-space: nowrap;'" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
 	foreach my $l (@buffer) {
@@ -350,7 +351,7 @@ sub showLog {
 		showTD( $ja3c );
 		showTD( $tlsfp );
 		showTD( $tlsv );
-		showTD( $risk );
+		showTD( getrisknames($risk) );
 	        print &ui_columns_row(\@cols, \@tds);
 	}
 	print &ui_columns_end();
@@ -362,12 +363,15 @@ sub showLog {
 
 sub showTD {
 	my $text = shift;
+
 	if( $text eq '' ) { $text = '&nbsp;'; }
 	push(@cols, "<tt>$text</tt>");
 }
 
 sub l3protoname {
 	my $num = shift;
+	my $protoname = '';
+
 	if( $num eq '4' ) { $protoname = 'ipv4'; }
 	if( $num eq '6' ) { $protoname = 'ipv6'; }
 	return $protoname;
@@ -375,6 +379,8 @@ sub l3protoname {
 
 sub l4protoname {
 	my $num = shift;
+	my $protoname = '';
+
 	if( $num eq '1' ) { $protoname = 'icmp'; }
 	if( $num eq '6' ) { $protoname = 'tcp'; }
 	if( $num eq '17' ) { $protoname = 'udp'; }
@@ -383,11 +389,26 @@ sub l4protoname {
 
 sub getifname {
 	my $index = shift;
+	my $ifname = '';
+
 	if ( $index eq '0' || $index eq '' ) {
 		$ifname = 'none';
 	} else {
 		$cmd_output = qx(ip link show | grep "^$index:");
-		if( $cmd_output =~ /(.*?) (.*?)(@|:)/ ) { $ifname = $2 };
+		if( $cmd_output =~ /(.*?) (.*?)(@|:)/ ) { $ifname = $2 } else { $ifname = 'unknown' };
 	}
 	return $ifname;
+}
+sub getrisknames {
+	my $risks = shift;
+	my $risknames = '';
+
+	my @items = ();
+
+	for my $id (split(/,/, $risks)) {
+		my %risk = $fw->GetNdpiRisk($id);
+		push(@items, $risk{'DESCRIPTION'} );
+	}
+	$risknames = join(",", @items);
+	return $risknames;
 }
