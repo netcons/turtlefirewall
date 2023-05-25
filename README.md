@@ -8,13 +8,16 @@ Turtle Firewall is an Open Source project written using the perl language and re
 
 ## New Features
 
-- Time, GeoIP and nDPI support.
-- Optional IP and Domain Blacklist support.
+- Time.
+- Geo Location.
+- Deep Packet Inspection.
+- Blacklists.
 - NAT Map to Port.
 - Flow Statistics.
-- Logging per rule for Allow and Deny.
-- Connection marking rules.
-- Connection tracking rules.
+- Logging per rule.
+- Flow Info logging.
+- Connection Marking.
+- Connection Tracking.
 
 ## Requirements
 
