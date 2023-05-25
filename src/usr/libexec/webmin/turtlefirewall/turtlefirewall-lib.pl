@@ -58,10 +58,20 @@ sub confdir {
 	}
 }
 
-%blacklists = ( 'ip' => { INDEX => '4', LOCATION => '/etc/turtlefirewall/ip_blacklist.dat', CRON => '/etc/cron.daily/ip_blacklist', DESCRIPTION => 'IP Address' },
-	 'domain' => { INDEX => '17', LOCATION => '/etc/turtlefirewall/domain_blacklist.dat', CRON => '/etc/cron.daily/domain_blacklist', DESCRIPTION => 'DNS Domain Name' },
-	 'ja3' => { INDEX => '19', LOCATION => '/etc/turtlefirewall/ja3_blacklist.dat', CRON => '/etc/cron.daily/ja3_blacklist', DESCRIPTION => 'SSL Handshake Fingerprint' },
-	 'sha1' => { INDEX => '20', LOCATION => '/etc/turtlefirewall/sha1_blacklist.dat', CRON => '/etc/cron.daily/sha1_blacklist', DESCRIPTION => 'SSL Certificate Fingerprint' } );
+%flowreports = ( 
+	'source' => { INDEX => '4' },
+       	'destination' => { INDEX => '6' },
+       	'protocol' => { INDEX => '16' },
+       	'hostname' => { INDEX => '17' },
+       	'risk' => { INDEX => '22' }
+);
+
+%blacklists = ( 
+	'ip' => { INDEX => '4', LOCATION => '/etc/turtlefirewall/ip_blacklist.dat', CRON => '/etc/cron.daily/ip_blacklist', DESCRIPTION => 'IP Address' },
+	'domain' => { INDEX => '17', LOCATION => '/etc/turtlefirewall/domain_blacklist.dat', CRON => '/etc/cron.daily/domain_blacklist', DESCRIPTION => 'DNS Domain Name' },
+	'ja3' => { INDEX => '19', LOCATION => '/etc/turtlefirewall/ja3_blacklist.dat', CRON => '/etc/cron.daily/ja3_blacklist', DESCRIPTION => 'SSL Handshake Fingerprint' },
+	'sha1' => { INDEX => '20', LOCATION => '/etc/turtlefirewall/sha1_blacklist.dat', CRON => '/etc/cron.daily/sha1_blacklist', DESCRIPTION => 'SSL Certificate Fingerprint' }
+);
 
 sub LoadServices {
 	my $firewall = shift;
