@@ -1556,7 +1556,7 @@ sub startFirewall {
 
 	# Ensure ipset item present for IP Blacklist
 	if( $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
-                $this->command('/usr/lib/turtlefirewall/ip_blacklist --initialise', '/dev/null');
+		$this->command('/usr/lib/turtlefirewall/ip_blacklist --initialise', '/dev/null');
 	}
 
 	my $rules = $this->getIptablesRules();
@@ -1582,6 +1582,13 @@ sub startFirewall {
 	} else {	
 		$this->iptables_restore_emu( $rules );
 	}
+
+	# Ensure dpi item present for Domain Blacklist
+	if( $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
+		print "run domain_blacklist\n";
+                $this->command('/usr/lib/turtlefirewall/domain_blacklist -x', '/dev/null');
+	}
+
 }
 
 sub stopFirewall {
