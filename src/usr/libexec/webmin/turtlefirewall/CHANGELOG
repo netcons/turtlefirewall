@@ -210,7 +210,9 @@ CHANGELOG
 		Feature : Added Raw Rules. ( Conntrack : for use with CT helpers )
 		Connection Tracking : Migrated helpers to CT target.
 03-05-2023 v.2.2
+           - CentOS/RHEL 9
            	Bug : Code cleanup.
 		Feature : Added Flow Risk support.
 		Feature : Added Optional Domain Blacklist.
+		Feature : Added Rate Limit support.
                 Theme : New Webmin support. ( Todo : Translate new features )

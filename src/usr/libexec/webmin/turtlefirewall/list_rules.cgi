@@ -33,6 +33,7 @@ sub showRule {
 		"align=center valign=top",
 		"align=center valign=top",
 		"align=center valign=top",
+		"align=center valign=top",
 		"valign=top",
 		"valign=top",
 		"valign=top",
@@ -45,6 +46,7 @@ sub showRule {
 			"<b>$text{'rule_service_head'}</b>",
 			"<b>$text{'rule_hostname_set'}</b>",
 			"<b>$text{'rule_risk_set'}</b>",
+			"<b>$text{'rule_rate_limit'}</b>",
 			"<b>$text{'rule_time'}</b>",
 			"<b>$text{'rule_target'}</b>",
 			"<b>$text{'rule_log'}</b>",
@@ -124,6 +126,10 @@ sub showRule {
 		my $cb = $attr{'RISKSET'} ne 'none' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $attr{'RISKSET'} ne 'none' && $se eq '' ? '</font>' : '';		# ColourEnd
 		push(@cols, "${sb}${bb}${cb}".$attr{'RISKSET'}."${ce}${be}${se}" );
+		if( $attr{'RATELIMIT'} eq '' ) { $attr{'RATELIMIT'} = 'none'; }
+		my $cb = $attr{'RATELIMIT'} ne 'none' && $sb eq '' ? '<font color=red>' : '';	# ColourBegin
+		my $ce = $attr{'RATELIMIT'} ne 'none' && $se eq '' ? '</font>' : '';		# ColourEnd
+		push(@cols, "${sb}${bb}${cb}".$attr{'RATELIMIT'}."${ce}${be}${se}" );
 		if( $attr{'TIME'} eq '' ) { $attr{'TIME'} = 'always'; $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
  		if( $attr{'TARGET'} eq 'ACCEPT' ) {
@@ -177,7 +183,7 @@ sub showRule {
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
-	print &ui_columns_row([undef, undef, "*", "*", "port (all)", "any", "none", "always", "<img src='images/no.png' hspace='4'><font color=red>DROP</font>", "<img src='images/eye.png' hspace='4'><font color=steelblue>ACT</font>", "Implicit Deny", undef], \@tds);
+	print &ui_columns_row([undef, undef, "*", "*", "port (all)", "any", "none", "none", "always", "<img src='images/no.png' hspace='4'><font color=red>DROP</font>", "<img src='images/eye.png' hspace='4'><font color=steelblue>ACT</font>", "Implicit Deny", undef], \@tds);
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';

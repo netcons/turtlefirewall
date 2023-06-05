@@ -24,6 +24,7 @@ if( $new ) {
 	$category = '';
 	$hostnameset = '';
 	$riskset = '';
+	$ratelimit = '';
 	$time = '';
 	$target = '';
 	$active = 1;
@@ -41,6 +42,7 @@ if( $new ) {
 	$category = $rule{'CATEGORY'};
 	$hostnameset = $rule{'HOSTNAMESET'};
 	$riskset = $rule{'RISKSET'};
+	$ratelimit = $rule{'RATELIMIT'};
 	$time = $rule{'TIME'};
 	$target = $rule{'TARGET'};
 	$active = $rule{'ACTIVE'} ne 'NO';
@@ -96,6 +98,16 @@ for my $k (@risksets) {
 	my $selected = 0;
 	if( $k eq $riskset ) { $selected = 1; }
 	$options_riskset .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
+}
+
+my $options_ratelimit = '';
+if( $ratelimit eq '' ) { $ratelimit = 'none'; }
+my @ratelimits = ('none');
+push @ratelimits, $fw->GetRateLimitList();
+for my $k (@ratelimits) {
+	my $selected = 0;
+	if( $k eq $ratelimit ) { $selected = 1; }
+	$options_ratelimit .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
 }
 
 my $options_time = '';
@@ -157,6 +169,10 @@ print				"<br>
 			<tr>
 				<td><b>$text{rule_risk_set}</b></td>
 				<td><select name=\"riskset\">$options_riskset</select></td>
+			</tr>
+			<tr>
+				<td><b>$text{rule_rate_limit}</b></td>
+				<td><select name=\"ratelimit\">$options_ratelimit</select></td>
 			</tr>
 			<tr>
 				<td><b>$text{rule_time}</b></td>

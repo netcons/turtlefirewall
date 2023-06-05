@@ -75,6 +75,10 @@ sub GetRiskSetList {
 	my $this = shift;
 	return sort( keys %{ $this->{fw}{RISKSET} } );
 }
+sub GetRateLimitList {
+	my $this = shift;
+	return sort( keys %{ $this->{fw}{RATELIMIT} } );
+}
 sub GetZone {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{ZONE}{$name} };
@@ -110,6 +114,10 @@ sub GetHostNameSet {
 sub GetRiskSet {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{RISKSET}{$name} };
+}
+sub GetRateLimit {
+	my ($this,$name) = @_;
+	return %{ $this->{fw}{RATELIMIT}{$name} };
 }
 sub GetAllItemsList {
 	my $this = shift;
@@ -289,6 +297,12 @@ sub AddRiskSet {
 	%{ $this->{fw}{RISKSET}{$name} } = ('NAME'=>$name, 'RISKS'=>$risks, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'RISKSET';
 }
+# AddRateLimit( $name, $rate, $description )
+sub AddRateLimit {
+	my ($this, $name, $rate, $description) = @_;
+	%{ $this->{fw}{RATELIMIT}{$name} } = ('NAME'=>$name, 'RATE'=>$rate, 'DESCRIPTION'=>$description );
+	$this->{fwItems}{$name} = 'RATELIMIT';
+}
 # AddHost( $name, $ip, $mac, $zone, $description )
 sub AddHost {
 	my ($this, $name, $ip, $mac, $zone, $description) = @_;
@@ -382,15 +396,16 @@ sub AddRedirectAttr {
 		%{$this->{fw}{'REDIRECT'}[$idx-1]} = %attr;
 	}
 }
-# AddRule( $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $target, $active, $log, $description );
+# AddRule( $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $ratelimit, $port, $time, $target, $active, $log, $description );
 sub AddRule {
-	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $target, $active, $log, $description ) = @_;
+	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $ratelimit, $port, $time, $target, $active, $log, $description ) = @_;
 	if( $service eq '' ) { $service = 'all'; }
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
 	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; } elsif( $hostnameset ne '' || $riskset ne '' ) { $attr{NDPI} = 'all'; }
 	if( $category ne '' ) { $attr{CATEGORY} = $category; }
 	if( $hostnameset ne '' ) { $attr{HOSTNAMESET} = $hostnameset; }
 	if( $riskset ne '' ) { $attr{RISKSET} = $riskset; }
+	if( $ratelimit ne '' ) { $attr{RATELIMIT} = $ratelimit; }
 	if( $port ne '' ) { $attr{PORT} = $port; }
 	if( $time ne '' ) { $attr{TIME} = $time; }
 	if( $target ne '' ) { $attr{TARGET} = $target; }
@@ -586,7 +601,7 @@ sub DeleteItem {
 	my $rules = $this->GetRulesCount();
 	for( my $r=0; $r<$rules; $r++ ) {
 		my %rule = $this->GetRule( $r );
-		if( $rule{SRC} eq $name || $rule{DST} eq $name || $rule{TIME} eq $name || $rule{HOSTNAMESET} eq $name || $rule{RISKSET} eq $name ) {
+		if( $rule{SRC} eq $name || $rule{DST} eq $name || $rule{TIME} eq $name || $rule{HOSTNAMESET} eq $name || $rule{RISKSET} eq $name || $rule{RATELIMIT} eq $name ) {
 			$found = 1;
 			last;
 		}
@@ -740,7 +755,7 @@ sub RenameItem {
 		# Change item name in all rules
 		foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','CONNTRACK','NAT','MASQUERADE','REDIRECT') {
 			for( my $i=0; $i<=$#{$this->{fw}{$ruletype}}; $i++ ) {
-				foreach $field ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET') {
+				foreach $field ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
 					if( $this->{fw}{$ruletype}[$i]{$field} eq $oldname ) {
 						$this->{fw}{$ruletype}[$i]{$field} = $newname;
 					}
@@ -770,6 +785,11 @@ sub DeleteHostNameSet {
 sub DeleteRiskSet {
 	my ($this, $riskset) = @_;
 	return $this->DeleteItem( $riskset );
+}
+# DeleteRateLimit( $ratelimit );
+sub DeleteRateLimit {
+	my ($this, $ratelimit) = @_;
+	return $this->DeleteItem( $ratelimit );
 }
 # DeleteHost( $host );
 sub DeleteHost {
@@ -881,6 +901,7 @@ sub LoadFirewall {
 				if( $name2 eq 'GROUP' ) { $this->_LoadFirewallItem( 'GROUP', @{$list[$j+1]} ); }
 				if( $name2 eq 'HOSTNAMESET' ) { $this->_LoadFirewallItem( 'HOSTNAMESET', @{$list[$j+1]} ); }
 				if( $name2 eq 'RISKSET' ) { $this->_LoadFirewallItem( 'RISKSET', @{$list[$j+1]} ); }
+				if( $name2 eq 'RATELIMIT' ) { $this->_LoadFirewallItem( 'RATELIMIT', @{$list[$j+1]} ); }
 				if( $name2 eq 'MASQUERADE' ) { $this->_LoadFirewallNat( 'MASQUERADE', @{$list[$j+1]} ); }
 				if( $name2 eq 'NAT' ) { $this->_LoadFirewallNat( 'NAT', @{$list[$j+1]} ); }
 				if( $name2 eq 'REDIRECT' ) { $this->_LoadFirewallNat( 'REDIRECT', @{$list[$j+1]} ); }
@@ -1350,6 +1371,10 @@ sub SaveFirewallAs {
 		$xml .= $this->attr2xml( 'riskset', %{$fw{'RISKSET'}{$k}} );
 	}
 	$xml .= "\n";
+	foreach my $k (keys %{$fw{'RATELIMIT'}}) {
+		$xml .= $this->attr2xml( 'ratelimit', %{$fw{'RATELIMIT'}{$k}} );
+	}
+	$xml .= "\n";
 	my @nats = @{$fw{'NAT'}};
 	for my $i (0..$#nats) {
 		$xml .= $this->attr2xml( 'nat', %{$nats[$i]} );
@@ -1480,6 +1505,10 @@ sub startFirewall {
 	print "connlabel_module: on\n";	
 	$this->command('modprobe xt_connlabel', '/dev/null');
 
+	# PreLoad module for Policing
+	print "ratelimit_module: on\n";	
+	$this->command('modprobe xt_ratelimit', '/dev/null');
+
 	# PreLoad module for time based rules
 	print "time_module: on\n";
 	$this->command('modprobe xt_time', '/dev/null');
@@ -1589,6 +1618,19 @@ sub startFirewall {
                 $this->command('/usr/lib/turtlefirewall/domain_blacklist -x', '/dev/null');
 	}
 
+	# Apply Rate Limits
+	for my $r ($this->GetRateLimitList()) {
+		my %ratelimit = $this->GetRateLimit($r);
+		for( my $i=0; $i<=$#{$this->{fw}{RULE}}; $i++ ) {
+			if( $this->{fw}{RULE}[$i]{RATELIMIT} eq $r && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
+				# Convert to Mbps
+				my $rate = $ratelimit{'RATE'} * 1024000; 
+				print "run ipt_ratelimit $r($ratelimit{'RATE'} Mbps)\n";
+				$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/go-$r" );
+				$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/back-$r" );
+			}
+		}
+	}
 }
 
 sub stopFirewall {
@@ -2600,6 +2642,7 @@ sub applyRule {
 	my $category = $rule{CATEGORY};
 	my $hostnameset = $rule{HOSTNAMESET};
 	my $riskset = $rule{RISKSET};
+	my $ratelimit = $rule{RATELIMIT};
 	my $hostname = $rule{HOSTNAME};
 	my $port = $rule{PORT};
 	my $mark = $rule{MARK};
@@ -2628,6 +2671,7 @@ sub applyRule {
 		if( $riskset ne '' ) { print " risk($riskset)"; }
 		print " $src --> $dst";
 		#if( $src_mac ne '' ) { print "(mac:$src_mac)"; }
+		if( $ratelimit ne '' ) { print " WHEN rate($ratelimit)"; }
 		if( $time ne '' ) { print " AT $time"; }
 		if( $mark ne '' ) { print " WITH mark($mark)"; }
 		if( $helper ne '' ) { print " WITH helper($helper)"; }
@@ -2836,15 +2880,15 @@ sub applyRule {
 	if( $mangle ) {
 		# Mangle Rule
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
-		   	$port, $ndpi, $category, $hostname, $risk, $t_days, $t_start, $t_stop, '', '', $mark, '' );
+		   	$port, $ndpi, $category, $hostname, $risk, '', $t_days, $t_start, $t_stop, '', '', $mark, '' );
 	}  elsif( $raw ) {
 		# Raw Rule
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
-		       	$port, $ndpi, $category, $hostname, $risk, $t_days, $t_start, $t_stop, '', '', '', $helper );
+		       	$port, $ndpi, $category, $hostname, $risk, '', $t_days, $t_start, $t_stop, '', '', '', $helper );
 	}  else {
 		# Filter Rule
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
-		       	$port, $ndpi, $category, $hostname, $risk, $t_days, $t_start, $t_stop, $log, $target, '', '' );
+		       	$port, $ndpi, $category, $hostname, $risk, $ratelimit, $t_days, $t_start, $t_stop, $log, $target, '', '' );
 	}
 	
 	return $rules;
@@ -2860,7 +2904,7 @@ sub applyService {
 sub _applyService {
 	my $this = shift;
 	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_mac, $dst,
-	$port, $ndpi, $category, $hostname, $risk, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper ) = @_;
+	$port, $ndpi, $category, $hostname, $risk, $ratelimit, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper ) = @_;
 
 	my %service = %{$ref_services->{$serviceName}};
 
@@ -2881,7 +2925,7 @@ sub _applyService {
 		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyService( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $category, $hostname, $risk,
+				$goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $category, $hostname, $risk, $ratelimit,
 			       	$t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper );
 			next;
 		}
@@ -2894,7 +2938,7 @@ sub _applyService {
 		my $state = $filter{STATE};
 		my $jump = $filter{JUMP};
 
-		if( $target =~ /DROP|REJECT/ && $direction ne 'go' ) {
+		if( $target =~ /DROP|REJECT/ && $direction ne 'go' && $ratelimit eq '' ) {
 			# Don't process Back filters
 			next;
 		}
@@ -2916,6 +2960,7 @@ sub _applyService {
 
 		if( $direction eq 'go' ) {
 			$cmd = "-A $goChain ";
+			if( $ratelimit ne '' ) { $cmd .= "-m ratelimit --ratelimit-set go-$ratelimit --ratelimit-mode src "; }
 			if( $dst !~ /^[A-Z1-2]{2}$/ && $src !~ /^[A-Z1-2]{2}$/ ) {
                                 if( $src ne '0.0.0.0/0' && $src ne '' ) { $cmd .= "-s $src "; }
                                 if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
@@ -2935,6 +2980,7 @@ sub _applyService {
                         }
 		} else {
 			$cmd = "-A $backChain ";
+			if( $ratelimit ne '' ) { $cmd .= "-m ratelimit --ratelimit-set back-$ratelimit --ratelimit-mode dst "; }
 			if( $src !~ /^[A-Z1-2]{2}$/ && $dst !~ /^[A-Z1-2]{2}$/ ) {
                                 if( $dst ne '0.0.0.0/0' && $dst ne '' ) { $cmd .= "-s $dst "; }
                                 if( $src ne '0.0.0.0/0' && $src ne '' ) { $cmd .= "-d $src "; }
@@ -2956,7 +3002,7 @@ sub _applyService {
 		if( $icmptype ne '' ) { $cmd .= "--icmp-type $icmptype "; }
 		if( $sport ne '' ) { $cmd .= "--sport $sport "; }
 		if( $dport ne '' ) { $cmd .= "--dport $dport "; }
-	
+
 		if( $ndpi ne '' ) { 
 			if( $target eq 'ACCEPT' ) {
 				if( $ndpi eq 'all' ) {

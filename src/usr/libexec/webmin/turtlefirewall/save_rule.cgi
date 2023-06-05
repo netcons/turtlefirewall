@@ -22,6 +22,8 @@ my $hostnameset = $in{'hostnameset'};
 if( $hostnameset eq 'any' ) { $hostnameset = ''; }
 my $riskset = $in{'riskset'};
 if( $riskset eq 'none' ) { $riskset = ''; }
+my $ratelimit = $in{'ratelimit'};
+if( $ratelimit eq 'none' ) { $ratelimit = ''; }
 my $time = $in{'time'};
 if( $time eq 'always' ) { $time = ''; }
 my $target = $in{'target'};
@@ -65,7 +67,15 @@ if( $in{'delete'} ) {
 		error( $text{save_rule_error5} );
 	}
 
-	$fw->AddRule( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $target, $active, $log, $description );
+	if( $target ne 'DROP' && $ratelimit ne '' ) {
+		error( $text{save_rule_error6} );
+	}
+
+	if( $log ne '' && $ratelimit ne '' ) {
+		error( $text{save_rule_error7} );
+	}
+
+	$fw->AddRule( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $ratelimit, $port, $time, $target, $active, $log, $description );
 }
 
 $fw->SaveFirewall();

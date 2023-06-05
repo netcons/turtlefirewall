@@ -27,8 +27,9 @@ my $flowtotal = 0;
 my %type_list = ();
 my @flows = getflows($log);
 
-my %type_index = ( 'source' => '4', 'destination' => '6', 'protocol' => '16', 'hostname' => '17', 'risk' => '22' );
-my @stats = getstats($type_index{$type},\%type_list,\@flows);
+my $index = $flowreports{$type}{INDEX};
+
+my @stats = getstats($index,\%type_list,\@flows);
 
 $type_name = "flowstat_type_${type}";
 showstats($type_name,@stats);
@@ -129,7 +130,7 @@ sub getflows {
 
 sub getstats {
 	
-	my $type_index = shift;
+	my $index = shift;
 	my ($type_list,$flows) = @_;
 
 	my @stats = ();
@@ -137,7 +138,7 @@ sub getstats {
 	# Sum bytes per Type
 	foreach my $f (@{$flows}) { 
 		foreach $t (sort keys %{$type_list}) {
-			if( $f->[$type_index] eq $t ) { $type_list{$t} = ($type_list{$t} + $f->[8] + $f->[9]); }
+			if( $f->[$index] eq $t ) { $type_list{$t} = ($type_list{$t} + $f->[8] + $f->[9]); }
 		}
 	}
 

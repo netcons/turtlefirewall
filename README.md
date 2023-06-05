@@ -11,11 +11,13 @@ Turtle Firewall is an Open Source project written using the perl language and re
 - Time.
 - Geo Location.
 - Deep Packet Inspection.
+- Risk Detection.
+- Rate Limiting.
 - Blacklists.
 - NAT Map to Port.
-- Flow Statistics.
 - Logging per rule.
 - Flow Info logging.
+- Flow Statistics.
 - Connection Marking.
 - Connection Tracking.
 
@@ -34,6 +36,7 @@ xt_time. <br>
 - Extra Netfilter kernel modules : <br>
 xt_ndpi, ( https://github.com/vel21ripn/nDPI ) <br>
 xt_geoip, ( https://inai.de/projects/xtables-addons ) <br>
+xt_ratelimit. ( https://github.com/aabc/ipt-ratelimit ) <br>
 
 ## Install CentOS/RHEL 9
 

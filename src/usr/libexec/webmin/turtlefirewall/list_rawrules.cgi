@@ -13,8 +13,11 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( $text{'list_rawrules_title'}, $text{'title'}, "" );
 
+$form= 0;
 showConntrackPreroute();
 
+$form++;
+print "<br><br>";
 showConntrack();
 
 &ui_print_footer('','turtle firewall index');
@@ -24,8 +27,8 @@ showConntrack();
 sub showConntrackPreroute {
 	print &ui_subheading($text{'conntrack_preroute'});
 	print &ui_form_start("save_conntrackpreroute.cgi", "post");
-	@links = ( &select_all_link("d"),
-       		   &select_invert_link("d"),
+	@links = ( &select_all_link("d", $form),
+       		   &select_invert_link("d", $form),
 		   "<a href=\"edit_conntrackpreroute.cgi?new=1\">$text{'list_conntrackpreroutes_create_rule'}</a>" );
 	@tds = ( 
 		"width=1%",
@@ -144,8 +147,8 @@ sub showConntrackPreroute {
 sub showConntrack {
 	print &ui_subheading($text{'conntrack'});
 	print &ui_form_start("save_conntrack.cgi", "post");
-	@links = ( &select_all_link("d"),
-       		   &select_invert_link("d"),
+	@links = ( &select_all_link("d", $form),
+       		   &select_invert_link("d", $form),
 		   "<a href=\"edit_conntrack.cgi?new=1\">$text{'list_conntracks_create_rule'}</a>" );
 	@tds = ( 
 		"width=1%",

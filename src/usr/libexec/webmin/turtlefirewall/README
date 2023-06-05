@@ -23,3 +23,4 @@ REQUIREMENTS
 - Extra Netfilter kernel modules :
    xt_ndpi, ( https://github.com/vel21ripn/nDPI )
    xt_geoip, ( https://inai.de/projects/xtables-addons )
+   xt_ratelimit. ( https://github.com/aabc/ipt-ratelimit )

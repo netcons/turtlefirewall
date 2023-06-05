@@ -12,7 +12,7 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( $text{'list_items_title'}, $text{'title'}, "" );
 
-$form= 0;
+$form = 0;
 showZone();
 
 $form++;
@@ -48,6 +48,10 @@ $form++;
 print "<br><br>";
 LoadNdpiRisks( $fw );
 showRiskSet();
+
+$form++;
+print "<br><br>";
+showRateLimit();
 
 &ui_print_footer('','turtle firewall index');
 
@@ -357,6 +361,36 @@ sub showRiskSet {
 		}
 		push(@cols, $risksetlist );
 		push(@cols, "".($riskset{'DESCRIPTION'} ne '' ? $riskset{'DESCRIPTION'} : '&nbsp;')."" );
+		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
+	}
+	print &ui_columns_end();
+	print "<table width=\"100%\"><tr>";
+	print '<td>'.&ui_links_row(\@links).'</td>';
+	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print "</tr></table>";
+	print &ui_form_end();
+}
+sub showRateLimit {
+	print &ui_form_start("save_ratelimit.cgi", "post");
+	@links = ( &select_all_link("d", $form),
+       		   &select_invert_link("d", $form),
+		   "<a href=\"edit_ratelimit.cgi?new=1\">$text{'list_items_create_ratelimit'}</a>" );
+        @tds = ( "width=1% valign=top",
+		 "valign=top",
+		 "valign=top",
+		 "valign=top" );
+        print &ui_columns_start([
+			  "",
+                          "<b>$text{'ratelimit'}</b>",
+                          "<b>$text{'rate'}</b>",
+                          "<b>$text{'description'}</b>" ], 100, 0, \@tds);
+	for my $k ($fw->GetRateLimitList()) {
+		my %ratelimit = $fw->GetRateLimit($k);
+		local @cols;
+		my $href = &ui_link("edit_ratelimit.cgi?ratelimit=$k",$k);
+		push(@cols, $href );
+        	push(@cols, "$ratelimit{'RATE'} <i>Mbps</i>" );
+	        push(@cols, "".($ratelimit{'DESCRIPTION'} ne '' ? $ratelimit{'DESCRIPTION'} : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();

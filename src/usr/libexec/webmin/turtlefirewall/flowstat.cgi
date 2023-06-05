@@ -26,7 +26,7 @@ sub reportFlowStat {
 
 	my $log = $FlowLogFile;
 
-	my @types = ( 'source', 'destination', 'protocol', 'hostname' );
+	my @types = sort keys %flowreports;
 	my @maxs = ( 'all', '100', '1000', '10000', '100000' );
 	my @tops = ( '5', '10', '15', '20' );
 

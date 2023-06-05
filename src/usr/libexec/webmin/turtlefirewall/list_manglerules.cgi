@@ -13,8 +13,11 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( $text{'list_manglerules_title'}, $text{'title'}, "" );
 
+$form= 0;
 showConnmarkPreroute();
 
+$form++;
+print "<br><br>";
 showConnmark();
 
 &ui_print_footer('','turtle firewall index');
@@ -24,8 +27,8 @@ showConnmark();
 sub showConnmarkPreroute {
 	print &ui_subheading($text{'connmark_preroute'});
 	print &ui_form_start("save_connmarkpreroute.cgi", "post");
-	@links = ( &select_all_link("d"),
-       		   &select_invert_link("d"),
+	@links = ( &select_all_link("d", $form),
+       		   &select_invert_link("d", $form),
 		   "<a href=\"edit_connmarkpreroute.cgi?new=1\">$text{'list_connmarkpreroutes_create_rule'}</a>" );
 	@tds = ( 
 		"width=1%",
@@ -168,8 +171,8 @@ sub showConnmarkPreroute {
 sub showConnmark {
 	print &ui_subheading($text{'connmark'});
 	print &ui_form_start("save_connmark.cgi", "post");
-	@links = ( &select_all_link("d"),
-       		   &select_invert_link("d"),
+	@links = ( &select_all_link("d", $form),
+       		   &select_invert_link("d", $form),
 		   "<a href=\"edit_connmark.cgi?new=1\">$text{'list_connmarks_create_rule'}</a>" );
 	@tds = ( 
 		"width=1%",
