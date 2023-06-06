@@ -1322,31 +1322,30 @@ sub SaveFirewallAs {
 		$xml .= $this->attr2xml( 'option', ('name'=>$k, 'value'=>$fw{'OPTION'}{$k}) );
 	}
 	$xml .= "</options>\n";
-
 	$xml .= "\n";
+
 	foreach my $k (keys %{$fw{'ZONE'}}) {
 		if( $k ne 'FIREWALL' ) {
 			$xml .= $this->attr2xml( 'zone', %{$fw{'ZONE'}{$k}} );
 		}
 	}
 	$xml .= "\n";
-	foreach my $k (keys %{$fw{'GEOIP'}}) {
-		$xml .= $this->attr2xml( 'geoip', %{$fw{'GEOIP'}{$k}} );
-	}
-	$xml .= "\n";
+
 	foreach my $k (keys %{$fw{'NET'}}) {
 		$xml .= $this->attr2xml( 'net', %{$fw{'NET'}{$k}} );
 	}
-	$xml .= "\n";
+	if( %{$fw{'NET'}} ) { $xml .= "\n"; }
+
 	foreach my $k (keys %{$fw{'HOST'}}) {
 		$xml .= $this->attr2xml( 'host', %{$fw{'HOST'}{$k}} );
 	}
-	$xml .= "\n";
-	foreach my $k (keys %{$fw{'TIME'}}) {
-		$xml .= $this->attr2xml( 'time', %{$fw{'TIME'}{$k}} );
+	if( %{$fw{'HOST'}} ) { $xml .= "\n"; }
+	
+	foreach my $k (keys %{$fw{'GEOIP'}}) {
+		$xml .= $this->attr2xml( 'geoip', %{$fw{'GEOIP'}{$k}} );
 	}
-	$xml .= "\n";
-	#foreach my $k (keys %{$fw{'GROUP'}}) {
+	if( %{$fw{'GEOIP'}} ) { $xml .= "\n"; }
+	
 	foreach my $k (@{$this->{fwKeys}{GROUP}}) {
 		$xml .= "<group name=\"$k\" description=\"".$this->_clean($fw{'GROUP'}{$k}{DESCRIPTION})."\">\n";
 		foreach my $item (@{$fw{'GROUP'}{$k}{ITEMS}}) {
@@ -1354,7 +1353,13 @@ sub SaveFirewallAs {
 		}
 		$xml .= "</group>\n";
 	}
-	$xml .= "\n";
+	if( @{$this->{fwKeys}{GROUP}} ) { $xml .= "\n"; }
+
+	foreach my $k (keys %{$fw{'TIME'}}) {
+		$xml .= $this->attr2xml( 'time', %{$fw{'TIME'}{$k}} );
+	}
+	if( %{$fw{'TIME'}} ) { $xml .= "\n"; }
+	
 	foreach my $k (@{$this->{fwKeys}{TIMEGROUP}}) {
 		$xml .= "<timegroup name=\"$k\" description=\"".$this->_clean($fw{'TIMEGROUP'}{$k}{DESCRIPTION})."\">\n";
 		foreach my $item (@{$fw{'TIMEGROUP'}{$k}{ITEMS}}) {
@@ -1362,59 +1367,71 @@ sub SaveFirewallAs {
 		}
 		$xml .= "</timegroup>\n";
 	}
-	$xml .= "\n";
+	if( @{$this->{fwKeys}{TIMEGROUP}} ) { $xml .= "\n"; }
+	
 	foreach my $k (keys %{$fw{'HOSTNAMESET'}}) {
 		$xml .= $this->attr2xml( 'hostnameset', %{$fw{'HOSTNAMESET'}{$k}} );
 	}
-	$xml .= "\n";
+	if( %{$fw{'HOSTNAMESET'}} ) { $xml .= "\n"; }
+	
 	foreach my $k (keys %{$fw{'RISKSET'}}) {
 		$xml .= $this->attr2xml( 'riskset', %{$fw{'RISKSET'}{$k}} );
 	}
-	$xml .= "\n";
+	if( %{$fw{'RISKSET'}} ) { $xml .= "\n"; }
+	
 	foreach my $k (keys %{$fw{'RATELIMIT'}}) {
 		$xml .= $this->attr2xml( 'ratelimit', %{$fw{'RATELIMIT'}{$k}} );
 	}
-	$xml .= "\n";
+	if( %{$fw{'RATELIMIT'}} ) { $xml .= "\n"; }
+	
 	my @nats = @{$fw{'NAT'}};
 	for my $i (0..$#nats) {
 		$xml .= $this->attr2xml( 'nat', %{$nats[$i]} );
 	}
-	$xml .= "\n";
+	if( @{$fw{'NAT'}} ) { $xml .= "\n"; }
+	
 	my @masq = @{$fw{'MASQUERADE'}};
 	for my $i (0..$#masq) {
 		$xml .= $this->attr2xml( 'masquerade', %{$masq[$i]} );
 	}
-	$xml .= "\n";
+	if( @{$fw{'MASQUERADE'}} ) { $xml .= "\n"; }
+	
 	my @redirectlist = @{$fw{'REDIRECT'}};
 	for my $i (0..$#redirectlist) {
 		$xml .= $this->attr2xml( 'redirect', %{$redirectlist[$i]} );
 	}
-	$xml .= "\n";
+	if( @{$fw{'REDIRECT'}} ) { $xml .= "\n"; }
+	
+	my @conntrackpreroutes = @{$fw{'CONNTRACKPREROUTE'}};
+	for my $i (0..$#conntrackpreroutes) {
+		$xml .= $this->attr2xml( 'conntrackpreroute', %{$conntrackpreroutes[$i]} );
+	}
+	if( @{$fw{'CONNTRACKPREROUTE'}} ) { $xml .= "\n"; }
+	
+	my @conntracks = @{$fw{'CONNTRACK'}};
+	for my $i (0..$#conntracks) {
+		$xml .= $this->attr2xml( 'conntrack', %{$conntracks[$i]} );
+	}
+	if( @{$fw{'CONNTRACK'}} ) { $xml .= "\n"; }
+	
+	my @connmarkpreroutes = @{$fw{'CONNMARKPREROUTE'}};
+	for my $i (0..$#connmarkpreroutes) {
+		$xml .= $this->attr2xml( 'connmarkpreroute', %{$connmarkpreroutes[$i]} );
+	}
+	if( @{$fw{'CONNMARKPREROUTE'}} ) { $xml .= "\n"; }
+	
+	my @connmarks = @{$fw{'CONNMARK'}};
+	for my $i (0..$#connmarks) {
+		$xml .= $this->attr2xml( 'connmark', %{$connmarks[$i]} );
+	}
+	if( @{$fw{'CONNMARK'}} ) { $xml .= "\n"; }
+	
 	my @rules = @{$fw{'RULE'}};
 	for my $i (0..$#rules) {
 		$xml .= $this->attr2xml( 'rule', %{$rules[$i]} );
 	}
 	$xml .= "\n";
-	my @connmarkpreroutes = @{$fw{'CONNMARKPREROUTE'}};
-	for my $i (0..$#connmarkpreroutes) {
-		$xml .= $this->attr2xml( 'connmarkpreroute', %{$connmarkpreroutes[$i]} );
-	}
-	$xml .= "\n";
-	my @connmarks = @{$fw{'CONNMARK'}};
-	for my $i (0..$#connmarks) {
-		$xml .= $this->attr2xml( 'connmark', %{$connmarks[$i]} );
-	}
-	$xml .= "\n";
-	my @conntrackpreroutes = @{$fw{'CONNTRACKPREROUTE'}};
-	for my $i (0..$#conntrackpreroutes) {
-		$xml .= $this->attr2xml( 'conntrackpreroute', %{$conntrackpreroutes[$i]} );
-	}
-	$xml .= "\n";
-	my @conntracks = @{$fw{'CONNTRACK'}};
-	for my $i (0..$#conntracks) {
-		$xml .= $this->attr2xml( 'conntrack', %{$conntracks[$i]} );
-	}
-	$xml .= "\n";
+
 	$xml .= "</firewall>\n";
 
 	open( FWFILE, ">$fwFile" );
