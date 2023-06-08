@@ -13,7 +13,7 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( $text{'list_nat_title'}, $text{'title'}, "" );
 
-$form= 0;
+$form = 0;
 showNat();
 
 $form++;

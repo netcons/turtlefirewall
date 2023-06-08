@@ -13,7 +13,7 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( $text{'list_rawrules_title'}, $text{'title'}, "" );
 
-$form= 0;
+$form = 0;
 showConntrackPreroute();
 
 $form++;
@@ -49,29 +49,22 @@ sub showConntrackPreroute {
 
 	my $nConntrackPreroutes = $fw->GetConntrackPreroutesCount();
 
-	my $idx = $in{idx};
-	if( $in{down} > 0 || $in{up} > 0 ) {
-		my $newIdx = $idx;
-		if( $in{down} > 0 && $idx > 0 && $idx < $nConntrackPreroutes ) {
-			$newIdx = $idx + $in{down};
-			if( $newIdx > $nConntrackPreroutes ) { $newIdx = $nConntrackPreroutes; }
-
-			#my %appo = $fw->GetRule($newIdx);
-			#$fw->AddRuleAttr($newIdx, $fw->GetRule($idx));
-			#$fw->AddRuleAttr($idx, %appo);
-			#$idx=$newIdx;
-			#$fw->SaveFirewall();
+	if( $in{table} eq 'conntrackpreroute' ) {
+		my $idx = $in{idx};
+		if( $in{down} > 0 || $in{up} > 0 ) {
+			my $newIdx = $idx;
+			if( $in{down} > 0 && $idx > 0 && $idx < $nConntrackPreroutes ) {
+				$newIdx = $idx + $in{down};
+				if( $newIdx > $nConntrackPreroutes ) { $newIdx = $nConntrackPreroutes; }
+			}
+			if( $in{up} > 0 && $idx > 1 && $idx <= $nConntrackPreroutes ) {
+				$newIdx = $idx - $in{up};
+				if( $newIdx < 1 ) { $newIdx = 1; }
+			}
+			$fw->MoveConntrackPreroute( $idx, $newIdx );
+			$fw->SaveFirewall();
+			$idx=$newIdx;
 		}
-		if( $in{up} > 0 && $idx > 1 && $idx <= $nConntrackPreroutes ) {
-			$newIdx = $idx - $in{up};
-			if( $newIdx < 1 ) { $newIdx = 1; }
-			#my %appo = $fw->GetRule($newIdx);
-			#$fw->AddRuleAttr($newIdx, $fw->GetRule($idx));
-			#$fw->AddRuleAttr($idx, %appo);
-		}
-		$fw->MoveConntrackPreroute( $idx, $newIdx );
-		$fw->SaveFirewall();
-		$idx=$newIdx;
 	}
 
 	for( my $i=1; $i<=$nConntrackPreroutes; $i++ ) {
@@ -105,12 +98,12 @@ sub showConntrackPreroute {
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nConntrackPreroutes-1 ) {
-		#			$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
+		#			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrackpreroute&idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
 		#		} else {
 		#			$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'></td>";
 		#		}
 		if( $i < $nConntrackPreroutes ) {
-			$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&down=1'>
+			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrackpreroute&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
 				   </td>";
 		} else {
@@ -119,7 +112,7 @@ sub showConntrackPreroute {
 				   </td>";
 		}
 		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&up=1'>
+			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrackpreroute&idx=$i&up=1'>
 				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='^'></a>
 				   </td>";
 		} else {
@@ -128,7 +121,7 @@ sub showConntrackPreroute {
 				   </td>";
 		}
 		#		if( $i > 2 ) {
-		#		$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
+		#		$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrackpreroute&idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
 		#	} else {
 		#		$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'></td>";
 		#	}
@@ -169,29 +162,22 @@ sub showConntrack {
 
 	my $nConntracks = $fw->GetConntracksCount();
 
-	my $idx = $in{idx};
-	if( $in{down} > 0 || $in{up} > 0 ) {
-		my $newIdx = $idx;
-		if( $in{down} > 0 && $idx > 0 && $idx < $nConntracks ) {
-			$newIdx = $idx + $in{down};
-			if( $newIdx > $nConntracks ) { $newIdx = $nConntracks; }
-
-			#my %appo = $fw->GetRule($newIdx);
-			#$fw->AddRuleAttr($newIdx, $fw->GetRule($idx));
-			#$fw->AddRuleAttr($idx, %appo);
-			#$idx=$newIdx;
-			#$fw->SaveFirewall();
+	if( $in{table} eq 'conntrack' ) {
+		my $idx = $in{idx};
+		if( $in{down} > 0 || $in{up} > 0 ) {
+			my $newIdx = $idx;
+			if( $in{down} > 0 && $idx > 0 && $idx < $nConntracks ) {
+				$newIdx = $idx + $in{down};
+				if( $newIdx > $nConntracks ) { $newIdx = $nConntracks; }
+			}
+			if( $in{up} > 0 && $idx > 1 && $idx <= $nConntracks ) {
+				$newIdx = $idx - $in{up};
+				if( $newIdx < 1 ) { $newIdx = 1; }
+			}
+			$fw->MoveConntrack( $idx, $newIdx );
+			$fw->SaveFirewall();
+			$idx=$newIdx;
 		}
-		if( $in{up} > 0 && $idx > 1 && $idx <= $nConntracks ) {
-			$newIdx = $idx - $in{up};
-			if( $newIdx < 1 ) { $newIdx = 1; }
-			#my %appo = $fw->GetRule($newIdx);
-			#$fw->AddRuleAttr($newIdx, $fw->GetRule($idx));
-			#$fw->AddRuleAttr($idx, %appo);
-		}
-		$fw->MoveConntrack( $idx, $newIdx );
-		$fw->SaveFirewall();
-		$idx=$newIdx;
 	}
 
 	for( my $i=1; $i<=$nConntracks; $i++ ) {
@@ -225,12 +211,12 @@ sub showConntrack {
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nConntracks-1 ) {
-		#			$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
+		#			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrack&idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
 		#		} else {
 		#			$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'></td>";
 		#		}
 		if( $i < $nConntracks ) {
-			$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&down=1'>
+			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrack&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
 				   </td>";
 		} else {
@@ -239,7 +225,7 @@ sub showConntrack {
 				   </td>";
 		}
 		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&up=1'>
+			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrack&idx=$i&up=1'>
 				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='^'></a>
 				   </td>";
 		} else {
@@ -248,7 +234,7 @@ sub showConntrack {
 				   </td>";
 		}
 		#		if( $i > 2 ) {
-		#		$mover .= "<td width=50%><a href='list_rawrules.cgi?idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
+		#		$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrack&idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
 		#	} else {
 		#		$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'></td>";
 		#	}

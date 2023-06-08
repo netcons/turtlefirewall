@@ -13,7 +13,7 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( $text{'list_manglerules_title'}, $text{'title'}, "" );
 
-$form= 0;
+$form = 0;
 showConnmarkPreroute();
 
 $form++;
@@ -55,29 +55,22 @@ sub showConnmarkPreroute {
 
 	my $nConnmarkPreroutes = $fw->GetConnmarkPreroutesCount();
 
-	my $idx = $in{idx};
-	if( $in{down} > 0 || $in{up} > 0 ) {
-		my $newIdx = $idx;
-		if( $in{down} > 0 && $idx > 0 && $idx < $nConnmarkPreroutes ) {
-			$newIdx = $idx + $in{down};
-			if( $newIdx > $nConnmarkPreroutes ) { $newIdx = $nConnmarkPreroutes; }
-
-			#my %appo = $fw->GetRule($newIdx);
-			#$fw->AddRuleAttr($newIdx, $fw->GetRule($idx));
-			#$fw->AddRuleAttr($idx, %appo);
-			#$idx=$newIdx;
-			#$fw->SaveFirewall();
+	if( $in{table} eq 'connmarkpreroute' ) {
+		my $idx = $in{idx};
+		if( $in{down} > 0 || $in{up} > 0 ) {
+			my $newIdx = $idx;
+			if( $in{down} > 0 && $idx > 0 && $idx < $nConnmarkPreroutes ) {
+				$newIdx = $idx + $in{down};
+				if( $newIdx > $nConnmarkPreroutes ) { $newIdx = $nConnmarkPreroutes; }
+			}
+			if( $in{up} > 0 && $idx > 1 && $idx <= $nConnmarkPreroutes ) {
+				$newIdx = $idx - $in{up};
+				if( $newIdx < 1 ) { $newIdx = 1; }
+			}
+			$fw->MoveConnmarkPreroute( $idx, $newIdx );
+			$fw->SaveFirewall();
+			$idx=$newIdx;
 		}
-		if( $in{up} > 0 && $idx > 1 && $idx <= $nConnmarkPreroutes ) {
-			$newIdx = $idx - $in{up};
-			if( $newIdx < 1 ) { $newIdx = 1; }
-			#my %appo = $fw->GetRule($newIdx);
-			#$fw->AddRuleAttr($newIdx, $fw->GetRule($idx));
-			#$fw->AddRuleAttr($idx, %appo);
-		}
-		$fw->MoveConnmarkPreroute( $idx, $newIdx );
-		$fw->SaveFirewall();
-		$idx=$newIdx;
 	}
 
 	for( my $i=1; $i<=$nConnmarkPreroutes; $i++ ) {
@@ -129,12 +122,12 @@ sub showConnmarkPreroute {
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nConnmarkPreroutes-1 ) {
-		#			$mover .= "<td width=50%><a href='list_connmarkpreroutes.cgi?idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
+		#			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmarkpreroute&idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
 		#		} else {
 		#			$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'></td>";
 		#		}
 		if( $i < $nConnmarkPreroutes ) {
-			$mover .= "<td width=50%><a href='list_connmarkpreroutes.cgi?idx=$i&down=1'>
+			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmarkpreroute&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
 				   </td>";
 		} else {
@@ -143,7 +136,7 @@ sub showConnmarkPreroute {
 				   </td>";
 		}
 		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_connmarkpreroutes.cgi?idx=$i&up=1'>
+			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmarkpreroute&idx=$i&up=1'>
 				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='^'></a>
 				   </td>";
 		} else {
@@ -152,7 +145,7 @@ sub showConnmarkPreroute {
 				   </td>";
 		}
 		#		if( $i > 2 ) {
-		#		$mover .= "<td width=50%><a href='list_connmarkpreroutes.cgi?idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
+		#		$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmarkpreroute&idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
 		#	} else {
 		#		$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'></td>";
 		#	}
@@ -199,29 +192,22 @@ sub showConnmark {
 
 	my $nConnmarks = $fw->GetConnmarksCount();
 
-	my $idx = $in{idx};
-	if( $in{down} > 0 || $in{up} > 0 ) {
-		my $newIdx = $idx;
-		if( $in{down} > 0 && $idx > 0 && $idx < $nConnmarks ) {
-			$newIdx = $idx + $in{down};
-			if( $newIdx > $nConnmarks ) { $newIdx = $nConnmarks; }
-
-			#my %appo = $fw->GetRule($newIdx);
-			#$fw->AddRuleAttr($newIdx, $fw->GetRule($idx));
-			#$fw->AddRuleAttr($idx, %appo);
-			#$idx=$newIdx;
-			#$fw->SaveFirewall();
+	if( $in{table} eq 'connmark' ) {
+		my $idx = $in{idx};
+		if( $in{down} > 0 || $in{up} > 0 ) {
+			my $newIdx = $idx;
+			if( $in{down} > 0 && $idx > 0 && $idx < $nConnmarks ) {
+				$newIdx = $idx + $in{down};
+				if( $newIdx > $nConnmarks ) { $newIdx = $nConnmarks; }
+			}
+			if( $in{up} > 0 && $idx > 1 && $idx <= $nConnmarks ) {
+				$newIdx = $idx - $in{up};
+				if( $newIdx < 1 ) { $newIdx = 1; }
+			}
+			$fw->MoveConnmark( $idx, $newIdx );
+			$fw->SaveFirewall();
+			$idx=$newIdx;
 		}
-		if( $in{up} > 0 && $idx > 1 && $idx <= $nConnmarks ) {
-			$newIdx = $idx - $in{up};
-			if( $newIdx < 1 ) { $newIdx = 1; }
-			#my %appo = $fw->GetRule($newIdx);
-			#$fw->AddRuleAttr($newIdx, $fw->GetRule($idx));
-			#$fw->AddRuleAttr($idx, %appo);
-		}
-		$fw->MoveConnmark( $idx, $newIdx );
-		$fw->SaveFirewall();
-		$idx=$newIdx;
 	}
 
 	for( my $i=1; $i<=$nConnmarks; $i++ ) {
@@ -273,12 +259,12 @@ sub showConnmark {
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nConnmarks-1 ) {
-		#			$mover .= "<td width=50%><a href='list_connmarks.cgi?idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
+		#			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmark&idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
 		#		} else {
 		#			$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'></td>";
 		#		}
 		if( $i < $nConnmarks ) {
-			$mover .= "<td width=50%><a href='list_connmarks.cgi?idx=$i&down=1'>
+			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmark&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
 				   </td>";
 		} else {
@@ -287,7 +273,7 @@ sub showConnmark {
 				   </td>";
 		}
 		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_connmarks.cgi?idx=$i&up=1'>
+			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmark&idx=$i&up=1'>
 				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='^'></a>
 				   </td>";
 		} else {
@@ -296,7 +282,7 @@ sub showConnmark {
 				   </td>";
 		}
 		#		if( $i > 2 ) {
-		#		$mover .= "<td width=50%><a href='list_connmarks.cgi?idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
+		#		$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmark&idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
 		#	} else {
 		#		$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'></td>";
 		#	}

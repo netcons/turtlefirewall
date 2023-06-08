@@ -30,7 +30,8 @@ sub reportFlowStat {
 	my @maxs = ( 'all', '100', '1000', '10000', '100000' );
 	my @tops = ( '5', '10', '15', '20' );
 
-	my $type = $types[0];
+	#my $type = $types[0];
+	my $type = 'protocol';
 	my $max = $maxs[1];
 	my $top = $tops[0];
 	my $string = '';
