@@ -213,6 +213,7 @@
 	<ndpiprotocol name="postgresql" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="ppstream" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="pptp" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="protonvpn" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="psiphon" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="qq" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="quic" category="browsing"> </ndpiprotocol>

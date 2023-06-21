@@ -601,7 +601,9 @@ sub DeleteItem {
 	my $rules = $this->GetRulesCount();
 	for( my $r=0; $r<$rules; $r++ ) {
 		my %rule = $this->GetRule( $r );
-		if( $rule{SRC} eq $name || $rule{DST} eq $name || $rule{TIME} eq $name || $rule{HOSTNAMESET} eq $name || $rule{RISKSET} eq $name || $rule{RATELIMIT} eq $name ) {
+		my @src_list = split( /,/, $rule{SRC} );
+		my @dst_list = split( /,/, $rule{DST} );
+		if( grep( /^$name$/, @src_list ) || grep( /^$name$/, @dst_list ) || $rule{TIME} eq $name || $rule{HOSTNAMESET} eq $name || $rule{RISKSET} eq $name || $rule{RATELIMIT} eq $name ) {
 			$found = 1;
 			last;
 		}
@@ -641,7 +643,8 @@ sub DeleteItem {
 	my $conntracks = $this->GetConntracksCount();
 	for( my $r=0; $r<$conntracks; $r++ ) {
 		my %conntrack = $this->GetConntrack( $r );
-		if( $conntrack{SRC} eq $name || $conntrack{DST} eq $name ) {
+		# SRC ignored here, can only be FIREWALL.
+		if( $conntrack{DST} eq $name ) {
 			$found = 1;
 			last;
 		}
@@ -756,8 +759,10 @@ sub RenameItem {
 		foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','CONNTRACK','NAT','MASQUERADE','REDIRECT') {
 			for( my $i=0; $i<=$#{$this->{fw}{$ruletype}}; $i++ ) {
 				foreach $field ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
-					if( $this->{fw}{$ruletype}[$i]{$field} eq $oldname ) {
-						$this->{fw}{$ruletype}[$i]{$field} = $newname;
+					my @field_list = split( /,/, $this->{fw}{$ruletype}[$i]{$field} );
+					if( grep( /^$oldname$/, @field_list ) ) {
+						s/^$oldname$/$newname/ for @field_list;
+						$this->{fw}{$ruletype}[$i]{$field} = join(",", @field_list);
 					}
 				}
 			}
@@ -1752,7 +1757,8 @@ sub getIptablesRules {
 	$rules .= "-A INPUT -i lo -j ACCEPT\n";
 	$rules .= "-A OUTPUT -o lo -j ACCEPT\n";
 
-	### Log invalid packets then drop packets
+	#################################################
+	# START of INVALID Packets filter by Mark Francis
 	$chains .= ":INVALID - [0:0]\n";
 	$chains .= ":CHECK_INVALID - [0:0]\n";
 	
@@ -1826,50 +1832,6 @@ sub getIptablesRules {
 		print "off\n";
 	}
 
-	print "drop_ip_blacklist: ";
-	if( $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
-		$chains .= ":INPUT-IP-BL - [0:0]\n";
-                $rules .= "-A INPUT-IP-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW input-ip-bl(DRO):\"\n";
-                $rules .= "-A INPUT-IP-BL -j DROP\n";
-
-                $chains .= ":OUTPUT-IP-BL - [0:0]\n";
-                $rules .= "-A OUTPUT-IP-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW output-ip-bl(DRO):\"\n";
-                $rules .= "-A OUTPUT-IP-BL -j DROP\n";
-
-                $chains .= ":FORWARD-IP-BL - [0:0]\n";
-                $rules .= "-A FORWARD-IP-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW forward-ip-bl(DRO):\"\n";
-                $rules .= "-A FORWARD-IP-BL -j DROP\n";
-
-                $rules .= "-A INPUT -m set --match-set drop_ip_blacklist src -j INPUT-IP-BL\n";
-                $rules .= "-A OUTPUT -m set --match-set drop_ip_blacklist dst -j OUTPUT-IP-BL\n";
-                $rules .= "-A FORWARD -m set --match-set drop_ip_blacklist src,dst -j FORWARD-IP-BL\n";
-		print "on\n";
-	} else {
-		print "off\n";
-	}
-
-	print "drop_domain_blacklist: ";
-	if( $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
-		$chains .= ":INPUT-DOMAIN-BL - [0:0]\n";
-                $rules .= "-A INPUT-DOMAIN-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW input-domain-bl(DRO):\"\n";
-                $rules .= "-A INPUT-DOMAIN-BL -j DROP\n";
-
-                $chains .= ":OUTPUT-DOMAIN-BL - [0:0]\n";
-                $rules .= "-A OUTPUT-DOMAIN-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW output-domain-bl(DRO):\"\n";
-                $rules .= "-A OUTPUT-DOMAIN-BL -j DROP\n";
-
-                $chains .= ":FORWARD-DOMAIN-BL - [0:0]\n";
-                $rules .= "-A FORWARD-DOMAIN-BL -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW forward-domain-bl(DRO):\"\n";
-                $rules .= "-A FORWARD-DOMAIN-BL -j DROP\n";
-
-                $rules .= "-A INPUT -m ndpi --all --risk 27 -j INPUT-DOMAIN-BL\n";
-                $rules .= "-A OUTPUT -m ndpi --all --risk 27 -j OUTPUT-DOMAIN-BL\n";
-                $rules .= "-A FORWARD -m ndpi --all --risk 27 -j FORWARD-DOMAIN-BL\n";
-		print "on\n";
-	} else {
-		print "off\n";
-	}
-
 	$rules .= "-A CHECK_INVALID -j RETURN\n";
 	# Log all invalid then drop
 	$rules .= "-A INVALID -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW INVALID PACKET:\"\n";
@@ -1879,7 +1841,35 @@ sub getIptablesRules {
 	$rules .= "-A OUTPUT -j CHECK_INVALID\n";
 	$rules .= "-A FORWARD -j CHECK_INVALID\n";
 	# END of INVALID Packets filter by Mark Francis
-	############################################
+	###############################################
+	
+	print "drop_ip_blacklist: ";
+	if( $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
+		$chains .= ":IP_BLACKLIST - [0:0]\n";
+                $rules .= "-A IP_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW IP BLACKLIST:\"\n";
+                $rules .= "-A IP_BLACKLIST -j DROP\n";
+
+                $rules .= "-A INPUT -m set --match-set drop_ip_blacklist src -j IP_BLACKLIST\n";
+                $rules .= "-A OUTPUT -m set --match-set drop_ip_blacklist dst -j IP_BLACKLIST\n";
+                $rules .= "-A FORWARD -m set --match-set drop_ip_blacklist src,dst -j IP_BLACKLIST\n";
+		print "on\n";
+	} else {
+		print "off\n";
+	}
+
+	print "drop_domain_blacklist: ";
+	if( $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
+		$chains .= ":DOMAIN_BLACKLIST - [0:0]\n";
+                $rules .= "-A DOMAIN_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW DOMAIN BLACKLIST:\"\n";
+                $rules .= "-A DOMAIN_BLACKLIST -j DROP\n";
+
+                $rules .= "-A INPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+                $rules .= "-A OUTPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+                $rules .= "-A FORWARD -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+		print "on\n";
+	} else {
+		print "off\n";
+	}
 	
 	# Definizione della catena di ritorno
 	# Chain dei pacchetti di ritorno (NO nuove connessioni)

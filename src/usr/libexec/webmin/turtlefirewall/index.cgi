@@ -38,7 +38,6 @@ my @icons = ('images/items.png',
 	     'images/blacklists.png',
 	     'images/options.png',
 	     'images/backup.png');
-
 &icons_table(\@links, \@titles, \@icons, 11);
 print &ui_hr();
 
@@ -54,21 +53,19 @@ my @ricons = ('images/rules.png',
 	      'images/nats.png',
 	      'images/manglerules.png',
 	      'images/rawrules.png');
-
 &icons_table(\@rlinks, \@rtitles, \@ricons, 4);
 print &ui_hr();
 
-my @rlinks = ('log.cgi',
+my @llinks = ('log.cgi',
 	      'flowlog.cgi',
 	      'flowstat.cgi');
-my @rtitles = ($text{'index_icon_log'},
+my @ltitles = ($text{'index_icon_log'},
 	       $text{'index_icon_flowlog'},
                $text{'index_icon_flowstat'});
-my @ricons = ('images/log.png',
+my @licons = ('images/log.png',
  	      'images/flowlog.png',
 	      'images/flowstat.png');
-
-&icons_table(\@rlinks, \@rtitles, \@ricons, 4);
+&icons_table(\@llinks, \@ltitles, \@licons, 3);
 print &ui_hr();
 
 # $status == 1 if Firewall is ON
