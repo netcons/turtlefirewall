@@ -1,40 +1,42 @@
 <firewall>
 
 <options>
-<option name="log_limit" value="60"/>
-<option value="off" name="drop_invalid_none"/>
 <option name="drop_invalid_fragment" value="on"/>
-<option value="off" name="rp_filter"/>
-<option name="drop_invalid_syn_fin" value="on"/>
-<option name="log_martians" value="on"/>
 <option name="drop_invalid_state" value="off"/>
 <option value="on" name="drop_ip_blacklist"/>
-<option value="5" name="log_limit_burst"/>
-<option value="off" name="drop_invalid_fin_notack"/>
-<option name="drop_domain_blacklist" value="on"/>
-<option name="nf_conntrack_max" value="262144"/>
-<option name="drop_invalid_syn_rst" value="on"/>
+<option value="262144" name="nf_conntrack_max"/>
+<option name="drop_invalid_none" value="off"/>
 <option name="drop_invalid_all" value="off"/>
+<option name="log_limit_burst" value="5"/>
+<option name="drop_invalid_syn_rst" value="on"/>
+<option name="log_limit" value="60"/>
+<option name="drop_invalid_syn_fin" value="on"/>
+<option name="log_martians" value="on"/>
+<option value="on" name="drop_ja3_blacklist"/>
+<option name="drop_invalid_fin_notack" value="off"/>
+<option name="drop_domain_blacklist" value="on"/>
+<option value="on" name="drop_sha1_blacklist"/>
+<option value="off" name="rp_filter"/>
 </options>
 
-<zone description="" name="primarywan" if="eth1"/>
-<zone if="eth0" name="lan" description=""/>
+<zone if="eth0" description="" name="lan"/>
+<zone name="primarywan" description="" if="eth1"/>
 
 <group name="internet" description="Internet">
 	<item name="primarywan"/>
 </group>
 
-<masquerade src="*" service="all" dst="primarywan"/>
-<masquerade src="*" active="NO" service="all" dst="lan"/>
+<masquerade dst="primarywan" service="all" src="*"/>
+<masquerade src="*" service="all" active="NO" dst="lan"/>
 
-<conntrackpreroute helper="ftp" src="lan" service="tcp" dst="*" port="21"/>
-<conntrackpreroute port="5060" dst="*" service="tcp" helper="sip" src="lan"/>
-<conntrackpreroute port="5060" dst="*" service="udp" helper="sip" src="lan"/>
-<conntrackpreroute dst="*" port="1723" helper="pptp" src="lan" service="tcp"/>
+<conntrackpreroute service="tcp" src="lan" dst="*" port="21" helper="ftp"/>
+<conntrackpreroute port="5060" helper="sip" dst="*" service="tcp" src="lan"/>
+<conntrackpreroute dst="*" src="lan" service="udp" helper="sip" port="5060"/>
+<conntrackpreroute helper="pptp" port="1723" service="tcp" dst="*" src="lan"/>
 
-<rule service="all" description="Firewall to Anyware" src="FIREWALL" target="ACCEPT" dst="*"/>
-<rule service="icmp_all,openvpn" src="internet" description="Internet to Firewall" target="ACCEPT" dst="FIREWALL"/>
-<rule dst="FIREWALL" service="dns,http,icmp_all,imap,logio,ntop,ntp,pop3,proxy8080,shellinabox,smtp,ssh,unifi,webmin" target="ACCEPT" src="lan" description="Lan To Firewall"/>
-<rule service="ftp,http,https,icmp_all,imap,imaps,ntp,pop3,pop3s,smtp587,smtps" description="Lan to Internet" src="lan" target="ACCEPT" log="YES" dst="internet"/>
+<rule target="ACCEPT" description="Firewall to Anyware" dst="*" service="all" src="FIREWALL"/>
+<rule target="ACCEPT" src="internet" dst="FIREWALL" service="icmp_all,openvpn" description="Internet to Firewall"/>
+<rule service="dns,http,icmp_all,imap,logio,ntop,ntp,pop3,proxy8080,shellinabox,smtp,ssh,unifi,webmin" src="lan" dst="FIREWALL" description="Lan To Firewall" target="ACCEPT"/>
+<rule service="ftp,http,https,icmp_all,imap,imaps,ntp,pop3,pop3s,smtp587,smtps" src="lan" dst="internet" log="YES" description="Lan to Internet" target="ACCEPT"/>
 
 </firewall>

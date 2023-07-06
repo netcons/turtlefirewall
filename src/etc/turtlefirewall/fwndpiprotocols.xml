@@ -282,6 +282,7 @@
 	<ndpiprotocol name="tidal" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="tftp" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="threema" category="social-media"> </ndpiprotocol>
+	<ndpiprotocol name="thrift" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="tiktok" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="tinc" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="tivoconnect" category="other"> </ndpiprotocol>

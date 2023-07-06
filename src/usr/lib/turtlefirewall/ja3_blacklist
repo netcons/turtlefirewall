@@ -2,8 +2,62 @@
 echo -e "\nTurtle Firewall 2.2 - JA3 Blacklist";
 echo -e "Copyright (c) 2001-2023 Andrea Frigido\n";
 
+fw_file="/etc/turtlefirewall/fw.xml"
+
+grep -E 'drop_ja3_blacklist.*="on"|="on".*drop_ja3_blacklist' $fw_file > /dev/null
+if [ $? = 0 ]
+ then
+
 blacklist_file="/etc/turtlefirewall/ja3_blacklist.dat"
 
+Help () {
+ echo "Usage :  ja3_blacklist [OPTION]"
+ echo " "
+ echo "  -I, --initialise"
+ echo "     initialise blacklist firewall item"
+ echo " "
+ echo "  -d, --download"
+ echo "     download blacklist file"
+ echo " "
+ echo "  -i, --import"
+ echo "     import blacklist file into firewall item"
+ echo " "
+ echo "  -h, --help"
+ echo "     this menu"
+ echo " "
+ echo "  -x, --exclude-download"
+ echo "     do intialise and import"
+ echo " "
+ exit 0
+}
+
+Verify () {
+if [ ! -d /proc/net/xt_ndpi ]
+ then
+  echo "xt_ndpi kernel module not loaded"
+  echo
+  exit 1
+fi
+}
+
+Initialise () {
+echo -e "Initialise : \c"
+cat /proc/net/xt_ndpi/proto | grep drop_ja3_blacklist > /dev/null 2>&1
+if [ $? = 0 ]
+ then
+  echo -e "SKIP"
+ else
+  echo "add_custom drop_ja3_blacklist" > /proc/net/xt_ndpi/proto
+  if [ $? = 0 ]
+   then
+    echo -e "OK"
+  else
+    echo -e "FAIL"
+  fi
+fi
+}
+
+Download () {
 echo -e "Download : \c"
 systemctl is-enabled turtlefirewall > /dev/null 2>&1
 if [ $? = 0 ]
@@ -20,10 +74,41 @@ if [ $? = 0 ]
      echo -e "FAIL"
    fi
   chmod 600 $blacklist_file
- else
+else
   echo -e "turtlefirewall not enabled"
   echo
   exit 1
+fi
+}
+
+Import () {
+echo -e "Import : \c"
+if [ -s $blacklist_file ]
+ then
+   sed "s/,.*//;s/^/drop_ja3_blacklist:RISK_JA3_/" $blacklist_file > /proc/net/xt_ndpi/host_proto
+   count=`wc -l < $blacklist_file`
+   if [ $? = 0 ]
+    then
+     echo -e "$count"
+   else
+     echo -e "FAIL"
+   fi
+ else
+   echo -e "$blacklist_file empty"
+fi
+}
+
+case $1 in
+ -I|--initialise) Verify;Initialise;;
+ -d|--download) Download;;
+ -i|--import) Verify;Import;;
+ -h|--help) Help;;
+ -x|--exclude-download) Verify;Initialise;Import;;
+ *) Verify;Initialise;Download;Import;;
+esac
+
+else
+ echo -e "drop_ja3_blacklist disabled in $fw_file"
 fi
 
 echo

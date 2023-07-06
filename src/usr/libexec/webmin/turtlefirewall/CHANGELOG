@@ -214,6 +214,6 @@ CHANGELOG
            	Bug : Code cleanup.
            	Bug : Fixed rename and delete of multi select items used in rules.
 		Feature : Added Flow Risk support.
-		Feature : Added Optional Domain Blacklist.
+		Feature : Added Optional Domain, JA3 and SHA1 Blacklist support.
 		Feature : Added Rate Limit support.
                 Theme : New Webmin support. ( Todo : Translate new features )

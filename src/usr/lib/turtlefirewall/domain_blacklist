@@ -16,9 +16,6 @@ Help () {
  echo "  -I, --initialise"
  echo "     initialise blacklist firewall item"
  echo " "
- echo "  -f, --flush"
- echo "     flush blacklist firewall item"
- echo " "
  echo "  -d, --download"
  echo "     download blacklist file"
  echo " "
@@ -29,7 +26,7 @@ Help () {
  echo "     this menu"
  echo " "
  echo "  -x, --exclude-download"
- echo "     do intialise, flush and import"
+ echo "     do intialise and import"
  echo " "
  exit 0
 }
@@ -48,27 +45,16 @@ echo -e "Initialise : \c"
 cat /proc/net/xt_ndpi/proto | grep drop_domain_blacklist > /dev/null 2>&1
 if [ $? = 0 ]
  then
-  echo -e "OK"
+  echo -e "SKIP"
  else
   echo "add_custom drop_domain_blacklist" > /proc/net/xt_ndpi/proto
   if [ $? = 0 ]
    then
-    echo -e "CREATED"
+    echo -e "OK"
   else
     echo -e "FAIL"
   fi
 fi
-}
-
-Flush () {
-echo -e "Flush : \c"
-echo "reset" > /proc/net/xt_ndpi/host_proto
- if [ $? = 0 ]
-  then
-   echo -e "OK"
- else
-   echo -e "FAIL"
- fi
 }
 
 Download () {
@@ -114,12 +100,11 @@ fi
 
 case $1 in
  -I|--initialise) Verify;Initialise;;
- -f|--flush) Verify;Flush;;
  -d|--download) Download;;
  -i|--import) Verify;Import;;
  -h|--help) Help;;
- -x|--exclude-download) Initialise;Flush;Import;;
- *) Initialise;Flush;Download;Import;;
+ -x|--exclude-download) Verify;Initialise;Import;;
+ *) Verify;Initialise;Download;Import;;
 esac
 
 else

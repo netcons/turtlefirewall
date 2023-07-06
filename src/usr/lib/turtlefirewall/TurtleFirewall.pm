@@ -1607,7 +1607,22 @@ sub startFirewall {
 
 	# Ensure ipset item present for IP Blacklist
 	if( $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
-		$this->command('/usr/lib/turtlefirewall/ip_blacklist --initialise', '/dev/null');
+		$this->command('/usr/lib/turtlefirewall/ip_blacklist -I', '/dev/null');
+	}
+
+	# Ensure dpi item present for Domain Blacklist
+	if( $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
+		$this->command('/usr/lib/turtlefirewall/domain_blacklist -x', '/dev/null');
+	}
+
+	# Ensure dpi item present for JA3 Blacklist
+	if( $this->{fw}{OPTION}{drop_ja3_blacklist} ne 'off' ) {
+		$this->command('/usr/lib/turtlefirewall/ja3_blacklist -x', '/dev/null');
+	}
+
+	# Ensure dpi item present for SHA1 Blacklist
+	if( $this->{fw}{OPTION}{drop_sha1_blacklist} ne 'off' ) {
+		$this->command('/usr/lib/turtlefirewall/sha1_blacklist -x', '/dev/null');
 	}
 
 	my $rules = $this->getIptablesRules();
@@ -1632,12 +1647,6 @@ sub startFirewall {
 		#unlink "/etc/turtlefirewall/iptables.dat";
 	} else {	
 		$this->iptables_restore_emu( $rules );
-	}
-
-	# Ensure dpi item present for Domain Blacklist
-	if( $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
-		print "run domain_blacklist\n";
-                $this->command('/usr/lib/turtlefirewall/domain_blacklist -x', '/dev/null');
 	}
 
 	# Apply Rate Limits
@@ -1866,6 +1875,34 @@ sub getIptablesRules {
                 $rules .= "-A INPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
                 $rules .= "-A OUTPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
                 $rules .= "-A FORWARD -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+		print "on\n";
+	} else {
+		print "off\n";
+	}
+
+	print "drop_ja3_blacklist: ";
+	if( $this->{fw}{OPTION}{drop_ja3_blacklist} ne 'off' ) {
+		$chains .= ":JA3_BLACKLIST - [0:0]\n";
+                $rules .= "-A JA3_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW JA3 BLACKLIST:\"\n";
+                $rules .= "-A JA3_BLACKLIST -j DROP\n";
+
+                $rules .= "-A INPUT -m ndpi --all --risk 28 -j JA3_BLACKLIST\n";
+                $rules .= "-A OUTPUT -m ndpi --all --risk 28 -j JA3_BLACKLIST\n";
+                $rules .= "-A FORWARD -m ndpi --all --risk 28 -j JA3_BLACKLIST\n";
+		print "on\n";
+	} else {
+		print "off\n";
+	}
+
+	print "drop_sha1_blacklist: ";
+	if( $this->{fw}{OPTION}{drop_sha1_blacklist} ne 'off' ) {
+		$chains .= ":SHA1_BLACKLIST - [0:0]\n";
+                $rules .= "-A SHA1_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW SHA1 BLACKLIST:\"\n";
+                $rules .= "-A SHA1_BLACKLIST -j DROP\n";
+
+                $rules .= "-A INPUT -m ndpi --all --risk 29 -j SHA1_BLACKLIST\n";
+                $rules .= "-A OUTPUT -m ndpi --all --risk 29 -j SHA1_BLACKLIST\n";
+                $rules .= "-A FORWARD -m ndpi --all --risk 29 -j SHA1_BLACKLIST\n";
 		print "on\n";
 	} else {
 		print "off\n";
