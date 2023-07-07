@@ -16,6 +16,9 @@ Help () {
  echo "  -I, --initialise"
  echo "     initialise blacklist firewall item"
  echo " "
+ echo "  -f, --flush"
+ echo "     flush blacklist firewall item"
+ echo " "
  echo "  -d, --download"
  echo "     download blacklist file"
  echo " "
@@ -26,7 +29,7 @@ Help () {
  echo "     this menu"
  echo " "
  echo "  -x, --exclude-download"
- echo "     do intialise and import"
+ echo "     do intialise, flush and import"
  echo " "
  exit 0
 }
@@ -54,6 +57,17 @@ if [ $? = 0 ]
   else
     echo -e "FAIL"
   fi
+fi
+}
+
+Flush () {
+echo -e "Flush : \c"
+echo "-drop_domain_blacklist:*" > /proc/net/xt_ndpi/host_proto
+if [ $? = 0 ]
+ then
+  echo -e "OK"
+else
+  echo -e "FAIL"
 fi
 }
 
@@ -94,17 +108,19 @@ if [ -s $blacklist_file ]
      echo -e "FAIL"
    fi
  else
+   echo "drop_domain_blacklist:RISK_DOMAIN_dummy.tfw" > /proc/net/xt_ndpi/host_proto
    echo -e "$blacklist_file empty"
 fi
 }
 
 case $1 in
  -I|--initialise) Verify;Initialise;;
+ -f|--flush) Verify;Flush;;
  -d|--download) Download;;
  -i|--import) Verify;Import;;
  -h|--help) Help;;
- -x|--exclude-download) Verify;Initialise;Import;;
- *) Verify;Initialise;Download;Import;;
+ -x|--exclude-download) Verify;Initialise;Flush;Import;;
+ *) Verify;Initialise;Flush;Download;Import;;
 esac
 
 else
