@@ -37,92 +37,112 @@ sub new {
 	return $this;
 }
 
-##
 # Public method for get firewall info (after LoadFirewall)
 sub GetZoneList {
 	my $this = shift;
 	return sort( keys %{ $this->{fw}{ZONE} } );
 }
+
 sub GetGeoipList {
 	my $this = shift;
 	return sort( keys %{ $this->{fw}{GEOIP} } );
 }
+
 sub GetNetList {
 	my $this = shift;
 	return sort( keys %{ $this->{fw}{NET} } );
 }
+
 sub GetHostList {
 	my $this = shift;
 	return sort( keys %{ $this->{fw}{HOST} } );
 }
+
 sub GetTimeList {
 	my $this = shift;
 	return sort( keys %{ $this->{fw}{TIME} } );
 }
+
 sub GetGroupList {
 	my $this = shift;
 	return @{$this->{fwKeys}{GROUP}};
 }
+
 sub GetTimeGroupList {
 	my $this = shift;
 	return @{$this->{fwKeys}{TIMEGROUP}};
 }
+
 sub GetHostNameSetList {
 	my $this = shift;
 	return sort( keys %{ $this->{fw}{HOSTNAMESET} } );
 }
+
 sub GetRiskSetList {
 	my $this = shift;
 	return sort( keys %{ $this->{fw}{RISKSET} } );
 }
+
 sub GetRateLimitList {
 	my $this = shift;
 	return sort( keys %{ $this->{fw}{RATELIMIT} } );
 }
+
 sub GetZone {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{ZONE}{$name} };
 }
+
 sub GetGeoip {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{GEOIP}{$name} };
 }
+
 sub GetNet {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{NET}{$name} };
 }
+
 sub GetHost {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{HOST}{$name} };
 }
+
 sub GetTime {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{TIME}{$name} };
 }
+
 sub GetGroup {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{GROUP}{$name} };
 }
+
 sub GetTimeGroup {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{TIMEGROUP}{$name} };
 }
+
 sub GetHostNameSet {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{HOSTNAMESET}{$name} };
 }
+
 sub GetRiskSet {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{RISKSET}{$name} };
 }
+
 sub GetRateLimit {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{RATELIMIT}{$name} };
 }
+
 sub GetAllItemsList {
 	my $this = shift;
 	return sort( keys %{ $this->{fwItems} } );
 }
+
 # GetItemsAllowToGroup( group )
 # Get items allow to inserted into the group: all items defined before the group
 sub GetItemsAllowToGroup {
@@ -142,6 +162,7 @@ sub GetItemsAllowToGroup {
 	}
 	return @items;
 }
+
 sub GetItemsAllowToTimeGroup {
 	my $this = shift;
 	my $timegroup = shift;
@@ -149,112 +170,138 @@ sub GetItemsAllowToTimeGroup {
 	push @items, @{$this->{fwKeys}{TIME}};
 	return @items;
 }
+
 sub GetServicesList {
 	my $this = shift;
 	return sort( keys %{ $this->{services} } );
 }
+
 sub GetService {
 	my $this = shift;
 	my $name = shift;
 	return %{ $this->{services}{$name} };
 }
+
 sub GetNdpiProtocolsList {
 	my $this = shift;
 	return sort( keys %{ $this->{ndpiprotocols} } );
 }
+
 sub GetNdpiProtocol {
 	my $this = shift;
 	my $name = shift;
 	return %{ $this->{ndpiprotocols}{$name} };
 }
+
 sub GetNdpiRisksList {
 	my $this = shift;
 	return sort( keys %{ $this->{ndpirisks} } );
 }
+
 sub GetNdpiRisk {
 	my $this = shift;
 	my $id = shift;
 	return %{ $this->{ndpirisks}{$id} };
 }
+
 sub GetCountryCodesList {
 	my $this = shift;
 	return sort( keys %{ $this->{countrycodes} } );
 }
+
 sub GetCountryCode {
 	my $this = shift;
 	my $name = shift;
 	return %{ $this->{countrycodes}{$name} };
 }
+
 sub GetMasqueradesCount {
 	my $this = shift;
 	return $#{$this->{fw}{MASQUERADE}}+1;
 }
+
 sub GetMasquerade {
 	# param n = id of masquerade rule (1 .. MasqueradeCount)
 	my ($this,$n) = @_;
 	return %{ $this->{fw}{MASQUERADE}[$n-1] };
 }
+
 sub GetNatsCount {
 	my $this = shift;
 	return $#{$this->{fw}{NAT}}+1;
 }
+
 sub GetNat {
 	my ($this,$n) = @_;
 	return %{ $this->{fw}{NAT}[$n-1] };
 }
+
 sub GetRedirectCount {
 	my $this = shift;
 	return $#{$this->{fw}{REDIRECT}}+1;
 }
+
 sub GetRedirect {
 	my ($this,$n) = @_;
 	return %{ $this->{fw}{REDIRECT}[$n-1] };
 }
+
 sub GetRulesCount {
 	my $this = shift;
 	return $#{$this->{fw}{RULE}}+1;
 }
+
 sub GetRule {
 	my ($this,$n) = @_;
 	return %{ $this->{fw}{RULE}[$n-1] };
 }
+
 sub GetConnmarkPreroutesCount {
 	my $this = shift;
 	return $#{$this->{fw}{CONNMARKPREROUTE}}+1;
 }
+
 sub GetConnmarkPreroute {
 	my ($this,$n) = @_;
 	return %{ $this->{fw}{CONNMARKPREROUTE}[$n-1] };
 }
+
 sub GetConnmarksCount {
 	my $this = shift;
 	return $#{$this->{fw}{CONNMARK}}+1;
 }
+
 sub GetConnmark {
 	my ($this,$n) = @_;
 	return %{ $this->{fw}{CONNMARK}[$n-1] };
 }
+
 sub GetConntrackPreroutesCount {
 	my $this = shift;
 	return $#{$this->{fw}{CONNTRACKPREROUTE}}+1;
 }
+
 sub GetConntrackPreroute {
 	my ($this,$n) = @_;
 	return %{ $this->{fw}{CONNTRACKPREROUTE}[$n-1] };
 }
+
 sub GetConntracksCount {
 	my $this = shift;
 	return $#{$this->{fw}{CONNTRACK}}+1;
 }
+
 sub GetConntrack {
 	my ($this,$n) = @_;
 	return %{ $this->{fw}{CONNTRACK}[$n-1] };
 }
+
 # Get Firewall Configuration Specific Option
 sub GetOption {
 	my ($this,$name) = @_;
 	return $this->{fw}{OPTION}{$name};
 }
+
 # AddGroup( $group, $description, @items )
 sub AddGroup {
 	my $this = shift;
@@ -270,6 +317,7 @@ sub AddGroup {
 	$this->{fwItems}{$group} = 'GROUP';
 	return 1;
 }
+
 # AddTimeGroup( $timegroup, $description, @items )
 sub AddTimeGroup {
 	my $this = shift;
@@ -285,36 +333,42 @@ sub AddTimeGroup {
 	$this->{fwItems}{$timegroup} = 'TIMEGROUP';
 	return 1;
 }
+
 # AddHostNameSet( $name, $hostnames, $description )
 sub AddHostNameSet {
 	my ($this, $name, $hostnames, $description) = @_;
 	%{ $this->{fw}{HOSTNAMESET}{$name} } = ('NAME'=>$name, 'HOSTNAMES'=>$hostnames, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'HOSTNAMESET';
 }
+
 # AddRiskSet( $name, $risks, $description )
 sub AddRiskSet {
 	my ($this, $name, $risks, $description) = @_;
 	%{ $this->{fw}{RISKSET}{$name} } = ('NAME'=>$name, 'RISKS'=>$risks, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'RISKSET';
 }
+
 # AddRateLimit( $name, $rate, $description )
 sub AddRateLimit {
 	my ($this, $name, $rate, $description) = @_;
 	%{ $this->{fw}{RATELIMIT}{$name} } = ('NAME'=>$name, 'RATE'=>$rate, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'RATELIMIT';
 }
+
 # AddHost( $name, $ip, $mac, $zone, $description )
 sub AddHost {
 	my ($this, $name, $ip, $mac, $zone, $description) = @_;
 	%{ $this->{fw}{HOST}{$name} } = ('NAME'=>$name, 'IP'=>$ip, 'MAC'=>$mac, 'ZONE'=>$zone, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'HOST';
 }
+
 # AddTime( $name, $weekdays, $timestart, $timestop, $description )
 sub AddTime {
 	my ($this, $name, $weekdays, $timestart, $timestop, $description) = @_;
 	%{ $this->{fw}{TIME}{$name} } = ('NAME'=>$name, 'WEEKDAYS'=>$weekdays, 'TIMESTART'=>$timestart, 'TIMESTOP'=>$timestop, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'TIME';
 }
+
 # AddGeoip( $name, $zone, $description )
 sub AddGeoip {
 	my ($this, $name, $ip, $zone, $description) = @_;
@@ -322,6 +376,7 @@ sub AddGeoip {
 	$this->{fwItems}{$name} = 'GEOIP';
 	return 1;
 }
+
 # AddNet( $name, $ip, $netmask, $zone, $description )
 sub AddNet {
 	my ($this, $name, $ip, $netmask, $zone, $description) = @_;
@@ -329,6 +384,7 @@ sub AddNet {
 	$this->{fwItems}{$name} = 'NET';
 	return 1;
 }
+
 # AddZone( $name, $if, $description  )
 sub AddZone {
 	my ($this, $name, $if, $description) = @_;
@@ -336,6 +392,7 @@ sub AddZone {
 	$this->{fwItems}{$name} = 'ZONE';
 	return 1;
 }
+
 # AddMasquerade( $idx, $zone, $active ) if $idx==0 then add new Masquerade
 sub AddMasquerade {
 	my ($this, $idx, $src, $dst, $service, $port, $masquerade, $active ) = @_;
@@ -346,6 +403,7 @@ sub AddMasquerade {
 	if( ! $active ) { $attr{ACTIVE} = 'NO'; }
 	$this->AddMasqueradeAttr( $idx, %attr );
 }
+
 sub AddMasqueradeAttr {
 	my $this = shift;
 	my $idx = shift;
@@ -356,6 +414,7 @@ sub AddMasqueradeAttr {
 		%{ $this->{fw}{MASQUERADE}[$idx-1] } = %attr;
 	}
 }
+
 # AddNat( $idx, $virtual, $real, $service, $port, $toport, $active ) if $idx==0 then add new Masquerade
 sub AddNat {
 	my ($this, $idx, $virtual, $real, $service, $port, $toport, $active) = @_;
@@ -366,6 +425,7 @@ sub AddNat {
 	if( ! $active ) { $attr{ACTIVE} = 'NO'; }
 	$this->AddNatAttr( $idx, %attr );
 }
+
 sub AddNatAttr {
 	my $this = shift;
 	my $idx = shift;
@@ -376,6 +436,7 @@ sub AddNatAttr {
 		%{ $this->{fw}{NAT}[$idx-1] } = %attr;
 	}
 }
+
 # AddRedirect( $idx, $src, $dst, $service, $port, $toport, $active );
 sub AddRedirect {
 	my ($this, $idx, $src, $dst, $service, $port, $toport, $redirect, $active ) = @_;
@@ -386,6 +447,7 @@ sub AddRedirect {
 	if( ! $active ) { $attr{ACTIVE} = 'NO'; }
 	$this->AddRedirectAttr( $idx, %attr );
 }
+
 sub AddRedirectAttr {
 	my $this = shift;
 	my $idx = shift;
@@ -396,6 +458,7 @@ sub AddRedirectAttr {
 		%{$this->{fw}{'REDIRECT'}[$idx-1]} = %attr;
 	}
 }
+
 # AddRule( $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $ratelimit, $port, $time, $target, $active, $log, $description );
 sub AddRule {
 	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $ratelimit, $port, $time, $target, $active, $log, $description ) = @_;
@@ -414,6 +477,7 @@ sub AddRule {
 	if( $description ne '' ) { $attr{DESCRIPTION} = $description; }
 	$this->AddRuleAttr( $idx, %attr );
 }
+
 sub AddRuleAttr {
 	my $this = shift;
 	my $idx = shift;
@@ -424,12 +488,14 @@ sub AddRuleAttr {
 		%{$this->{fw}{'RULE'}[$idx-1]} = %attr;
 	}
 }
+
 sub MoveRule {
 	my ($this, $idxSrc, $idxDst) = @_;
 	my %attr = %{$this->{fw}{RULE}[$idxSrc-1]};
 	splice @{$this->{fw}{RULE}}, $idxSrc-1, 1;
 	splice @{$this->{fw}{RULE}}, $idxDst-1, 0, \%attr;
 }
+
 # AddConnmarkPreroute( $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active );
 sub AddConnmarkPreroute {
 	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active ) = @_;
@@ -445,6 +511,7 @@ sub AddConnmarkPreroute {
 	if( ! $active ) { $attr{ACTIVE} = 'NO'; }
 	$this->AddConnmarkPrerouteAttr( $idx, %attr );
 }
+
 sub AddConnmarkPrerouteAttr {
 	my $this = shift;
 	my $idx = shift;
@@ -455,12 +522,14 @@ sub AddConnmarkPrerouteAttr {
 		%{$this->{fw}{'CONNMARKPREROUTE'}[$idx-1]} = %attr;
 	}
 }
+
 sub MoveConnmarkPreroute {
 	my ($this, $idxSrc, $idxDst) = @_;
 	my %attr = %{$this->{fw}{CONNMARKPREROUTE}[$idxSrc-1]};
 	splice @{$this->{fw}{CONNMARKPREROUTE}}, $idxSrc-1, 1;
 	splice @{$this->{fw}{CONNMARKPREROUTE}}, $idxDst-1, 0, \%attr;
 }
+
 # AddConnmark( $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active );
 sub AddConnmark {
 	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active ) = @_;
@@ -476,6 +545,7 @@ sub AddConnmark {
 	if( ! $active ) { $attr{ACTIVE} = 'NO'; }
 	$this->AddConnmarkAttr( $idx, %attr );
 }
+
 sub AddConnmarkAttr {
 	my $this = shift;
 	my $idx = shift;
@@ -486,12 +556,14 @@ sub AddConnmarkAttr {
 		%{$this->{fw}{'CONNMARK'}[$idx-1]} = %attr;
 	}
 }
+
 sub MoveConnmark {
 	my ($this, $idxSrc, $idxDst) = @_;
 	my %attr = %{$this->{fw}{CONNMARK}[$idxSrc-1]};
 	splice @{$this->{fw}{CONNMARK}}, $idxSrc-1, 1;
 	splice @{$this->{fw}{CONNMARK}}, $idxDst-1, 0, \%attr;
 }
+
 # AddConntrackPreroute( $idx, $src, $dst, $service, $port, $helper, $active );
 sub AddConntrackPreroute {
 	my ($this, $idx, $src, $dst, $service, $port, $helper, $active ) = @_;
@@ -501,6 +573,7 @@ sub AddConntrackPreroute {
 	if( ! $active ) { $attr{ACTIVE} = 'NO'; }
 	$this->AddConntrackPrerouteAttr( $idx, %attr );
 }
+
 sub AddConntrackPrerouteAttr {
 	my $this = shift;
 	my $idx = shift;
@@ -511,12 +584,14 @@ sub AddConntrackPrerouteAttr {
 		%{$this->{fw}{'CONNTRACKPREROUTE'}[$idx-1]} = %attr;
 	}
 }
+
 sub MoveConntrackPreroute {
 	my ($this, $idxSrc, $idxDst) = @_;
 	my %attr = %{$this->{fw}{CONNTRACKPREROUTE}[$idxSrc-1]};
 	splice @{$this->{fw}{CONNTRACKPREROUTE}}, $idxSrc-1, 1;
 	splice @{$this->{fw}{CONNTRACKPREROUTE}}, $idxDst-1, 0, \%attr;
 }
+
 # AddConntrack( $idx, $src, $dst, $service, $port, $helper, $active );
 sub AddConntrack {
 	my ($this, $idx, $src, $dst, $service, $port, $helper, $active ) = @_;
@@ -526,6 +601,7 @@ sub AddConntrack {
 	if( ! $active ) { $attr{ACTIVE} = 'NO'; }
 	$this->AddConntrackAttr( $idx, %attr );
 }
+
 sub AddConntrackAttr {
 	my $this = shift;
 	my $idx = shift;
@@ -536,17 +612,20 @@ sub AddConntrackAttr {
 		%{$this->{fw}{'CONNTRACK'}[$idx-1]} = %attr;
 	}
 }
+
 sub MoveConntrack {
 	my ($this, $idxSrc, $idxDst) = @_;
 	my %attr = %{$this->{fw}{CONNTRACK}[$idxSrc-1]};
 	splice @{$this->{fw}{CONNTRACK}}, $idxSrc-1, 1;
 	splice @{$this->{fw}{CONNTRACK}}, $idxDst-1, 0, \%attr;
 }
+
 # AddOption( $name, $value );
 sub AddOption {
 	my ($this, $name, $value) = @_;
 	$this->{fw}{OPTION}{$name} = $value;
 }
+
 # DeleteItem( $name );
 sub DeleteItem {
 	my $this = shift;
@@ -771,106 +850,121 @@ sub RenameItem {
 		return 1;
 	}
 }
+
 # DeleteGroup( $group );
 sub DeleteGroup {
 	my ($this, $group) = @_;
 	return $this->DeleteItem( $group );
 }
+
 # DeleteTimeGroup( $timegroup );
 sub DeleteTimeGroup {
 	my ($this, $timegroup) = @_;
 	return $this->DeleteItem( $timegroup );
 }
+
 # DeleteHostNameSet( $hostnameset );
 sub DeleteHostNameSet {
 	my ($this, $hostnameset) = @_;
 	return $this->DeleteItem( $hostnameset );
 }
+
 # DeleteRiskSet( $riskset );
 sub DeleteRiskSet {
 	my ($this, $riskset) = @_;
 	return $this->DeleteItem( $riskset );
 }
+
 # DeleteRateLimit( $ratelimit );
 sub DeleteRateLimit {
 	my ($this, $ratelimit) = @_;
 	return $this->DeleteItem( $ratelimit );
 }
+
 # DeleteHost( $host );
 sub DeleteHost {
 	my ($this, $host) = @_;
 	return $this->DeleteItem( $host );
 }
+
 # DeleteTime( $time );
 sub DeleteTime {
 	my ($this, $time) = @_;
 	return $this->DeleteItem( $time );
 }
+
 # DeleteHost( $net );
 sub DeleteNet {
 	my ($this, $net) = @_;
 	return $this->DeleteItem( $net );
 }
+
 # DeleteGeoip( $zone );
 sub DeleteGeoip {
 	my ($this, $geoip) = @_;
 	return $this->DeleteItem( $geoip );
 }
+
 # DeleteZone( $zone );
 sub DeleteZone {
 	my ($this, $zone) = @_;
 	return $this->DeleteItem( $zone );
 }
+
 # DeleteMasquerade( $idx );
 sub DeleteMasquerade {
 	my ($this, $idx) = @_;
 	splice( @{$this->{fw}{'MASQUERADE'}}, $idx-1, 1 );
 }
+
 # DeleteNat( $idx );
 sub DeleteNat {
 	my ($this, $idx) = @_;
 	splice( @{$this->{fw}{'NAT'}}, $idx-1, 1 );
 }
+
 # DeleteRedirect( $idx );
 sub DeleteRedirect {
 	my ($this, $idx) = @_;
 	splice( @{$this->{fw}{'REDIRECT'}}, $idx-1, 1 );
 }
+
 # DeleteRule( $idx );
 sub DeleteRule {
 	my ($this, $idx) = @_;
 	splice( @{$this->{fw}{'RULE'}}, $idx-1, 1 );
 }
+
 # DeleteConnmarkPreroute( $idx );
 sub DeleteConnmarkPreroute {
 	my ($this, $idx) = @_;
 	splice( @{$this->{fw}{'CONNMARKPREROUTE'}}, $idx-1, 1 );
 }
+
 # DeleteConnmark( $idx );
 sub DeleteConnmark {
 	my ($this, $idx) = @_;
 	splice( @{$this->{fw}{'CONNMARK'}}, $idx-1, 1 );
 }
+
 # DeleteConntrackPreroute( $idx );
 sub DeleteConntrackPreroute {
 	my ($this, $idx) = @_;
 	splice( @{$this->{fw}{'CONNTRACKPREROUTE'}}, $idx-1, 1 );
 }
+
 # DeleteConntrack( $idx );
 sub DeleteConntrack {
 	my ($this, $idx) = @_;
 	splice( @{$this->{fw}{'CONNTRACK'}}, $idx-1, 1 );
 }
+
 # DeleteOption( $name );
 sub DeleteOption {
 	my ($this, $name) = @_;
 	delete $this->{fw}{OPTION}{$name};
 }
 
-#===================================
-# Carico le regole del firewall
-
-#==================
 # Load Firewall Items and rules.
 sub LoadFirewall {
 	my $this = shift;
@@ -878,23 +972,21 @@ sub LoadFirewall {
 
 	$this->{fw_file} = $fwFile;
 
-	# Aggiungo il firewall come zona predefinita
+	# Add the firewall as a default zone
 	$this->{fwItems}{FIREWALL} = 'ZONE';
 	%{$this->{fw}{ZONE}{FIREWALL}} = (NAME=>'FIREWALL');
 
 	my $xml = new XML::Parser( Style=>'Tree' );
 	my @tree = @{ $xml->parsefile( $fwFile ) };
 
-	#------
-	# Ciclo sui tag di primo livello (firewall)
+	# Loop over top-level tags (firewall)
 	for( my $i=0; $i<=$#tree; $i+=2 ) {
 		my $name = uc($tree[$i]);
 		if ($name eq 'FIREWALL') {
 			my @list = @{$tree[$i+1]};
 			my %attr = shift @list;
 
-			#------
-			# Ciclo sui tag di secondo livello (hosts, groups, rules ecc.)
+			# Loop over second-level tags (hosts, groups, rules ecc.)
 			for( my $j=0; $j<=$#list; $j+=2 ) {
 				my $name2 = uc($list[$j]);
 				if( $name2 eq 'ZONE' ) { $this->_LoadFirewallItem( 'ZONE', @{$list[$j+1]} ); }
@@ -966,7 +1058,6 @@ sub _LoadFirewallItem {
 	}
 }
 
-###
 # Internal method for add NAT, MASQUERADE or REDIRECT to firewall object
 sub _LoadFirewallNat {
 	my $this = shift;
@@ -990,7 +1081,6 @@ sub _LoadFirewallNat {
 	%{$this->{fw}{$type}[$#{$this->{fw}{$type}}+1]} = %attrs;
 }
 
-###
 # Internal method for add RULE to firewall object
 sub _LoadFirewallRule {
 	my $this = shift;
@@ -1014,7 +1104,6 @@ sub _LoadFirewallRule {
 	%{$this->{fw}{'RULE'}[$#{$this->{fw}{'RULE'}}+1]} = %attrs;
 }
 
-###
 # Internal method for add CONNMARKPREROUTE to firewall object
 sub _LoadFirewallConnmarkPreroute {
 	my $this = shift;
@@ -1034,7 +1123,6 @@ sub _LoadFirewallConnmarkPreroute {
 	%{$this->{fw}{'CONNMARKPREROUTE'}[$#{$this->{fw}{'CONNMARKPREROUTE'}}+1]} = %attrs;
 }
 
-###
 # Internal method for add CONNMARK to firewall object
 sub _LoadFirewallConnmark {
 	my $this = shift;
@@ -1058,7 +1146,6 @@ sub _LoadFirewallConnmark {
 	%{$this->{fw}{'CONNMARK'}[$#{$this->{fw}{'CONNMARK'}}+1]} = %attrs;
 }
 
-###
 # Internal method for add CONNTRACKPREROUTE to firewall object
 sub _LoadFirewallConntrackPreroute {
 	my $this = shift;
@@ -1078,7 +1165,6 @@ sub _LoadFirewallConntrackPreroute {
 	%{$this->{fw}{'CONNTRACKPREROUTE'}[$#{$this->{fw}{'CONNTRACKPREROUTE'}}+1]} = %attrs;
 }
 
-###
 # Internal method for add CONNTRACK to firewall object
 sub _LoadFirewallConntrack {
 	my $this = shift;
@@ -1098,7 +1184,6 @@ sub _LoadFirewallConntrack {
 	%{$this->{fw}{'CONNTRACK'}[$#{$this->{fw}{'CONNTRACK'}}+1]} = %attrs;
 }
 
-###
 # Internal method for add OPTIONS to firewall object
 #
 # XML:
@@ -1136,16 +1221,14 @@ sub LoadServices {
 
 			my @tree = @{ $xml->parsefile( $fileName ) };
 
-			#------
-			# Ciclo sui tag di primo livello (SERVICES)
+			# Loop over top-level tags (SERVICES)
 			for( my $i=0; $i<=$#tree; $i+=2 ) {
 				my $name = uc($tree[$i]);
 				if ($name eq 'SERVICES') {
 					my @list = @{$tree[$i+1]};
 					shift @list;
 
-					#------
-					# Ciclo sui tag di secondo livello (SERVICE)
+					# Loop over second-level tags (SERVICE)
 					for( my $j=0; $j<=$#list; $j+=2 ) {
 						my $name2 = uc($list[$j]);
 						if( $name2 eq 'SERVICE' ) {
@@ -1186,16 +1269,14 @@ sub LoadCountryCodes {
 
 		my @tree = @{ $xml->parsefile( $countrycodesFile ) };
 
-		#------
-		# Ciclo sui tag di primo livello (COUNTRYCODES)
+		# Loop over top-level tags (COUNTRYCODES)
 		for( my $i=0; $i<=$#tree; $i+=2 ) {
 			my $name = uc($tree[$i]);
 			if ($name eq 'COUNTRYCODES') {
 				my @list = @{$tree[$i+1]};
 				shift @list;
 
-				#------
-				# Ciclo sui tag di secondo livello (COUNTRYCODE)
+				# Loop over second-level tags (COUNTRYCODE)
 				for( my $j=0; $j<=$#list; $j+=2 ) {
 					my $name2 = uc($list[$j]);
 					if( $name2 eq 'COUNTRYCODE' ) {
@@ -1226,16 +1307,14 @@ sub LoadNdpiProtocols {
 
 		my @tree = @{ $xml->parsefile( $ndpiprotocolsFile ) };
 
-		#------
-		# Ciclo sui tag di primo livello (NDPIPROTOCOLS)
+		# Loop over top-level tags (NDPIPROTOCOLS)
 		for( my $i=0; $i<=$#tree; $i+=2 ) {
 			my $name = uc($tree[$i]);
 			if ($name eq 'NDPIPROTOCOLS') {
 				my @list = @{$tree[$i+1]};
 				shift @list;
 
-				#------
-				# Ciclo sui tag di secondo livello (NDPIPROTOCOL)
+				# Loop over second-level tags (NDPIPROTOCOL)
 				for( my $j=0; $j<=$#list; $j+=2 ) {
 					my $name2 = uc($list[$j]);
 					if( $name2 eq 'NDPIPROTOCOL' ) {
@@ -1266,16 +1345,14 @@ sub LoadNdpiRisks {
 
 		my @tree = @{ $xml->parsefile( $ndpirisksFile ) };
 
-		#------
-		# Ciclo sui tag di primo livello (NDPIRISKS)
+		# Loop over top-level tags (NDPIRISKS)
 		for( my $i=0; $i<=$#tree; $i+=2 ) {
 			my $id = uc($tree[$i]);
 			if ($id eq 'NDPIRISKS') {
 				my @list = @{$tree[$i+1]};
 				shift @list;
 
-				#------
-				# Ciclo sui tag di secondo livello (NDPIRISK)
+				# Loop over second-level tags (NDPIRISK)
 				for( my $j=0; $j<=$#list; $j+=2 ) {
 					my $id2 = uc($list[$j]);
 					if( $id2 eq 'NDPIRISK' ) {
@@ -1294,10 +1371,8 @@ sub LoadNdpiRisks {
 	}
 }
 
-###
-# Funzione di servizio.
-# Passato un hash come parametro ne converte le chiavi in maiuscolo.
-
+# Service function.
+# Passed a hash as a parameter converts the keys to uppercase.
 sub upperKeys {
 	my %hash = @_;
 	my %newHash;
@@ -1443,6 +1518,7 @@ sub SaveFirewallAs {
 	print FWFILE $xml;
 	close( FWFILE );
 }
+
 sub attr2xml {
 	my $this = shift;
 	my ($tag, %attr, @order) = @_;
@@ -1453,6 +1529,7 @@ sub attr2xml {
 	$appo .= "/>\n";
 	return $appo;
 }
+
 # Translate """ to "'", "<" to "&lt;" and ">" to "&gt;" and "&" to "&amp;"
 sub _clean {
 	my $this = shift;
@@ -1464,7 +1541,6 @@ sub _clean {
 	return $s;
 }
 
-###
 # Check if a name is correct (use only [a-zA-Z0-9\_\-])
 sub checkName {
 	my $this = shift;
@@ -1574,13 +1650,11 @@ sub startFirewall {
 		$this->command( "for f in /proc/sys/net/ipv4/conf/*/log_martians; do echo $flag > \$f; done" );
 	}
 	
-	###
 	# I want ever icmp_echo_ignore_all set to off. Turtle Firewall uses iptables
 	# rules for drop or allow icmp echo packets. Andrea Frigido 2004-07-17
 	$this->command( 'echo "1"', '/proc/sys/net/ipv4/icmp_echo_ignore_broadcasts' );
 	$this->command( 'echo "0"', '/proc/sys/net/ipv4/icmp_echo_ignore_all' );
 	
-	###
 	# Disable tcp_ecn flag.
 	$this->command( 'echo 0', '/proc/sys/net/ipv4/tcp_ecn' );
 
@@ -1667,10 +1741,7 @@ sub startFirewall {
 sub stopFirewall {
 	my $this = shift;
 
-	#
 	# Stop the firewall, allow all connections.
-	#
-
 	$this->command(
 		"iptables -F; ".
 		"iptables -X; ".
@@ -1691,8 +1762,6 @@ sub stopFirewall {
 	$this->command( 'conntrack -F', '/dev/null 2>&1' );
 }
 
-###
-# 
 sub getIptablesRules {
 	my $this = shift;
 	
@@ -1908,14 +1977,14 @@ sub getIptablesRules {
 		print "off\n";
 	}
 	
-	# Definizione della catena di ritorno
-	# Chain dei pacchetti di ritorno (NO nuove connessioni)
+	# Definition for the return chain
+	# Return packet chain (NO new connections)
 	$chains .= ":BACK - [0:0]\n";
 	$rules .= "-A BACK -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT\n";
 	$rules .= "-A BACK -j RETURN\n";
 
-	# Definizione della catena ICMP-ACC
-	# Chain per la gestione degli errori standard ICMP
+	# Definition for the ICMP-ACC chain
+	# Standard ICMP error handling chain
 	$chains .= ":ICMP-ACC - [0:0]\n";
 	$rules .= "-A ICMP-ACC -p icmp --icmp-type destination-unreachable -j ACCEPT\n";
 	$rules .= "-A ICMP-ACC -p icmp --icmp-type source-quench -j ACCEPT\n";
@@ -1923,9 +1992,7 @@ sub getIptablesRules {
 	$rules .= "-A ICMP-ACC -p icmp --icmp-type parameter-problem -j ACCEPT\n";
 	$rules .= "-A ICMP-ACC -j RETURN\n";
 	
-	# Applicazione delle CONNMARKPREROUTEs
-	#$connmarkpreroutes .= "#=====================================\n".
-	#	"# Regole di forwarding.\n";
+	# Application of CONNMARKPREROUTEs
 	my $connmarkpreroutesCount = $this->GetConnmarkPreroutesCount();
 	if( $connmarkpreroutesCount > 0 ) {
 		my @zone = $this->GetZoneList();
@@ -1944,9 +2011,7 @@ sub getIptablesRules {
 		$rules_mangle .= $rules_mangle_connmarkpreroute;
 	}
 
-	# Applicazione delle CONNMARKs
-	#$connmarks .= "#=====================================\n".
-	#	"# Regole di forwarding.\n";
+	# Application of CONNMARKs
 	my $connmarksCount = $this->GetConnmarksCount();
 	if( $connmarksCount > 0 ) {
 		my @zone = $this->GetZoneList();
@@ -1957,9 +2022,8 @@ sub getIptablesRules {
 				my $z2 = $zone[$j];
 				my %zone2 = $this->GetZone($z2);
 				if( $z1 eq 'FIREWALL' || $z2 eq 'FIREWALL' ) {
-					# Definisco le catene per i pacchetti che hanno come destinazione od
-					# origine lo stesso firewall.
-					# Notare che escludo la coppia FIREWALL -> FIREWALL
+					# I define chains for packets where the target or origin are the firewall
+					# Notice that FIREWALL -> FIREWALL is excluded.
 					if( $z1 eq 'FIREWALL' && $z2 ne 'FIREWALL' ) {
 						$chains_mangle_connmark .= ":$z1-$z2 - [0:0]\n";
 						$rules_mangle_connmark .= "-A OUTPUT -o \"".$zone2{'IF'}."\" -j $z1-$z2\n";
@@ -1981,9 +2045,7 @@ sub getIptablesRules {
 		$rules_mangle .= $rules_mangle_connmark;
 	}
 
-	# Applicazione delle CONNTRACKPREROUTEs
-	#$conntrackpreroutes .= "#=====================================\n".
-	#	"# Regole di forwarding.\n";
+	# Application of CONNTRACKPREROUTEs
 	my $conntrackpreroutesCount = $this->GetConntrackPreroutesCount();
 	if( $conntrackpreroutesCount > 0 ) {
 		my @zone = $this->GetZoneList();
@@ -2002,9 +2064,7 @@ sub getIptablesRules {
 		$rules_raw .= $rules_raw_conntrackpreroute;
 	}
 
-	# Applicazione delle CONNTRACKs
-	#$conntracks .= "#=====================================\n".
-	#	"# Regole di forwarding.\n";
+	# Application of CONNTRACKs
 	my $conntracksCount = $this->GetConntracksCount();
 	if( $conntracksCount > 0 ) {
 		my @zone = $this->GetZoneList();
@@ -2023,16 +2083,13 @@ sub getIptablesRules {
 		$rules_raw .= $rules_raw_conntrack;
 	}
 
-	# Applicazione delle NATs
-	#$rules_nat .= "#=====================================\n".
+	# Application of NATs
 	my $rules_nat = '';
 	for( my $i=1; $i <= $this->GetNatsCount(); $i++ ) {
 		$rules_nat .= $this->applyNat( $this->GetNat($i) );
 	}
 
-	# MASQUERADE (sempre dopo il NAT)
-	#$chains_nat .= "#=====================================\n".
-	#		"# Masquerading\n";
+	# MASQUERADE (always after the NAT)
 	my $masqueradesCount = $this->GetMasqueradesCount();
 	if( $masqueradesCount > 0 ) {
 		# Add MASQ chain
@@ -2041,13 +2098,11 @@ sub getIptablesRules {
 		for( my $i=1; $i <= $masqueradesCount; $i++ ) {
 			$rules_nat .= $this->applyMasquerade( $this->GetMasquerade($i) );
 		}
-		# close the MASQ chain with a RETURN to the POSTROUTING parent chain
+		# Close the MASQ chain with a RETURN to the POSTROUTING parent chain
 		$rules_nat .= "-A MASQ -j RETURN\n";
 	}
 	
 	# REDIRECT
-	#$chains_nat .= "#=====================================\n".
-	#		"# REDIRECT\n";
 	my $redirectCount = $this->GetRedirectCount();
 	if( $redirectCount > 0 ) {
 		# Add REDIR chain
@@ -2060,7 +2115,7 @@ sub getIptablesRules {
 		$rules_nat .= "-A REDIR -j RETURN\n";
 	}
 
-	# Creo le catene delle ZONE
+	# Create the chains for the ZONES
 	my @zone = $this->GetZoneList();
 	for(my $i=0; $i<=$#zone; $i++ ) {
 		my $z1 = $zone[$i];
@@ -2069,9 +2124,8 @@ sub getIptablesRules {
 			my $z2 = $zone[$j];
 			my %zone2 = $this->GetZone($z2);
 			if( $z1 eq 'FIREWALL' || $z2 eq 'FIREWALL' ) {
-				# Definisco le catene per i pacchetti che hanno come destinazione od
-				# origine lo stesso firewall.
-				# Notare che escludo la coppia FIREWALL -> FIREWALL
+				# I define chains for packets where the target or origin are the firewall
+				# Notice that FIREWALL -> FIREWALL is excluded.
 				if( $z1 eq 'FIREWALL' && $z2 ne 'FIREWALL' ) {
 					$chains .= ":$z1-$z2 - [0:0]\n";
 					$rules .= "-A OUTPUT -o \"".$zone2{'IF'}."\" -j $z1-$z2\n";
@@ -2087,17 +2141,13 @@ sub getIptablesRules {
 		}
 	}
 
-	# Applicazione delle RULEs
-	#$rules .= "#=====================================\n".
-	#	"# Regole di forwarding.\n";
+	# Application of the RULES
 	my $rulesCount = $this->GetRulesCount();
 	for( my $i=1; $i <= $rulesCount; $i++ ) {
 		$rules .= $this->applyRule( 1, 0, 0, 0, $this->GetRule($i) );
 	}
 	
-	# chiudo le catene delle zone
-	#$rules .= "#=====================================\n".
-	#	"# Chiusura di tutte le catene con relativo log\n";
+	# Close the zone chains
 	for(my $i=0; $i<=$#zone; $i++ ) {
 		$z1 = $zone[$i];
 		for($j=0; $j<=$#zone; $j++ ) {
@@ -2106,7 +2156,7 @@ sub getIptablesRules {
 				my $logprefix = "TFW $z1-$z2";
 				if( length($logprefix) > 23 ) { $logprefix = substr( $logprefix, 0, 23 ); }
 				$logprefix = "$logprefix(DRO)";
-				#comment( "# Chiusura catena $z1 -> $z2" );
+				#comment( "# Chain closure $z1 -> $z2" );
 				$rules .= "-A $z1-$z2 -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix:\"\n";
 				$rules .= "-A $z1-$z2 -j DROP\n";
 			}
@@ -2295,7 +2345,6 @@ sub applyNat {
 	return $rules;
 }
 
-# Applica una regola di mascheramento
 sub applyMasquerade {
 	my $this = shift;
 	my %masq = @_;
@@ -2332,7 +2381,7 @@ sub applyMasquerade {
 	#	return
 	#}
 
-	# Vedo se come sorgente ho un group
+	# See if I have a group as source
 	if( $fwItems{$src} eq 'GROUP' ) {
 		my %newmasq = %masq;
 		foreach my $item ( @{$fw{GROUP}{$src}{ITEMS}} ) {
@@ -2344,7 +2393,7 @@ sub applyMasquerade {
 		return $rules;
 	}
 
-	# Vedo se come destinazione ho un group
+	# See if I have a group as destination
 	if( $fwItems{$dst} eq 'GROUP' ) {
 		my %newmasq = %masq;
 		foreach my $item ( @{$fw{GROUP}{$dst}{ITEMS}} ) {
@@ -2356,7 +2405,7 @@ sub applyMasquerade {
 		return $rules;
 	}
 	
-	# Definisco il SERVICE
+	#I define the SERVICE
 	my $service = $masq{SERVICE};
 	my $port = $masq{PORT};
 
@@ -2404,14 +2453,14 @@ sub _applyServiceMasquerade {
 	
 	my %service = %{$ref_services->{$serviceName}};
 
-	# commento del servizio
+	# Service comment
 	#comment( "# $serviceName: ".$service{DESCRIPTION} );
 
 	$ref_calledServices->{$serviceName} = 1;
 
 	my $rules = '';
 	
-	# ciclo sulle regole di filering
+	# loop on filering rules
 	my $i;
 	for( $i = 0; $i <= $#{$service{FILTERS}}; $i++ ) {
 
@@ -2474,7 +2523,6 @@ sub _applyServiceMasquerade {
 	return $rules;
 }
 
-# Apply Redirect rule
 sub applyRedirect {
 	my $this = shift;
 	my %redirect = @_;
@@ -2495,7 +2543,7 @@ sub applyRedirect {
 	my $src = $redirect{SRC};
 	my $dst = $redirect{DST};
 
-	# Vedo se come sorgente ho un group
+	# See if I have a group as source
 	if( $fwItems{$src} eq 'GROUP' ) {
 		my %newredirect = %redirect;
 		foreach my $item ( @{$fw{GROUP}{$src}{ITEMS}} ) {
@@ -2507,7 +2555,7 @@ sub applyRedirect {
 		return $rules;
 	}
 
-	# Vedo se come destinazione ho un group
+	# See if I have a group as destination
 	if( $fwItems{$dst} eq 'GROUP' ) {
 		my %newredirect = %redirect;
 		foreach my $item ( @{$fw{GROUP}{$dst}{ITEMS}} ) {
@@ -2522,7 +2570,7 @@ sub applyRedirect {
 		return $rules;
 	}
 
-	# Definisco il SERVICE
+	# I define the SERVICE
 	my $service = $redirect{SERVICE};
 	my $port = $redirect{PORT};
 	my $toport = $redirect{TOPORT};
@@ -2559,7 +2607,7 @@ sub applyRedirect {
 	}
 	print "\n";
 
-	# Creo le 2 catene di andata e ritorno.
+	# I create the 2 return chains
 	$rules .= $this->applyServiceRedirect( \%services, $service, $src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $toport, $is_redirect);
 	
 	return $rules;
@@ -2581,7 +2629,7 @@ sub _applyServiceRedirect {
 
 	$ref_calledServices->{$serviceName} = 1;
 
-	# ciclo sulle regole di filering
+	# loop on filering rules
 	for( my $i = 0; $i <= $#{$service{FILTERS}}; $i++ ) {
 
 		my %filter = %{$service{FILTERS}[$i]};
@@ -2613,10 +2661,10 @@ sub _applyServiceRedirect {
 			if( $src_if ne '' ) { $cmd .= "-i $src_if "; }
 			if( $src_peer ne '0.0.0.0/0' && $src_peer ne '' ) { $cmd .= "-s $src_peer "; }
 
-		# Invalid Redirect, Ignore
-		#	if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
-		#		$cmd .= "-m mac --source-mac $src_mac ";
-		#	}
+			# Invalid Redirect, Ignore
+			#if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
+			#	$cmd .= "-m mac --source-mac $src_mac ";
+			#}
 
 			# iptables prerouting chain don't accept -o option.
 			#if( $dst_if ne '' ) { $cmd .= "-o $dst_if "; }
@@ -2658,7 +2706,7 @@ sub _applyServiceRedirect {
 	return $rules;
 }
 
-# Applica una regola di filtro del firewall
+# Apply a firewall filtering rule
 sub applyRule {
 	my $this = shift;
 	my $display = shift;
@@ -2944,7 +2992,7 @@ sub applyService {
 	return $this->_applyService( \%calledServices, @_ );
 }
 
-# Applica un servizio
+# Apply a service
 sub _applyService {
 	my $this = shift;
 	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_mac, $dst,
@@ -3107,9 +3155,9 @@ sub _applyService {
 
 		if( $target =~ /DROP|REJECT/ ) { $jump = $target; }
 
-		# Se e' in andata accetto il passaggio del pacchetto se e' in ritorno lo invio
-		# alla catena BACK che si occupa di verificare che sia realmente un pacchetto di
-		# una connessione gia' aperta.
+		# If it is outgoing I accept the direction of the packet, if it is in return I send it
+		# to the BACK chain which takes care of verifying that it really is a packet of
+		# an already open connection
 		if( $mangle_mark eq '' ) {
 			# filter rule
 			if( $jump eq '' ) {
@@ -3151,7 +3199,7 @@ sub _applyService {
 	return $rules;
 }
 
-# dato il nome dell'item ritorna la zona e l'ip + netmask
+# Given the name of the item it returns the zone, ip & netmask
 sub expand_item {
 	my $this = shift;
 	my $item = shift;
