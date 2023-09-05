@@ -67,10 +67,10 @@ sub confdir {
 );
 
 %blacklists = ( 
-	'ip' => { INDEX => '4', LOCATION => '/etc/turtlefirewall/ip_blacklist.dat', CRON => '/etc/cron.daily/ip_blacklist', DESCRIPTION => 'IP Address' },
-	'domain' => { INDEX => '17', LOCATION => '/etc/turtlefirewall/domain_blacklist.dat', CRON => '/etc/cron.daily/domain_blacklist', DESCRIPTION => 'DNS Domain Name' },
-	'ja3' => { INDEX => '19', LOCATION => '/etc/turtlefirewall/ja3_blacklist.dat', CRON => '/etc/cron.daily/ja3_blacklist', DESCRIPTION => 'SSL Handshake Fingerprint' },
-	'sha1' => { INDEX => '20', LOCATION => '/etc/turtlefirewall/sha1_blacklist.dat', CRON => '/etc/cron.daily/sha1_blacklist', DESCRIPTION => 'SSL Certificate Fingerprint' }
+	'ip' => { INDEX => '4', LOCATION => '/etc/turtlefirewall/drop_ip_blacklist.dat', CRON => '/etc/cron.daily/ip_blacklist', DESCRIPTION => 'IP Address' },
+	'domain' => { INDEX => '17', LOCATION => '/etc/turtlefirewall/drop_domain_blacklist.dat', CRON => '/etc/cron.daily/domain_blacklist', DESCRIPTION => 'DNS Domain Name' },
+	'ja3' => { INDEX => '19', LOCATION => '/etc/turtlefirewall/drop_ja3_blacklist.dat', CRON => '/etc/cron.daily/ja3_blacklist', DESCRIPTION => 'SSL Handshake Fingerprint' },
+	'sha1' => { INDEX => '20', LOCATION => '/etc/turtlefirewall/drop_sha1_blacklist.dat', CRON => '/etc/cron.daily/sha1_blacklist', DESCRIPTION => 'SSL Certificate Fingerprint' }
 );
 
 sub LoadServices {
@@ -117,7 +117,6 @@ sub LoadCountryCodes {
 	$firewall->LoadCountryCodes( $fwcountrycodes_file );
 }
 
-###
 # Generates html for service input
 sub formService {
 	my( $service, $port, $multiple ) = @_;
@@ -160,7 +159,6 @@ sub formService {
 	print " $text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"5\"> <small><i>$text{port_help}</i></small></td></tr></table>";
 }
 
-###
 # Parse service inputs and return name of service choosed
 sub formServiceParse {
 	my ($servicetype, $service2, $service3, $port ) = @_;
@@ -178,7 +176,6 @@ sub formServiceParse {
 	return ('','');
 }
 
-###
 # Generates html for ndpiprotocol input
 sub formNdpiProtocol {
 	my( $ndpiprotocol, $category, $multiple ) = @_;
@@ -235,7 +232,6 @@ sub formNdpiProtocol {
 	print '</select></td></tr></table>';
 }
 
-###
 # Parse ndpiprotocol inputs and return name of ndpiprotocol choosen
 sub formNdpiProtocolParse {
 	my ($ndpiprotocoltype, $ndpiprotocol2, $category ) = @_;

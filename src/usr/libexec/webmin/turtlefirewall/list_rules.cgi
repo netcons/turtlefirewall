@@ -127,8 +127,8 @@ sub showRule {
 		my $ce = $attr{'RISKSET'} ne 'none' && $se eq '' ? '</font>' : '';		# ColourEnd
 		push(@cols, "${sb}${bb}${cb}".$attr{'RISKSET'}."${ce}${be}${se}" );
 		if( $attr{'RATELIMIT'} eq '' ) { $attr{'RATELIMIT'} = 'none'; }
-		my $cb = $attr{'RATELIMIT'} ne 'none' && $sb eq '' ? '<font color=red>' : '';	# ColourBegin
-		my $ce = $attr{'RATELIMIT'} ne 'none' && $se eq '' ? '</font>' : '';		# ColourEnd
+		my $cb = $attr{'RATELIMIT'} ne 'none' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
+		my $ce = $attr{'RATELIMIT'} ne 'none' && $se eq '' ? '</font>' : '';			# ColourEnd
 		push(@cols, "${sb}${bb}${cb}".$attr{'RATELIMIT'}."${ce}${be}${se}" );
 		if( $attr{'TIME'} eq '' ) { $attr{'TIME'} = 'always'; $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );

@@ -91,7 +91,6 @@
 	<ndpiprotocol name="ftp_data" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="ftps" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="fuze" category="collaboration"> </ndpiprotocol>
-	<ndpiprotocol name="gambling" category="gambling"> </ndpiprotocol>
 	<ndpiprotocol name="geforcenow" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="genshinimpact" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="git" category="other"> </ndpiprotocol>
@@ -176,6 +175,7 @@
 	<ndpiprotocol name="mpeg_ts" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="mpegdash" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="mqtt" category="infrastructure"> </ndpiprotocol>
+	<ndpiprotocol name="mullvad" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="munin" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="ms_onedrive" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="mssql-tds" category="database"> </ndpiprotocol>
@@ -223,6 +223,7 @@
 	<ndpiprotocol name="reddit" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="redis" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="riotgames" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="roblox" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="rpc" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="rsh" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="rsync" category="storage-backup"> </ndpiprotocol>
@@ -236,6 +237,7 @@
 	<ndpiprotocol name="sap" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="sctp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="sd-rtn" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="service_location_protocol" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="sflow" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="showtime" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="signal" category="instant-messaging"> </ndpiprotocol>

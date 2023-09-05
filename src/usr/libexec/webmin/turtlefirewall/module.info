@@ -1,5 +1,5 @@
 os_support=*-linux
-version=2.1
+version=2.2
 longdesc=Realize a Linux firewall in a simple and fast way.
 name=turtlefirewall
 desc=Turtle Firewall
