@@ -156,7 +156,7 @@ sub formService {
 	print '<option'.($service eq 'tcp' ? ' SELECTED' : '').'>tcp</option>';
 	print '<option'.($service eq 'udp' ? ' SELECTED' : '').'>udp</option>';
 	print '</select>';
-	print " $text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"5\"> <small><i>$text{port_help}</i></small></td></tr></table>";
+	print " $text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"11\" maxlength=\"11\"> <small><i>$text{port_help}</i></small></td></tr></table>";
 }
 
 # Parse service inputs and return name of service choosed

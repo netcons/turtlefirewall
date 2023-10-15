@@ -92,7 +92,7 @@ print			"<tr>
 			<tr>
 				<td><b>$text{rule_service}</b></td>
 				<td><select name=\"service\">$options_service</select>
-				$text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"5\"> <small><i>$text{port_help}</i></small></td>
+				$text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"11\" maxlength=\"11\"> <small><i>$text{port_help}</i></small></td>
 			</tr>
 			<tr>
                                 <td><br></td><td></td>

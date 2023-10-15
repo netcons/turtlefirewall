@@ -86,7 +86,7 @@ print "				<br></td>
                         </tr>
 			<tr>
 				<td><b>$text{real_port}</b></td>
-			       	<td>$text{nat_port} : <input type=\"text\" name=\"toport\" size=\"5\" value=\"$toport\"></td>
+			       	<td>$text{nat_port} : <input type=\"text\" name=\"toport\" size=\"5\" maxlength=\"5\" value=\"$toport\"></td>
 			</tr>
 			<tr>
                                 <td><br></td><td></td>

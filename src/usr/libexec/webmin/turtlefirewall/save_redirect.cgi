@@ -39,12 +39,16 @@ if( $in{'delete'} ) {
 		$whatfailed = $text{save_redirect_error_title3};
 	}
 
-	if( $port ne '' && ($port < 0 || $port > 65535) ) {
+	if( $port ne '' && $port !~ /^(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[0-9]{1,4})$|^(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[0-9]{1,4}):(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[0-9]{1,4})$/ ) {
 		error( $text{save_redirect_error1} );
 	}
 
 	if( $port ne '' && $service ne 'tcp' && $service ne 'udp' ) {
 		error( $text{save_redirect_error2} );
+	}
+
+	if( $toport ne '' && $toport !~ /^()([1-9]|[1-5]?[0-9]{2,4}|6[1-4][0-9]{3}|65[1-4][0-9]{2}|655[1-2][0-9]|6553[1-5])$/ ) {
+		error( $text{save_redirect_error3} );
 	}
 
 	$fw->AddRedirect( $in{'new'} ? 0 : $idx, $src, $dst, $service, $port, $toport, $is_redirect, $active );

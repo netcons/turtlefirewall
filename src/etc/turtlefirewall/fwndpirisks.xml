@@ -52,5 +52,6 @@
 	<ndpirisk id="48" description="Periodic Flow"> </ndpirisk>
 	<ndpirisk id="49" description="Minor Issues"> </ndpirisk>
 	<ndpirisk id="50" description="TCP Connection Issues"> </ndpirisk>
+	<ndpirisk id="51" description="Fully encrypted flow"> </ndpirisk>
 
 </ndpirisks>
