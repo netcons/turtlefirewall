@@ -370,7 +370,7 @@ save_nat_error_title2=Fail to create new Nat
 save_nat_error_title3=Fail to save Nat
 save_nat_error1=Real Host missing.
 save_nat_error2=Invalid port (1-65535) or port range (1-65535:1-65535).
-save_nat_error3=Invalid "$nat_toport".
+save_nat_error3=Invalid "$nat_toport" (1-65535).
 save_nat_error4=Mapped port only valid for explicitly defined tcp or udp port.
 
 save_masq_error_title1=Fail to delete Masquerade
@@ -384,7 +384,7 @@ save_redirect_error_title2=Fail to create new Redirect
 save_redirect_error_title3=Fail to save Redirect
 save_redirect_error1=Invalid port (1-65535) or port range (1-65535:1-65535).
 save_redirect_error2=port is valid only for tcp and udp services.
-save_redirect_error3=Invalid "$redirect_toport".
+save_redirect_error3=Invalid "$redirect_toport" (1-65535).
 
 save_rule_error_title1=Fail to delete Rule
 save_rule_error_title2=Fail to create new Rule

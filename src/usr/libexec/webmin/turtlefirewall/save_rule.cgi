@@ -17,6 +17,7 @@ $src =~ s/\0/,/g;
 my $dst = $in{'dst'};
 $dst =~ s/\0/,/g;
 my ($service, $port) = formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
+if( $service eq '' ) { $service = 'all'; }
 my ($ndpi, $category) = formNdpiProtocolParse( $in{'ndpiprotocoltype'}, $in{'ndpiprotocol2'}, $in{'category'} );
 my $hostnameset = $in{'hostnameset'};
 if( $hostnameset eq 'any' ) { $hostnameset = ''; }
@@ -47,8 +48,16 @@ if( $in{'delete'} ) {
 } else {
 	$whatfailed = $in{'new'} ? $text{save_rule_error_title2} : $text{save_rule_error_title3};
 
-	if( $port ne '' && $port !~ /^(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[0-9]{1,4})$|^(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[0-9]{1,4}):(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[0-9]{1,4})$/ ) {
-		error( $text{save_rule_error1} );
+	if( $port ne '' ) {
+		my @ports = split( /:/, $port, 2 );
+		foreach my $p (@ports) {
+			# ensure integer
+			$p = $p + 0;
+			if( $p < 1 || $p > 65535 ) {
+				error( $text{save_rule_error1} );
+			}
+		}
+		$port = join(":", @ports);
 	}
 
 	if( $port ne '' && $service ne 'tcp' && $service ne 'udp' ) {
