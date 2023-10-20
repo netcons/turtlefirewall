@@ -116,12 +116,14 @@
 	<ndpiprotocol name="guildwars" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="h323" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="halflife2" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="haproxy" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="hbo" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="heroes_of_the_storm" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="hotspotshield" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="hp_virtgrp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="hsrp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="http" category="browsing"> </ndpiprotocol>
+	<ndpiprotocol name="http2" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="http_connect" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="http_proxy" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="hulu" category="video-audio"> </ndpiprotocol>
@@ -198,6 +200,7 @@
 	<ndpiprotocol name="ookla" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="opendns" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="openvpn" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="operavpn" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="oracle" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="ospf" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="outlook" category="email"> </ndpiprotocol>

@@ -53,5 +53,7 @@
 	<ndpirisk id="49" description="Minor Issues"> </ndpirisk>
 	<ndpirisk id="50" description="TCP Connection Issues"> </ndpirisk>
 	<ndpirisk id="51" description="Fully encrypted flow"> </ndpirisk>
+	<ndpirisk id="52" description="ALPN/SNI Mismatch"> </ndpirisk>
+	<ndpirisk id="53" description="Client contacted a malware host"> </ndpirisk>
 
 </ndpirisks>
