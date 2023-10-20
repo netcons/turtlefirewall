@@ -498,7 +498,6 @@ sub MoveRule {
 # AddConnmarkPreroute( $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active );
 sub AddConnmarkPreroute {
 	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active ) = @_;
-	if( $service eq '' ) { $service = 'all'; }
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
 	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; } elsif( $hostnameset ne '' || $riskset ne '' ) { $attr{NDPI} = 'all'; }
 	if( $category ne '' ) { $attr{CATEGORY} = $category; }
@@ -532,7 +531,6 @@ sub MoveConnmarkPreroute {
 # AddConnmark( $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active );
 sub AddConnmark {
 	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active ) = @_;
-	if( $service eq '' ) { $service = 'all'; }
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
 	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; } elsif( $hostnameset ne '' || $riskset ne '' ) { $attr{NDPI} = 'all'; }
 	if( $category ne '' ) { $attr{CATEGORY} = $category; }
