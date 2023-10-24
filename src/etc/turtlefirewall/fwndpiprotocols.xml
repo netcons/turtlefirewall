@@ -48,6 +48,7 @@
 	<ndpiprotocol name="cnn" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="coap" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="collectd" category="infrastructure"> </ndpiprotocol>
+	<ndpiprotocol name="controller_area_network" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="corba" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="cpha" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="crashlytics" category="other"> </ndpiprotocol>
@@ -226,6 +227,7 @@
 	<ndpiprotocol name="reddit" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="redis" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="riotgames" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="rmcp" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="roblox" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="rpc" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="rsh" category="remote-access"> </ndpiprotocol>
