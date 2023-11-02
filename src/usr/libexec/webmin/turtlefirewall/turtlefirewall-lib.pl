@@ -61,6 +61,7 @@ sub confdir {
 %flowreports = ( 
 	'source' => { INDEX => '4' },
        	'destination' => { INDEX => '6' },
+       	'dport' => { INDEX => '7' },
        	'protocol' => { INDEX => '16' },
        	'hostname' => { INDEX => '17' },
        	'risk' => { INDEX => '22' }

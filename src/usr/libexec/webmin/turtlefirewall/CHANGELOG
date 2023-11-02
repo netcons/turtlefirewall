@@ -217,4 +217,5 @@ CHANGELOG
 		Feature : Added Flow Risk support.
 		Feature : Added Optional Domain, JA3 and SHA1 Blacklist support.
 		Feature : Added Rate Limit support.
+		Feature : Added "dport" Flow Statistics option.
                 Theme : New Webmin support. ( Todo : Translate new features )

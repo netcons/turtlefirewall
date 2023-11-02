@@ -190,6 +190,7 @@ flowstat_title=Flow Statistics
 report_flowstat_title=Flow Statistics Report
 flowstat_type_source=Top Sources
 flowstat_type_destination=Top Destinations
+flowstat_type_dport=Top Destination Ports
 flowstat_type_protocol=Top Protocols
 flowstat_type_hostname=Top Hostnames
 flowstat_type_risk=Top Risks

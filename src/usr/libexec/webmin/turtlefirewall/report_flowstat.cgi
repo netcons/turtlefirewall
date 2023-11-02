@@ -114,6 +114,7 @@ sub getflows {
 
 		if( $type eq 'source' && $source ne '' ) {$type_list{$source} = '0';}
 		if( $type eq 'destination' && $destination ne '' ) {$type_list{$destination} = '0';}
+		if( $type eq 'dport' && $dport ne '' ) {$type_list{$dport} = '0';}
 		if( $type eq 'protocol' && $protocol ne '') {$type_list{$protocol} = '0';}
 		if( $type eq 'hostname' && $hostname ne '') {$type_list{$hostname} = '0';}
 		if( $type eq 'risk' && $risk ne '') {$type_list{$risk} = '0';}
