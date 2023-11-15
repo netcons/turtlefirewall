@@ -214,6 +214,7 @@ CHANGELOG
            	Bug : Code cleanup.
            	Bug : Fixed rename and delete of multi select items used in rules.
            	Bug : Fixed port or port range verification in rules.
+           	Bug : Fixed service display wrap in rules.
 		Feature : Added Flow Risk support.
 		Feature : Added Optional Domain, JA3 and SHA1 Blacklist support.
 		Feature : Added Rate Limit support.

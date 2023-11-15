@@ -35,7 +35,7 @@ sub showConntrackPreroute {
 		"width=1% align=center valign=center",
 		"width=10% valign=top",
 		"width=10% valign=top",
-		"align=center valign=top",
+		"align=center valign=top style='white-space: normal;'",
 		"width=1% align=center valign=center",
 		"width=1% valign=top" );
         print &ui_columns_start([
@@ -148,7 +148,7 @@ sub showConntrack {
 		"width=1% align=center valign=center",
 		"width=10% valign=top",
 		"width=10% valign=top",
-		"align=center valign=top",
+		"align=center valign=top style='white-space: normal;'",
 		"width=1% align=center valign=center",
 		"width=1% valign=top" );
         print &ui_columns_start([

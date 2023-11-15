@@ -29,7 +29,7 @@ sub showRule {
 		"width=1% align=center valign=center",
 		"valign=top",
 		"valign=top",
-		"align=center valign=top",
+		"align=center valign=top style='white-space: normal;'",
 		"align=center valign=top",
 		"align=center valign=top",
 		"align=center valign=top",
