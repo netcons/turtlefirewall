@@ -88,3 +88,48 @@ Configure */etc/turtlefirewall/fw.xml* or via Webmin and enable Turtle Firewall.
 ```
 systemctl enable turtlefirewall --now
 ```
+
+## Upgrade CentOS/RHEL 9
+
+Upgrade package and module dependencies
+```
+dnf upgrade turtlefirewall
+reboot
+```
+
+If dkms does not auto build kernel modules after reboot
+```
+systemctl is-enabled turtlefirewall > /dev/null
+if [ $? = 0 ]
+ then
+  turtlefirewall
+  lsmod | grep xt_geoip > /dev/null
+  if [ $? != 0 ]
+   then
+    ver=`readlink -f /usr/src/xtables-addons-* | cut -d "-" -f3`
+    dkms remove -m xtables-addons/${ver} --all
+    dkms add -m xtables-addons -v $ver
+    dkms make -m xtables-addons -v $ver
+    dkms install -m xtables-addons -v $ver
+  fi
+  lsmod | grep xt_ndpi > /dev/null
+  if [ $? != 0 ]
+   then
+    ver=`readlink -f /usr/src/ndpi-netfilter-* | cut -d "-" -f3`
+    dkms remove -m ndpi-netfilter/${ver} --all
+    dkms add -m ndpi-netfilter -v $ver
+    dkms make -m ndpi-netfilter -v $ver
+    dkms install -m ndpi-netfilter -v $ver
+  fi
+  lsmod | grep xt_ratelimit > /dev/null
+  if [ $? != 0 ]
+   then
+    ver=`readlink -f /usr/src/ipt-ratelimit-* | cut -d "-" -f3`
+    dkms remove -m ipt-ratelimit/${ver} --all
+    dkms add -m ipt-ratelimit -v $ver
+    dkms make -m ipt-ratelimit -v $ver
+    dkms install -m ipt-ratelimit -v $ver
+  fi
+  turtlefirewall
+fi
+```
