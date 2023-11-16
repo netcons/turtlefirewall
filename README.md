@@ -93,7 +93,8 @@ systemctl enable turtlefirewall --now
 
 Upgrade package and module dependencies
 ```
-dnf upgrade turtlefirewall
+dnf -y upgrade kernel kernel-devel kernel-headers
+dnf -y upgrade turtlefirewall
 reboot
 ```
 
