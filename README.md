@@ -89,15 +89,6 @@ Configure */etc/turtlefirewall/fw.xml* or via Webmin and enable Turtle Firewall.
 systemctl enable turtlefirewall --now
 ```
 
-## Upgrade CentOS/RHEL 9
-
-Upgrade package and module dependencies
-```
-dnf -y upgrade kernel kernel-devel kernel-headers
-dnf -y upgrade turtlefirewall
-reboot
-```
-
 If dkms does not auto build kernel modules after reboot
 ```
 systemctl is-enabled turtlefirewall > /dev/null
