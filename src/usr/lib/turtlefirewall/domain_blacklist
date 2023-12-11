@@ -115,8 +115,8 @@ if [ -s $drop_blacklist_file ]
     done < $never_blacklist_file
   fi
 
-  sed "s/^/drop_domain_blacklist:RISK_DOMAIN_/" $drop_blacklist_file > /proc/net/xt_ndpi/host_proto
-  #sed "s/^/drop_domain_blacklist:/" $drop_blacklist_file > /proc/net/xt_ndpi/host_proto
+  #sed "s/^/drop_domain_blacklist:RISK_DOMAIN_/" $drop_blacklist_file > /proc/net/xt_ndpi/host_proto
+  sed "s/^/drop_domain_blacklist:/" $drop_blacklist_file > /proc/net/xt_ndpi/host_proto
   count=`wc -l < $drop_blacklist_file`
   if [ $? = 0 ]
    then
