@@ -31,6 +31,7 @@
 	<ndpiprotocol name="azure" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="bacnet" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="badoo" category="social-media"> </ndpiprotocol>
+	<ndpiprotocol name="beckhoffads" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="bgp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="bitcoin" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="bittorrent" category="storage-backup"> </ndpiprotocol>
@@ -81,11 +82,14 @@
 	<ndpiprotocol name="egp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="elasticsearch" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="epicgames" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="ethereum" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ethernetip" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="ethersio" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="facebook" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="facebookvoip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="fastcgi" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="fbookreelstory" category="social-media"> </ndpiprotocol>
+	<ndpiprotocol name="fins" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="fix" category="financial"> </ndpiprotocol>
 	<ndpiprotocol name="forticlient" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="ftp_control" category="storage-backup"> </ndpiprotocol>
@@ -106,7 +110,6 @@
 	<ndpiprotocol name="googledrive" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="googlehangoutduo" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="googlemaps" category="navigation"> </ndpiprotocol>
-	<ndpiprotocol name="googleplus" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="googleservices" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="goto" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="gre" category="tunnelling"> </ndpiprotocol>
@@ -118,6 +121,7 @@
 	<ndpiprotocol name="h323" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="halflife2" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="haproxy" category="proxy"> </ndpiprotocol>
+	<ndpiprotocol name="hart-ip" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="hbo" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="heroes_of_the_storm" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="hotspotshield" category="tunnelling"> </ndpiprotocol>
@@ -135,6 +139,7 @@
 	<ndpiprotocol name="icmp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="icmpv6" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="iec60870" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="ieee-c37118" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="iflix" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="igmp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="iheartradio" category="video-audio"> </ndpiprotocol>
@@ -147,6 +152,7 @@
 	<ndpiprotocol name="ipp" category="printing"> </ndpiprotocol>
 	<ndpiprotocol name="ipsec" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="irc" category="instant-messaging"> </ndpiprotocol>
+	<ndpiprotocol name="iso9506-1-mms" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="jabber" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="kakaotalk" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="kakaotalk_voice" category="telephony"> </ndpiprotocol>
@@ -199,6 +205,7 @@
 	<ndpiprotocol name="ocsp" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="oicq" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="ookla" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="opc-ua" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="opendns" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="openvpn" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="operavpn" category="tunnelling"> </ndpiprotocol>
@@ -217,8 +224,10 @@
 	<ndpiprotocol name="postgresql" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="ppstream" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="pptp" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="protobuf" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="protonvpn" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="psiphon" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="ptpv2" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="qq" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="quic" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="radius" category="authentication"> </ndpiprotocol>
@@ -235,9 +244,11 @@
 	<ndpiprotocol name="rtcp" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rtmp" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rtp" category="video-audio"> </ndpiprotocol>
+	<ndpiprotocol name="rtps" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rtsp" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rx" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="s7comm" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="s7commplus" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="salesforce" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="sap" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="sctp" category="networking"> </ndpiprotocol>
@@ -247,7 +258,7 @@
 	<ndpiprotocol name="showtime" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="signal" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="signalvoip" category="telephony"> </ndpiprotocol>
-	<ndpiprotocol name="sina(weibo)" category="social-media"> </ndpiprotocol>
+	<ndpiprotocol name="sinaweibo" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="sip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="siriusxmradio" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="skype_teamscall" category="telephony"> </ndpiprotocol>
@@ -282,10 +293,12 @@
 	<ndpiprotocol name="teamspeak" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="teamviewer" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="telegram" category="instant-messaging"> </ndpiprotocol>
+	<ndpiprotocol name="telegramvoip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="telnet" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="tencent" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="tencentvideo" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="teredo" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="teslaservices" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="tidal" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="tftp" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="threema" category="social-media"> </ndpiprotocol>
@@ -309,6 +322,7 @@
 	<ndpiprotocol name="ubntac2" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="ubuntuone" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ultrasurf" category="proxy"> </ndpiprotocol>
+	<ndpiprotocol name="umas" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="usenet" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="vevo" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="vhua" category="collaboration"> </ndpiprotocol>

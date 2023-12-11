@@ -5,7 +5,7 @@
 #   2001/11/23 13:25:00
 #
 #======================================================================
-# Copyright (c) 2001-2023 Andrea Frigido
+# Copyright (c) 2001-2024 Andrea Frigido
 # You may distribute under the terms of either the GNU General Public
 # License
 #======================================================================
@@ -1938,12 +1938,12 @@ sub getIptablesRules {
                 $rules .= "-A DOMAIN_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW DOMAIN BLACKLIST:\"\n";
                 $rules .= "-A DOMAIN_BLACKLIST -j DROP\n";
 
-		#$rules .= "-A INPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
-		#$rules .= "-A OUTPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
-		#$rules .= "-A FORWARD -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
-		$rules .= "-A INPUT -m ndpi --proto drop_domain_blacklist -j DOMAIN_BLACKLIST\n";
-		$rules .= "-A OUTPUT -m ndpi --proto drop_domain_blacklist -j DOMAIN_BLACKLIST\n";
-		$rules .= "-A FORWARD -m ndpi --proto drop_domain_blacklist -j DOMAIN_BLACKLIST\n";
+		$rules .= "-A INPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+		$rules .= "-A OUTPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+		$rules .= "-A FORWARD -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+		#$rules .= "-A INPUT -m ndpi --proto drop_domain_blacklist -j DOMAIN_BLACKLIST\n";
+		#$rules .= "-A OUTPUT -m ndpi --proto drop_domain_blacklist -j DOMAIN_BLACKLIST\n";
+		#$rules .= "-A FORWARD -m ndpi --proto drop_domain_blacklist -j DOMAIN_BLACKLIST\n";
 		print "on\n";
 	} else {
 		print "off\n";
