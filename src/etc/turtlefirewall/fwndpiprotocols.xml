@@ -84,6 +84,7 @@
 	<ndpiprotocol name="epicgames" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="ethereum" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ethernetip" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="ether-s-bus" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ethersio" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="facebook" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="facebookvoip" category="telephony"> </ndpiprotocol>
