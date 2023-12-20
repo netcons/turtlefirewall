@@ -18,7 +18,7 @@ require '/usr/lib/turtlefirewall/TurtleFirewall.pm';
 $firewall = new TurtleFirewall();
 
 print "\nTurtle Firewall ".$firewall->Version()."\n";
-print "Copyright (c) 2001-2023 Andrea Frigido\n\n";
+print "Copyright (c) 2001-2024 Andrea Frigido\n\n";
 
 # parsing dei parametri
 my $outputFile;
