@@ -179,44 +179,42 @@ CHANGELOG
 20-05-2011 v.1.38
            - Debian 6.0 compatibility (chocolateboy).
 23-04-2020 v.2.0
-           - CentOS/RHEL 8
-           	OS : Systemd support, RPM package, Ensure running via cron.
-           	Feature : Added Time, GeoIP and nDPI support.
-		Feature : Added Optional IP Blacklist.
-           	Feature : Added NAT Map to Port.
-           	Feature : Added HostName Set and IP Set items.
-           	Feature : Added pptp, sip, h323 and tftp kernel module options.
-		Feature : Added Flow Statistics.
-		Feature : Moved Marking to Mangle Rules. ( Connmark : for use with tc )
-		Feature : Added Preroute Mangle Rules. ( Connmark Preroute : for use with iproute )
-		Logging : Added Logging per rule and Flowinfo logging for target ACCEPT.
-		Services : Removed www service. ( duplicate of http service ) 
-		Services : Added Google QUIC, Ubiquiti Unifi, Whatsapp, Zoom, Teams, etc.
-           	Bug : Fixed MAC filtering. ( no ip required )
-           	Bug : Fixed Mangle table flush on firewall stop.
-           	Bug : Migrated ip_conntrack_max to nf_conntrack_max.
-           	Bug : Limit zone name max characters.
-           	Bug : Fixed zone deletion verification.
-           	Connection Tracking : Replaced "-m state --state" with "-m conntrack --ctstate".
-		Connection Tracking : Enabled automatic helpers. ( Todo : migrate to CT target )
-		Connection Tracking : Enabled connection marking.
-		Connection Tracking : Flush conntrack table on firewall stop.
-		Connection Tracking : Added conntrack tools.
+           - OS : Systemd support, RPM package, Ensure running via cron.
+           - Feature : Added Time, GeoIP and nDPI support.
+           - Feature : Added Optional IP Blacklist.
+           - Feature : Added NAT Map to Port.
+           - Feature : Added HostName Set and IP Set items.
+           - Feature : Added pptp, sip, h323 and tftp kernel module options.
+           - Feature : Added Flow Statistics.
+           - Feature : Moved Marking to Mangle Rules. ( Connmark : for use with tc )
+           - Feature : Added Preroute Mangle Rules. ( Connmark Preroute : for use with iproute )
+           - Logging : Added Logging per rule and Flowinfo logging for target ACCEPT.
+           - Services : Removed www service. ( duplicate of http service ) 
+           - Services : Added Google QUIC, Ubiquiti Unifi, Whatsapp, Zoom, Teams, etc.
+           - Bug : Fixed MAC filtering. ( no ip required )
+           - Bug : Fixed Mangle table flush on firewall stop.
+           - Bug : Migrated ip_conntrack_max to nf_conntrack_max.
+           - Bug : Limit zone name max characters.
+           - Bug : Fixed zone deletion verification.
+           - Connection Tracking : Replaced "-m state --state" with "-m conntrack --ctstate".
+           - Connection Tracking : Enabled automatic helpers. ( Todo : migrate to CT target )
+           - Connection Tracking : Enabled connection marking.
+           - Connection Tracking : Flush conntrack table on firewall stop.
+           - Connection Tracking : Added conntrack tools.
+           - Theme : New Webmin support. ( Todo : Translate new features )
 09-10-2022 v.2.1
-           - CentOS/RHEL 9
-		OS : Kernel 6 compatibility.
-           	Feature : Removed pptp, sip, h323 and tftp kernel module options.
-		Feature : Added Preroute Raw Rules. ( Conntrack Preroute : for use with CT helpers )
-		Feature : Added Raw Rules. ( Conntrack : for use with CT helpers )
-		Connection Tracking : Migrated helpers to CT target.
+           - OS : Kernel 6 compatibility.
+           - Feature : Removed pptp, sip, h323 and tftp kernel module options.
+           - Feature : Added Preroute Raw Rules. ( Conntrack Preroute : for use with CT helpers )
+           - Feature : Added Raw Rules. ( Conntrack : for use with CT helpers )
+           - Connection Tracking : Migrated helpers to CT target.
 03-06-2023 v.2.2
-           - CentOS/RHEL 9
-           	Bug : Code cleanup.
-           	Bug : Fixed rename and delete of multi select items used in rules.
-           	Bug : Fixed port or port range verification in rules.
-           	Bug : Fixed service display wrap in rules.
-		Feature : Added Flow Risk support.
-		Feature : Added Optional Domain, JA3 and SHA1 Blacklist support.
-		Feature : Added Rate Limit support.
-		Feature : Added "dport" Flow Statistics option.
-                Theme : New Webmin support. ( Todo : Translate new features )
+           - Bug : Code cleanup.
+           - Bug : Fixed rename and delete of multi select items used in rules.
+           - Bug : Fixed port or port range verification in rules.
+           - Bug : Fixed service display wrap in rules.
+           - Feature : Added Flow Risk support.
+           - Feature : Added Optional Domain, JA3 and SHA1 Blacklist support.
+           - Feature : Added Rate Limit support.
+           - Feature : Added "dport" Flow Statistics option.
+           - Feature : Removed Blacklist Flow Reports. 

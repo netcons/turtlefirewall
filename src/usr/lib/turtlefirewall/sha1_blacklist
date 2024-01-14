@@ -84,7 +84,7 @@ if [ $? = 0 ]
  then
   wget -q -O - https://sslbl.abuse.ch/blacklist/sslblacklist.csv \
    | dos2unix \
-   | awk -F "," '(!/^#/ && $2~/^[a-z0-9]{40}$/){print $2","$3}' \
+   | awk -F "," '(!/^#/ && $2~/^[a-z0-9]{40}$/){print $2}' \
    | sort -u \
    > $drop_blacklist_file
    if [ $? = 0 ]
@@ -115,8 +115,8 @@ if [ -s $drop_blacklist_file ]
     done < $never_blacklist_file
   fi
 
-  sed "s/,.*//;s/^/drop_sha1_blacklist:RISK_SHA1CERT_/" $drop_blacklist_file > /proc/net/xt_ndpi/host_proto
-  #sed "s/,.*//;s/^/drop_sha1_blacklist:TLSFP_/" $drop_blacklist_file > /proc/net/xt_ndpi/host_proto
+  sed "s/^/drop_sha1_blacklist:RISK_SHA1CERT_/" $drop_blacklist_file > /proc/net/xt_ndpi/host_proto
+  #sed "s/^/drop_sha1_blacklist:TLSFP_/" $drop_blacklist_file > /proc/net/xt_ndpi/host_proto
   count=`wc -l < $drop_blacklist_file`
   if [ $? = 0 ]
    then

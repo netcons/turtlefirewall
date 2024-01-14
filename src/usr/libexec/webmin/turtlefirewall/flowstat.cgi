@@ -15,9 +15,6 @@ use Tie::File;
 
 reportFlowStat();
 
-print "<br><br>";
-reportFlowBlacklist();
-
 &ui_print_footer('','turtle firewall index');
 
 #============================================================================
@@ -85,53 +82,6 @@ sub reportFlowStat {
 			<tr>
 				<td><b>$text{'edit_flowstat_string'}</b></td>
 				<td><input type="text" size="60" name="string" value="$string"></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>~;
-
-	print "<table width=\"100%\"><tr>";
-	print '<td>'.&ui_submit( $text{'button_create'}, "create").'</td>';
-	print "</tr></table>";
-	print &ui_form_end();
-}
-
-sub reportFlowBlacklist {
-
-	my $log = $FlowLogFile;
-
-	#my @types = sort keys %blacklists;
-	my @types = ( 'ja3', 'sha1' );
-	my $type = $types[0];
-
-	my $options_log = '';
-	my @logs = glob("${log}*");
-	for my $k (@logs) {
-		$options_log .= '<option'.($k eq $log ? ' selected' : '').'>'.$k.'</option>';
-	}
-
-	my $options_type = '';
-	for my $k (@types) {
-		$options_type .= qq~<option value="$k"~.($selected ? ' selected' : '').">$k - $blacklists{$k}{DESCRIPTION}</option>";
-	}
-
-	$td = "width=20% style='white-space: nowrap;'";
-	print &ui_form_start("report_flowblacklist.cgi", "post");
-	print qq~<table border width=\"100%\">
-		<tr $tb>
-			<th>$text{'edit_flowblacklist_title_create'}</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\">
-			<tr>
-				<td $td><b>$text{'edit_flowblacklist_log'}</b></td>
-				<td><select name="log">$options_log</select></td>
-			</tr>
-			<tr>
-				<td $td><b>$text{'edit_flowblacklist_type'}</b></td>
-				<td><select name="type">$options_type</select></td>
 			</tr>
 			</table>
 			</td>
