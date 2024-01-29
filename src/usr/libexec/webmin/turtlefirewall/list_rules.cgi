@@ -30,10 +30,10 @@ sub showRule {
 		"valign=top",
 		"valign=top",
 		"align=center valign=top style='white-space: normal;'",
-		"align=center valign=top",
-		"align=center valign=top",
-		"align=center valign=top",
-		"align=center valign=top",
+		"align=center valign=top style='white-space: normal;'",
+		"align=center valign=top style='white-space: normal;'",
+		"align=center valign=top style='white-space: normal;'",
+		"align=center valign=top style='white-space: normal;'",
 		"valign=top",
 		"valign=top",
 		"valign=top",
@@ -131,7 +131,9 @@ sub showRule {
 		my $ce = $attr{'RATELIMIT'} ne 'none' && $se eq '' ? '</font>' : '';			# ColourEnd
 		push(@cols, "${sb}${bb}${cb}".$attr{'RATELIMIT'}."${ce}${be}${se}" );
 		if( $attr{'TIME'} eq '' ) { $attr{'TIME'} = 'always'; $cimage = ''; }
-		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
+		my $cb = $attr{'TIME'} ne 'always' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
+		my $ce = $attr{'TIME'} ne 'always' && $se eq '' ? '</font>' : '';		# ColourEnd
+		push(@cols, "${cimage}${sb}${bb}${cb}".$attr{'TIME'}."${ce}${be}${se}" );
  		if( $attr{'TARGET'} eq 'ACCEPT' ) {
 			my $cb = $sb eq '' ? '<font color=green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd

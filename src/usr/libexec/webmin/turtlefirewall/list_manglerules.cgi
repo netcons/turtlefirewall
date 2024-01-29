@@ -36,9 +36,9 @@ sub showConnmarkPreroute {
 		"width=10% valign=top",
 		"width=10% valign=top",
 		"align=center valign=top style='white-space: normal;'",
-		"width=1% align=center valign=center",
-		"width=1% align=center valign=center",
-		"width=1% align=center valign=center",
+		"align=center valign=top style='white-space: normal;'",
+		"align=center valign=top style='white-space: normal;'",
+		"align=center valign=top style='white-space: normal;'",
 		"width=1% align=center valign=center",
 		"width=1% valign=top" );
         print &ui_columns_start([
@@ -117,7 +117,9 @@ sub showConnmarkPreroute {
 		my $ce = $attr{'RISKSET'} ne 'none' && $se eq '' ? '</font>' : '';		# ColourEnd
 		push(@cols, "${sb}${bb}${cb}".$attr{'RISKSET'}."${ce}${be}${se}" );
 		if( $attr{'TIME'} eq '' ) { $attr{'TIME'} = 'always'; $cimage = ''; }
-		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
+		my $cb = $attr{'TIME'} ne 'always' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
+		my $ce = $attr{'TIME'} ne 'always' && $se eq '' ? '</font>' : '';		# ColourEnd
+		push(@cols, "${cimage}${sb}${bb}${cb}".$attr{'TIME'}."${ce}${be}${se}" );
 		push(@cols, "${sb}${bb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
@@ -173,9 +175,9 @@ sub showConnmark {
 	 	"width=10% valign=top",
 		"width=10% valign=top",
 		"align=center valign=top style='white-space: normal;'",
-		"width=1% align=center valign=center",
-		"width=1% align=center valign=center",
-		"width=1% align=center valign=center",
+		"align=center valign=top style='white-space: normal;'",
+		"align=center valign=top style='white-space: normal;'",
+		"align=center valign=top style='white-space: normal;'",
 		"width=1% align=center valign=center",
 		"width=1% valign=top" );
         print &ui_columns_start([
@@ -254,7 +256,9 @@ sub showConnmark {
 		my $ce = $attr{'RISKSET'} ne 'none' && $se eq '' ? '</font>' : '';		# ColourEnd
 		push(@cols, "${sb}${bb}${cb}".$attr{'RISKSET'}."${ce}${be}${se}" );
 		if( $attr{'TIME'} eq '' ) { $attr{'TIME'} = 'always'; $cimage = ''; }
-		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
+		my $cb = $attr{'TIME'} ne 'always' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
+		my $ce = $attr{'TIME'} ne 'always' && $se eq '' ? '</font>' : '';		# ColourEnd
+		push(@cols, "${cimage}${sb}${bb}${cb}".$attr{'TIME'}."${ce}${be}${se}" );
 		push(@cols, "${sb}${bb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
