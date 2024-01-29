@@ -82,17 +82,20 @@ echo -e "Download : \c"
 systemctl is-enabled turtlefirewall > /dev/null 2>&1
 if [ $? = 0 ]
  then
+  # Memory error on large lists such as :
+  # https://raw.githubusercontent.com/ntop/nDPI/dev/lists/100_malware.list
+  #
   wget -q -O - https://threatfox.abuse.ch/downloads/hostfile \
-  | dos2unix \
-  | awk -F "\t" '(!/^#/ && $2~/^[A-z0-9\-\.]+$/){print $2}' \
-  | sort -u \
-  > $drop_blacklist_file
+   | dos2unix \
+   | awk -F "\t" '(!/^#/ && $2~/^[A-z0-9\-\.]+$/){print $2}' \
+   > $drop_blacklist_file
   if [ $? = 0 ]
    then
     echo -e "OK"
   else
     echo -e "FAIL"
   fi
+  sort -u $drop_blacklist_file -o $drop_blacklist_file
   chmod 600 $drop_blacklist_file
 else
   echo -e "turtlefirewall not enabled"

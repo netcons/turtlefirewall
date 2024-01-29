@@ -85,14 +85,14 @@ if [ $? = 0 ]
   wget -q -O - https://sslbl.abuse.ch/blacklist/sslblacklist.csv \
    | dos2unix \
    | awk -F "," '(!/^#/ && $2~/^[a-z0-9]{40}$/){print $2}' \
-   | sort -u \
    > $drop_blacklist_file
-   if [ $? = 0 ]
-    then
-     echo -e "OK"
-   else
-     echo -e "FAIL"
-   fi
+  if [ $? = 0 ]
+   then
+    echo -e "OK"
+  else
+    echo -e "FAIL"
+  fi
+  sort -u $drop_blacklist_file -o $drop_blacklist_file
   chmod 600 $drop_blacklist_file
 else
   echo -e "turtlefirewall not enabled"

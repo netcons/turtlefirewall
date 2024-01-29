@@ -14,6 +14,7 @@ use Tie::File;
 &ui_print_header( $text{'flowstat_title'}, $text{'title'}, "" );
 
 reportFlowStat();
+print "<br><br>";
 
 &ui_print_footer('','turtle firewall index');
 
