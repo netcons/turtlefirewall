@@ -68,10 +68,10 @@ sub confdir {
 );
 
 %blacklists = ( 
-	'ip' => { INDEX => '4', LOCATION => '/etc/turtlefirewall/drop_ip_blacklist.dat', CRON => '/etc/cron.daily/ip_blacklist', DESCRIPTION => 'IP Address' },
-	'domain' => { INDEX => '17', LOCATION => '/etc/turtlefirewall/drop_domain_blacklist.dat', CRON => '/etc/cron.daily/domain_blacklist', DESCRIPTION => 'DNS Domain Name' },
-	'ja3' => { INDEX => '19', LOCATION => '/etc/turtlefirewall/drop_ja3_blacklist.dat', CRON => '/etc/cron.daily/ja3_blacklist', DESCRIPTION => 'SSL Handshake Fingerprint' },
-	'sha1' => { INDEX => '20', LOCATION => '/etc/turtlefirewall/drop_sha1_blacklist.dat', CRON => '/etc/cron.daily/sha1_blacklist', DESCRIPTION => 'SSL Certificate Fingerprint' }
+	'drop_ip_blacklist' => { LOCATION => '/etc/turtlefirewall/drop_ip_blacklist.dat', CRON => '/etc/cron.daily/ip_blacklist', DESCRIPTION => 'IP Address' },
+	'drop_domain_blacklist' => { LOCATION => '/etc/turtlefirewall/drop_domain_blacklist.dat', CRON => '/etc/cron.daily/domain_blacklist', DESCRIPTION => 'DNS Domain Name' },
+	'drop_ja3_blacklist' => { LOCATION => '/etc/turtlefirewall/drop_ja3_blacklist.dat', CRON => '/etc/cron.daily/ja3_blacklist', DESCRIPTION => 'SSL Handshake Fingerprint' },
+	'drop_sha1_blacklist' => { LOCATION => '/etc/turtlefirewall/drop_sha1_blacklist.dat', CRON => '/etc/cron.daily/sha1_blacklist', DESCRIPTION => 'SSL Certificate Fingerprint' }
 );
 
 sub LoadServices {

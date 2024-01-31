@@ -218,4 +218,5 @@ CHANGELOG
            - Feature : Added Rate Limit support.
            - Feature : Added "dport" Flow Statistics option.
            - Feature : Removed Blacklist Flow Reports. 
+           - Feature : Improve Blacklist view.
            - Theme : Standardize Webmin images.
