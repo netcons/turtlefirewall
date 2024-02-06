@@ -81,6 +81,7 @@ sub showConnmarkPreroute {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $rimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-exclamation.png hspace=4>' : '<img src=images/exclamation.png hspace=4>';
 		my $cimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-clock.png hspace=4>' : '<img src=images/clock.png hspace=4>';
 		my $href = &ui_link("edit_connmarkpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
@@ -112,10 +113,10 @@ sub showConnmarkPreroute {
 		my $cb = $attr{'HOSTNAMESET'} ne 'any' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $attr{'HOSTNAMESET'} ne 'any' && $se eq '' ? '</font>' : '';			# ColourEnd
 		push(@cols, "${sb}${bb}${cb}".$attr{'HOSTNAMESET'}."${ce}${be}${se}" );
-		if( $attr{'RISKSET'} eq '' ) { $attr{'RISKSET'} = 'none'; }
+		if( $attr{'RISKSET'} eq '' ) { $attr{'RISKSET'} = 'none'; $rimage = ''; }
 		my $cb = $attr{'RISKSET'} ne 'none' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $attr{'RISKSET'} ne 'none' && $se eq '' ? '</font>' : '';		# ColourEnd
-		push(@cols, "${sb}${bb}${cb}".$attr{'RISKSET'}."${ce}${be}${se}" );
+		push(@cols, "${rimage}${sb}${bb}${cb}".$attr{'RISKSET'}."${ce}${be}${se}" );
 		if( $attr{'TIME'} eq '' ) { $attr{'TIME'} = 'always'; $cimage = ''; }
 		my $cb = $attr{'TIME'} ne 'always' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $attr{'TIME'} ne 'always' && $se eq '' ? '</font>' : '';		# ColourEnd
