@@ -75,13 +75,15 @@ sub showConntrackPreroute {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
-		my $cimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-clock.png hspace=4>' : '<img src=images/clock.png hspace=4>';
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $simage = '<img src=images/service.png hspace=4>';
+		my $himage = '<img src=images/helper.png hspace=4>';
 		my $href = &ui_link("edit_conntrackpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		$attr{'SRC'} =~ s/,/, /g;
-		push(@cols, "${sb}${bb}".$attr{'SRC'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
 		$attr{'DST'} =~ s/,/, /g;
-		push(@cols, "${sb}${bb}".$attr{'DST'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
 		$serviceline .= "port (".$attr{'SERVICE'}."";
@@ -93,8 +95,8 @@ sub showConntrackPreroute {
 			}
 		}
 		$serviceline .= ")";
-		push(@cols, "${sb}${bb}".$serviceline."${be}${se}");
-		push(@cols, "${sb}${bb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${be}${se}" );
+		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
+		push(@cols, "${himage}${sb}${bb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nConntrackPreroutes-1 ) {
@@ -188,13 +190,15 @@ sub showConntrack {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
-		my $cimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-clock.png hspace=4>' : '<img src=images/clock.png hspace=4>';
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $simage = '<img src=images/service.png hspace=4>';
+		my $himage = '<img src=images/helper.png hspace=4>';
 		my $href = &ui_link("edit_conntrack.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		$attr{'SRC'} =~ s/,/, /g;
-		push(@cols, "${sb}${bb}".$attr{'SRC'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
 		$attr{'DST'} =~ s/,/, /g;
-		push(@cols, "${sb}${bb}".$attr{'DST'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
 		$serviceline .= "port (".$attr{'SERVICE'}."";
@@ -206,8 +210,8 @@ sub showConntrack {
 			}
 		}
 		$serviceline .= ")";
-		push(@cols, "${sb}${bb}".$serviceline."${be}${se}");
-		push(@cols, "${sb}${bb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${be}${se}" );
+		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
+		push(@cols, "${himage}${sb}${bb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nConntracks-1 ) {

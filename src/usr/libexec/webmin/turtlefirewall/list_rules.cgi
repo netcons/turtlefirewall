@@ -88,18 +88,22 @@ sub showRule {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $simage = '<img src=images/service.png hspace=4>';
+		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
 		my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
-		my $rimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-exclamation.png hspace=4>' : '<img src=images/exclamation.png hspace=4>';
-		my $rlimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-arrow.png hspace=4>' : '<img src=images/arrow.png hspace=4>';
-		my $cimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-clock.png hspace=4>' : '<img src=images/clock.png hspace=4>';
+		my $himage = '<img src=images/hostname.png hspace=4>';
+		my $rimage = '<img src=images/risk.png hspace=4>';
+		my $pimage ='<img src=images/rate.png hspace=4>';
+		my $cimage = '<img src=images/time.png hspace=4>';
 		my $limage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-eye.png hspace=4>' : '<img src=images/eye.png hspace=4>';
 		my $href = &ui_link("edit_rule.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		$attr{'SRC'} =~ s/,/, /g;
-		push(@cols, "${sb}${bb}".$attr{'SRC'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
 		$attr{'DST'} =~ s/,/, /g;
-		push(@cols, "${sb}${bb}".$attr{'DST'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
 		$serviceline .= "port (".$attr{'SERVICE'}."";
@@ -114,28 +118,20 @@ sub showRule {
 		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
 		if( $attr{'CATEGORY'} ne '' ) { 
-			$serviceline .= " ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
+			$serviceline .= " ${nimage}ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
 			$attr{'NDPI'} =~ s/,/, /g;
-			$serviceline .= " ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
+			$serviceline .= " ${nimage}ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
 		}
-		push(@cols, "${sb}${bb}".$serviceline."${be}${se}");
-		if( $attr{'HOSTNAMESET'} eq '' ) { $attr{'HOSTNAMESET'} = 'any'; }
-		my $cb = $attr{'HOSTNAMESET'} ne 'any' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
-		my $ce = $attr{'HOSTNAMESET'} ne 'any' && $se eq '' ? '</font>' : '';			# ColourEnd
-		push(@cols, "${sb}${bb}${cb}".$attr{'HOSTNAMESET'}."${ce}${be}${se}" );
-		if( $attr{'RISKSET'} eq '' ) { $attr{'RISKSET'} = 'none'; $rimage = ''; }
-		my $cb = $attr{'RISKSET'} ne 'none' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
-		my $ce = $attr{'RISKSET'} ne 'none' && $se eq '' ? '</font>' : '';		# ColourEnd
-		push(@cols, "${rimage}${sb}${bb}${cb}".$attr{'RISKSET'}."${ce}${be}${se}" );
-		if( $attr{'RATELIMIT'} eq '' ) { $attr{'RATELIMIT'} = 'none'; $rlimage = ''; }
-		my $cb = $attr{'RATELIMIT'} ne 'none' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
-		my $ce = $attr{'RATELIMIT'} ne 'none' && $se eq '' ? '</font>' : '';			# ColourEnd
-		push(@cols, "${rlimage}${sb}${bb}${cb}".$attr{'RATELIMIT'}."${ce}${be}${se}" );
-		if( $attr{'TIME'} eq '' ) { $attr{'TIME'} = 'always'; $cimage = ''; }
-		my $cb = $attr{'TIME'} ne 'always' && $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
-		my $ce = $attr{'TIME'} ne 'always' && $se eq '' ? '</font>' : '';		# ColourEnd
-		push(@cols, "${cimage}${sb}${bb}${cb}".$attr{'TIME'}."${ce}${be}${se}" );
+		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
+		if( $attr{'HOSTNAMESET'} eq '' ) { $himage = ''; }
+		push(@cols, "${himage}${sb}${bb}".$attr{'HOSTNAMESET'}."${be}${se}" );
+		if( $attr{'RISKSET'} eq '' ) { $rimage = ''; }
+		push(@cols, "${rimage}${sb}${bb}".$attr{'RISKSET'}."${be}${se}" );
+		if( $attr{'RATELIMIT'} eq '' ) { $pimage = ''; }
+		push(@cols, "${pimage}${sb}${bb}".$attr{'RATELIMIT'}."${be}${se}" );
+		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
+		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
  		if( $attr{'TARGET'} eq 'ACCEPT' ) {
 			my $cb = $sb eq '' ? '<font color=green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
@@ -187,7 +183,7 @@ sub showRule {
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
-	print &ui_columns_row([undef, undef, "*", "*", "port (all)", "any", "none", "none", "always", "<img src='images/no.png' hspace='4'><font color=red>DROP</font>", "<img src='images/eye.png' hspace='4'><font color=steelblue>ACT</font>", "Implicit Deny", undef], \@tds);
+	print &ui_columns_row([undef, undef, "<img src=images/zone.png hspace=4>*", "<img src=images/zone.png hspace=4>*", "<img src=images/service.png hspace=4>port (all)", "", "", "", "", "<img src='images/no.png' hspace='4'><font color=red>DROP</font>", "<img src='images/eye.png' hspace='4'><font color=steelblue>ACT</font>", "Implicit Deny", undef], \@tds);
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';

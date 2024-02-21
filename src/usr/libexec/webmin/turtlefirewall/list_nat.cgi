@@ -72,15 +72,19 @@ sub showNat {
 		local @cols;
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $himage = '<img src=images/host.png hspace=4>';
+		my $simage = '<img src=images/service.png hspace=4>';
+		my $timage = '<img src=images/toport.png hspace=4>';
 		my $href = &ui_link("edit_nat.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
 		my %zone = $fw->GetZone($attr{'VIRTUAL'});
 		if( $zone{IF} ne '' ) {
-			push(@cols, "${sb}".$attr{'VIRTUAL'}." (".$zone{'IF'}.")${se}" );
+			push(@cols, "${zimage}${sb}".$attr{'VIRTUAL'}." (".$zone{'IF'}.")${se}" );
 		} else {
-			push(@cols, "${sb}".$attr{'VIRTUAL'}."${se}" );
+			push(@cols, "${zimage}${sb}".$attr{'VIRTUAL'}."${se}" );
 		}
-		push(@cols, "${sb}".$attr{'REAL'}."${se}" );
+		push(@cols, "${himage}${sb}".$attr{'REAL'}."${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
 		$serviceline .= "port (".$attr{'SERVICE'}."";
@@ -92,8 +96,9 @@ sub showNat {
 			}
 		}
 		$serviceline .= ")";
-		push(@cols, "${sb}".$serviceline."${se}");
-		push(@cols, "${sb}".($attr{'TOPORT'} ne '' ? $attr{'TOPORT'} : '&nbsp;')."${se}" );
+		push(@cols, "${simage}${sb}".$serviceline."${se}");
+		if( $attr{'TOPORT'} eq '' ) { $timage = ''; }
+		push(@cols, "${timage}${sb}".($attr{'TOPORT'} ne '' ? $attr{'TOPORT'} : '&nbsp;')."${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 
@@ -171,10 +176,14 @@ sub showMasquerade {
 		local @cols;
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
+		my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $simage = '<img src=images/service.png hspace=4>';
 		my $href = &ui_link("edit_masq.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
-		push(@cols, "${sb}".($attr{'SRC'} ne '' ? $attr{'SRC'} : '*')."${se}" );
-		push(@cols, "${sb}".($attr{'DST'} ne '' ? $attr{'DST'} : '&nbsp;')."${se}" );
+		push(@cols, "${zimage}${sb}".($attr{'SRC'} ne '' ? $attr{'SRC'} : '*')."${se}" );
+		push(@cols, "${zimage}${sb}".($attr{'DST'} ne '' ? $attr{'DST'} : '&nbsp;')."${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
 		$serviceline .= "port (".$attr{'SERVICE'}."";
@@ -186,15 +195,15 @@ sub showMasquerade {
 			}
 		}
 		$serviceline .= ")";
-		push(@cols, "${sb}".$serviceline."${se}");
+		push(@cols, "${simage}${sb}".$serviceline."${se}");
 		if( $attr{'MASQUERADE'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			push(@cols, "${sb}${cb}".$text{NO}."${ce}${se}" );
+			push(@cols, "${dimage}${sb}${cb}".$text{NO}."${ce}${se}" );
 		} else {
 			my $cb = $sb eq '' ? '<font color=green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			push(@cols, "${sb}${cb}".$text{YES}."${ce}${se}" );
+			push(@cols, "${aimage}${sb}${cb}".$text{YES}."${ce}${se}" );
 		}
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
@@ -274,10 +283,15 @@ sub showRedirect {
 		local @cols;
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
+		my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $simage = '<img src=images/service.png hspace=4>';
+		my $timage = '<img src=images/toport.png hspace=4>';
 		my $href = &ui_link("edit_redirect.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
-		push(@cols, "${sb}".$attr{'SRC'}."${se}" );
-		push(@cols, "${sb}".$attr{'DST'}."${se}" );
+		push(@cols, "${zimage}${sb}".$attr{'SRC'}."${se}" );
+		push(@cols, "${zimage}${sb}".$attr{'DST'}."${se}" );
 		local $serviceline;
 		$serviceline .= "port (".$attr{'SERVICE'}."";
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
@@ -288,17 +302,18 @@ sub showRedirect {
 			}
 		}
 		$serviceline .= ")";
-		push(@cols, "${sb}".$serviceline."${se}");
+		push(@cols, "${simage}${sb}".$serviceline."${se}");
 		if( $attr{'REDIRECT'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			push(@cols, "${sb}${cb}".$text{NO}."${ce}${se}" );
+			push(@cols, "${dimage}${sb}${cb}".$text{NO}."${ce}${se}" );
 		} else {
 			my $cb = $sb eq '' ? '<font color=green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			push(@cols, "${sb}${cb}".$text{YES}."${ce}${se}" );
+			push(@cols, "${aimage}${sb}${cb}".$text{YES}."${ce}${se}" );
 		}
-		push(@cols, "${sb}".$attr{'TOPORT'}."${se}" );
+		if( $attr{'TOPORT'} eq '' ) { $timage = ''; }
+		push(@cols, "${timage}${sb}".$attr{'TOPORT'}."${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		if( $i < $nRedirect ) {

@@ -76,9 +76,9 @@ sub showZone {
 		local @cols;
 		my $href = &ui_link("edit_zone.cgi?zone=$k",$k);
 		if( $k eq 'FIREWALL' ) {
-			push(@cols, "<i>$k</i>" );
+			push(@cols, "<img src=images/zone.png hspace=4><i>$k</i>" );
 		} else {
-			push(@cols, $href );
+			push(@cols, "<img src=images/zone.png hspace=4>$href" );
 		}
 		push(@cols, "$zone{'IF'}" );
 		push(@cols, "".($zone{'DESCRIPTION'} ne '' ? $zone{'DESCRIPTION'} : '&nbsp;')."" );
@@ -113,7 +113,7 @@ sub showNet {
 		my %net = $fw->GetNet($k);
 		local @cols;
 		my $href = &ui_link("edit_net.cgi?net=$k",$k);
-		push(@cols, $href );
+		push(@cols, "<img src=images/net.png hspace=4>$href" );
 	        push(@cols, "$net{'IP'}" );
 	        push(@cols, "$net{'NETMASK'}" );
 	        push(@cols, "$net{'ZONE'}" );
@@ -149,7 +149,7 @@ sub showHost {
 		my %host = $fw->GetHost($k);
 		local @cols;
 		my $href = &ui_link("edit_host.cgi?host=$k",$k);
-		push(@cols, $href );
+		push(@cols, "<img src=images/host.png hspace=4>$href" );
 	        push(@cols, "$host{'IP'}" );
 	        push(@cols, "$host{'MAC'}" );
 	        push(@cols, "$host{'ZONE'}" );
@@ -183,7 +183,7 @@ sub showGeoip {
 		my %geoip = $fw->GetGeoip($k);
 		local @cols;
 		my $href = &ui_link("edit_geoip.cgi?geoip=$k",$k);
-		push(@cols, $href );
+		push(@cols, "<img src=images/geoip.png hspace=4>$href" );
 		my %g = $fw->GetCountryCode($geoip{'IP'});
 		push(@cols, "$geoip{'IP'} - $g{'DESCRIPTION'}" );
 	        push(@cols, "$geoip{'ZONE'}" );
@@ -215,7 +215,7 @@ sub showGroup {
 		my %group = $fw->GetGroup($k);
 		local @cols;
 		my $href = &ui_link("edit_group.cgi?group=$k",$k);
-		push(@cols, $href );
+		push(@cols, "<img src=images/group.png hspace=4>$href" );
 		my $grouplist;
 		for my $item (@{$group{ITEMS}}) {
 			$grouplist .= "$item<br>";
@@ -253,7 +253,7 @@ sub showTime {
 		my %time = $fw->GetTime($k);
 		local @cols;
 		my $href = &ui_link("edit_time.cgi?time=$k",$k);
-		push(@cols, $href );
+		push(@cols, "<img src=images/time.png hspace=4>$href" );
 	        push(@cols, "$time{'WEEKDAYS'}" );
 	        push(@cols, "$time{'TIMESTART'}" );
 	        push(@cols, "$time{'TIMESTOP'}" );
@@ -285,7 +285,7 @@ sub showTimeGroup {
 		my %timegroup = $fw->GetTimeGroup($k);
 		local @cols;
 		my $href = &ui_link("edit_timegroup.cgi?timegroup=$k",$k);
-		push(@cols, $href );
+		push(@cols, "<img src=images/timegroup.png hspace=4>$href" );
 		my $timegrouplist;
 		for my $item (@{$timegroup{ITEMS}}) {
 			$timegrouplist .= "$item<br>";
@@ -319,7 +319,7 @@ sub showHostNameSet {
 		my %hostnameset = $fw->GetHostNameSet($k);
 		local @cols;
 		my $href = &ui_link("edit_hostnameset.cgi?hostnameset=$k",$k);
-		push(@cols, $href );
+		push(@cols, "<img src=images/hostname.png hspace=4>$href" );
 		my $hostnamesetlist;
 		for my $hostname (split(/,/, $hostnameset{'HOSTNAMES'})) {
 			$hostnamesetlist .= "$hostname<br>";
@@ -353,7 +353,7 @@ sub showRiskSet {
 		my %riskset = $fw->GetRiskSet($k);
 		local @cols;
 		my $href = &ui_link("edit_riskset.cgi?riskset=$k",$k);
-		push(@cols, $href );
+		push(@cols, "<img src=images/risk.png hspace=4>$href" );
 		my $risksetlist;
 		for my $i (split(/,/, $riskset{'RISKS'})) {
 			my %ndpirisk = $fw->GetNdpiRisk($i);
@@ -388,7 +388,7 @@ sub showRateLimit {
 		my %ratelimit = $fw->GetRateLimit($k);
 		local @cols;
 		my $href = &ui_link("edit_ratelimit.cgi?ratelimit=$k",$k);
-		push(@cols, $href );
+		push(@cols, "<img src=images/rate.png hspace=4>$href" );
         	push(@cols, "$ratelimit{'RATE'} <i>Mbps</i>" );
 	        push(@cols, "".($ratelimit{'DESCRIPTION'} ne '' ? $ratelimit{'DESCRIPTION'} : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);

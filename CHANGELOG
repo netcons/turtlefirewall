@@ -219,4 +219,7 @@ CHANGELOG
            - Feature : Added "dport" Flow Statistics option.
            - Feature : Removed Blacklist Flow Reports. 
            - Feature : Improve Blacklist view.
+18-02-2024 v.2.3
+           - Bug : note that iptables 1.8.10 causes ksoftirqd 100% CPU usage.
+           - Feature : Extend nDPI support.
            - Theme : Standardize Webmin images.

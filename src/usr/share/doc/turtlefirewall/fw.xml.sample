@@ -1,0 +1,75 @@
+<firewall>
+
+<options>
+<option name="drop_invalid_fin_notack" value="off"/>
+<option name="drop_ip_blacklist" value="on"/>
+<option value="off" name="drop_invalid_state"/>
+<option value="60" name="log_limit"/>
+<option name="drop_sha1_blacklist" value="on"/>
+<option name="drop_domain_blacklist" value="on"/>
+<option value="on" name="drop_invalid_syn_rst"/>
+<option value="5" name="log_limit_burst"/>
+<option name="rp_filter" value="off"/>
+<option value="off" name="drop_invalid_none"/>
+<option name="log_martians" value="on"/>
+<option name="drop_invalid_fragment" value="on"/>
+<option value="262144" name="nf_conntrack_max"/>
+<option name="drop_invalid_all" value="off"/>
+<option name="drop_ja3_blacklist" value="on"/>
+<option value="on" name="drop_invalid_syn_fin"/>
+</options>
+
+<zone if="eth0" description="" name="lan"/>
+<zone description="" if="eth1" name="primarywan"/>
+
+<net netmask="255.255.255.0" ip="20.160.50.0" description="" zone="primarywan" name="net-support"/>
+
+<host ip="192.168.2.10" zone="lan" name="host-server" mac="" description=""/>
+<host description="" name="host-boss" mac="" zone="lan" ip="192.168.2.50"/>
+
+<geoip ip="GB" description="" name="geoip-uk" zone="primarywan"/>
+<geoip description="" name="geoip-usa" zone="primarywan" ip="US"/>
+
+<group name="internet" description="Internet">
+	<item name="primarywan"/>
+</group>
+<group name="grp-open" description="">
+	<item name="host-server"/>
+	<item name="host-boss"/>
+</group>
+<group name="grp-geoip" description="">
+	<item name="geoip-uk"/>
+	<item name="geoip-usa"/>
+</group>
+
+<time description="" weekdays="Wed,Thu,Fri,Tue,Mon" name="lunch" timestart="10:00" timestop="11:00"/>
+
+<hostnameset description="" hostnames="example.com,test.com,host.somewhere.com" name="banned"/>
+
+<riskset name="ips" description="" risks="6,7"/>
+
+<ratelimit rate="5" description="" name="5Mbps"/>
+
+<nat virtual="primarywan" service="rdp" real="host-server"/>
+
+<masquerade dst="primarywan" service="all" src="*"/>
+<masquerade service="all" dst="lan" src="*" active="NO"/>
+
+<conntrackpreroute port="21" src="lan" service="tcp" helper="ftp" dst="*"/>
+<conntrackpreroute port="5060" service="tcp" helper="sip" dst="*" src="lan"/>
+<conntrackpreroute src="lan" dst="*" helper="sip" service="udp" port="5060"/>
+<conntrackpreroute port="1723" helper="pptp" service="tcp" dst="*" src="lan"/>
+
+<rule description="Accept Firewall to anyware" target="ACCEPT" dst="*" service="all" src="FIREWALL"/>
+<rule src="internet" dst="FIREWALL" target="ACCEPT" service="icmp_all" description="Accept Internet to Firewall"/>
+<rule description="Accept grp-geoip to Firewall" service="openvpn" dst="FIREWALL" target="ACCEPT" src="grp-geoip"/>
+<rule dst="FIREWALL" target="ACCEPT" service="dns,http,icmp_all,imap,logio,ntop,ntp,pop3,proxy8080,shellinabox,smtp,ssh,unifi,webmin" src="lan" description="Accept Lan to Firewall"/>
+<rule src="lan" riskset="ips" ndpi="all" target="DROP" dst="internet" service="all" log="YES" description="Deny some risks"/>
+<rule service="all" target="DROP" dst="internet" description="Limit Windows updates" src="lan" ratelimit="5Mbps" ndpi="windowsupdate"/>
+<rule src="grp-open" log="YES" description="Accept grp-open to Internet" target="ACCEPT" dst="internet" service="all"/>
+<rule log="YES" category="adult-content" description="Deny adult content" target="DROP" dst="internet" service="all" src="lan"/>
+<rule hostnameset="banned" target="DROP" dst="internet" time="lunch" service="all" log="YES" description="Deny banned during lunch" src="lan" ndpi="all"/>
+<rule description="Accept Lan to Internet" log="YES" service="ftp,http,https,icmp_all,imap,imaps,ntp,pop3,pop3s,smtp587,smtps" dst="internet" target="ACCEPT" src="lan"/>
+<rule description="Accept inbound NAT for net-supprot" target="ACCEPT" dst="host-server" service="rdp" src="net-support"/>
+
+</firewall>

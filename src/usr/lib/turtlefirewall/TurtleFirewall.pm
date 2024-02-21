@@ -16,7 +16,7 @@ use XML::Parser;
 
 # Turtle Firewall Version
 sub Version {
-	return '2.2';
+	return '2.3';
 }
 
 sub new {
