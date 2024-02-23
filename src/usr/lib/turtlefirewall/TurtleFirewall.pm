@@ -302,6 +302,12 @@ sub GetOption {
 	return $this->{fw}{OPTION}{$name};
 }
 
+sub GetItemType {
+	my $this = shift;
+	my $name = shift;
+	return $type = $this->{fwItems}{$name};
+}
+
 # AddGroup( $group, $description, @items )
 sub AddGroup {
 	my $this = shift;

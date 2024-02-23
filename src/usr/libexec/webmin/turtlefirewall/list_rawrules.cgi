@@ -33,9 +33,9 @@ sub showConntrackPreroute {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-		"width=10% valign=top",
-		"width=10% valign=top",
-		"align=center valign=top style='white-space: normal;'",
+		"width=10% valign=top style='white-space: normal;'",
+		"width=10% valign=top style='white-space: normal;'",
+		"valign=top style='white-space: normal;'",
 		"width=1% align=center valign=center",
 		"width=1% valign=top" );
         print &ui_columns_start([
@@ -75,14 +75,22 @@ sub showConntrackPreroute {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
-		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $simage = '<img src=images/service.png hspace=4>';
 		my $himage = '<img src=images/helper.png hspace=4>';
 		my $href = &ui_link("edit_conntrackpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
-		$attr{'SRC'} =~ s/,/, /g;
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'SRC'});
+		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
+		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
-		$attr{'DST'} =~ s/,/, /g;
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'DST'});
+		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
@@ -148,9 +156,9 @@ sub showConntrack {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-		"width=10% valign=top",
-		"width=10% valign=top",
-		"align=center valign=top style='white-space: normal;'",
+		"width=10% valign=top style='white-space: normal;'",
+		"width=10% valign=top style='white-space: normal;'",
+		"valign=top style='white-space: normal;'",
 		"width=1% align=center valign=center",
 		"width=1% valign=top" );
         print &ui_columns_start([
@@ -190,16 +198,20 @@ sub showConntrack {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
-		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $simage = '<img src=images/service.png hspace=4>';
 		my $himage = '<img src=images/helper.png hspace=4>';
 		my $href = &ui_link("edit_conntrack.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
-		$attr{'SRC'} =~ s/,/, /g;
+		my $zimage = '<img src=images/firewall.png hspace=4>';
 		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'DST'});
+		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
+		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		$attr{'DST'} =~ s/,/, /g;
 		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );
-		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
 		$serviceline .= "port (".$attr{'SERVICE'}."";
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {

@@ -34,6 +34,8 @@ sub showBlackLists {
 		if( $blacklistcount eq '' ) { $blacklistcount = '0'; }
 		my $sb = $fw->GetOption($b) ne 'on' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $fw->GetOption($b) ne 'on' ? '</strike></font>' : '';		# StrikeEnd
+		my $aimage = $fw->GetOption($b) ne 'on' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
+		my $dimage = $fw->GetOption($b) ne 'on' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
 		push(@cols, "${sb}".$blacklistcount."${se}");
 		push(@cols, "${sb}".$b."${se}");
 		push(@cols, "${sb}".$blacklists{$b}{DESCRIPTION}."${se}");
@@ -43,11 +45,11 @@ sub showBlackLists {
  		if( $autoupdate eq 'YES' ) {
 			my $cb = $sb eq '' ? '<font color=green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			push(@cols, "${sb}${cb}".$autoupdate."${ce}${se}");
+			push(@cols, "${aimage}${sb}${cb}".$autoupdate."${ce}${se}");
 		} else {
 			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			push(@cols, "${sb}${cb}".$autoupdate."${ce}${se}");
+			push(@cols, "${dimage}${sb}${cb}".$autoupdate."${ce}${se}");
 		}
 	        print &ui_columns_row(\@cols, \@tds);
         }

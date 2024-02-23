@@ -76,7 +76,7 @@ sub showZone {
 		local @cols;
 		my $href = &ui_link("edit_zone.cgi?zone=$k",$k);
 		if( $k eq 'FIREWALL' ) {
-			push(@cols, "<img src=images/zone.png hspace=4><i>$k</i>" );
+			push(@cols, "<img src=images/firewall.png hspace=4><i>$k</i>" );
 		} else {
 			push(@cols, "<img src=images/zone.png hspace=4>$href" );
 		}

@@ -36,9 +36,9 @@ sub showNat {
 		   "<a href=\"edit_nat.cgi?new=1\">$text{'list_nat_create_nat'}</a>" );
         @tds = ( "width=1% valign=top",
 		 "width=1% align=center valign=center",
-		 "width=10% valign=top",
-		 "width=10% valign=top",
-		 "align=center valign=top style='white-space: normal;'",
+		 "width=10% valign=top style='white-space: normal;'",
+		 "width=10% valign=top style='white-space: normal;'",
+		 "valign=top style='white-space: normal;'",
 		 "width=1% align=center valign=center",
 		 "width=1% valign=top" );
         print &ui_columns_start([
@@ -82,7 +82,7 @@ sub showNat {
 		if( $zone{IF} ne '' ) {
 			push(@cols, "${zimage}${sb}".$attr{'VIRTUAL'}." (".$zone{'IF'}.")${se}" );
 		} else {
-			push(@cols, "${zimage}${sb}".$attr{'VIRTUAL'}."${se}" );
+			push(@cols, "${himage}${sb}".$attr{'VIRTUAL'}."${se}" );
 		}
 		push(@cols, "${himage}${sb}".$attr{'REAL'}."${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
@@ -140,9 +140,9 @@ sub showMasquerade {
 		   "<a href=\"edit_masq.cgi?new=1\">$text{'list_nat_create_masq'}</a>" );
         @tds = ( "width=1% valign=top",
 		 "width=1% align=center valign=center",
-		 "width=10% valign=top",
-		 "width=10% valign=top",
-		 "align=center valign=top style='white-space: normal;'",
+		 "width=10% valign=top style='white-space: normal;'",
+		 "width=10% valign=top style='white-space: normal;'",
+		 "valign=top style='white-space: normal;'",
 		 "width=1% align=center valign=center",
 		 "width=1% valign=top" );
         print &ui_columns_start([
@@ -178,11 +178,20 @@ sub showMasquerade {
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
 		my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
 		my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
-		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $simage = '<img src=images/service.png hspace=4>';
 		my $href = &ui_link("edit_masq.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'SRC'});
+                if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}".($attr{'SRC'} ne '' ? $attr{'SRC'} : '*')."${se}" );
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'DST'});
+                if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}".($attr{'DST'} ne '' ? $attr{'DST'} : '&nbsp;')."${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
@@ -245,9 +254,9 @@ sub showRedirect {
 		   "<a href=\"edit_redirect.cgi?new=1\">$text{'list_nat_create_redirect'}</a>" );
         @tds = ( "width=1% valign=top",
 		 "width=1% align=center valign=center",
-		 "width=10% valign=top",
-		 "width=10% valign=top",
-		 "align=center valign=top style='white-space: normal;'",
+		 "width=10% valign=top style='white-space: normal;'",
+		 "width=10% valign=top style='white-space: normal;'",
+		 "valign=top style='white-space: normal;'",
 		 "width=1% align=center valign=center",
 		 "width=1% align=center valign=center",
 		 "width=1% valign=top" );
@@ -285,12 +294,21 @@ sub showRedirect {
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
 		my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
 		my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
-		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $simage = '<img src=images/service.png hspace=4>';
 		my $timage = '<img src=images/toport.png hspace=4>';
 		my $href = &ui_link("edit_redirect.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'SRC'});
+                if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}".$attr{'SRC'}."${se}" );
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'DST'});
+                if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}".$attr{'DST'}."${se}" );
 		local $serviceline;
 		$serviceline .= "port (".$attr{'SERVICE'}."";

@@ -27,9 +27,9 @@ sub showRule {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-		"valign=top",
-		"valign=top",
-		"align=center valign=top style='white-space: normal;'",
+		"width=10% valign=top style='white-space: normal;'",
+		"width=10% valign=top style='white-space: normal;'",
+		"valign=top style='white-space: normal;'",
 		"align=center valign=top style='white-space: normal;'",
 		"align=center valign=top style='white-space: normal;'",
 		"align=center valign=top style='white-space: normal;'",
@@ -88,7 +88,6 @@ sub showRule {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
-		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $simage = '<img src=images/service.png hspace=4>';
 		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
@@ -96,12 +95,37 @@ sub showRule {
 		my $himage = '<img src=images/hostname.png hspace=4>';
 		my $rimage = '<img src=images/risk.png hspace=4>';
 		my $pimage ='<img src=images/rate.png hspace=4>';
-		my $cimage = '<img src=images/time.png hspace=4>';
 		my $limage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-eye.png hspace=4>' : '<img src=images/eye.png hspace=4>';
 		my $href = &ui_link("edit_rule.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
+		# If SRC is single item
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		if( $attr{'SRC'} !~ /,/ ) {
+			if( $attr{'SRC'} eq 'FIREWALL' ) {
+			       	$zimage = '<img src=images/firewall.png hspace=4>';
+			} else {
+				my $type = $fw->GetItemType($attr{'SRC'});
+				if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+				elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+				elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
+				elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
+			}
+		}
 		$attr{'SRC'} =~ s/,/, /g;
 		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
+		# If DST is single item
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		if( $attr{'DST'} !~ /,/ ) {
+			if( $attr{'DST'} eq 'FIREWALL' ) {
+			       	$zimage = '<img src=images/firewall.png hspace=4>';
+			} else {
+				my $type = $fw->GetItemType($attr{'DST'});
+				if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+				elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+				elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
+				elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
+			}
+		}
 		$attr{'DST'} =~ s/,/, /g;
 		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
@@ -130,6 +154,9 @@ sub showRule {
 		push(@cols, "${rimage}${sb}${bb}".$attr{'RISKSET'}."${be}${se}" );
 		if( $attr{'RATELIMIT'} eq '' ) { $pimage = ''; }
 		push(@cols, "${pimage}${sb}${bb}".$attr{'RATELIMIT'}."${be}${se}" );
+		my $cimage = '<img src=images/time.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'TIME'});
+		if( $type eq 'TIMEGROUP' ) { $cimage = '<img src=images/timegroup.png hspace=4>'; }
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
  		if( $attr{'TARGET'} eq 'ACCEPT' ) {
