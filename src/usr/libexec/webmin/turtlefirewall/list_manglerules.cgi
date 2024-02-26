@@ -81,11 +81,6 @@ sub showConnmarkPreroute {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
-		my $simage = '<img src=images/service.png hspace=4>';
-		my $nimage = '<img src=images/ndpi.png hspace=4>';
-		my $himage = '<img src=images/hostname.png hspace=4>';
-		my $rimage = '<img src=images/risk.png hspace=4>';
-		my $mimage = '<img src=images/mark.png hspace=4>';
 		my $href = &ui_link("edit_connmarkpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $zimage = '<img src=images/zone.png hspace=4>';
@@ -113,23 +108,27 @@ sub showConnmarkPreroute {
 		$serviceline .= ")";
 		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
+		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
 			$serviceline .= ", ${nimage}ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
 			$attr{'NDPI'} =~ s/,/, /g;
 			$serviceline .= ", ${nimage}ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
 		}
+		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
-		if( $attr{'HOSTNAMESET'} eq '' ) { $himage = ''; }
+		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostname.png hspace=4>';
 		push(@cols, "${himage}${sb}${bb}".$attr{'HOSTNAMESET'}."${be}${se}" );
-		if( $attr{'RISKSET'} eq '' ) { $rimage = ''; }
+		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/risk.png hspace=4>';
 		push(@cols, "${rimage}${sb}${bb}".$attr{'RISKSET'}."${be}${se}" );
-		my $cimage = '<img src=images/time.png hspace=4>';
 		my $type = $fw->GetItemType($attr{'TIME'});
-		if( $type eq 'TIMEGROUP' ) { $cimage = '<img src=images/timegroup.png hspace=4>'; }
+		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
-		push(@cols, "${mimage}${sb}${bb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${be}${se}" );
+		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+		my $mimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-mark.png hspace=4>' : '<img src=images/mark.png hspace=4>';
+		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nConnmarkPreroutes-1 ) {
@@ -229,11 +228,7 @@ sub showConnmark {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
-		my $simage = '<img src=images/service.png hspace=4>';
-		my $nimage = '<img src=images/ndpi.png hspace=4>';
-		my $himage = '<img src=images/hostname.png hspace=4>';
-		my $rimage = '<img src=images/risk.png hspace=4>';
-		my $mimage = '<img src=images/mark.png hspace=4>';
+		my $mimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-mark.png hspace=4>' : '<img src=images/mark.png hspace=4>';
 		my $href = &ui_link("edit_connmark.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $zimage = '<img src=images/zone.png hspace=4>';
@@ -271,23 +266,26 @@ sub showConnmark {
 		$serviceline .= ")";
 		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
+		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
 			$serviceline .= ", ${nimage}ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
 			$attr{'NDPI'} =~ s/,/, /g;
 			$serviceline .= ", ${nimage}ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
 		}
+		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
-		if( $attr{'HOSTNAMESET'} eq '' ) { $himage = ''; }
+		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostname.png hspace=4>';
 		push(@cols, "${himage}${sb}${bb}".$attr{'HOSTNAMESET'}."${be}${se}" );
-		if( $attr{'RISKSET'} eq '' ) { $rimage = ''; }
+		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/risk.png hspace=4>';
 		push(@cols, "${rimage}${sb}${bb}".$attr{'RISKSET'}."${be}${se}" );
-		my $cimage = '<img src=images/time.png hspace=4>';
 		my $type = $fw->GetItemType($attr{'TIME'});
-		if( $type eq 'TIMEGROUP' ) { $cimage = '<img src=images/timegroup.png hspace=4>'; }
+		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
-		push(@cols, "${mimage}${sb}${bb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${be}${se}" );
+		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nConnmarks-1 ) {

@@ -88,14 +88,6 @@ sub showRule {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
-		my $simage = '<img src=images/service.png hspace=4>';
-		my $nimage = '<img src=images/ndpi.png hspace=4>';
-		my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
-		my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
-		my $himage = '<img src=images/hostname.png hspace=4>';
-		my $rimage = '<img src=images/risk.png hspace=4>';
-		my $pimage ='<img src=images/rate.png hspace=4>';
-		my $limage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-eye.png hspace=4>' : '<img src=images/eye.png hspace=4>';
 		my $href = &ui_link("edit_rule.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		# If SRC is single item
@@ -141,36 +133,40 @@ sub showRule {
 		$serviceline .= ")";
 		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
+		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
 			$serviceline .= " ${nimage}ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
 			$attr{'NDPI'} =~ s/,/, /g;
 			$serviceline .= " ${nimage}ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
 		}
+		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
-		if( $attr{'HOSTNAMESET'} eq '' ) { $himage = ''; }
+		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostname.png hspace=4>';
 		push(@cols, "${himage}${sb}${bb}".$attr{'HOSTNAMESET'}."${be}${se}" );
-		if( $attr{'RISKSET'} eq '' ) { $rimage = ''; }
+		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/risk.png hspace=4>';
 		push(@cols, "${rimage}${sb}${bb}".$attr{'RISKSET'}."${be}${se}" );
-		if( $attr{'RATELIMIT'} eq '' ) { $pimage = ''; }
+		my $pimage = $attr{'RATELIMIT'} eq '' ? '' : '<img src=images/rate.png hspace=4>';
 		push(@cols, "${pimage}${sb}${bb}".$attr{'RATELIMIT'}."${be}${se}" );
-		my $cimage = '<img src=images/time.png hspace=4>';
 		my $type = $fw->GetItemType($attr{'TIME'});
-		if( $type eq 'TIMEGROUP' ) { $cimage = '<img src=images/timegroup.png hspace=4>'; }
+		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
  		if( $attr{'TARGET'} eq 'ACCEPT' ) {
 			my $cb = $sb eq '' ? '<font color=green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
+			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
 			push(@cols, "${aimage}${sb}${bb}${cb}".$attr{'TARGET'}."${ce}${be}${se}" );
 		} else {
 			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
+			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
 			push(@cols, "${dimage}${sb}${bb}${cb}".$attr{'TARGET'}."${ce}${be}${se}" );
 		}
                 if( $attr{'LOG'} eq 'YES' ) {
 			my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+			my $limage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-eye.png hspace=4>' : '<img src=images/eye.png hspace=4>';
 			push(@cols, "${limage}${sb}${bb}${cb}".($attr{'TARGET'} eq 'ACCEPT' ? 'FLO' : 'ACT')."${ce}${be}${se}" );
                 } else {
 			push(@cols, '&nbsp;' );

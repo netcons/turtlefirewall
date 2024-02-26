@@ -75,8 +75,6 @@ sub showConntrackPreroute {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
-		my $simage = '<img src=images/service.png hspace=4>';
-		my $himage = '<img src=images/helper.png hspace=4>';
 		my $href = &ui_link("edit_conntrackpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $zimage = '<img src=images/zone.png hspace=4>';
@@ -103,8 +101,12 @@ sub showConntrackPreroute {
 			}
 		}
 		$serviceline .= ")";
+		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
-		push(@cols, "${himage}${sb}${bb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${be}${se}" );
+		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';
+		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nConntrackPreroutes-1 ) {
@@ -198,8 +200,6 @@ sub showConntrack {
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
-		my $simage = '<img src=images/service.png hspace=4>';
-		my $himage = '<img src=images/helper.png hspace=4>';
 		my $href = &ui_link("edit_conntrack.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $zimage = '<img src=images/firewall.png hspace=4>';
@@ -222,8 +222,12 @@ sub showConntrack {
 			}
 		}
 		$serviceline .= ")";
+		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
-		push(@cols, "${himage}${sb}${bb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${be}${se}" );
+		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';
+		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nConntracks-1 ) {
