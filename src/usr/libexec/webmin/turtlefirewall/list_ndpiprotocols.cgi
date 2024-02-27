@@ -26,7 +26,7 @@ sub showNdpiProtocols {
         my @ndpiprotocols = $fw->GetNdpiProtocolsList();
 	foreach my $name (@ndpiprotocols) {
 		my %ndpiprotocol = $fw->GetNdpiProtocol($name);
-	        print &ui_columns_row([ $name, $ndpiprotocol{'CATEGORY'} ], \@tds);
+	        print &ui_columns_row([ "<img src=images/ndpi.png hspace=4>$name", $ndpiprotocol{'CATEGORY'} ], \@tds);
         }
 	print &ui_columns_end();
 }

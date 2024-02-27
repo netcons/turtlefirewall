@@ -26,7 +26,7 @@ sub showServices {
 	my @services = $fw->GetServicesList();
 	foreach my $name (@services) {
 		my %service = $fw->GetService($name);
-	        print &ui_columns_row([ $name, $service{'DESCRIPTION'} ], \@tds);
+	        print &ui_columns_row([ "<img src=images/service.png hspace=4>$name", $service{'DESCRIPTION'} ], \@tds);
         }
         print &ui_columns_end();
 	#print '<a href="edit_service.cgi?new=1">create new service</a><br>';

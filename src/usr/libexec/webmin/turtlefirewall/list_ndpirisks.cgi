@@ -26,7 +26,7 @@ sub showNdpiRisks {
         my @ndpirisks = $fw->GetNdpiRisksList();
 	foreach $id (sort { $a <=> $b } @ndpirisks) {
 		my %ndpirisk = $fw->GetNdpiRisk($id);
-	        print &ui_columns_row([ $id, $ndpirisk{'DESCRIPTION'} ], \@tds);
+	        print &ui_columns_row([ "<img src=images/risk.png hspace=4>$id", $ndpirisk{'DESCRIPTION'} ], \@tds);
         }
 	print &ui_columns_end();
 }
