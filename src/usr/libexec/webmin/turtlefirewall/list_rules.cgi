@@ -91,8 +91,8 @@ sub showRule {
 		my $href = &ui_link("edit_rule.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		# If SRC is single item
-		my $zimage = '<img src=images/zone.png hspace=4>';
 		if( $attr{'SRC'} !~ /,/ ) {
+			$zimage = '<img src=images/zone.png hspace=4>';
 			if( $attr{'SRC'} eq 'FIREWALL' ) {
 			       	$zimage = '<img src=images/firewall.png hspace=4>';
 			} else {
@@ -102,12 +102,14 @@ sub showRule {
 				elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 				elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 			}
+		} else {
+			$zimage = '<img src=images/group.png hspace=4>';
 		}
 		$attr{'SRC'} =~ s/,/, /g;
 		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
 		# If DST is single item
-		my $zimage = '<img src=images/zone.png hspace=4>';
 		if( $attr{'DST'} !~ /,/ ) {
+			$zimage = '<img src=images/zone.png hspace=4>';
 			if( $attr{'DST'} eq 'FIREWALL' ) {
 			       	$zimage = '<img src=images/firewall.png hspace=4>';
 			} else {
@@ -117,6 +119,8 @@ sub showRule {
 				elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 				elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 			}
+		} else {
+			$zimage = '<img src=images/group.png hspace=4>';
 		}
 		$attr{'DST'} =~ s/,/, /g;
 		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );

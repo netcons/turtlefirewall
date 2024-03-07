@@ -39,7 +39,7 @@ sub showConnmarkPreroute {
 		"align=center valign=top style='white-space: normal;'",
 		"align=center valign=top style='white-space: normal;'",
 		"align=center valign=top style='white-space: normal;'",
-		"width=1% align=center valign=center",
+		"width=1% valign=top style='white-space: normal;'",
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',
@@ -186,7 +186,7 @@ sub showConnmark {
 		"align=center valign=top style='white-space: normal;'",
 		"align=center valign=top style='white-space: normal;'",
 		"align=center valign=top style='white-space: normal;'",
-		"width=1% align=center valign=center",
+		"width=1% valign=top style='white-space: normal;'",
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',

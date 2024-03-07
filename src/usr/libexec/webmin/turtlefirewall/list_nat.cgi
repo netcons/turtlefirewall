@@ -39,7 +39,7 @@ sub showNat {
 		 "width=10% valign=top style='white-space: normal;'",
 		 "width=10% valign=top style='white-space: normal;'",
 		 "valign=top style='white-space: normal;'",
-		 "width=1% align=center valign=center",
+		 "width=1% valign=top style='white-space: normal;'",
 		 "width=1% valign=top" );
         print &ui_columns_start([
                           "",
@@ -180,7 +180,7 @@ sub showMasquerade {
 		push(@cols, $href );
 		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $type = $fw->GetItemType($attr{'SRC'});
-                if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}".($attr{'SRC'} ne '' ? $attr{'SRC'} : '*')."${se}" );
@@ -258,7 +258,7 @@ sub showRedirect {
 		 "width=10% valign=top style='white-space: normal;'",
 		 "valign=top style='white-space: normal;'",
 		 "width=1% align=center valign=center",
-		 "width=1% align=center valign=center",
+		 "width=1% valign=top style='white-space: normal;'",
 		 "width=1% valign=top" );
         print &ui_columns_start([
                           "",
