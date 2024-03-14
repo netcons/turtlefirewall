@@ -13,7 +13,7 @@ do 'turtlefirewall-lib.pl';
 use Tie::File;
 use Time::Piece;
 
-&ui_print_header( $text{'report_flowstat_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/graph.png hspace=4>$text{'report_flowstat_title'}", $text{'title'}, "" );
 
 my $log = $in{'log'};
 my $type = $in{'type'};
@@ -83,7 +83,7 @@ sub getflows {
 		my $dstnat = '';
 		my $protocol = '';
 		my $hostname = '';
-		my $ja3s = '';
+		my $ja4c = '';
 		my $ja3c = '';
 		my $tlsfp = '';
 		my $tlsv = '';
@@ -124,7 +124,7 @@ sub getflows {
 		push @flows, [$stime, $etime, $l3proto, $l4proto, $source, $sport, $destination, $dport,
 		      		$ubytes, $dbytes, $upackets, $dpackets, $ifindex,
 			       	$connmark, $srcnat, $dstnat, $protocol, $hostname,
-			       	$ja3s, $ja3c, $tlsfp, $tlsv, $risk];
+			       	$ja4c, $ja3c, $tlsfp, $tlsv, $risk];
 	}
 	return @flows;
 }

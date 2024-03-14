@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( $text{'list_manglerules_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/grey-mark.png hspace=4>$text{'list_manglerules_title'}", $text{'title'}, "" );
 
 $form = 0;
 showConnmarkPreroute();
@@ -25,7 +25,7 @@ showConnmark();
 #============================================================================
 
 sub showConnmarkPreroute {
-	print &ui_subheading($text{'connmark_preroute'});
+	print &ui_subheading("<img src=images/grey-mark.png hspace=4>",$text{'connmark_preroute'});
 	print &ui_form_start("save_connmarkpreroute.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -172,7 +172,7 @@ sub showConnmarkPreroute {
 }
 
 sub showConnmark {
-	print &ui_subheading($text{'connmark'});
+	print &ui_subheading("<img src=images/grey-mark.png hspace=4>",$text{'connmark'});
 	print &ui_form_start("save_connmark.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),

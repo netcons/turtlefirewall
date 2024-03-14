@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_redirect_title_create'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_redirect_title_create'}", $text{'title'}, "" );
 	$idx = '';
 	$src = '';
 	$dst = '';
@@ -24,7 +24,7 @@ if( $new ) {
 	$is_redirect = 1;
 	$active = 1;
 } else {
-	&ui_print_header( $text{'edit_redirect_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_redirect_title_edit'}", $text{'title'}, "" );
 	$idx = $in{'idx'};
 	%redirect = $fw->GetRedirect($idx);
 	$src = $redirect{'SRC'};

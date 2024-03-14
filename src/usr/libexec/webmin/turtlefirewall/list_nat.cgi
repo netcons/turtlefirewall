@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( $text{'list_nat_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'list_nat_title'}", $text{'title'}, "" );
 
 $form = 0;
 showNat();
@@ -29,7 +29,7 @@ showRedirect();
 #============================================================================
 
 sub showNat {
-	print &ui_subheading($text{'nat'});
+	print &ui_subheading("<img src=images/arrow.png hspace=4>",$text{'nat'});
 	print &ui_form_start("save_nat.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -133,7 +133,7 @@ sub showNat {
 }
 
 sub showMasquerade {
-	print &ui_subheading($text{'masquerade'});
+	print &ui_subheading("<img src=images/arrow.png hspace=4>",$text{'masquerade'});
 	print &ui_form_start("save_masq.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -247,7 +247,7 @@ sub showMasquerade {
 }
 
 sub showRedirect {
-	print &ui_subheading($text{'redirect_redirect'});
+	print &ui_subheading("<img src=images/arrow.png hspace=4>",$text{'redirect_redirect'});
 	print &ui_form_start("save_redirect.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),

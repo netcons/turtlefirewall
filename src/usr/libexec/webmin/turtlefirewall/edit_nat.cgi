@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_nat_title_create'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_nat_title_create'}", $text{'title'}, "" );
 	$idx = '';
 	$virtual = '';
 	$real = '';
@@ -23,7 +23,7 @@ if( $new ) {
         $toport = '';
 	$active = 1;
 } else {
-	&ui_print_header( $text{'edit_nat_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_nat_title_edit'}", $text{'title'}, "" );
 	$idx = $in{'idx'};
 	%nat = $fw->GetNat($idx);
 	$virtual = $nat{'VIRTUAL'};

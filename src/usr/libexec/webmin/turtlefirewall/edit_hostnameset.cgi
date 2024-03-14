@@ -16,9 +16,9 @@ $hostnameset = $in{'hostnameset'};
 $newhostnameset = $in{'newhostnameset'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_hostnameset_title_create'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/hostname.png hspace=4>$text{'edit_hostnameset_title_create'}", $text{'title'}, "" );
 } else {
-	&ui_print_header( $text{'edit_hostnameset_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/hostname.png hspace=4>$text{'edit_hostnameset_title_edit'}", $text{'title'}, "" );
 }
 
 my %h = $fw->GetHostNameSet($hostnameset);

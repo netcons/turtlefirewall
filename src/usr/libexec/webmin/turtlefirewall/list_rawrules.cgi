@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( $text{'list_rawrules_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/grey-helper.png hspace=4>$text{'list_rawrules_title'}", $text{'title'}, "" );
 
 $form = 0;
 showConntrackPreroute();
@@ -25,7 +25,7 @@ showConntrack();
 #============================================================================
 
 sub showConntrackPreroute {
-	print &ui_subheading($text{'conntrack_preroute'});
+	print &ui_subheading("<img src=images/grey-helper.png hspace=4>",$text{'conntrack_preroute'});
 	print &ui_form_start("save_conntrackpreroute.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -150,7 +150,7 @@ sub showConntrackPreroute {
 }
 
 sub showConntrack {
-	print &ui_subheading($text{'conntrack'});
+	print &ui_subheading("<img src=images/grey-helper.png hspace=4>",$text{'conntrack'});
 	print &ui_form_start("save_conntrack.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),

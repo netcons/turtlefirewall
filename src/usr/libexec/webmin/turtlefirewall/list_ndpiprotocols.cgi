@@ -10,7 +10,7 @@
 
 do 'turtlefirewall-lib.pl';
 
-&ui_print_header( $text{'list_ndpiprotocols_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/ndpi.png hspace=4>$text{'list_ndpiprotocols_title'}", $text{'title'}, "" );
 
 LoadNdpiProtocols( $fw );
 showNdpiProtocols();

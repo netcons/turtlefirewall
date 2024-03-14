@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( $text{'list_blacklists_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/risk.png hspace=4>$text{'list_blacklists_title'}", $text{'title'}, "" );
 
 showBlackLists();
 print "<br><br>";
@@ -32,7 +32,7 @@ sub showBlackLists {
 		local @cols;
 		my $sb = $fw->GetOption($b) ne 'on' ? '<strike><font color=grey>' : '';	# StrikeBegin
 		my $se = $fw->GetOption($b) ne 'on' ? '</strike></font>' : '';		# StrikeEnd
-		push(@cols, "<img src=images/blacklist.png hspace=4>${sb}".$b."${se}");
+		push(@cols, "<img src=images/risk.png hspace=4>${sb}".$b."${se}");
 		push(@cols, "${sb}".$blacklists{$b}{DESCRIPTION}."${se}");
 		push(@cols, "${sb}".$blacklists{$b}{LOCATION}."${se}");
 		my $blacklistcount = qx{wc -l < $blacklists{$b}{LOCATION} 2>/dev/null};

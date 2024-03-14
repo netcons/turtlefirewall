@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header($fw->Version() , $text{'title'}, "", undef, 1, 1, 0,
+&ui_print_header( "<img src=images/shield.png hspace=4> v ".$fw->Version(), $text{'title'}, "", undef, 1, 1, 0,
         &help_search_link("iptables", "man", "doc"));
 
 my @links = ('list_items.cgi',

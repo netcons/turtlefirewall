@@ -10,7 +10,7 @@
 
 do 'turtlefirewall-lib.pl';
 
-&ui_print_header( $text{'list_services_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/service.png hspace=4>$text{'list_services_title'}", $text{'title'}, "" );
 
 LoadServices( $fw );
 showServices();

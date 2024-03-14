@@ -14,9 +14,9 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_geoip_title_create'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/geoip.png hspace=4>$text{'edit_geoip_title_create'}", $text{'title'}, "" );
 } else {
-	&ui_print_header( $text{'edit_geoip_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/geoip.png hspace=4>$text{'edit_geoip_title_edit'}", $text{'title'}, "" );
 }
 
 $geoip = $in{'geoip'};

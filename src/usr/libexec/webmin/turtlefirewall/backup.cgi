@@ -15,7 +15,7 @@ if( $in{download} ) {
 	backup_download();
 }
 
-&ui_print_header( $text{'backup_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/shield.png hspace=4>$text{'backup_title'}", $text{'title'}, "" );
 
 if( $in{upload} ) {
 	restore_upload( $in{backup} );
@@ -29,8 +29,9 @@ if( $in{upload} ) {
 	<tr $cb>
 		<td align="center">
 		<br/>~;
-	#	<a href="backup.cgi?download=1"><b>$text{backup_backupdownload}</b></a>
-		print &ui_buttons_row("backup.cgi?download=1", $text{backup_backupdownload});
+	print   &ui_form_start("backup.cgi?download=1", "post");
+	print   &ui_submit($text{'backup_backupdownload'});
+	print   &ui_form_end();
 	print qq~<br/><br/>
 		</td>
 	</tr>
@@ -42,13 +43,12 @@ if( $in{upload} ) {
 	</tr>
 	<tr $cb>
 		<td align="center">
-		<br/>
-		<form action="backup.cgi" method="POST" enctype="multipart/form-data">~;
-	#	<input name="backup" type="file" size="40">&nbsp~;
+		<br/>~;
+	print   &ui_form_start("backup.cgi", "form-data");
 	print 	&ui_upload("backup", 40);
-	#	<input name="upload" type="submit" value="$text{backup_restoreupload}">
-	print 	&ui_submit($text{'backup_restoreupload'}, "upload");
-	print qq~</form>
+	print 	&ui_submit($text{'backup_restoreupload'});
+	print   &ui_form_end();
+	print qq~<br/><br/>
 		<br/>
 		</td>
 	</tr>

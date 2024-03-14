@@ -10,7 +10,7 @@
 
 do 'turtlefirewall-lib.pl';
 
-&ui_print_header( $text{'edit_options_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/shield.png hspace=4>$text{'edit_options_title'}", $text{'title'}, "" );
 
 getOptionsList();
 

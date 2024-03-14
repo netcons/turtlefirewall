@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_masq_title_create'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_masq_title_create'}", $text{'title'}, "" );
 	$idx = '';
 	$src = '';
 	$dst = '';
@@ -23,7 +23,7 @@ if( $new ) {
 	$is_masquerade = 1;
 	$active = 1;
 } else {
-	&ui_print_header( $text{'edit_masq_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_masq_title_edit'}", $text{'title'}, "" );
 	$idx = $in{'idx'};
 	%masq = $fw->GetMasquerade($idx);
 	$src = $masq{'SRC'};

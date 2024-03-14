@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_connmarkpreroute_title_create'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/grey-mark.png hspace=4>$text{'edit_connmarkpreroute_title_create'}", $text{'title'}, "" );
 	$idx = '';
 	$src = '';
 	$dst = '';
@@ -28,7 +28,7 @@ if( $new ) {
 	$mark = '';
 	$active = 1;
 } else {
-	&ui_print_header( $text{'edit_connmarkpreroute_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/grey-mark.png hspace=4>$text{'edit_connmarkpreroute_title_edit'}", $text{'title'}, "" );
 	$idx = $in{'idx'};
 	%rule = $fw->GetConnmarkPreroute($idx);
 	$src = $rule{'SRC'};

@@ -14,9 +14,9 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_host_title_create'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/host.png hspace=4>$text{'edit_host_title_create'}", $text{'title'}, "" );
 } else {
-	&ui_print_header( $text{'edit_host_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/host.png hspace=4>$text{'edit_host_title_edit'}", $text{'title'}, "" );
 }
 
 $host = $in{'host'};

@@ -16,9 +16,9 @@ $riskset = $in{'riskset'};
 $newriskset = $in{'newriskset'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_riskset_title_create'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/risk.png hspace=4>$text{'edit_riskset_title_create'}", $text{'title'}, "" );
 } else {
-	&ui_print_header( $text{'edit_riskset_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/risk.png hspace=4>$text{'edit_riskset_title_edit'}", $text{'title'}, "" );
 }
 
 my %r = $fw->GetRiskSet($riskset);

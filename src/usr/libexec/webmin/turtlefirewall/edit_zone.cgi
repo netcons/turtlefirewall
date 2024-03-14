@@ -18,9 +18,9 @@ if( $in{'zone'} eq 'FIREWALL' ) {
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_zone_title_create'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/zone.png hspace=4>$text{'edit_zone_title_create'}", $text{'title'}, "" );
 } else {
-	&ui_print_header( $text{'edit_zone_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/zone.png hspace=4>$text{'edit_zone_title_edit'}", $text{'title'}, "" );
 }
 
 %z = $fw->GetZone($in{'zone'});

@@ -10,7 +10,7 @@
 
 do 'turtlefirewall-lib.pl';
 
-&ui_print_header( $text{'list_items_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/shield.png hspace=4>$text{'list_items_title'}", $text{'title'}, "" );
 
 $form = 0;
 showZone();

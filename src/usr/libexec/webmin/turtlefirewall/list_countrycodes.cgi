@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( $text{'list_countrycodes_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/geoip.png hspace=4>$text{'list_countrycodes_title'}", $text{'title'}, "" );
 
 LoadCountryCodes( $fw );
 showCountryCodes();

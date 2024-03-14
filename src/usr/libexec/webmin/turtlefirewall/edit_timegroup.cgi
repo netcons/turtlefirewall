@@ -16,9 +16,9 @@ $timegroup = $in{'timegroup'};
 $newtimegroup = $in{'newtimegroup'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_timegroup_title_create'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/timegroup.png hspace=4>$text{'edit_timegroup_title_create'}", $text{'title'}, "" );
 } else {
-	&ui_print_header( $text{'edit_timegroup_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/timegroup.png hspace=4>$text{'edit_timegroup_title_edit'}", $text{'title'}, "" );
 }
 
 @aItems = $fw->GetItemsAllowToTimeGroup( $timegroup );

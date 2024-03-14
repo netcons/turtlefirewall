@@ -12,7 +12,7 @@ do 'turtlefirewall-lib.pl';
 &ReadParse();
 use Time::Piece;
 
-&ui_print_header( $text{'flowlog_title'}, $text{'title'}, "" );
+&ui_print_header( "<img src=images/grey-yes.png hspace=4>$text{'flowlog_title'}", $text{'title'}, "" );
 
 LoadNdpiRisks( $fw );
 showLog();
@@ -45,7 +45,7 @@ sub showLog {
 	#my %dstnat_list = ('*'=>'x');
 	#my %proto_list = ('*'=>'x');
 	#my %host_list = ('*'=>'x');
-	#my %ja3s_list = ('*'=>'x');
+	#my %ja4c_list = ('*'=>'x');
 	#my %ja3c_list = ('*'=>'x');
 	#my %tlsfp_list = ('*'=>'x');
 	#my %tlsv_list = ('*'=>'x');
@@ -73,7 +73,7 @@ sub showLog {
 			my $dstnat = '';
 			my $proto = '';
 			my $host = '';
-			my $ja3s = '';
+			my $ja4c = '';
 			my $ja3c = '';
 			my $tlsfp = '';
 			my $tlsv = '';
@@ -100,7 +100,7 @@ sub showLog {
 			if( $l =~ /DN=(.*?)( |$)/ ) { $dstnat = $1; }
 			if( $l =~ /P=(.*?)( |$)/ ) { $proto = $1; }
 			if( $l =~ /H=(.*?)( |$)/ ) { $host = $1; }
-			if( $l =~ /S=(.*?)( |$)/ ) { $ja3s = $1; }
+			if( $l =~ /c=(.*?)( |$)/ ) { $ja4c = $1; }
 			if( $l =~ /C=(.*?)( |$)/ ) { $ja3c = $1; }
 			if( $l =~ /F=(.*?)( |$)/ ) { $tlsfp = $1; }
 			if( $l =~ /V=(.*?)( |$)/ ) { $tlsv = $1; }
@@ -122,7 +122,7 @@ sub showLog {
 			#if( $dstnat ne '' ) {$dstnat_list{$dstnat} = 'x';}
 			#if( $proto ne '') {$proto_list{$proto} = 'x';}
 			#if( $host ne '') {$host_list{$host} = 'x';}
-			#if( $ja3s ne '') {$ja3s_list{$ja3s} = 'x';}
+			#if( $ja4c ne '') {$ja4c_list{$ja4c} = 'x';}
 			#if( $ja3c ne '') {$ja3c_list{$ja3c} = 'x';}
 			#if( $tlsfp ne '') {$tlsfp_list{$tlsfp} = 'x';}
 			#if( $tlsv ne '') {$tlsv_list{$tlsv} = 'x';}
@@ -144,7 +144,7 @@ sub showLog {
 			    ($in{dstnat} eq '' || $in{dstnat} eq '*' || $in{dstnat} eq $dstnat) &&
 			    ($in{proto} eq '' || $in{proto} eq '*' || $in{proto} eq $proto) &&
 			    ($in{host} eq '' || $in{host} eq '*' || $in{host} eq $host) &&
-			    ($in{ja3s} eq '' || $in{ja3s} eq '*' || $in{ja3s} eq $ja3s) &&
+			    ($in{ja4c} eq '' || $in{ja4c} eq '*' || $in{ja4c} eq $ja4c) &&
 			    ($in{ja3c} eq '' || $in{ja3c} eq '*' || $in{ja3c} eq $ja3c) &&
 			    ($in{tlsfp} eq '' || $in{tlsfp} eq '*' || $in{tlsfp} eq $tlsfp) &&
 			    ($in{tlsv} eq '' || $in{tlsv} eq '*' || $in{tlsv} eq $tlsv) &&
@@ -155,7 +155,7 @@ sub showLog {
 					push @buffer, [$stime, $etime, $l3proto, $l4proto, $src, $sport, $dst, $dport,
 					      		$ubytes, $dbytes, $upackets, $dpackets, $ifindex,
 						       	$connmark, $srcnat, $dstnat, $proto, $host,
-						       	$ja3s, $ja3c, $tlsfp, $tlsv, $risk];
+						       	$ja4c, $ja3c, $tlsfp, $tlsv, $risk];
 				}
 			}
 	}
@@ -166,7 +166,7 @@ sub showLog {
 			'&src='.$in{src}.'&sport='.$in{sport}.'&dst='.$in{dst}.'&dport='.$in{dport}.'&ubytes='.$in{ubytes}.'&dbytes='.$in{dbytes}.
 			'&upackets='.$in{upackets}.'&dpackets='.$in{dpackets}.'&ifindex='.$in{ifindex}.
 			'&connmark='.$in{connmark}.'&srcnat='.$in{srcnat}.'&dstnat='.$in{dstnat}.
-			'&proto='.$in{proto}.'&host='.$in{host}.'&ja3s='.$in{ja3s}.'&ja3c='.$in{ja3c}.
+			'&proto='.$in{proto}.'&host='.$in{host}.'&ja4c='.$in{ja4c}.'&ja3c='.$in{ja3c}.
 			'&tlsfp='.$in{tlsfp}.'&tlsv='.$in{tlsv}.'&risk='.$in{risk};
 	my $pageindex = '';
 	if( $pag > 1 ) {
@@ -269,9 +269,9 @@ sub showLog {
 	$hdstnat .= "<b>dstNAT<br></b>";
 	push(@head, $hdstnat );
 
-	local $hja3s;
-	$hja3s .= "<b>ja3sFINGERPRINT<br></b>";
-	push(@head, $hja3s );
+	local $hja4c;
+	$hja4c .= "<b>ja4cFINGERPRINT<br></b>";
+	push(@head, $hja4c );
 
 	local $hja3c;
 	$hja3c .= "<b>ja3cFINGERPRINT<br></b>";
@@ -323,7 +323,7 @@ sub showLog {
 	foreach my $l (@buffer) {
 		local @cols;
 		my ($stime, $etime, $l3proto, $l4proto, $src, $sport, $dst, $dport, $ubytes, $dbytes, $upackets, $dpackets, $ifindex,
-		    $connmark, $srcnat, $dstnat, $proto, $host, $ja3s, $ja3c, $tlsfp, $tlsv, $risk) = @$l;
+		    $connmark, $srcnat, $dstnat, $proto, $host, $ja4c, $ja3c, $tlsfp, $tlsv, $risk) = @$l;
 	    	showTD( localtime($stime)->strftime('%b %d %X') );
 	    	showTD( localtime($etime)->strftime('%b %d %X') );
 		showTD( l3protoname($l3proto) );
@@ -347,7 +347,7 @@ sub showLog {
 		showTD( $connmark );
 		showTD( $srcnat );
 		showTD( $dstnat );
-		showTD( $ja3s );
+		showTD( $ja4c );
 		showTD( $ja3c );
 		showTD( $tlsfp );
 		showTD( $tlsv );

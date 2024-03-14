@@ -16,9 +16,9 @@ $ratelimit = $in{'ratelimit'};
 $newratelimit = $in{'newratelimit'};
 
 if( $new ) {
-	&ui_print_header( $text{'edit_ratelimit_title_create'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/rate.png hspace=4>$text{'edit_ratelimit_title_create'}", $text{'title'}, "" );
 } else {
-	&ui_print_header( $text{'edit_ratelimit_title_edit'}, $text{'title'}, "" );
+	&ui_print_header( "<img src=images/rate.png hspace=4>$text{'edit_ratelimit_title_edit'}", $text{'title'}, "" );
 }
 
 my %r = $fw->GetRateLimit($ratelimit);
