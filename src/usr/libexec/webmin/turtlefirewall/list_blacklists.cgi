@@ -30,27 +30,18 @@ sub showBlackLists {
         my @items = ();
         foreach my $b (sort keys %blacklists) {
 		local @cols;
-		my $sb = $fw->GetOption($b) ne 'on' ? '<strike><font color=grey>' : '';	# StrikeBegin
-		my $se = $fw->GetOption($b) ne 'on' ? '</strike></font>' : '';		# StrikeEnd
-		push(@cols, "<img src=images/risk.png hspace=4>${sb}".$b."${se}");
-		push(@cols, "${sb}".$blacklists{$b}{DESCRIPTION}."${se}");
-		push(@cols, "${sb}".$blacklists{$b}{LOCATION}."${se}");
+		push(@cols, "<img src=images/risk.png hspace=4>$b");
+		push(@cols, $blacklists{$b}{DESCRIPTION});
+		push(@cols, $blacklists{$b}{LOCATION});
 		my $blacklistcount = qx{wc -l < $blacklists{$b}{LOCATION} 2>/dev/null};
 		if( $blacklistcount eq '' ) { $blacklistcount = '0'; }
-		push(@cols, "${sb}".$blacklistcount."${se}");
+		push(@cols, "$blacklistcount");
 		my $autoupdate = 'NO';
 		if( -e $blacklists{$b}{CRON} ) { $autoupdate = 'YES'; }
- 		if( $autoupdate eq 'YES' ) {
-			my $cb = $sb eq '' ? '<font color=green>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			my $aimage = $fw->GetOption($b) ne 'on' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
-			push(@cols, "${aimage}${sb}${cb}".$autoupdate."${ce}${se}");
-		} else {
-			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			my $dimage = $fw->GetOption($b) ne 'on' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
-			push(@cols, "${dimage}${sb}${cb}".$autoupdate."${ce}${se}");
-		}
+		my $aimage = $autoupdate eq 'YES' ? '<img src=images/yes.png hspace=4>' : '<img src=images/no.png hspace=4>';
+		my $cb = $autoupdate eq 'YES' ? '<font color=green>' : '<font color=red>';	# ColourBegin
+		my $ce = '</font>';								# ColourEnd
+		push(@cols, "${aimage}${cb}".$autoupdate."${ce}");
 	        print &ui_columns_row(\@cols, \@tds);
         }
 	print &ui_columns_end();

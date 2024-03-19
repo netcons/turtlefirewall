@@ -9,11 +9,7 @@ echo -e "Copyright (c) 2001-2024 Andrea Frigido\n";
 
 fw_file="/etc/turtlefirewall/fw.xml"
 
-grep -E 'drop_sha1_blacklist.*="on"|="on".*drop_sha1_blacklist' $fw_file > /dev/null
-if [ $? = 0 ]
- then
-
-drop_blacklist_file="/etc/turtlefirewall/drop_sha1_blacklist.dat"
+drop_blacklist_file="/etc/turtlefirewall/sha1_blacklist.dat"
 never_blacklist_file="/etc/turtlefirewall/never_sha1_blacklist.dat"
 
 Help () {
@@ -138,9 +134,5 @@ case $1 in
  -x|--exclude-download) Verify;Initialise;Flush;Import;;
  *) Verify;Initialise;Flush;Download;Import;;
 esac
-
-else
- echo -e "drop_sha1_blacklist disabled in $fw_file"
-fi
 
 echo
