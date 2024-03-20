@@ -9,7 +9,7 @@ echo -e "Copyright (c) 2001-2024 Andrea Frigido\n";
 
 fw_file="/etc/turtlefirewall/fw.xml"
 
-drop_blacklist_file="/etc/turtlefirewall/ja3_blacklist.dat"
+blacklist_file="/etc/turtlefirewall/ja3_blacklist.dat"
 never_blacklist_file="/etc/turtlefirewall/never_ja3_blacklist.dat"
 
 Help () {
@@ -47,12 +47,12 @@ fi
 
 Initialise () {
 echo -e "Initialise : \c"
-cat /proc/net/xt_ndpi/proto | grep drop_ja3_blacklist > /dev/null 2>&1
+cat /proc/net/xt_ndpi/proto | grep -w ja3_blacklist > /dev/null 2>&1
 if [ $? = 0 ]
  then
   echo -e "SKIP"
  else
-  echo "add_custom drop_ja3_blacklist" > /proc/net/xt_ndpi/proto
+  echo "add_custom ja3_blacklist" > /proc/net/xt_ndpi/proto
   if [ $? = 0 ]
    then
     echo -e "OK"
@@ -64,7 +64,7 @@ fi
 
 Flush () {
 echo -e "Flush : \c"
-echo "-drop_ja3_blacklist:*" > /proc/net/xt_ndpi/host_proto
+echo "-ja3_blacklist:*" > /proc/net/xt_ndpi/host_proto
 if [ $? = 0 ]
  then
   echo -e "OK"
@@ -81,15 +81,15 @@ if [ $? = 0 ]
   wget -q -O - https://sslbl.abuse.ch/blacklist/ja3_fingerprints.csv \
    | dos2unix \
    | awk -F "," '(!/^#/ && $1~/^[a-z0-9]{32}$/){print $1}' \
-   > $drop_blacklist_file
+   > $blacklist_file
   if [ $? = 0 ]
    then
     echo -e "OK"
   else
     echo -e "FAIL"
   fi
-  sort -u $drop_blacklist_file -o $drop_blacklist_file
-  chmod 600 $drop_blacklist_file
+  sort -u $blacklist_file -o $blacklist_file
+  chmod 600 $blacklist_file
  else
   echo -e "turtlefirewall not enabled"
   echo
@@ -99,7 +99,7 @@ fi
 
 Import () {
 echo -e "Import : \c"
-if [ -s $drop_blacklist_file ]
+if [ -s $blacklist_file ]
  then
 
   # Ensure exclude
@@ -107,13 +107,13 @@ if [ -s $drop_blacklist_file ]
    then
     while read blacklist_exclude
      do
-      sed -i "/^$blacklist_exclude$/d" $drop_blacklist_file
+      sed -i "/^$blacklist_exclude$/d" $blacklist_file
     done < $never_blacklist_file
   fi
 
-  sed "s/^/drop_ja3_blacklist:RISK_JA3_/" $drop_blacklist_file > /proc/net/xt_ndpi/host_proto
-  #sed "s/^/drop_ja3_blacklist:JA3C_/" $drop_blacklist_file > /proc/net/xt_ndpi/host_proto
-  count=`wc -l < $drop_blacklist_file`
+  sed "s/^/ja3_blacklist:RISK_JA3_/" $blacklist_file > /proc/net/xt_ndpi/host_proto
+  #sed "s/^/ja3_blacklist:JA3C_/" $blacklist_file > /proc/net/xt_ndpi/host_proto
+  count=`wc -l < $blacklist_file`
   if [ $? = 0 ]
    then
     echo -e "$count"
@@ -121,7 +121,7 @@ if [ -s $drop_blacklist_file ]
     echo -e "FAIL"
   fi
  else
-  echo -e "$drop_blacklist_file empty"
+  echo -e "$blacklist_file empty"
 fi
 }
 

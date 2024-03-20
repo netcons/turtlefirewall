@@ -1622,7 +1622,7 @@ sub startFirewall {
 	print "ndpi_module: on\n";	
 	$this->command('modprobe xt_ndpi ndpi_enable_flow=1 ndpi_flow_opt=cCFVR', '/dev/null');
 	
-	# Abilitiamo l'IP forwarding
+	# Enable IP forwarding
 	$this->command('echo "1"', '/proc/sys/net/ipv4/ip_forward');
 	
 	if( $this->{fw}{OPTION}{rp_filter} eq 'unchange' ) {
@@ -1930,9 +1930,9 @@ sub getIptablesRules {
                 $rules .= "-A IP_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW IP BLACKLIST:\"\n";
                 $rules .= "-A IP_BLACKLIST -j DROP\n";
 
-                $rules .= "-A INPUT -m set --match-set drop_ip_blacklist src -j IP_BLACKLIST\n";
-                $rules .= "-A OUTPUT -m set --match-set drop_ip_blacklist dst -j IP_BLACKLIST\n";
-                $rules .= "-A FORWARD -m set --match-set drop_ip_blacklist src,dst -j IP_BLACKLIST\n";
+                $rules .= "-A INPUT -m set --match-set ip_blacklist src -j IP_BLACKLIST\n";
+                $rules .= "-A OUTPUT -m set --match-set ip_blacklist dst -j IP_BLACKLIST\n";
+                $rules .= "-A FORWARD -m set --match-set ip_blacklist src,dst -j IP_BLACKLIST\n";
 		print "on\n";
 	} else {
 		print "off\n";
@@ -1944,12 +1944,9 @@ sub getIptablesRules {
                 $rules .= "-A DOMAIN_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW DOMAIN BLACKLIST:\"\n";
                 $rules .= "-A DOMAIN_BLACKLIST -j DROP\n";
 
-		#$rules .= "-A INPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
-		#$rules .= "-A OUTPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
-		#$rules .= "-A FORWARD -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
-		$rules .= "-A INPUT -m ndpi --proto drop_domain_blacklist -j DOMAIN_BLACKLIST\n";
-		$rules .= "-A OUTPUT -m ndpi --proto drop_domain_blacklist -j DOMAIN_BLACKLIST\n";
-		$rules .= "-A FORWARD -m ndpi --proto drop_domain_blacklist -j DOMAIN_BLACKLIST\n";
+		$rules .= "-A INPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+		$rules .= "-A OUTPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+		$rules .= "-A FORWARD -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
 		print "on\n";
 	} else {
 		print "off\n";
@@ -1964,9 +1961,6 @@ sub getIptablesRules {
 		$rules .= "-A INPUT -m ndpi --all --risk 28 -j JA3_BLACKLIST\n";
 		$rules .= "-A OUTPUT -m ndpi --all --risk 28 -j JA3_BLACKLIST\n";
 		$rules .= "-A FORWARD -m ndpi --all --risk 28 -j JA3_BLACKLIST\n";
-		#$rules .= "-A INPUT -m ndpi --proto drop_ja3_blacklist -j JA3_BLACKLIST\n";
-		#$rules .= "-A OUTPUT -m ndpi --proto drop_ja3_blacklist -j JA3_BLACKLIST\n";
-		#$rules .= "-A FORWARD -m ndpi --proto drop_ja3_blacklist -j JA3_BLACKLIST\n";
 		print "on\n";
 	} else {
 		print "off\n";
@@ -1981,9 +1975,6 @@ sub getIptablesRules {
 		$rules .= "-A INPUT -m ndpi --all --risk 29 -j SHA1_BLACKLIST\n";
 		$rules .= "-A OUTPUT -m ndpi --all --risk 29 -j SHA1_BLACKLIST\n";
 		$rules .= "-A FORWARD -m ndpi --all --risk 29 -j SHA1_BLACKLIST\n";
-		#$rules .= "-A INPUT -m ndpi --proto drop_sha1_blacklist -j SHA1_BLACKLIST\n";
-		#$rules .= "-A OUTPUT -m ndpi --proto drop_sha1_blacklist -j SHA1_BLACKLIST\n";
-		#$rules .= "-A FORWARD -m ndpi --proto drop_sha1_blacklist -j SHA1_BLACKLIST\n";
 		print "on\n";
 	} else {
 		print "off\n";
