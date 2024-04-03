@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "<img src=images/grey-no.png hspace=4>$text{'log_title'}", $text{'title'}, "" );
+&ui_print_header( "<img src=images/grey-eye.png hspace=4>$text{'log_title'}", $text{'title'}, "" );
 
 showLog();
 

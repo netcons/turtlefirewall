@@ -17,6 +17,7 @@
 	<ndpiprotocol name="amazonvideo" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="amongus" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="amqp" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="ansi_c1222" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="anydesk" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="apple" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="appleicloud" category="storage-backup"> </ndpiprotocol>
@@ -32,10 +33,12 @@
 	<ndpiprotocol name="bacnet" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="badoo" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="beckhoffads" category="iot-scada"> </ndpiprotocol>
+	<ndpiprotocol name="bfd" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="bgp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="bitcoin" category="crypto-currency"> </ndpiprotocol>
 	<ndpiprotocol name="bittorrent" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="bjnp" category="printing"> </ndpiprotocol>
+	<ndpiprotocol name="dlep" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="bloomberg" category="financial"> </ndpiprotocol>
 	<ndpiprotocol name="cachefly" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="cassandra" category="database"> </ndpiprotocol>
@@ -96,6 +99,7 @@
 	<ndpiprotocol name="fbookreelstory" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="fins" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="fix" category="financial"> </ndpiprotocol>
+	<ndpiprotocol name="flute" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="forticlient" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="ftp_control" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="ftp_data" category="storage-backup"> </ndpiprotocol>
@@ -111,6 +115,7 @@
 	<ndpiprotocol name="gmail" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="gnutella" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="google" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="googlecall" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="googlechat" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="googlemeet" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="googleclassroom" category="other"> </ndpiprotocol>
@@ -141,6 +146,8 @@
 	<ndpiprotocol name="http2" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="http_connect" category="browsing"> </ndpiprotocol>
 	<ndpiprotocol name="http_proxy" category="proxy"> </ndpiprotocol>
+	<ndpiprotocol name="huawei" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="huaweicloud" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="hulu" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="i3d" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="iax" category="telephony"> </ndpiprotocol>
@@ -182,6 +189,7 @@
 	<ndpiprotocol name="lisp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="livestream" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="llmnr" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="lolwildrift" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="lotusnotes" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="maplestory" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="mdns" category="networking"> </ndpiprotocol>
@@ -210,6 +218,7 @@
 	<ndpiprotocol name="nats" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="nestlogsink" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="netbios" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="neteasegames" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="netflix" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="netflow" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="nfs" category="storage-backup"> </ndpiprotocol>
@@ -233,6 +242,8 @@
 	<ndpiprotocol name="outlook" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="pandora" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="pastebin" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="pathofexile" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="pfcp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="pgm" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="pinterest" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="playstation" category="gaming"> </ndpiprotocol>

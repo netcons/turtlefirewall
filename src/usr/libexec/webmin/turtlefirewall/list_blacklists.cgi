@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "<img src=images/risk.png hspace=4>$text{'list_blacklists_title'}", $text{'title'}, "" );
+&ui_print_header( "<img src=images/blacklist.png hspace=4>$text{'list_blacklists_title'}", $text{'title'}, "" );
 
 showBlackLists();
 print "<br><br>";
@@ -30,7 +30,7 @@ sub showBlackLists {
         my @items = ();
         foreach my $b (sort keys %blacklists) {
 		local @cols;
-		push(@cols, "<img src=images/risk.png hspace=4>$b");
+		push(@cols, "<img src=images/blacklist.png hspace=4>$b");
 		push(@cols, $blacklists{$b}{DESCRIPTION});
 		push(@cols, $blacklists{$b}{LOCATION});
 		my $blacklistcount = qx{wc -l < $blacklists{$b}{LOCATION} 2>/dev/null};
