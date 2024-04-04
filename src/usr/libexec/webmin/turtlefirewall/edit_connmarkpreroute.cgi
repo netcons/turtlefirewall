@@ -115,7 +115,7 @@ print "<br>
 if( !$new ) {
 	print		"<tr>
 				<td><b>#</b></td>
-				<td><b><tt>$idx</tt></b></td>
+				<td><b>$idx</b></td>
 			</tr>";
 }
 print			"<tr>

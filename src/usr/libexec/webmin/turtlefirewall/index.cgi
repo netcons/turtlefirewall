@@ -111,10 +111,10 @@ if( $in{showiptfilter} ne '' ) {
 	print "<br><table border width=\"100%\">
 		<tr $tb><th>FILTER</th></tr>
 		<tr $cb><td>";
-	print "<pre><tt><small>";
+	print "<pre><small>";
 	print qx{iptables -L -n -v -x 2>&1};
 	#print qx{nft list table ip filter 2>&1};
-	print "</small></tt></pre>";
+	print "</small></pre>";
 	print "</td></tr></table>";
 }
 
@@ -122,10 +122,10 @@ if( $in{showiptnat} ne '' ) {
 	print "<br><table border width=\"100%\">
 		<tr $tb><th>NAT</th></tr>
 		<tr $cb><td>";
-	print "<pre><tt><small>";
+	print "<pre><small>";
 	print qx{iptables -t nat -L -n -v -x 2>&1};
 	#print qx{nft list table ip nat 2>&1};
-	print "</small></tt></pre>";
+	print "</small></pre>";
 	print "</td></tr></table>";
 }
 
@@ -133,10 +133,10 @@ if( $in{showiptmangle} ne '' ) {
 	print "<br><table border width=\"100%\">
 		<tr $tb><th>MANGLE</th></tr>
 		<tr $cb><td>";
-	print "<pre><tt><small>";
+	print "<pre><small>";
 	print qx{iptables -t mangle -L -n -v -x 2>&1};
 	#print qx{nft list table ip mangle 2>&1};
-	print "</small></tt></pre>";
+	print "</small></pre>";
 	print "</td></tr></table>";
 }
 
@@ -144,10 +144,10 @@ if( $in{showiptraw} ne '' ) {
 	print "<br><table border width=\"100%\">
 		<tr $tb><th>RAW</th></tr>
 		<tr $cb><td>";
-	print "<pre><tt><small>";
+	print "<pre><small>";
 	print qx{iptables -t raw -L -n -v -x 2>&1};
 	#print qx{nft list table ip raw 2>&1};
-	print "</small></tt></pre>";
+	print "</small></pre>";
 	print "</td></tr></table>";
 }
 
@@ -155,9 +155,9 @@ if( $in{showconntrack} ne '' ) {
 	print "<br><table border width=\"100%\">
 		<tr $tb><th>CONNTRACK</th></tr>
 		<tr $cb><td>";
-	print "<pre><tt><small>";
+	print "<pre><small>";
 	print qx{/usr/sbin/conntrack -L -o extended};
-	print "</small></tt></pre>";
+	print "</small></pre>";
 	print "</td></tr></table>";
 }
 
@@ -165,9 +165,9 @@ if( $in{flushconntrack} ne '' ) {
 	print "<br><table border width=\"100%\">
 		<tr $tb><th>CONNTRACK</th></tr>
 		<tr $cb><td>";
-	print "<pre><tt><small>";
+	print "<pre><small>";
 	print qx{/usr/sbin/conntrack -F 2>&1};
-	print "</small></tt></pre>";
+	print "</small></pre>";
 	print "</td></tr></table>";
 }
 

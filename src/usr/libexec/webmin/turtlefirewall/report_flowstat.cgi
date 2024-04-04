@@ -110,6 +110,10 @@ sub getflows {
 		if( $l =~ /DN=(.*?)( |$)/ ) { $dstnat = $1; }
 		if( $l =~ /P=(.*?)( |$)/ ) { $protocol = $1; }
 		if( $l =~ /H=(.*?)( |$)/ ) { $hostname = $1; }
+		if( $l =~ /c=(.*?)( |$)/ ) { $ja4c = $1; }
+		if( $l =~ /C=(.*?)( |$)/ ) { $ja3c = $1; }
+		if( $l =~ /F=(.*?)( |$)/ ) { $tlsfp = $1; }
+		if( $l =~ /V=(.*?)( |$)/ ) { $tlsv = $1; }
 		if( $l =~ /R=(.*?)( |$)/ ) { $risk = $1; }
 
 		if( $type eq 'source' && $source ne '' ) {$type_list{$source} = '0';}
@@ -162,33 +166,31 @@ sub showstats {
 	my $logflowcount = qx{wc -l < $log 2>/dev/null};
 	my $flowcount = @flows;
 
+	my $firstflowtime = localtime($flows[0][0])->strftime('%b %d %X');
+	my $lastflowtime = localtime($flows[$#flows][1])->strftime('%b %d %X');
+
 	print "Using $flowcount of $logflowcount flows from $log";
-	if( $string ne '' ) { print " containing <tt>\"$string\"</tt>"; }
-	# Time of first flow
-	print " ( ";
-	print localtime($flows[0][0])->strftime('%b %d %X');
-	# Time of last flow
-	print " --> ";
-	print localtime($flows[$#flows][1])->strftime('%b %d %X');
-	print " )";
+	if( $string ne '' ) { print " containing <i>".&ui_text_color($string, 'info')."</i>"; }
+	print " ( $firstflowtime --> $lastflowtime )";
 
-	@tds = ( "style='white-space: nowrap;'", "width=$graphwidth", "", "" );
+	@tds = ( "style='white-space: nowrap;'", "width=$graphwidth", "", "width=1% align=right style='white-space: nowrap;'" );
 
-	print &ui_columns_start([ "<b>$text{$type_name}</b>", "", "<b>$text{'flowstat_percent'}</b>", "<b>$text{'flowstat_usage'}</b>" ], 100, 0, \@tds);
+	print &ui_columns_start([ "<b>$text{$type_name}</b>", "<b>$text{'flowstat_percent'}</b>", "", "<b>$text{'flowstat_traffic'}</b>" ], 100, 0, \@tds);
 
 	foreach my $l (@stats) {
 		local @cols;
 		my ( $item, $bytes) = @$l;
 
-		# Compared to overall usage
+		# Compared to overall traffic
 		my $width = ($bytes/$flowtotal) * $graphwidth;
 		my $percent = sprintf("%.1f", ($bytes/$flowtotal) * 100);
 
-		# Compared to type usage
+		# Compared to type traffic
 		#my $width = ($bytes/$stats[0][1]) * $graphwidth;
 		#my $percent = sprintf("%.1f", ($bytes/$stats[0][1]) * 100);
 
 		my $graph = sprintf("<img src=images/bar.gif height=5 width=%d>", $width);
+		my $greygraph = sprintf("<img src=images/grey-bar.gif height=5 width=%d>", $graphwidth-$width);
 
 		if( $type eq 'risk' ) {
 			my @risk_list = ();
@@ -199,17 +201,17 @@ sub showstats {
 			$item = join(",", @risk_list);
 		}
 
-		push(@cols, "<tt>$item</tt>");
+		push(@cols, "<i>$item</i>");
 
-		push(@cols, $graph);
+		push(@cols, "$graph"."$greygraph");
 
-		push(@cols, "$percent %");
+		push(@cols, "<i>&nbsp;&nbsp;$percent %</i>");
 
-		push(@cols, "<tt>".roundbytes($bytes)."</tt>");
+		push(@cols, "<i>".&roundbytes($bytes)."</i>");
 
 	        print &ui_columns_row(\@cols, \@tds);
 	}
-        print &ui_columns_row(["<b>Total</b>", undef, undef, "<tt>".roundbytes($flowtotal)."</tt>"], \@tds);
+        print &ui_columns_row(["<b>Total</b>", undef, undef, "<b>".roundbytes($flowtotal)."</b>"], \@tds);
 
 	print &ui_columns_end();
 }

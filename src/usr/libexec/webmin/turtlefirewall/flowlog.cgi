@@ -365,7 +365,7 @@ sub showTD {
 	my $text = shift;
 
 	if( $text eq '' ) { $text = '&nbsp;'; }
-	push(@cols, "<tt>$text</tt>");
+	push(@cols, "<i>$text&nbsp;&nbsp;</i>");
 }
 
 sub l3protoname {

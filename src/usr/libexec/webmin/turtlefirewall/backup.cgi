@@ -97,10 +97,10 @@ sub restore_upload {
 			<th>$text{'backup_restoretitle'}</th>
 		</tr>
 		<tr $cb>
-			<td align="center"><pre><tt>~;
+			<td align="center"><pre>~;
 	open FILE, "<$output";
 	while( <FILE> ) { print; }
 	close FILE;
 	unlink $output;
-	print qq~	</tt></pre></td></tr></table>~;
+	print qq~	</pre></td></tr></table>~;
 }

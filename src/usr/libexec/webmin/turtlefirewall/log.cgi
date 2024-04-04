@@ -211,5 +211,5 @@ sub showLog {
 sub showTD {
 	my $text = shift;
 	if( $text eq '' ) { $text = '&nbsp;'; }
-	push(@cols, "<tt>$text</tt>");
+	push(@cols, "<i>$text</i>");
 }

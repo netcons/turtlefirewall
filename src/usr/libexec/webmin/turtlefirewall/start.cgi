@@ -15,9 +15,9 @@ do 'turtlefirewall-lib.pl';
 
 print "<table border width=\"100%\">
        <tr $cb><td>";
-print "<pre><tt>\n";
+print "<pre>\n";
 print qx{/usr/sbin/turtlefirewall --start 2>&1};
-print "</tt></pre>";
+print "</pre>";
 print "</td></tr></table>";
 
 &ui_print_footer( "index.cgi", "turtle firewall index" );

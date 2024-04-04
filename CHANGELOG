@@ -220,6 +220,7 @@ CHANGELOG
            - Feature : Removed Blacklist Flow Reports. 
            - Feature : Improve Blacklist view.
 18-02-2024 v.2.3
+           - Bug : Removed depreciated HTML <tt> tag.
            - Feature : Extend nDPI support.
            - Logging : Replaced JA3 server with JA4 client.
            - Theme : Standardize Webmin images.
