@@ -19,8 +19,6 @@ showLog();
 
 sub showLog {
 
-	print "Using logfile $SysLogFile";
-
 	my $pag = $in{pag};
 	if( $pag == 0 ) { $pag = 1; }
 	my $count = 0;
@@ -115,7 +113,7 @@ sub showLog {
 
 	print &ui_form_start("log.cgi", "post");
 
-	print "<br><center>$pageindex</center><br>\n";
+	print "<center>$pageindex</center>\n";
 
 	my $opz;
 
@@ -179,10 +177,6 @@ sub showLog {
 	$hmac .= "</select></b>";
 	push(@head, $hmac );
 
-	print "<table width=\"100%\"><tr>";
-	print '<td>'.&ui_submit( $text{'log_refresh'} ).'</td>';
-	print "</tr></table>";
-
 	@tds = ( "style='white-space: nowrap;'", "align=center", "align=center", "", "", "", "align=center", "", "", "" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
@@ -203,9 +197,13 @@ sub showLog {
 	}
 	print &ui_columns_end();
 
+	print "<table width=\"100%\"><tr>";
+	print '<td align=right>'.&ui_submit( $text{'log_update'} ).'</td>';
+	print "</tr></table>";
+
 	print &ui_form_end();
 
-	print "<br><center>$pageindex</center><br>\n";
+	print "<center>$pageindex</center>\n";
 }
 
 sub showTD {

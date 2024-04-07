@@ -21,8 +21,6 @@ showLog();
 
 sub showLog {
 
-	print "Using logfile $FlowLogFile";
-
 	my $pag = $in{pag};
 	if( $pag == 0 ) { $pag = 1; }
 	my $count = 0;
@@ -181,7 +179,7 @@ sub showLog {
 	}
 
 	print &ui_form_start("flowlog.cgi", "post");
-	print "<br><center>$pageindex</center><br>\n";
+	print "<center>$pageindex</center>\n";
 
 	my $opz;
 
@@ -289,10 +287,6 @@ sub showLog {
 	$hrisk .= "<b>RISK<br></b>";
 	push(@head, $hrisk );
 
-	print "<table width=\"100%\"><tr>";
-	print '<td>'.&ui_submit( $text{'log_refresh'} ).'</td>';
-	print "</tr></table>";
-
 	@tds = ( "style='white-space: nowrap;'",
 	       	 "style='white-space: nowrap;'",
 		 "align=center",
@@ -356,9 +350,13 @@ sub showLog {
 	}
 	print &ui_columns_end();
 
+	print "<table width=\"100%\"><tr>";
+	print '<td align=right>'.&ui_submit( $text{'log_update'} ).'</td>';
+	print "</tr></table>";
+
 	print &ui_form_end();
 
-	print "<br><center>$pageindex</center><br>\n";
+	print "<center>$pageindex</center>\n";
 }
 
 sub showTD {

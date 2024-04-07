@@ -78,10 +78,11 @@ echo -e "Download : \c"
 systemctl is-enabled turtlefirewall > /dev/null 2>&1
 if [ $? = 0 ]
  then
+  > $blacklist_file
   wget -q -O - https://sslbl.abuse.ch/blacklist/sslblacklist.csv \
    | dos2unix \
    | awk -F "," '(!/^#/ && $2~/^[a-z0-9]{40}$/){print $2}' \
-   > $blacklist_file
+   >> $blacklist_file
   if [ $? = 0 ]
    then
     echo -e "OK"

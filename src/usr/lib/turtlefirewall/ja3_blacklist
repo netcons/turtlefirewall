@@ -78,10 +78,11 @@ echo -e "Download : \c"
 systemctl is-enabled turtlefirewall > /dev/null 2>&1
 if [ $? = 0 ]
  then
+  > $blacklist_file
   wget -q -O - https://sslbl.abuse.ch/blacklist/ja3_fingerprints.csv \
    | dos2unix \
    | awk -F "," '(!/^#/ && $1~/^[a-z0-9]{32}$/){print $1}' \
-   > $blacklist_file
+   >> $blacklist_file
   if [ $? = 0 ]
    then
     echo -e "OK"

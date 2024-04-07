@@ -30,7 +30,7 @@ if( $in{upload} ) {
 		<td align="center">
 		<br/>~;
 	print   &ui_form_start("backup.cgi?download=1", "post");
-	print   &ui_submit($text{'backup_backupdownload'});
+	print   &ui_submit($text{'backup_index_download'});
 	print   &ui_form_end();
 	print qq~<br/><br/>
 		</td>
@@ -46,7 +46,7 @@ if( $in{upload} ) {
 		<br/>~;
 	print   &ui_form_start("backup.cgi", "form-data");
 	print 	&ui_upload("backup", 40);
-	print 	&ui_submit($text{'backup_restoreupload'});
+	print 	&ui_submit($text{'backup_index_restore'});
 	print   &ui_form_end();
 	print qq~<br/><br/>
 		<br/>
