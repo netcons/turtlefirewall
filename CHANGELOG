@@ -222,6 +222,7 @@ CHANGELOG
 18-02-2024 v.2.3
            - Bug : Removed depreciated HTML <tt> tag.
            - Bug : Limit Domain Blacklist size.
+           - Bug : Remove Domain Blacklist wildcard match.
            - Feature : Extend nDPI support.
            - Logging : Replaced JA3 server with JA4 client.
            - Theme : Standardize Webmin images.

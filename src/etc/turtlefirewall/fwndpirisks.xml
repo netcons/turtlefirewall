@@ -55,5 +55,6 @@
 	<ndpirisk id="51" description="Fully encrypted flow"> </ndpirisk>
 	<ndpirisk id="52" description="ALPN/SNI Mismatch"> </ndpirisk>
 	<ndpirisk id="53" description="Client contacted a malware host"> </ndpirisk>
+	<ndpirisk id="54" description="Binary Data Transfer Attempt"> </ndpirisk>
 
 </ndpirisks>
