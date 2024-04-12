@@ -163,7 +163,6 @@ list_services_title=Port Services
 list_countrycodes_title=Country Codes
 list_ndpiprotocols_title=nDPI Services
 list_ndpirisks_title=nDPI Risks
-redirect=Redirect to local port
 redirect_src=Source
 redirect_dst=Destination
 redirect_service=Port Service

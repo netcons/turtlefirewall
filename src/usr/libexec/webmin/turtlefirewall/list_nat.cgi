@@ -39,6 +39,7 @@ sub showNat {
 		 "width=10% valign=top style='white-space: normal;'",
 		 "width=10% valign=top style='white-space: normal;'",
 		 "valign=top style='white-space: normal;'",
+		 "width=1% align=center valign=center",
 		 "width=1% valign=top style='white-space: normal;'",
 		 "width=1% valign=top" );
         print &ui_columns_start([
@@ -47,6 +48,7 @@ sub showNat {
                           "<b>$text{'virtual_host'}</b>",
                           "<b>$text{'real_host'}</b>",
                           "<b>$text{'nat_service'}</b>",
+                          "<b>$text{'nat'}</b>",
                           "<b>$text{'nat_toport'}</b>",
 		 	  "<b>$text{'nat_move'}</b>" ], 100, 0, \@tds);
 
@@ -97,8 +99,12 @@ sub showNat {
 		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}".$serviceline."${se}");
+		my $cb = $sb eq '' ? '<font color=green>' : '';		# ColourBegin
+		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
+		push(@cols, "${nimage}${sb}${cb}".$text{YES}."${ce}${se}" );
 		my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';
-		push(@cols, "${timage}${sb}".($attr{'TOPORT'} ne '' ? $attr{'TOPORT'} : '&nbsp;')."${se}" );
+		push(@cols, "${timage}${sb}".$attr{'TOPORT'}."${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 
