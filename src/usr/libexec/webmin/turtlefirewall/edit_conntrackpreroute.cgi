@@ -86,20 +86,20 @@ print "<br>
 			<table width=\"100%\">";
 if( !$new ) {
 	print		"<tr>
-				<td><b>#</b></td>
+				<td><img src=images/hash.png hspace=4><b>ID</b></td>
 				<td><b>$idx</b></td>
 			</tr>";
 }
 print			"<tr>
-				<td><b>$text{rule_src}</b></td>
+				<td><img src=images/zone.png hspace=4><b>$text{rule_src}</b></td>
 				<td><select name=\"src\">$options_src</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_dst}</b></td>
+				<td><img src=images/zone.png hspace=4><b>$text{rule_dst}</b></td>
 				<td><select name=\"dst\">$options_dst</select> <small><i>$text{preroute_help}</i></small></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_service}</b></td>
+				<td><img src=images/service.png hspace=4><b>$text{rule_service}</b></td>
 				<td><select name=\"service\">$options_service</select>
 				$text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"11\" maxlength=\"11\"> <small><i>$text{port_help}</i></small></td>
 			</tr>
@@ -107,14 +107,14 @@ print			"<tr>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><b>$text{rule_helper}</b></td>
+				<td><img src=images/grey-helper.png hspace=4><b>$text{rule_helper}</b></td>
 				<td><select name=\"helper\">$options_helper</select></td>
 			</tr>
 			<tr>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><b>$text{rule_active}</b></td>
+				<td><img src=images/active.png hspace=4><b>$text{rule_active}</b></td>
 				<td><input type=\"checkbox\" name=\"active\" value=\"1\"".($active ? ' checked' : '')."></td>
 			</tr>
 			</table>

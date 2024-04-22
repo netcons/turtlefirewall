@@ -133,27 +133,30 @@ print "<br>
 			<table width=\"100%\">";
 if( !$new ) {
 	print		"<tr>
-				<td><b>#</b></td>
+				<td><img src=images/hash.png hspace=4><b>ID</b></td>
 				<td><b>$idx</b></td>
 			</tr>";
 }
 print			"<tr>
-				<td><b>$text{rule_src}</b></td>
+				<td><img src=images/zone.png hspace=4><b>$text{rule_src}</b></td>
 				<td><select name=\"src\" size=\"5\" multiple>$options_src</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_dst}</b></td>
+                                <td><br></td><td></td>
+                        </tr>
+			<tr>
+				<td><img src=images/zone.png hspace=4><b>$text{rule_dst}</b></td>
 				<td><select name=\"dst\" size=\"5\" multiple>$options_dst</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_service}</b></td>
+				<td><img src=images/service.png hspace=4><b>$text{rule_service}</b></td>
 				<td><br>";
 				formService( $service, $port, 1 );
 print				"<br>
 				</td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_ndpiprotocol}</b></td>
+				<td><img src=images/ndpi.png hspace=4><b>$text{rule_ndpiprotocol}</b></td>
 				<td><br>";
 				formNdpiProtocol( $ndpi, $category, 1 );
 print				"<br>
@@ -163,23 +166,23 @@ print				"<br>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><b>$text{rule_hostname_set}</b></td>
+				<td><img src=images/hostname.png hspace=4><b>$text{rule_hostname_set}</b></td>
 				<td><select name=\"hostnameset\">$options_hostnameset</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_risk_set}</b></td>
+				<td><img src=images/risk.png hspace=4><b>$text{rule_risk_set}</b></td>
 				<td><select name=\"riskset\">$options_riskset</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_rate_limit}</b></td>
+				<td><img src=images/rate.png hspace=4><b>$text{rule_rate_limit}</b></td>
 				<td><select name=\"ratelimit\">$options_ratelimit</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_time}</b></td>
+				<td><img src=images/time.png hspace=4><b>$text{rule_time}</b></td>
 				<td><select name=\"time\">$options_time</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_target}</b></td>
+				<td><img src=images/target.png hspace=4><b>$text{rule_target}</b></td>
 				<td>
 				<select name=\"target\">
 				<option ".($target eq 'ACCEPT' ? 'SELECTED' : '').">ACCEPT</option>
@@ -189,18 +192,18 @@ print				"<br>
 				</td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_log}</b></td>
+				<td><img src=images/grey-eye.png hspace=4><b>$text{rule_log}</b></td>
 				<td><input type=\"checkbox\" name=\"log\" value=\"1\"".($log ? ' checked' : '')."> <small><i>$text{log_help}</i></small></td>
 			</tr>
 			<tr>
-				<td><b>$text{description}</b></td>
+				<td><img src=images/info.png hspace=4><b>$text{description}</b></td>
 				<td><input type=\"text\" name=\"description\" value=\"$description\" size=\"60\"></td>
 			</tr>
 			<tr>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><b>$text{rule_active}</b></td>
+				<td><img src=images/active.png hspace=4><b>$text{rule_active}</b></td>
 				<td><input type=\"checkbox\" name=\"active\" value=\"1\"".($active ? ' checked' : '')."></td>
 			</tr>
 			</table>

@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_nat_title_create'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'edit_nat_title_create'}", $text{'title'}, "" );
 	$idx = '';
 	$virtual = '';
 	$real = '';
@@ -23,7 +23,7 @@ if( $new ) {
         $toport = '';
 	$active = 1;
 } else {
-	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_nat_title_edit'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'edit_nat_title_edit'}", $text{'title'}, "" );
 	$idx = $in{'idx'};
 	%nat = $fw->GetNat($idx);
 	$virtual = $nat{'VIRTUAL'};
@@ -63,20 +63,20 @@ print "<br>
 			<table width=\"100%\">";
 if( ! $new ) { print "
 			<tr>
-				<td><b>#</b></td>
+				<td><img src=images/hash.png hspace=4><b>ID</b></td>
 				<td><b>$idx</b></td>
 			</tr>";
 }
 print "			<tr>
-				<td width=\"10%\"><b><nobr>$text{virtual_host}<nobr></b></td>
+				<td width=\"20%\"><b><nobr><img src=images/zone.png hspace=4>$text{virtual_host}<nobr></b></td>
 				<td><select name=\"virtual\">$options_virtual</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{real_host}</b></td>
+				<td><img src=images/host.png hspace=4><b>$text{real_host}</b></td>
 				<td><select name=\"real\">$options_real</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{nat_service}</b></td>
+				<td><img src=images/service.png hspace=4><b>$text{nat_service}</b></td>
 				<td><br>";
 				formService( $service, $port, 1 );
 print "				<br></td>
@@ -85,14 +85,14 @@ print "				<br></td>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><b>$text{real_port}</b></td>
-			       	<td>$text{nat_port} : <input type=\"text\" name=\"toport\" size=\"5\" maxlength=\"5\" value=\"$toport\"></td>
+				<td><img src=images/grey-nat.png hspace=4><b>$text{nat}</b></td>
+			       	<td>$text{YES} : $text{real_port} $text{nat_port} : <input type=\"text\" name=\"toport\" size=\"5\" maxlength=\"5\" value=\"$toport\"></td>
 			</tr>
 			<tr>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><b>$text{nat_active}</b></td>
+				<td><img src=images/active.png hspace=4><b>$text{nat_active}</b></td>
 				<td><input type=\"checkbox\" name=\"active\" value=\"1\"".($active ? ' checked' : '')."></td>
 			</tr>
 			</table>

@@ -114,27 +114,27 @@ print "<br>
 			<table width=\"100%\">";
 if( !$new ) {
 	print		"<tr>
-				<td><b>#</b></td>
+				<td><img src=images/hash.png hspace=4><b>ID</b></td>
 				<td><b>$idx</b></td>
 			</tr>";
 }
 print			"<tr>
-				<td><b>$text{rule_src}</b></td>
+				<td><img src=images/zone.png hspace=4><b>$text{rule_src}</b></td>
 				<td><select name=\"src\">$options_src</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_dst}</b></td>
+				<td><img src=images/zone.png hspace=4><b>$text{rule_dst}</b></td>
 				<td><select name=\"dst\">$options_dst</select> <small><i>$text{preroute_help}</i></small></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_service}</b></td>
+				<td><img src=images/service.png hspace=4><b>$text{rule_service}</b></td>
 				<td><br>";
 				formService( $service, $port, 1 );
 print				"<br>
 				</td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_ndpiprotocol}</b></td>
+				<td><img src=images/ndpi.png hspace=4><b>$text{rule_ndpiprotocol}</b></td>
 				<td><br>";
 				formNdpiProtocol( $ndpi, $category, 1 );
 print				"<br>
@@ -144,26 +144,26 @@ print				"<br>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><b>$text{rule_hostname_set}</b></td>
+				<td><img src=images/hostname.png hspace=4><b>$text{rule_hostname_set}</b></td>
 				<td><select name=\"hostnameset\">$options_hostnameset</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_risk_set}</b></td>
+				<td><img src=images/risk.png hspace=4><b>$text{rule_risk_set}</b></td>
 				<td><select name=\"riskset\">$options_riskset</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_time}</b></td>
+				<td><img src=images/time.png hspace=4><b>$text{rule_time}</b></td>
 				<td><select name=\"time\">$options_time</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{rule_mark}</b></td>
+				<td><img src=images/grey-mark.png hspace=4><b>$text{rule_mark}</b></td>
 				<td><input type=\"text\" name=\"mark\" value=\"$mark\" size=\"13\"></td>
 			</tr>
 			<tr>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><b>$text{rule_active}</b></td>
+				<td><img src=images/active.png hspace=4><b>$text{rule_active}</b></td>
 				<td><input type=\"checkbox\" name=\"active\" value=\"1\"".($active ? ' checked' : '')."></td>
 			</tr>
 			</table>

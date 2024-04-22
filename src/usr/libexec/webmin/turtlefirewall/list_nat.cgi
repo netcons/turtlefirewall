@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'list_nat_title'}", $text{'title'}, "" );
+&ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'list_nat_title'}", $text{'title'}, "" );
 
 $form = 0;
 showNat();
@@ -29,7 +29,7 @@ showRedirect();
 #============================================================================
 
 sub showNat {
-	print &ui_subheading("<img src=images/arrow.png hspace=4>",$text{'nat'});
+	print &ui_subheading("<img src=images/grey-nat.png hspace=4>",$text{'nat'});
 	print &ui_form_start("save_nat.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -44,7 +44,7 @@ sub showNat {
 		 "width=1% valign=top" );
         print &ui_columns_start([
                           "",
-                          "<b>#</b>",
+                          "<b>ID</b>",
                           "<b>$text{'virtual_host'}</b>",
                           "<b>$text{'real_host'}</b>",
                           "<b>$text{'nat_service'}</b>",
@@ -99,9 +99,9 @@ sub showNat {
 		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}".$serviceline."${se}");
-		my $cb = $sb eq '' ? '<font color=green>' : '';		# ColourBegin
+		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
-		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
+		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
 		push(@cols, "${nimage}${sb}${cb}".$text{YES}."${ce}${se}" );
 		my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';
 		push(@cols, "${timage}${sb}".$attr{'TOPORT'}."${se}" );
@@ -139,7 +139,7 @@ sub showNat {
 }
 
 sub showMasquerade {
-	print &ui_subheading("<img src=images/arrow.png hspace=4>",$text{'masquerade'});
+	print &ui_subheading("<img src=images/grey-nat.png hspace=4>",$text{'masquerade'});
 	print &ui_form_start("save_masq.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -153,7 +153,7 @@ sub showMasquerade {
 		 "width=1% valign=top" );
         print &ui_columns_start([
                           "",
-                          "<b>#</b>",
+                          "<b>ID</b>",
                           "<b>$text{'masq_src'}</b>",
                           "<b>$text{'masq_dst'}</b>",
                           "<b>$text{'masq_service'}</b>",
@@ -212,12 +212,12 @@ sub showMasquerade {
 		if( $attr{'MASQUERADE'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
+			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
 			push(@cols, "${dimage}${sb}${cb}".$text{NO}."${ce}${se}" );
 		} else {
-			my $cb = $sb eq '' ? '<font color=green>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
+			my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
+			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
 			push(@cols, "${aimage}${sb}${cb}".$text{YES}."${ce}${se}" );
 		}
 		local $mover;
@@ -253,7 +253,7 @@ sub showMasquerade {
 }
 
 sub showRedirect {
-	print &ui_subheading("<img src=images/arrow.png hspace=4>",$text{'redirect_redirect'});
+	print &ui_subheading("<img src=images/grey-nat.png hspace=4>",$text{'redirect_redirect'});
 	print &ui_form_start("save_redirect.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -268,7 +268,7 @@ sub showRedirect {
 		 "width=1% valign=top" );
         print &ui_columns_start([
                           "",
-                          "<b>#</b>",
+                          "<b>ID</b>",
                           "<b>$text{'redirect_src'}</b>",
                           "<b>$text{'redirect_dst'}</b>",
                           "<b>$text{'redirect_service'}</b>",
@@ -327,12 +327,12 @@ sub showRedirect {
 		if( $attr{'REDIRECT'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
+			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
 			push(@cols, "${dimage}${sb}${cb}".$text{NO}."${ce}${se}" );
 		} else {
-			my $cb = $sb eq '' ? '<font color=green>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
-			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
+			my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
+			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
 			push(@cols, "${aimage}${sb}${cb}".$text{YES}."${ce}${se}" );
 		}
 		my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';

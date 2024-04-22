@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_masq_title_create'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'edit_masq_title_create'}", $text{'title'}, "" );
 	$idx = '';
 	$src = '';
 	$dst = '';
@@ -23,7 +23,7 @@ if( $new ) {
 	$is_masquerade = 1;
 	$active = 1;
 } else {
-	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_masq_title_edit'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'edit_masq_title_edit'}", $text{'title'}, "" );
 	$idx = $in{'idx'};
 	%masq = $fw->GetMasquerade($idx);
 	$src = $masq{'SRC'};
@@ -77,20 +77,20 @@ print "<br>
 			<table width=\"100%\">";
 if( ! $new ) { print "
 			<tr>
-				<td><b>#</b></td>
+				<td><img src=images/hash.png hspace=4><b>ID</b></td>
 				<td><b>$idx</b></td>
 			</tr>";
 }
 print			"<tr>
-				<td><b>$text{masq_src}</b></td>
+				<td><img src=images/zone.png hspace=4><b>$text{masq_src}</b></td>
 				<td><select name=\"src\">$options_src</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{masq_dst}</b></td>
+				<td><img src=images/zone.png hspace=4><b>$text{masq_dst}</b></td>
 				<td><select name=\"dst\">$options_dst</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{masq_service}</b></td>
+				<td><img src=images/service.png hspace=4><b>$text{masq_service}</b></td>
 				<td><br>";
 				formService( $service, $port, 1 );
 print			qq~	<br></td>
@@ -99,7 +99,7 @@ print			qq~	<br></td>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><b>$text{masq_masquerade}</b></td>
+				<td><img src=images/grey-nat.png hspace=4><b>$text{masq_masquerade}</b></td>
 				<td>
 				<input type="radio" name="masquerade" value="0" ~.($is_masquerade ? '' : 'checked').qq~>
 				$text{NO}<br>
@@ -111,7 +111,7 @@ print			qq~	<br></td>
 				<td><br></td><td></td>
 			</tr>
 			<tr>
-				<td><b>$text{masq_active}</b></td>
+				<td><img src=images/active.png hspace=4><b>$text{masq_active}</b></td>
 				<td><input type=\"checkbox\" name=\"active\" value=\"1\"~.($active ? ' checked' : '').qq~></td>
 			</tr>
 			</table>

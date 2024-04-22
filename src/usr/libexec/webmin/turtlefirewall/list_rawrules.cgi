@@ -40,7 +40,7 @@ sub showConntrackPreroute {
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',
-			"<b>#<b>",
+			"<b>ID<b>",
                         "<b>$text{'rule_src'}</b>",
 			"<b>$text{'rule_dst'}</b>",
 			"<b>$text{'rule_service_head'}</b>",
@@ -165,7 +165,7 @@ sub showConntrack {
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',
-			"<b>#<b>",
+			"<b>ID<b>",
                         "<b>$text{'rule_src'}</b>",
 			"<b>$text{'rule_dst'}</b>",
 			"<b>$text{'rule_service_head'}</b>",

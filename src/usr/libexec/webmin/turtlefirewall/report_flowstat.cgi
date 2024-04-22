@@ -211,7 +211,7 @@ sub showstats {
 
 	        print &ui_columns_row(\@cols, \@tds);
 	}
-        print &ui_columns_row(["<b>Total</b>", undef, undef, "<b>".roundbytes($flowtotal)."</b>"], \@tds);
+	print &ui_columns_row([undef, undef, undef, "<b>Total : ".roundbytes($flowtotal)."</b>"], \@tds);
 
 	print &ui_columns_end();
 }

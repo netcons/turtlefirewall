@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_redirect_title_create'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'edit_redirect_title_create'}", $text{'title'}, "" );
 	$idx = '';
 	$src = '';
 	$dst = '';
@@ -24,7 +24,7 @@ if( $new ) {
 	$is_redirect = 1;
 	$active = 1;
 } else {
-	&ui_print_header( "<img src=images/arrow.png hspace=4>$text{'edit_redirect_title_edit'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'edit_redirect_title_edit'}", $text{'title'}, "" );
 	$idx = $in{'idx'};
 	%redirect = $fw->GetRedirect($idx);
 	$src = $redirect{'SRC'};
@@ -80,22 +80,22 @@ print "<br>
 			<table width=\"100%\">";
 if( !$new ) {
 	print		"<tr>
-				<td><b>#</b></td>
+				<td><img src=images/hash.png hspace=4><b>ID</b></td>
 				<td><b>$idx</b></td>
 			</tr>";
 }
 print			"<tr>
-				<td><b>$text{redirect_src}</b></td>
+				<td><img src=images/zone.png hspace=4><b>$text{redirect_src}</b></td>
 				<td><select name=\"src\">$options_src</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{redirect_dst}</b></td>
+				<td><img src=images/zone.png hspace=4><b>$text{redirect_dst}</b></td>
 				<td><select name=\"dst\">$options_dst</select>
 				&nbsp;<small><i>$text{redirect_dst_help}</i></small>
 				</td>
 			</tr>
 			<tr>
-				<td><b>$text{redirect_service}</b></td>
+				<td><img src=images/service.png hspace=4><b>$text{redirect_service}</b></td>
 				<td><br>";
 				formService( $service, $port );
 print			qq~	<br></td>
@@ -104,7 +104,7 @@ print			qq~	<br></td>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><b>$text{redirect_redirect}</b></td>
+				<td><img src=images/grey-nat.png hspace=4><b>$text{redirect_redirect}</b></td>
 				<td>
 				<input type="radio" name="redirect" value="0" ~.($is_redirect ? '' : 'checked').qq~>
 				$text{NO}<br>
@@ -116,7 +116,7 @@ print			qq~	<br></td>
 				<td><br></td><td></td>
 			</tr>
 			<tr>
-				<td><b>$text{redirect_active}</b></td>
+				<td><img src=images/active.png hspace=4><b>$text{redirect_active}</b></td>
 				<td><input type=\"checkbox\" name=\"active\" value=\"1\"~.($active ? ' checked' : '').qq~></td>
 			</tr>
 			</table>
