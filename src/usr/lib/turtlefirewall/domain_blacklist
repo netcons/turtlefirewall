@@ -12,6 +12,9 @@ fw_file="/etc/turtlefirewall/fw.xml"
 blacklist_file="/etc/turtlefirewall/domain_blacklist.dat"
 never_blacklist_file="/etc/turtlefirewall/never_domain_blacklist.dat"
 
+# Some older CPU's cant load large lists
+item_limit="32768"
+
 Help () {
  echo "Usage :  domain_blacklist [OPTION]"
  echo " "
@@ -80,31 +83,32 @@ if [ $? = 0 ]
  then
   > $blacklist_file
   result="1"
+  # ThreatFox Malware List
   wget -q -O - https://threatfox.abuse.ch/downloads/hostfile \
    | dos2unix \
    | awk -F "\t" '(!/^#/ && $2~/^[A-z0-9\-\.]+$/){print $2}' \
    >> $blacklist_file
   [ $? = 0 ] && result=0
-  #wget -q -O - https://raw.githubusercontent.com/ntop/nDPI/dev/lists/100_malware.list \
-  # | dos2unix \
-  # >> $blacklist_file
-  #[ $? = 0 ] && result=0
-  # Pi-Hole Blocklist
-  #wget -q -O - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts \
-  # | dos2unix \
-  # | sed '/^$/d;/^#/d;/^0.0.0.0 0.0.0.0/d' \
-  # | awk -F " " '(/^0.0.0.0 / && $2~/^[A-z0-9\-\.]+$/){print $2}' \
-  # >> $blacklist_file
-  #[ $? = 0 ] && result=0
+  # URLhaus Malware List
+  wget -q -O - https://urlhaus.abuse.ch/downloads/hostfile \
+   | dos2unix \
+   | awk -F "\t" '(!/^#/ && $2~/^[A-z0-9\-\.]+$/){print $2}' \
+   >> $blacklist_file
+  [ $? = 0 ] && result=0
+  # nDPI Malware List
+  wget -q -O - https://raw.githubusercontent.com/ntop/nDPI/dev/lists/100_malware.list \
+   | dos2unix \
+   | awk '(!/^#/ && $1~/^[A-z0-9\-\.]+$/){print $1}' \
+   >> $blacklist_file
+  [ $? = 0 ] && result=0
   if [ $result = 0 ]
    then
     echo -e "OK"
   else
     echo -e "FAIL"
   fi
-  item_limit="194304"
-  sed -i ${item_limit}q $blacklist_file
   sort -u $blacklist_file -o $blacklist_file
+  sed -i ${item_limit}q $blacklist_file
   chmod 600 $blacklist_file
 else
   echo -e "turtlefirewall not enabled"

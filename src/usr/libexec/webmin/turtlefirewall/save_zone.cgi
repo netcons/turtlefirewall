@@ -48,6 +48,7 @@ if( $in{'delete'} ) {
 				error( $text{save_zone_error6} );
 			}
 		}
+		if( ! $fw->checkName($zone) ) { error( $text{save_zone_error8} ); }
 		$fw->AddZone( $zone, $if, $description );
 	} else {
 		# save zone

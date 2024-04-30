@@ -53,7 +53,7 @@ $form++;
 print "<br><br>";
 showRateLimit();
 
-&ui_print_footer('','turtle firewall index');
+&ui_print_footer('index.cgi',$text{'index'});
 
 #============================================================================
 

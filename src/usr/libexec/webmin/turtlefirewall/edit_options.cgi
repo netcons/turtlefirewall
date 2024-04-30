@@ -10,7 +10,7 @@
 
 do 'turtlefirewall-lib.pl';
 
-&ui_print_header( "<img src=images/shield.png hspace=4>$text{'edit_options_title'}", $text{'title'}, "" );
+&ui_print_header( "<img src=images/option.png hspace=4>$text{'edit_options_title'}", $text{'title'}, "" );
 
 getOptionsList();
 
@@ -48,7 +48,7 @@ print qq~	</tr></table>
 	</form>
 	<br><br>~;
 
-&ui_print_footer('','turtle firewall index');
+&ui_print_footer('index.cgi',$text{'index'});
 
 sub showOption {
 	my( $var, $type, $value, $default, $addunchangeopz, $name, $desc ) = @_;

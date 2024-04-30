@@ -15,7 +15,7 @@ do 'turtlefirewall-lib.pl';
 
 showRule();
 
-&ui_print_footer('','turtle firewall index');
+&ui_print_footer('index.cgi',$text{'index'});
 
 #============================================================================
 
@@ -161,10 +161,15 @@ sub showRule {
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
 			push(@cols, "${aimage}${sb}${bb}${cb}".$attr{'TARGET'}."${ce}${be}${se}" );
-		} else {
+		} elsif( $attr{'TARGET'} eq 'DROP' ) {
 			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
+			push(@cols, "${dimage}${sb}${bb}${cb}".$attr{'TARGET'}."${ce}${be}${se}" );
+		} elsif( $attr{'TARGET'} eq 'REJECT' ) {
+			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
+			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-reject.png hspace=4>' : '<img src=images/reject.png hspace=4>';
 			push(@cols, "${dimage}${sb}${bb}${cb}".$attr{'TARGET'}."${ce}${be}${se}" );
 		}
                 if( $attr{'LOG'} eq 'YES' ) {

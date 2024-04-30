@@ -20,7 +20,7 @@ $form++;
 print "<br><br>";
 showConnmark();
 
-&ui_print_footer('','turtle firewall index');
+&ui_print_footer('index.cgi',$text{'index'});
 
 #============================================================================
 

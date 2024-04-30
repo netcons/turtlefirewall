@@ -15,7 +15,7 @@ do 'turtlefirewall-lib.pl';
 
 showLog();
 
-&ui_print_footer('','turtle firewall index');
+&ui_print_footer('index.cgi',$text{'index'});
 
 sub showLog {
 
@@ -25,7 +25,7 @@ sub showLog {
 	my $pagelen = 20;
 	my @buffer = ();
 
-	my %chain_list = ('*' => undef);
+	my %action_list = ('*' => undef);
 	my %in_list = ('*' => undef);
 	my %out_list = ('*' => undef);
 	my %mac_list = ('*' => undef);
@@ -37,11 +37,11 @@ sub showLog {
 
 	open( LOG, "<", $SysLogFile );
 	while( <LOG> ) {
-		if( $_ =~ /TFW / ) {
+		if( $_ =~ /TFW=/ ) {
 			my $l = $_;
 
 			my $time = '';
-			my $chain = '';
+			my $action = '';
 			my $in = '';
 			my $out = '';
 			my $mac = '';
@@ -51,12 +51,10 @@ sub showLog {
 			my $spt = '';
 			my $dpt = '';
 
-			# Gestisco sia i nuovi log "TFW" che i vecchi "TFW DROP".
-			if( $l =~ /^(.*?\d\d\:\d\d\:\d\d) .*?TFW (.*?)\:/ ) {
+			if( $l =~ /^(.*?\d\d\:\d\d\:\d\d) / ) {
 				$time = $1;
-				$chain = $2;
-				$chain =~ s/^DROP //;
 			}
+			if( $l =~ /TFW=(.*?) / ) { $action = $1; }
 			if( $l =~ /IN=(.*?) / ) { $in = $1; }
 			if( $l =~ /OUT=(.*?) / ) { $out = $1; }
 			if( $l =~ /MAC=(.*?) / ) { $mac = $1; }
@@ -66,7 +64,7 @@ sub showLog {
 			if( $l =~ /SPT=(.*?) / ) { $spt = $1; }
 			if( $l =~ /DPT=(.*?) / ) { $dpt = $1; }
 
-			if( $chain ne '' ) {$chain_list{$chain} = undef;}
+			if( $action ne '' ) {$action_list{$action} = undef;}
 			if( $in ne '' ) {$in_list{$in} = undef;}
 			if( $out ne '' ) {$out_list{$out} = undef;}
 			if( $mac ne '' ) {$mac_list{$mac} = undef;}
@@ -76,7 +74,7 @@ sub showLog {
 			if( $spt ne '') {$spt_list{$spt} = undef;}
 			if( $dpt ne '') {$dpt_list{$dpt} = undef;}
 
-			if( ($in{chain} eq '' || $in{chain} eq '*' || $in{chain} eq $chain) &&
+			if( ($in{action} eq '' || $in{action} eq '*' || $in{action} eq $action) &&
 			    ($in{in} eq '' || $in{in} eq '*' || $in{in} eq $in) &&
 			    ($in{out} eq '' || $in{out} eq '*' || $in{out} eq $out) &&
 			    ($in{mac} eq '' || $in{mac} eq '*' || $in{mac} eq $mac) &&
@@ -88,7 +86,7 @@ sub showLog {
 				$count++;
 
 				if( $count >= ($pag-1) * $pagelen && $count < $pag * $pagelen) {
-					push @buffer, [$time, $chain, $in, $out, $mac, $src, $dst, $proto, $spt, $dpt];
+					push @buffer, [$time, $action, $in, $out, $mac, $src, $dst, $proto, $spt, $dpt];
 				}
 			}
 		}
@@ -96,7 +94,7 @@ sub showLog {
 	close( LOG );
 
 	# Pages index
-	my $urlparam = 'chain='.$in{chain}.'&in='.$in{in}.'&out='.$in{out}.'&mac='.$in{mac}.
+	my $urlparam = 'action='.$in{action}.'&in='.$in{in}.'&out='.$in{out}.'&mac='.$in{mac}.
 			'&src='.$in{src}.'&dst='.$in{dst}.'&proto='.$in{proto}.
 			'&spt='.$in{spt}.'&dpt='.$in{dpt};
 	my $pageindex = '';
@@ -123,11 +121,11 @@ sub showLog {
         $hdate .= "<b>DATE<br></b>";
         push(@head, $hdate );
 
-	local $hchain;
-	$hchain .= "<b>ACTION<br><select name='chain' size='1'>";
-        foreach $opz (sort keys %chain_list) {$hchain .= "<option".($in{chain} eq $opz ? ' SELECTED' : '').">$opz</option>";}
-	$hchain .= "</select></b>";
-	push(@head, $hchain );
+	local $haction;
+	$haction .= "<b>ACTION<br><select name='action' size='1'>";
+        foreach $opz (sort keys %action_list) {$haction .= "<option".($in{action} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	$haction .= "</select></b>";
+	push(@head, $haction );
 
 	local $hin;
 	$hin .= "<b>IN<br><select name='in' size='1'>";
@@ -182,9 +180,9 @@ sub showLog {
 
 	foreach my $l (@buffer) {
 		local @cols;
-		my ($time, $chain, $in, $out, $mac, $src, $dst, $proto, $spt, $dpt) = @$l;
+		my ($time, $action, $in, $out, $mac, $src, $dst, $proto, $spt, $dpt) = @$l;
 		showTD( $time );
-		showTD( $chain );
+		showTD( $action );
 		showTD( $in );
 		showTD( $out );
 		showTD( $src );

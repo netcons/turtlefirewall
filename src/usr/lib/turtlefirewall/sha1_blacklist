@@ -12,6 +12,8 @@ fw_file="/etc/turtlefirewall/fw.xml"
 blacklist_file="/etc/turtlefirewall/sha1_blacklist.dat"
 never_blacklist_file="/etc/turtlefirewall/never_sha1_blacklist.dat"
 
+item_limit="32768"
+
 Help () {
  echo "Usage :  sha1_blacklist [OPTION]"
  echo " "
@@ -90,6 +92,7 @@ if [ $? = 0 ]
     echo -e "FAIL"
   fi
   sort -u $blacklist_file -o $blacklist_file
+  sed -i ${item_limit}q $blacklist_file
   chmod 600 $blacklist_file
 else
   echo -e "turtlefirewall not enabled"

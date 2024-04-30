@@ -20,4 +20,4 @@ print qx{/usr/sbin/turtlefirewall --start 2>&1};
 print "</pre>";
 print "</td></tr></table>";
 
-&ui_print_footer( "index.cgi", "turtle firewall index" );
+&ui_print_footer('index.cgi',$text{'index'});

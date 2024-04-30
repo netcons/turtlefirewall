@@ -16,7 +16,7 @@ use Tie::File;
 reportFlowStat();
 print "<br><br>";
 
-&ui_print_footer('','turtle firewall index');
+&ui_print_footer('index.cgi',$text{'index'});
 
 #============================================================================
 

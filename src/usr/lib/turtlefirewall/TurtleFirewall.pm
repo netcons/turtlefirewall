@@ -1847,7 +1847,7 @@ sub getIptablesRules {
 	if( $this->{fw}{OPTION}{drop_invalid_state} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -m conntrack --ctstate INVALID -j INVALID\n";
 		$rules .= "-A INVALID -m conntrack --ctstate INVALID ".
-			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW INVALID STATE:\"\n";
+			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-STATE(DRO) \"\n";
 		print "on\n";
 	} else {
 		print "off\n";
@@ -1857,7 +1857,7 @@ sub getIptablesRules {
 	if( $this->{fw}{OPTION}{drop_invalid_all} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags ALL ALL -j INVALID\n";
 		$rules .= "-A INVALID -p tcp --tcp-flags ALL ALL ".
-			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW INVALID ALL:\"\n";
+			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-ALL(DRO) \"\n";
 		print "on\n";
 	} else {
 		print "off\n";
@@ -1867,7 +1867,7 @@ sub getIptablesRules {
 	if( $this->{fw}{OPTION}{drop_invalid_none} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags ALL NONE -j INVALID\n";
 		$rules .= "-A INVALID -p tcp --tcp-flags ALL NONE ".
-			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW INVALID NONE:\"\n";
+			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-NONE(DRO) \"\n";
 		print "on\n";
 	} else {
 		print "off\n";
@@ -1877,7 +1877,7 @@ sub getIptablesRules {
 	if( $this->{fw}{OPTION}{drop_invalid_fin_notack} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags FIN,ACK FIN -j INVALID\n";
 		$rules .= "-A INVALID -p tcp --tcp-flags FIN,ACK FIN ".
-			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW INVALID FIN,!ACK:\"\n";
+			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-FIN,!ACK(DRO) \"\n";
 		print "on\n";
 	} else {
 		print "off\n";
@@ -1887,7 +1887,7 @@ sub getIptablesRules {
 	if( $this->{fw}{OPTION}{drop_invalid_syn_fin} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags SYN,FIN SYN,FIN -j INVALID\n";
 		$rules .= "-A INVALID -p tcp --tcp-flags SYN,FIN SYN,FIN ".
-			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW INVALID SYN,FIN:\"\n";
+			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-SYN,FIN(DRO) \"\n";
 		print "on\n";
 	} else {
 		print "off\n";
@@ -1897,7 +1897,7 @@ sub getIptablesRules {
 	if( $this->{fw}{OPTION}{drop_invalid_syn_rst} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags SYN,RST SYN,RST  -j INVALID\n";
 		$rules .= "-A INVALID -p tcp --tcp-flags SYN,RST SYN,RST ".
-			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW INVALID SYN,RST:\"\n";
+			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-SYN,RST(DRO) \"\n";
 		print "on\n";
 	} else {
 		print "off\n";
@@ -1907,7 +1907,7 @@ sub getIptablesRules {
 	if( $this->{fw}{OPTION}{drop_invalid_fragment} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -f -j INVALID\n";
 		$rules .= "-A INVALID -f ".
-			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW INVALID fragment:\"\n";
+			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-FRAGMENT(DRO) \"\n";
 		print "on\n";
 	} else {
 		print "off\n";
@@ -1915,7 +1915,7 @@ sub getIptablesRules {
 
 	$rules .= "-A CHECK_INVALID -j RETURN\n";
 	# Log all invalid then drop
-	$rules .= "-A INVALID -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW INVALID PACKET:\"\n";
+	$rules .= "-A INVALID -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-PACKET(DRO) \"\n";
 	$rules .= "-A INVALID -j DROP\n";
 
 	$rules .= "-A INPUT -j CHECK_INVALID\n";
@@ -1927,7 +1927,7 @@ sub getIptablesRules {
 	print "drop_ip_blacklist: ";
 	if( $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
 		$chains .= ":IP_BLACKLIST - [0:0]\n";
-                $rules .= "-A IP_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW IP BLACKLIST:\"\n";
+                $rules .= "-A IP_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=IP-BLACKLIST(DRO) \"\n";
                 $rules .= "-A IP_BLACKLIST -j DROP\n";
 
                 $rules .= "-A INPUT -m set --match-set ip_blacklist src -j IP_BLACKLIST\n";
@@ -1941,7 +1941,7 @@ sub getIptablesRules {
 	print "drop_domain_blacklist: ";
 	if( $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
 		$chains .= ":DOMAIN_BLACKLIST - [0:0]\n";
-                $rules .= "-A DOMAIN_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW DOMAIN BLACKLIST:\"\n";
+                $rules .= "-A DOMAIN_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=DOMAIN-BLACKLIST(DRO) \"\n";
                 $rules .= "-A DOMAIN_BLACKLIST -j DROP\n";
 
 		# Workaround for Risk 27 not working as expected
@@ -1959,7 +1959,7 @@ sub getIptablesRules {
 	print "drop_ja3_blacklist: ";
 	if( $this->{fw}{OPTION}{drop_ja3_blacklist} ne 'off' ) {
 		$chains .= ":JA3_BLACKLIST - [0:0]\n";
-                $rules .= "-A JA3_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW JA3 BLACKLIST:\"\n";
+                $rules .= "-A JA3_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=JA3-BLACKLIST(DRO) \"\n";
                 $rules .= "-A JA3_BLACKLIST -j DROP\n";
 
 		$rules .= "-A INPUT -m ndpi --all --risk 28 -j JA3_BLACKLIST\n";
@@ -1973,7 +1973,7 @@ sub getIptablesRules {
 	print "drop_sha1_blacklist: ";
 	if( $this->{fw}{OPTION}{drop_sha1_blacklist} ne 'off' ) {
 		$chains .= ":SHA1_BLACKLIST - [0:0]\n";
-                $rules .= "-A SHA1_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW SHA1 BLACKLIST:\"\n";
+                $rules .= "-A SHA1_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=SHA1-BLACKLIST(DRO) \"\n";
                 $rules .= "-A SHA1_BLACKLIST -j DROP\n";
 
 		$rules .= "-A INPUT -m ndpi --all --risk 29 -j SHA1_BLACKLIST\n";
@@ -2160,17 +2160,22 @@ sub getIptablesRules {
 		for($j=0; $j<=$#zone; $j++ ) {
 			$z2 = $zone[$j];
 			if( $z1 ne 'FIREWALL' || $z2 ne 'FIREWALL' ) {
-				my $logprefix = "TFW $z1-$z2";
+				my $logprefix = "TFW=$z1-$z2";
+				# iptables --log-prefix max = 29
 				if( length($logprefix) > 23 ) { $logprefix = substr( $logprefix, 0, 23 ); }
 				$logprefix = "$logprefix(DRO)";
 				#comment( "# Chain closure $z1 -> $z2" );
-				$rules .= "-A $z1-$z2 -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix:\"\n";
+				$rules .= "-A $z1-$z2 -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
 				$rules .= "-A $z1-$z2 -j DROP\n";
 			}
 		}
 	}
 	for my $chain (('INPUT','OUTPUT','FORWARD')) {
-		$rules .= "-A $chain -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW $chain:\"\n";
+		my $logprefix = "$chain";
+		# iptables --log-prefix max = 29
+                if( length($logprefix) > 23 ) { $logprefix = substr( $logprefix, 0, 23 ); }
+		$logprefix = "$logprefix(DRO)";
+		$rules .= "-A $chain -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
 	}
 	print "DROP any other connections and LOG Action\n";
 	
@@ -2493,7 +2498,7 @@ sub _applyServiceMasquerade {
 			next;
 		}
 
-		# porta impostata dalla regola del firewall
+		# port set by firewall rule
 		if( $sport eq 'PORT' ) {
 			$sport = $port;
 		}
@@ -2507,7 +2512,7 @@ sub _applyServiceMasquerade {
 			if( $src_if ne '' ) { $cmd .= "-i $src_if "; }
 			if( $src_peer ne '0.0.0.0/0' && $src_peer ne '' ) { $cmd .= "-s $src_peer "; }
 			if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
-				$cmd .= "-m mac --source-mac $src_mac ";
+				$cmd .= "-m mac --mac-source $src_mac ";
 			}
 			if( $dst_if ne '' ) { $cmd .= "-o $dst_if "; }
 			if( $dst_peer ne '0.0.0.0/0' && $dst_peer ne '' ) { $cmd .= "-d $dst_peer "; }
@@ -2670,7 +2675,7 @@ sub _applyServiceRedirect {
 
 			# Invalid Redirect, Ignore
 			#if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
-			#	$cmd .= "-m mac --source-mac $src_mac ";
+			#	$cmd .= "-m mac --mac-source $src_mac ";
 			#}
 
 			# iptables prerouting chain don't accept -o option.
@@ -3136,23 +3141,22 @@ sub _applyService {
 			my $cmdlog = $cmd;
 			if( $target =~ /DROP|REJECT/ ) {
 				if( $risk ne '' ) {
-					$logprefix = "TFW RISK $risk";
+					$logprefix = "TFW=RISK-$risk";
 				} elsif( $hostname ne '') { 
-					$logprefix = "TFW $hostname";
+					$logprefix = "TFW=$hostname";
 				} elsif( $category ne '') { 
-					$logprefix = "TFW $category";
+					$logprefix = "TFW=$category";
 				} elsif( $ndpi ne '' ) {
-					$logprefix = "TFW $ndpi";
+					$logprefix = "TFW=$ndpi";
 				} elsif( $src =~ /^[A-Z1-2]{2}$/ || $dst =~ /^[A-Z1-2]{2}$/ ) {
-					$logprefix = "TFW GEO ".( $src =~ /^[A-Z1-2]{2}$/ ? $src : $dst );
+					$logprefix = "TFW=GEO-".( $src =~ /^[A-Z1-2]{2}$/ ? $src : $dst );
 			    	} else {
-					$logprefix = "TFW $goChain";
+					$logprefix = "TFW=$goChain";
 				}
-				# iptables log-prefix strings only 29 chars in length
-				# we need -5 chars to add target as : (DRO) or (REJ)
+				# iptables --log-prefix max = 29
 				if( length($logprefix) > 23 ) { $logprefix = substr( $logprefix, 0, 23 ); }
 				$logprefix = "$logprefix(".substr( $target, 0, 3 ).")";
-				$cmdlog .= "-m limit --limit $this->{log_limit}/hour --limit-burst $this->{log_limit_burst} -j LOG --log-prefix \"$logprefix:\"";
+				$cmdlog .= "-m limit --limit $this->{log_limit}/hour --limit-burst $this->{log_limit_burst} -j LOG --log-prefix \"$logprefix \"";
 			} else {
 				# log flows for target ACCEPT
 				$cmdlog .= "-m ndpi ! --error -j NDPI --flow-info";

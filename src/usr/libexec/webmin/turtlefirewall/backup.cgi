@@ -54,7 +54,7 @@ if( $in{upload} ) {
 	</tr>
 	</table><br>~;
 
-	&ui_print_footer('','turtle firewall index');
+	&ui_print_footer('index.cgi',$text{'index'});
 }
 
 sub backup_download {
