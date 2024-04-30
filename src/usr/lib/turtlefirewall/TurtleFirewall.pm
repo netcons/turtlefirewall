@@ -2171,10 +2171,7 @@ sub getIptablesRules {
 		}
 	}
 	for my $chain (('INPUT','OUTPUT','FORWARD')) {
-		my $logprefix = "$chain";
-		# iptables --log-prefix max = 29
-                if( length($logprefix) > 23 ) { $logprefix = substr( $logprefix, 0, 23 ); }
-		$logprefix = "$logprefix(DRO)";
+		my $logprefix = "TFW=$chain(DRO)";
 		$rules .= "-A $chain -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
 	}
 	print "DROP any other connections and LOG Action\n";
