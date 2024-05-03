@@ -17,9 +17,8 @@ my $timestart = $in{'timestart'};
 my $timestop = $in{'timestop'};
 my $description = $in{'description'};
 
-if( ! $fw->checkName($newtime) ) {
-	error( $text{save_time_error8} );
-}
+if( ! $fw->checkName($newtime) ) { error( $text{save_time_error8} ); }
+if( ! $fw->checkName($description) ) { error( $text{save_time_error9} ); }
 
 if( $in{'delete'} ) {
 	# delete time
@@ -47,7 +46,7 @@ if( $in{'delete'} ) {
 		$whatfailed = $text{save_time_error_title3};
 	}
 	if ( $time eq '' ) { error( $text{save_time_error3} ); }
-	if ( $time eq 'always' ) { error( $text{save_time_error9} ); }
+	if ( $time eq 'always' ) { error( $text{save_time_error10} ); }
 	if ( $timestart eq '' || $timestop eq '' ) { error( $text{save_time_error5} ); }
 	if ( $timestart ne '' && $timestart !~ /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/ ) {
 		error( $text{save_time_error6} );

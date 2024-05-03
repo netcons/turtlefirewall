@@ -18,9 +18,8 @@ my $mac = $in{'mac'};
 my $zone = $in{'zone'};
 my $description = $in{'description'};
 
-if( ! $fw->checkName($newhost) ) {
-	error( $text{save_host_error8} );
-}
+if( ! $fw->checkName($newhost) ) { error( $text{save_host_error8} ); }
+if( ! $fw->checkName($description) ) { error( $text{save_host_error9} ); }
 
 if( $in{'delete'} ) {
 	# delete host
@@ -49,7 +48,7 @@ if( $in{'delete'} ) {
 	}
 	if ( $host eq '' ) { error( $text{save_host_error3} ); }
 	if ( ! $fw->GetZone($zone) ) { error( $text{save_host_error4} ); }
-	if ( $ip eq '' && $mac eq '' ) { error( $text{save_host_error9} ); 
+	if ( $ip eq '' && $mac eq '' ) { error( $text{save_host_error10} ); 
 	} else {
 		if ( $ip ne '' && $ip !~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ ) { error( $text{save_host_error5} ); }
 		if ( $mac ne '' && $mac !~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {

@@ -15,9 +15,8 @@ my $timegroup = $in{'timegroup'};
 my $newtimegroup = $in{'newtimegroup'};
 my $description = $in{'description'};
 
-if( ! $fw->checkName($newtimegroup) ) {
-	error( $text{save_timegroup_error6} );
-}
+if( ! $fw->checkName($newtimegroup) ) { error( $text{save_timegroup_error6} ); }
+if( ! $fw->checkName($description) ) { error( $text{save_timegroup_error7} ); }
 
 if( $in{'delete'} ) {
 	# delete timegroup
@@ -45,7 +44,7 @@ if( $in{'delete'} ) {
 		$whatfailed = $text{save_timegroup_error_title3};
 	}
 	if ( $timegroup eq '' ) { error( $text{save_timegroup_error3} ); }
-	if ( $timegroup eq 'always' ) { error( $text{save_timegroup_error7} ); }
+	if ( $timegroup eq 'always' ) { error( $text{save_timegroup_error8} ); }
 
 	my @items = ();
 	foreach my $k (keys %in) {

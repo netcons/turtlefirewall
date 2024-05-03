@@ -15,9 +15,8 @@ my $group = $in{'group'};
 my $newgroup = $in{'newgroup'};
 my $description = $in{'description'};
 
-if( ! $fw->checkName($newgroup) ) {
-	error( $text{save_group_error6} );
-}
+if( ! $fw->checkName($newgroup) ) { error( $text{save_group_error6} ); }
+if( ! $fw->checkName($description) ) { error( $text{save_group_error7} ); }
 
 if( $in{'delete'} ) {
 	# delete group

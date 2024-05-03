@@ -225,6 +225,7 @@ CHANGELOG
            - Bug : Limit Blacklist sizes.
            - Bug : Remove Domain Blacklist wildcard match.
            - Bug : Fixed zone name item verification.
+           - Bug : Fixed items description verification.
            - Feature : Rework action log format.
            - Feature : Extend nDPI support.
            - Logging : Replaced JA3 server with JA4 client.
