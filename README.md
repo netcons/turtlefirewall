@@ -25,7 +25,7 @@ Turtle Firewall is an Open Source project written using the perl language and re
 
 - expat library installed.
 - XML::Parser perl module installed.
-- Webmin installed. ( https://www.webmin.com )
+- Webmin installed. ( https://github.com/webmin/webmin )
 - iptables command in PATH.
 - Standard Netfilter kernel modules : <br>
 nf_tables, <br>
@@ -35,5 +35,5 @@ xt_connlabel, <br>
 xt_time. <br>
 - Extra Netfilter kernel modules : <br>
 xt_ndpi, ( https://github.com/vel21ripn/nDPI ) <br>
-xt_geoip, ( https://inai.de/projects/xtables-addons ) <br>
+xt_geoip, ( https://codeberg.org/jengelh/xtables-addons ) <br>
 xt_ratelimit. ( https://github.com/aabc/ipt-ratelimit ) <br>
