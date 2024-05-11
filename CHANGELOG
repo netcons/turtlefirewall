@@ -229,4 +229,5 @@ CHANGELOG
            - Feature : Rework action log format.
            - Feature : Extend nDPI support.
            - Logging : Replaced JA3 server with JA4 client.
+           - Theme : Rework group item selection.
            - Theme : Standardize Webmin images.

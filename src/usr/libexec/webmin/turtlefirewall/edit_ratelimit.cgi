@@ -16,9 +16,9 @@ $ratelimit = $in{'ratelimit'};
 $newratelimit = $in{'newratelimit'};
 
 if( $new ) {
-	&ui_print_header( "<img src=images/rate.png hspace=4>$text{'edit_ratelimit_title_create'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/ratelimit.png hspace=4>$text{'edit_ratelimit_title_create'}", $text{'title'}, "" );
 } else {
-	&ui_print_header( "<img src=images/rate.png hspace=4>$text{'edit_ratelimit_title_edit'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/ratelimit.png hspace=4>$text{'edit_ratelimit_title_edit'}", $text{'title'}, "" );
 }
 
 my %r = $fw->GetRateLimit($ratelimit);
@@ -34,8 +34,7 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-			<td>
-				<b>".$text{'name'}."</b></td>
+				<td><img src=images/ratelimit.png hspace=4><b>".$text{'name'}."</b></td>
 			<td>";
 if( $new ) {
 	print "		<input type=\"text\" name=\"ratelimit\">";
@@ -45,11 +44,11 @@ if( $new ) {
 }
 print			qq~</td></tr>
                    	<tr>
-				<td><b>$text{'rate'}</b></td>
+				<td><img src=images/rate.png hspace=4><b>$text{'rate'}</b></td>
 				<td valign="top"><input type="text" name="rate" size="3" maxlength="3" value="$rate"> <i>Mbps</i></td>
 			</tr>
  			<tr>
-				<td><b>$text{'description'}</b></td>
+				<td><img src=images/info.png hspace=4><b>$text{'description'}</b></td>
 				<td valign="top"><input type="text" name="description" size="60" value="$description"></td>
 			</tr>
 			</table>

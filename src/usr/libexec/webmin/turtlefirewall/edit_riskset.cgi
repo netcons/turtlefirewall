@@ -16,9 +16,9 @@ $riskset = $in{'riskset'};
 $newriskset = $in{'newriskset'};
 
 if( $new ) {
-	&ui_print_header( "<img src=images/risk.png hspace=4>$text{'edit_riskset_title_create'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/riskset.png hspace=4>$text{'edit_riskset_title_create'}", $text{'title'}, "" );
 } else {
-	&ui_print_header( "<img src=images/risk.png hspace=4>$text{'edit_riskset_title_edit'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/riskset.png hspace=4>$text{'edit_riskset_title_edit'}", $text{'title'}, "" );
 }
 
 my %r = $fw->GetRiskSet($riskset);
@@ -53,8 +53,7 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-			<td>
-				<b>".$text{'name'}."</b></td>
+				<td><img src=images/riskset.png hspace=4><b>".$text{'name'}."</b></td>
 			<td>";
 if( $new ) {
 	print "		<input type=\"text\" name=\"riskset\">";
@@ -64,11 +63,11 @@ if( $new ) {
 }
 print			qq~</td></tr>
                    	<tr>
-                                <td><b>$text{'risks'}</b></td>
+                                <td><img src=images/risk.png hspace=4><b>$text{'risks'}</b></td>
 				<td><select name="risks" size="5" multiple>$options_risk</select></td>
 			</tr>
  			<tr>
-				<td><b>$text{'description'}</b></td>
+				<td><img src=images/info.png hspace=4><b>$text{'description'}</b></td>
 				<td valign="top"><input type="text" name="description" size="60" value="$description"></td>
 			</tr>
 			</table>

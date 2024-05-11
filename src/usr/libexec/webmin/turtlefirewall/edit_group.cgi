@@ -21,15 +21,25 @@ if( $new ) {
 	&ui_print_header( "<img src=images/group.png hspace=4>$text{'edit_group_title_edit'}", $text{'title'}, "" );
 }
 
-@aItems = $fw->GetItemsAllowToGroup( $group );
-
 my %g = $fw->GetGroup($group);
-my @groupItems = @{$g{ITEMS}};
-my $description = $g{DESCRIPTION};
+my @selected_items = @{$g{ITEMS}};
+my $description = $g{'DESCRIPTION'};
 
-%aSelectedItems = ();
-foreach my $k (@groupItems) {
-	$aSelectedItems{$k} = 1;
+my $options_group = '';
+
+my @items = ();
+push @items, $fw->GetItemsAllowToGroup( $group );
+@items = sort { $a <=> $b } @items;
+for my $k (@items) {
+	my $selected = 0;
+	for my $s (@selected_items) {
+		if( $k eq $s ) {
+			$selected = 1;
+			last;
+		}
+	}
+	my $type = lc($fw->GetItemType($k));
+	$options_group .= qq~<option value="$k"~.($selected ? ' selected' : '').">$k - $type</option>";
 }
 
 print "<br><br>
@@ -41,46 +51,27 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-			<td valign=\"top\">
-				<b>".$text{'name'}."</b></td>
-			<td valign=\"top\">";
+				<td><img src=images/group.png hspace=4><b>".$text{'name'}."</b></td>
+			<td>";
 if( $new ) {
 	print "		<input type=\"text\" name=\"group\">";
 } else {
 	print '		<input type="text" name="newgroup" value="'.$group.'">';
 	print '		<input type="hidden" name="group" value="'.$group.'">';
 }
-print			'</td></tr>
-			<tr>
-				<td valign="top"><b>'.$text{'groupitems'}.'</b></td>
-				<td valign="top">
-					<table width="100%">';
-
-my $col = 0;
-foreach my $i (@aItems) {
-	if( $col == 0 ) { print "<tr>"; }
-	print "<td width=\"25%\"><nobr><input type=\"checkbox\" name=\"item_$i\" value=\"1\" ";
-	print ($aSelectedItems{$i} ? ' checked' : '');
-	print "> $i</nobr></td>";
-	if( ++$col == 4 ) {
-		$col = 0;
-		print "</tr>";
-	}
-}
-if( $col < 3 ) { print "</tr>"; }
-
-print					'</table>
-				</td>
-			</tr>';
-
-print 			'<tr><td valign="top"><b>'.$text{'description'}.'</b></td>';
-print			'<td valign="top"><input type="text" name="description" size="60" value="'.$description.'"></td>';
-print			'</tr>';
-
-print			'</table>
+print			qq~</td></tr>
+                   	<tr>
+                                <td><img src=images/item.png hspace=4><b>$text{'groupitems'}</b></td>
+				<td><select name="items" size="5" multiple>$options_group</select></td>
+			</tr>
+ 			<tr>
+				<td><img src=images/info.png hspace=4><b>$text{'description'}</b></td>
+				<td valign="top"><input type="text" name="description" size="60" value="$description"></td>
+			</tr>
+			</table>
 			</td>
 		</tr>
-	</table>';
+	</table>~;
 
 print "<table width=\"100%\"><tr>";
 if( $new ) {
@@ -94,4 +85,3 @@ print "</form>";
 
 print "<br><br>";
 &ui_print_footer('list_items.cgi','items list');
-

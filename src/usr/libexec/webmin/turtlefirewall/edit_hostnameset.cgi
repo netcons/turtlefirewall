@@ -36,8 +36,7 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-			<td valign=\"top\">
-				<b>".$text{'name'}."</b></td>
+				<td valign=\"top\"><img src=images/hostname.png hspace=4><b>".$text{'name'}."</b></td>
 			<td valign=\"top\">";
 if( $new ) {
 	print "		<input type=\"text\" name=\"hostnameset\">";
@@ -47,7 +46,7 @@ if( $new ) {
 }
 print			'</td></tr>
 			<tr>
-				<td valign="top"><b>'.$text{'hostnames'}.'</b></td>
+				<td valign="top"><img src=images/item.png hspace=4><b>'.$text{'hostnames'}.'</b></td>
 				<td valign="top">
 			<table width="100%">
                    	<tr><td>';
@@ -56,7 +55,7 @@ print			'</td></tr>
 			</table>
 			</td></tr>';
 
-print 			'<tr><td valign="top"><b>'.$text{'description'}.'</b></td>';
+print 			'<tr><td valign="top"><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>';
 print			'<td valign="top"><input type="text" name="description" size="60" value="'.$description.'"></td>';
 print			'</tr>';
 

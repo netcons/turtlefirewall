@@ -13,6 +13,7 @@ do 'turtlefirewall-lib.pl';
 
 my $group = $in{'group'};
 my $newgroup = $in{'newgroup'};
+my @items = split(/\0/, $in{'items'});
 my $description = $in{'description'};
 
 if( ! $fw->checkName($newgroup) ) { error( $text{save_group_error6} ); }
@@ -45,12 +46,6 @@ if( $in{'delete'} ) {
 	}
 	if ( $group eq '' ) { error( $text{save_group_error3} ); }
 
-	my @items = ();
-	foreach my $k (keys %in) {
-		if( $k =~ /^item_(.*)$/ ) {
-			push @items, $1;
-		}
-	}
 	if( $#items < 0 ) { error( $text{save_group_error4} ); }
 	$fw->AddGroup( $group, $description, @items );
 	if( !$in{'new'} && $newgroup ne $group ) {

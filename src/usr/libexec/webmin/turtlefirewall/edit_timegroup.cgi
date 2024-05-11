@@ -41,8 +41,7 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-			<td valign=\"top\">
-				<b>".$text{'name'}."</b></td>
+				<td valign=\"top\"><img src=images/timegroup.png hspace=4><b>".$text{'name'}."</b></td>
 			<td valign=\"top\">";
 if( $new ) {
 	print "		<input type=\"text\" name=\"timegroup\">";
@@ -52,7 +51,7 @@ if( $new ) {
 }
 print			'</td></tr>
 			<tr>
-				<td valign="top"><b>'.$text{'timegroupitems'}.'</b></td>
+				<td valign="top"><img src=images/item.png hspace=4><b>'.$text{'timegroupitems'}.'</b></td>
 				<td valign="top">
 					<table width="100%">';
 
@@ -61,7 +60,7 @@ foreach my $i (@aItems) {
 	if( $col == 0 ) { print "<tr>"; }
 	print "<td width=\"25%\"><nobr><input type=\"checkbox\" name=\"item_$i\" value=\"1\" ";
 	print ($aSelectedItems{$i} ? ' checked' : '');
-	print "> $i</nobr></td>";
+	print "> <img src=images/time.png hspace=4>$i</nobr></td>";
 	if( ++$col == 4 ) {
 		$col = 0;
 		print "</tr>";
@@ -73,7 +72,7 @@ print					'</table>
 				</td>
 			</tr>';
 
-print 			'<tr><td valign="top"><b>'.$text{'description'}.'</b></td>';
+print 			'<tr><td valign="top"><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>';
 print			'<td valign="top"><input type="text" name="description" size="60" value="'.$description.'"></td>';
 print			'</tr>';
 

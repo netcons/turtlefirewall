@@ -170,11 +170,11 @@ print				"<br>
 				<td><select name=\"hostnameset\">$options_hostnameset</select></td>
 			</tr>
 			<tr>
-				<td><img src=images/risk.png hspace=4><b>$text{rule_risk_set}</b></td>
+				<td><img src=images/riskset.png hspace=4><b>$text{rule_risk_set}</b></td>
 				<td><select name=\"riskset\">$options_riskset</select></td>
 			</tr>
 			<tr>
-				<td><img src=images/rate.png hspace=4><b>$text{rule_rate_limit}</b></td>
+				<td><img src=images/ratelimit.png hspace=4><b>$text{rule_rate_limit}</b></td>
 				<td><select name=\"ratelimit\">$options_ratelimit</select></td>
 			</tr>
 			<tr>

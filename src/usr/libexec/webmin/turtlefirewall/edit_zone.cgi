@@ -36,8 +36,7 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-			<td>
-				<b>".$text{'name'}."</b></td>
+				<td><img src=images/zone.png hspace=4><b>".$text{'name'}."</b></td>
 			<td>";
 if( $new ) {
 	print "		<input type=\"text\" size=\"13\" maxlength=\"13\" name=\"zone\">";
@@ -47,11 +46,11 @@ if( $new ) {
 }
 print			'</td></tr>
 			<tr>
-				<td><b>'.$text{'interface'}.'</b></td>
+				<td><img src=images/interface.png hspace=4><b>'.$text{'interface'}.'</b></td>
 				<td><input type="text" name="if" value="'.$if.'"> <small><i>'.$text{zone_help}.'</i></small></td>
 			</tr>
 			<tr>
-				<td><b>'.$text{'description'}.'</b></td>
+				<td><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>
 				<td><input type="text" name="description" size="60" value="'.$description.'"></td>
 			</tr></table>
 			</td>

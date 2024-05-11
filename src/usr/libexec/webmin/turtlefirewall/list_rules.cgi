@@ -30,10 +30,10 @@ sub showRule {
 		"width=10% valign=top style='white-space: normal;'",
 		"width=10% valign=top style='white-space: normal;'",
 		"valign=top style='white-space: normal;'",
-		"align=center valign=top style='white-space: normal;'",
-		"align=center valign=top style='white-space: normal;'",
-		"align=center valign=top style='white-space: normal;'",
-		"align=center valign=top style='white-space: normal;'",
+		"width=5% align=center valign=top style='white-space: normal;'",
+		"width=5% align=center valign=top style='white-space: normal;'",
+		"width=5% align=center valign=top style='white-space: normal;'",
+		"width=5% align=center valign=top style='white-space: normal;'",
 		"valign=top",
 		"valign=top",
 		"valign=top valign=top style='white-space: normal;'",
@@ -148,9 +148,9 @@ sub showRule {
 		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
 		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostname.png hspace=4>';
 		push(@cols, "${himage}${sb}${bb}".$attr{'HOSTNAMESET'}."${be}${se}" );
-		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/risk.png hspace=4>';
+		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/riskset.png hspace=4>';
 		push(@cols, "${rimage}${sb}${bb}".$attr{'RISKSET'}."${be}${se}" );
-		my $pimage = $attr{'RATELIMIT'} eq '' ? '' : '<img src=images/rate.png hspace=4>';
+		my $pimage = $attr{'RATELIMIT'} eq '' ? '' : '<img src=images/ratelimit.png hspace=4>';
 		push(@cols, "${pimage}${sb}${bb}".$attr{'RATELIMIT'}."${be}${se}" );
 		my $type = $fw->GetItemType($attr{'TIME'});
 		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';

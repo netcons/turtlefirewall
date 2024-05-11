@@ -44,8 +44,7 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-			<td valign=\"top\">
-				<b>".$text{'name'}."</b></td>
+				<td valign=\"top\"><img src=images/time.png hspace=4><b>".$text{'name'}."</b></td>
 			<td valign=\"top\">";
 if( $new ) {
 	print "		<input type=\"text\" name=\"time\">";
@@ -55,7 +54,7 @@ if( $new ) {
 }
 print			'</td></tr>
 			<tr>
-				<td valign="top"><b>'.$text{'timeitems'}.'</b></td>
+				<td valign="top"><img src=images/item.png hspace=4><b>'.$text{'timeitems'}.'</b></td>
 				<td valign="top">
 					<table width="100%">';
 
@@ -76,15 +75,15 @@ print					'</table>
 				</td>
 			</tr>';
 
-print 			'<tr><td valign="top"><b>'.$text{'timestart'}.'</b></td>';
+print 			'<tr><td valign="top"><img src=images/stopwatch.png hspace=4><b>'.$text{'timestart'}.'</b></td>';
 print			'<td valign="top"><input type="text" name="timestart" size="5" value="'.$timestart.'"></td>';
 print			'</tr>';
 
-print 			'<tr><td valign="top"><b>'.$text{'timestop'}.'</b></td>';
+print 			'<tr><td valign="top"><img src=images/stopwatch.png hspace=4><b>'.$text{'timestop'}.'</b></td>';
 print			'<td valign="top"><input type="text" name="timestop" size="5" value="'.$timestop.'"></td>';
 print			'</tr>';
 
-print 			'<tr><td valign="top"><b>'.$text{'description'}.'</b></td>';
+print 			'<tr><td valign="top"><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>';
 print			'<td valign="top"><input type="text" name="description" size="60" value="'.$description.'"></td>';
 print			'</tr>';
 

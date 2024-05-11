@@ -52,7 +52,7 @@ print "<br><br>
 			<td>
 			<table width=\"100%\"><tr>
 			<td>
-				<b>".$text{'name'}."</b></td>
+				<b><img src=images/geoip.png hspace=4>".$text{'name'}."</b></td>
 			<td>";
 if( $new ) {
 	print "		<input type=\"text\" name=\"geoip\">";
@@ -62,15 +62,15 @@ if( $new ) {
 }
 print			'</td></tr>
                         <tr>
-                                <td><b>'.$text{'countrycode'}.'</b></td>
+                                <td><img src=images/countrycode.png hspace=4><b>'.$text{'countrycode'}.'</b></td>
 				<td><select name="ip">'.$options_countrycode.'</select></td>
                         </tr>
 			<tr>
-				<td><b>'.$text{'zone'}.'</b></td>
+				<td><img src=images/zone.png hspace=4><b>'.$text{'zone'}.'</b></td>
 				<td><select name="zone">'.$options_zone.'</select></td>
 			</tr>
 			<tr>
-				<td><b>'.$text{'description'}.'</b></td>
+				<td><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>
 				<td><input type="text" size="60" name="description" value="'.$description.'"></td>
 			</tr>
 			</table>

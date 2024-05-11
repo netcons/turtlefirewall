@@ -58,6 +58,7 @@ showRateLimit();
 #============================================================================
 
 sub showZone {
+	print &ui_subheading("<img src=images/zone.png hspace=4>","$text{'zone'}");
 	print &ui_form_start("save_zone.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -68,7 +69,7 @@ sub showZone {
 		 "" );
         print &ui_columns_start([
 			  "",
-                          "<b>$text{'zone'}</b>",
+                          "<b>$text{'name'}</b>",
                           "<b>$text{'interface'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
 	for my $k ($fw->GetZoneList()) {
@@ -80,8 +81,8 @@ sub showZone {
 		} else {
 			push(@cols, "<img src=images/zone.png hspace=4>$href" );
 		}
-		push(@cols, "$zone{'IF'}" );
-		push(@cols, "".($zone{'DESCRIPTION'} ne '' ? $zone{'DESCRIPTION'} : '&nbsp;')."" );
+		push(@cols, "".($zone{'IF'} ne '' ? "<img src=images/interface.png hspace=4>$zone{'IF'}" : '&nbsp;')."" );
+		push(@cols, "".($zone{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$zone{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
@@ -92,6 +93,7 @@ sub showZone {
 	print &ui_form_end();
 }
 sub showNet {
+	print &ui_subheading("<img src=images/net.png hspace=4>",$text{'net'});
 	print &ui_form_start("save_net.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -104,7 +106,7 @@ sub showNet {
 		 "" );
         print &ui_columns_start([
 			  "",
-                          "<b>$text{'net'}</b>",
+                          "<b>$text{'name'}</b>",
                           "<b>$text{'netaddress'}</b>",
                           "<b>$text{'netmask'}</b>",
                           "<b>$text{'zone'}</b>",
@@ -114,10 +116,10 @@ sub showNet {
 		local @cols;
 		my $href = &ui_link("edit_net.cgi?net=$k",$k);
 		push(@cols, "<img src=images/net.png hspace=4>$href" );
-	        push(@cols, "$net{'IP'}" );
-	        push(@cols, "$net{'NETMASK'}" );
-	        push(@cols, "$net{'ZONE'}" );
-	        push(@cols, "".($net{'DESCRIPTION'} ne '' ? $net{'DESCRIPTION'} : '&nbsp;')."" );
+	        push(@cols, "<img src=images/address.png hspace=4>$net{'IP'}" );
+	        push(@cols, "<img src=images/mask.png hspace=4>$net{'NETMASK'}" );
+	        push(@cols, "<img src=images/zone.png hspace=4>$net{'ZONE'}" );
+	        push(@cols, "".($net{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$net{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
@@ -128,6 +130,7 @@ sub showNet {
 	print &ui_form_end();
 }
 sub showHost {
+	print &ui_subheading("<img src=images/host.png hspace=4>",$text{'host'});
 	print &ui_form_start("save_host.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -140,7 +143,7 @@ sub showHost {
 		 "" );
         print &ui_columns_start([
 			  "",
-                          "<b>$text{'host'}</b>",
+                          "<b>$text{'name'}</b>",
                           "<b>$text{'hostaddress'}</b>",
                           "<b>$text{'macaddress'}</b>",
                           "<b>$text{'zone'}</b>",
@@ -150,10 +153,10 @@ sub showHost {
 		local @cols;
 		my $href = &ui_link("edit_host.cgi?host=$k",$k);
 		push(@cols, "<img src=images/host.png hspace=4>$href" );
-	        push(@cols, "$host{'IP'}" );
-	        push(@cols, "$host{'MAC'}" );
-	        push(@cols, "$host{'ZONE'}" );
-	        push(@cols, "".($host{'DESCRIPTION'} ne '' ? $host{'DESCRIPTION'} : '&nbsp;')."" );
+	        push(@cols, "".($host{'IP'} ne '' ? "<img src=images/address.png hspace=4>$host{'IP'}" : '&nbsp;')."" );
+	        push(@cols, "".($host{'MAC'} ne '' ? "<img src=images/address.png hspace=4>$host{'MAC'}" : '&nbsp;')."" );
+	        push(@cols, "<img src=images/zone.png hspace=4>$host{'ZONE'}" );
+	        push(@cols, "".($host{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$host{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
@@ -164,6 +167,7 @@ sub showHost {
 	print &ui_form_end();
 }
 sub showGeoip {
+	print &ui_subheading("<img src=images/geoip.png hspace=4>",$text{'geoip'});
 	print &ui_form_start("save_geoip.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -175,7 +179,7 @@ sub showGeoip {
 		 "" );
         print &ui_columns_start([
 			  "",
-                          "<b>$text{'geoip'}</b>",
+                          "<b>$text{'name'}</b>",
                           "<b>$text{'countrycode'}</b>",
                           "<b>$text{'zone'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
@@ -185,9 +189,9 @@ sub showGeoip {
 		my $href = &ui_link("edit_geoip.cgi?geoip=$k",$k);
 		push(@cols, "<img src=images/geoip.png hspace=4>$href" );
 		my %g = $fw->GetCountryCode($geoip{'IP'});
-		push(@cols, "$geoip{'IP'} - $g{'DESCRIPTION'}" );
-	        push(@cols, "$geoip{'ZONE'}" );
-		push(@cols, "".($geoip{'DESCRIPTION'} ne '' ? $geoip{'DESCRIPTION'} : '&nbsp;')."" );
+		push(@cols, "<img src=images/countrycode.png hspace=4>$geoip{'IP'} - $g{'DESCRIPTION'}" );
+	        push(@cols, "<img src=images/zone.png hspace=4>$geoip{'ZONE'}" );
+		push(@cols, "".($geoip{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$geoip{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
@@ -198,6 +202,7 @@ sub showGeoip {
 	print &ui_form_end();
 }
 sub showGroup {
+	print &ui_subheading("<img src=images/group.png hspace=4>",$text{'group'});
 	print &ui_form_start("save_group.cgi", "post" );
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -208,7 +213,7 @@ sub showGroup {
 		 "valign=top" );
         print &ui_columns_start([
 			  "",
-                          "<b>$text{'group'}</b>",
+                          "<b>$text{'name'}</b>",
                           "<b>$text{'groupitems'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
 	for my $k ($fw->GetGroupList()) {
@@ -218,10 +223,20 @@ sub showGroup {
 		push(@cols, "<img src=images/group.png hspace=4>$href" );
 		my $grouplist;
 		for my $item (@{$group{ITEMS}}) {
-			$grouplist .= "$item<br>";
+			if( $item eq 'FIREWALL' ) {
+			       	$iimage = '<img src=images/firewall.png hspace=4>';
+			} else {
+				my $type = $fw->GetItemType($item);
+				if( $type eq 'ZONE' ) { $iimage = '<img src=images/zone.png hspace=4>'; }
+				elsif( $type eq 'NET' ) { $iimage = '<img src=images/net.png hspace=4>'; }
+				elsif( $type eq 'HOST' ) { $iimage = '<img src=images/host.png hspace=4>'; }
+				elsif( $type eq 'GEOIP' ) { $iimage = '<img src=images/geoip.png hspace=4>'; }
+				elsif( $type eq 'GROUP' ) { $iimage = '<img src=images/group.png hspace=4>'; }
+			}
+			$grouplist .= "${iimage}${item}<br>";
 		}
         	push(@cols, $grouplist );
-	        push(@cols, "".($group{'DESCRIPTION'} ne '' ? $group{'DESCRIPTION'} : '&nbsp;')."" );
+	        push(@cols, "".($group{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$group{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
@@ -232,6 +247,7 @@ sub showGroup {
 	print &ui_form_end();
 }
 sub showTime {
+	print &ui_subheading("<img src=images/time.png hspace=4>",$text{'time'});
 	print &ui_form_start("save_time.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -244,7 +260,7 @@ sub showTime {
 		 "" );
         print &ui_columns_start([
 			  "",
-                          "<b>$text{'time'}</b>",
+                          "<b>$text{'name'}</b>",
                           "<b>$text{'weekdays'}</b>",
                           "<b>$text{'timestart'}</b>",
                           "<b>$text{'timestop'}</b>",
@@ -254,10 +270,10 @@ sub showTime {
 		local @cols;
 		my $href = &ui_link("edit_time.cgi?time=$k",$k);
 		push(@cols, "<img src=images/time.png hspace=4>$href" );
-	        push(@cols, "$time{'WEEKDAYS'}" );
-	        push(@cols, "$time{'TIMESTART'}" );
-	        push(@cols, "$time{'TIMESTOP'}" );
-	        push(@cols, "".($time{'DESCRIPTION'} ne '' ? $time{'DESCRIPTION'} : '&nbsp;')."" );
+	        push(@cols, "<img src=images/item.png hspace=4>$time{'WEEKDAYS'}" );
+	        push(@cols, "<img src=images/stopwatch.png hspace=4>$time{'TIMESTART'}" );
+	        push(@cols, "<img src=images/stopwatch.png hspace=4>$time{'TIMESTOP'}" );
+	        push(@cols, "".($time{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$time{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
@@ -268,6 +284,7 @@ sub showTime {
 	print &ui_form_end();
 }
 sub showTimeGroup {
+	print &ui_subheading("<img src=images/timegroup.png hspace=4>",$text{'timegroup'});
 	print &ui_form_start("save_timegroup.cgi", "post" );
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -278,7 +295,7 @@ sub showTimeGroup {
 		 "valign=top" );
         print &ui_columns_start([
 			  "",
-                          "<b>$text{'timegroup'}</b>",
+                          "<b>$text{'name'}</b>",
                           "<b>$text{'timegroupitems'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
 	for my $k ($fw->GetTimeGroupList()) {
@@ -288,10 +305,10 @@ sub showTimeGroup {
 		push(@cols, "<img src=images/timegroup.png hspace=4>$href" );
 		my $timegrouplist;
 		for my $item (@{$timegroup{ITEMS}}) {
-			$timegrouplist .= "$item<br>";
+			$timegrouplist .= "<img src=images/time.png hspace=4>$item<br>";
 		}
         	push(@cols, $timegrouplist );
-	        push(@cols, "".($timegroup{'DESCRIPTION'} ne '' ? $timegroup{'DESCRIPTION'} : '&nbsp;')."" );
+	        push(@cols, "".($timegroup{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$timegroup{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
@@ -302,6 +319,7 @@ sub showTimeGroup {
 	print &ui_form_end();
 }
 sub showHostNameSet {
+	print &ui_subheading("<img src=images/hostname.png hspace=4>",$text{'hostnameset'});
 	print &ui_form_start("save_hostnameset.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -312,7 +330,7 @@ sub showHostNameSet {
 		 "valign=top" );
         print &ui_columns_start([
 			  "",
-                          "<b>$text{'hostnameset'}</b>",
+                          "<b>$text{'name'}</b>",
                           "<b>$text{'hostnames'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
 	for my $k ($fw->GetHostNameSetList()) {
@@ -322,10 +340,10 @@ sub showHostNameSet {
 		push(@cols, "<img src=images/hostname.png hspace=4>$href" );
 		my $hostnamesetlist;
 		for my $hostname (split(/,/, $hostnameset{'HOSTNAMES'})) {
-			$hostnamesetlist .= "$hostname<br>";
+			$hostnamesetlist .= "<img src=images/item.png hspace=4>$hostname<br>";
 		}
         	push(@cols, $hostnamesetlist );
-	        push(@cols, "".($hostnameset{'DESCRIPTION'} ne '' ? $hostnameset{'DESCRIPTION'} : '&nbsp;')."" );
+	        push(@cols, "".($hostnameset{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$hostnameset{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
@@ -336,6 +354,7 @@ sub showHostNameSet {
 	print &ui_form_end();
 }
 sub showRiskSet {
+	print &ui_subheading("<img src=images/riskset.png hspace=4>",$text{'riskset'});
 	print &ui_form_start("save_riskset.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -346,21 +365,21 @@ sub showRiskSet {
 		 "" );
         print &ui_columns_start([
 			  "",
-                          "<b>$text{'riskset'}</b>",
+                          "<b>$text{'name'}</b>",
                           "<b>$text{'risks'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
 	for my $k ($fw->GetRiskSetList()) {
 		my %riskset = $fw->GetRiskSet($k);
 		local @cols;
 		my $href = &ui_link("edit_riskset.cgi?riskset=$k",$k);
-		push(@cols, "<img src=images/risk.png hspace=4>$href" );
+		push(@cols, "<img src=images/riskset.png hspace=4>$href" );
 		my $risksetlist;
 		for my $i (split(/,/, $riskset{'RISKS'})) {
 			my %ndpirisk = $fw->GetNdpiRisk($i);
-			$risksetlist .= "$i - $ndpirisk{'DESCRIPTION'}<br>";
+			$risksetlist .= "<img src=images/risk.png hspace=4>$i - $ndpirisk{'DESCRIPTION'}<br>";
 		}
 		push(@cols, $risksetlist );
-		push(@cols, "".($riskset{'DESCRIPTION'} ne '' ? $riskset{'DESCRIPTION'} : '&nbsp;')."" );
+		push(@cols, "".($riskset{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$riskset{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
@@ -371,6 +390,7 @@ sub showRiskSet {
 	print &ui_form_end();
 }
 sub showRateLimit {
+	print &ui_subheading("<img src=images/ratelimit.png hspace=4>",$text{'ratelimit'});
 	print &ui_form_start("save_ratelimit.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -381,16 +401,16 @@ sub showRateLimit {
 		 "valign=top" );
         print &ui_columns_start([
 			  "",
-                          "<b>$text{'ratelimit'}</b>",
+                          "<b>$text{'name'}</b>",
                           "<b>$text{'rate'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
 	for my $k ($fw->GetRateLimitList()) {
 		my %ratelimit = $fw->GetRateLimit($k);
 		local @cols;
 		my $href = &ui_link("edit_ratelimit.cgi?ratelimit=$k",$k);
-		push(@cols, "<img src=images/rate.png hspace=4>$href" );
-        	push(@cols, "$ratelimit{'RATE'} <i>Mbps</i>" );
-	        push(@cols, "".($ratelimit{'DESCRIPTION'} ne '' ? $ratelimit{'DESCRIPTION'} : '&nbsp;')."" );
+		push(@cols, "<img src=images/ratelimit.png hspace=4>$href" );
+        	push(@cols, "<img src=images/rate.png hspace=4>$ratelimit{'RATE'} <i>Mbps</i>" );
+	        push(@cols, "".($ratelimit{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$ratelimit{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();

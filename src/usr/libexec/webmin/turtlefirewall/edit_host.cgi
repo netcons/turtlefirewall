@@ -43,8 +43,7 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-			<td>
-				<b>".$text{'name'}."</b></td>
+				<td><img src=images/host.png hspace=4><b>".$text{'name'}."</b></td>
 			<td>";
 if( $new ) {
 	print "		<input type=\"text\" name=\"host\">";
@@ -54,19 +53,19 @@ if( $new ) {
 }
 print			qq~</td></tr>
 			<tr>
-				<td><b>$text{'hostaddress'}</b></td>
+				<td><img src=images/address.png hspace=4><b>$text{'hostaddress'}</b></td>
 				<td><input type="text" name="ip" value="$ip" size="15"> <small><i>$text{host_help}</i></small></td>
 			</tr>
 			<tr>
-				<td><b>$text{'macaddress'}</b></td>
+				<td><img src=images/address.png hspace=4><b>$text{'macaddress'}</b></td>
 				<td><input type="text" name="mac" value="$mac" size="17"> <small><i>$text{mac_help}</i></small></td>
 			</tr>
 			<tr>
-				<td><b>$text{'zone'}</b></td>
+				<td><img src=images/zone.png hspace=4><b>$text{'zone'}</b></td>
 				<td><select name="zone">$options_zone</select></td>
 			</tr>
 			<tr>
-				<td><b>$text{'description'}</b></td>
+				<td><img src=images/info.png hspace=4><b>$text{'description'}</b></td>
 				<td><input type="text" size="60" name="description" value="$description"></td>
 			</tr>
 			</table>
