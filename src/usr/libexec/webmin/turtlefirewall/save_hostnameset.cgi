@@ -19,7 +19,6 @@ my $description = $in{'description'};
 $hostnamesetlist =~ s/^\s+|\s+$//g;
 
 if( ! $fw->checkName($newhostnameset) ) { error( $text{save_hostnameset_error6} ); }
-if( ! $fw->checkName($description) ) { error( $text{save_hostnameset_error7} ); }
 
 if( $in{'delete'} ) {
 	# delete hostnameset
@@ -47,13 +46,13 @@ if( $in{'delete'} ) {
 		$whatfailed = $text{save_hostnameset_error_title3};
 	}
 	if ( $hostnameset eq '' ) { error( $text{save_hostnameset_error3} ); }
-	if ( $hostnameset eq 'any' ) { error( $text{save_hostnameset_error9} ); }
+	if ( $hostnameset eq 'any' ) { error( $text{save_hostnameset_error8} ); }
 	if ( $hostnamesetlist eq '' ) { 
 		error( $text{save_hostnameset_error4} );
 	} else {
 		for my $hostname (split(/\s+/, $hostnamesetlist)) {
 			if ( $hostname ne '' && $hostname !~ /^[A-z0-9\-\.]+$/ ) { 
-				error( $text{save_hostnameset_error8} );
+				error( $text{save_hostnameset_error7} );
 	       		}
 		}
 	}

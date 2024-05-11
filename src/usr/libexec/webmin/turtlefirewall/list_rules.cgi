@@ -90,40 +90,38 @@ sub showRule {
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_rule.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
-		# If SRC is single item
-		if( $attr{'SRC'} !~ /,/ ) {
-			$zimage = '<img src=images/zone.png hspace=4>';
-			if( $attr{'SRC'} eq 'FIREWALL' ) {
+		my $srclist = '';
+		my @srcs = split(/,/, $attr{'SRC'});
+		foreach my $s (@srcs) {
+			my $zimage = '<img src=images/zone.png hspace=4>';
+			if( $s eq 'FIREWALL' ) {
 			       	$zimage = '<img src=images/firewall.png hspace=4>';
 			} else {
-				my $type = $fw->GetItemType($attr{'SRC'});
+				my $type = $fw->GetItemType($s);
 				if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
 				elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 				elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 				elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 			}
-		} else {
-			$zimage = '<img src=images/group.png hspace=4>';
+			$srclist .= "${zimage}${s}<br>";
 		}
-		$attr{'SRC'} =~ s/,/, /g;
-		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
-		# If DST is single item
-		if( $attr{'DST'} !~ /,/ ) {
-			$zimage = '<img src=images/zone.png hspace=4>';
-			if( $attr{'DST'} eq 'FIREWALL' ) {
+		push(@cols, "${sb}${bb}${srclist}${be}${se}" );
+		my $dstlist = '';
+		my @dsts = split(/,/, $attr{'DST'});
+		foreach my $d (@dsts) {
+			my $zimage = '<img src=images/zone.png hspace=4>';
+			if( $d eq 'FIREWALL' ) {
 			       	$zimage = '<img src=images/firewall.png hspace=4>';
 			} else {
-				my $type = $fw->GetItemType($attr{'DST'});
+				my $type = $fw->GetItemType($d);
 				if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
 				elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 				elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 				elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 			}
-		} else {
-			$zimage = '<img src=images/group.png hspace=4>';
+			$dstlist .= "${zimage}${d}<br>";
 		}
-		$attr{'DST'} =~ s/,/, /g;
-		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );
+		push(@cols, "${sb}${bb}${dstlist}${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
 		$serviceline .= "port (".$attr{'SERVICE'}."";

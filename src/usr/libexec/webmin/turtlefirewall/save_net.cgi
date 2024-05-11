@@ -19,7 +19,6 @@ my $zone = $in{'zone'};
 my $description = $in{'description'};
 
 if( ! $fw->checkName($newnet) ) { error( $text{save_net_error8} ); }
-if( ! $fw->checkName($description) ) { error( $text{save_net_error9} ); }
 
 if( $in{'delete'} ) {
 	# delete net

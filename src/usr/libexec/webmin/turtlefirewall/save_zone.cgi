@@ -17,7 +17,6 @@ $if = $in{'if'};
 $description = $in{'description'};
 
 if( ! $fw->checkName($newzone) ) { error( $text{save_zone_error8} ); }
-if( ! $fw->checkName($description) ) { error( $text{save_zone_error9} ); }
 
 # A zone to add
 if( $in{'delete'} ) {

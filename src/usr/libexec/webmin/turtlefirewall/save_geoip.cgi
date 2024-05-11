@@ -17,8 +17,7 @@ my $ip = $in{'ip'};
 my $zone = $in{'zone'};
 my $description = $in{'description'};
 
-if( ! $fw->checkName($newgeoip) ) { error( $text{save_geoip_error8} ); }
-if( ! $fw->checkName($description) ) { error( $text{save_geoip_error9} ); }
+if( ! $fw->checkName($newgeoip) ) { error( $text{save_geoip_error7} ); }
 
 if( $in{'delete'} ) {
 	# delete geoip
@@ -51,7 +50,7 @@ if( $in{'delete'} ) {
 	$fw->AddGeoip( $geoip, $ip, $zone, $description );
 	if( !$in{'new'} && $newgeoip ne $geoip ) {
 		if( !$fw->RenameItem( $geoip, $newgeoip ) ) {
-			error( text('save_geoip_error7', $geoip, $newgeoip) );
+			error( text('save_geoip_error6', $geoip, $newgeoip) );
 		}
 	}
 }

@@ -17,7 +17,6 @@ my @items = split(/\0/, $in{'items'});
 my $description = $in{'description'};
 
 if( ! $fw->checkName($newgroup) ) { error( $text{save_group_error6} ); }
-if( ! $fw->checkName($description) ) { error( $text{save_group_error7} ); }
 
 if( $in{'delete'} ) {
 	# delete group

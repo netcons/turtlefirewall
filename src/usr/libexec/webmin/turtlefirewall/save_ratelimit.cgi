@@ -17,7 +17,6 @@ my $rate = $in{'rate'};
 my $description = $in{'description'};
 
 if( ! $fw->checkName($newratelimit) ) { error( $text{save_ratelimit_error6} ); }
-if( ! $fw->checkName($description) ) { error( $text{save_ratelimit_error7} ); }
 
 if( $in{'delete'} ) {
 	# delete ratelimit
@@ -45,7 +44,7 @@ if( $in{'delete'} ) {
 		$whatfailed = $text{save_ratelimit_error_title3};
 	}
 	if ( $ratelimit eq '' ) { error( $text{save_ratelimit_error3} ); }
-	if ( $ratelimit eq 'none' ) { error( $text{save_ratelimit_error8} ); }
+	if ( $ratelimit eq 'none' ) { error( $text{save_ratelimit_error7} ); }
 
 	if( $rate eq '' || ($rate < 0.1 || $rate > 999) ) {
 		error( $text{save_ratelimit_error4} );
