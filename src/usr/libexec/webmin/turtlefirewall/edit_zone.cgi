@@ -36,7 +36,7 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-				<td><img src=images/zone.png hspace=4><b>".$text{'name'}."</b></td>
+				<td><img src=images/zone.png hspace=4><b>$text{'name'}</b></td>
 			<td>";
 if( $new ) {
 	print "		<input type=\"text\" size=\"13\" maxlength=\"13\" name=\"zone\">";

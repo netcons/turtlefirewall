@@ -88,43 +88,43 @@ sub showConnmarkPreroute {
 		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}$attr{'SRC'}${be}${se}" );
 		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $type = $fw->GetItemType($attr{'DST'});
 		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}$attr{'DST'}${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
-		$serviceline .= "port (".$attr{'SERVICE'}."";
+		$serviceline .= "port ($attr{'SERVICE'}";
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/".$attr{'PORT'}."";
+				$serviceline .= "/$attr{'PORT'}";
 			} else {
 				$serviceline .= "/all";
 			}
 		}
-		$serviceline .= ")";
+		$serviceline .= ")<br>";
 		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
 		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
-			$serviceline .= ", ${nimage}ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
+			$serviceline .= "${nimage}ndpi category (${cb}$attr{'CATEGORY'}${ce})"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
 			$attr{'NDPI'} =~ s/,/, /g;
-			$serviceline .= ", ${nimage}ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
+			$serviceline .= "${nimage}ndpi (${cb}$attr{'NDPI'}${ce})"; 
 		}
 		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
-		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostname.png hspace=4>';
-		push(@cols, "${himage}${sb}${bb}".$attr{'HOSTNAMESET'}."${be}${se}" );
+		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
+		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostnameset.png hspace=4>';
+		push(@cols, "${himage}${sb}${bb}$attr{'HOSTNAMESET'}${be}${se}" );
 		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/risk.png hspace=4>';
-		push(@cols, "${rimage}${sb}${bb}".$attr{'RISKSET'}."${be}${se}" );
+		push(@cols, "${rimage}${sb}${bb}$attr{'RISKSET'}${be}${se}" );
 		my $type = $fw->GetItemType($attr{'TIME'});
 		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
-		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
+		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
 		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
 		my $mimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-mark.png hspace=4>' : '<img src=images/mark.png hspace=4>';
@@ -241,7 +241,7 @@ sub showConnmark {
 			elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 			elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		}
-		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}$attr{'SRC'}${be}${se}" );
 		my $zimage = '<img src=images/zone.png hspace=4>';
 		if( $attr{'DST'} eq 'FIREWALL' ) {
 		       	$zimage = '<img src=images/firewall.png hspace=4>';
@@ -252,37 +252,37 @@ sub showConnmark {
 			elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 			elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		}
-		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}$attr{'DST'}${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
-		$serviceline .= "port (".$attr{'SERVICE'}."";
+		$serviceline .= "port ($attr{'SERVICE'}";
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/".$attr{'PORT'}."";
+				$serviceline .= "/$attr{'PORT'}";
 			} else {
 				$serviceline .= "/all";
 			}
 		}
-		$serviceline .= ")";
+		$serviceline .= ")<br>";
 		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
 		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
-			$serviceline .= ", ${nimage}ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
+			$serviceline .= "${nimage}ndpi category (${cb}$attr{'CATEGORY'}${ce})"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
 			$attr{'NDPI'} =~ s/,/, /g;
-			$serviceline .= ", ${nimage}ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
+			$serviceline .= "${nimage}ndpi (${cb}$attr{'NDPI'}${ce})"; 
 		}
 		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
-		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostname.png hspace=4>';
-		push(@cols, "${himage}${sb}${bb}".$attr{'HOSTNAMESET'}."${be}${se}" );
+		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
+		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostnameset.png hspace=4>';
+		push(@cols, "${himage}${sb}${bb}$attr{'HOSTNAMESET'}${be}${se}" );
 		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/risk.png hspace=4>';
-		push(@cols, "${rimage}${sb}${bb}".$attr{'RISKSET'}."${be}${se}" );
+		push(@cols, "${rimage}${sb}${bb}$attr{'RISKSET'}${be}${se}" );
 		my $type = $fw->GetItemType($attr{'TIME'});
 		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
-		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
+		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
 		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );

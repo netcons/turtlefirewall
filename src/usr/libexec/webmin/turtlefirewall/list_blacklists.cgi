@@ -41,7 +41,7 @@ sub showBlackLists {
 		my $aimage = $autoupdate eq 'YES' ? '<img src=images/yes.png hspace=4>' : '<img src=images/no.png hspace=4>';
 		my $cb = $autoupdate eq 'YES' ? '<font color=green>' : '<font color=red>';	# ColourBegin
 		my $ce = '</font>';								# ColourEnd
-		push(@cols, "${aimage}${cb}".$autoupdate."${ce}");
+		push(@cols, "${aimage}${cb}${autoupdate}${ce}");
 	        print &ui_columns_row(\@cols, \@tds);
         }
 	print &ui_columns_end();

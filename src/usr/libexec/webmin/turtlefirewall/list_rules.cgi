@@ -124,51 +124,51 @@ sub showRule {
 		push(@cols, "${sb}${bb}${dstlist}${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
-		$serviceline .= "port (".$attr{'SERVICE'}."";
+		$serviceline .= "port ($attr{'SERVICE'}";
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/".$attr{'PORT'}."";
+				$serviceline .= "/$attr{'PORT'}";
 			} else {
 				$serviceline .= "/all";
 			}
 		}
-		$serviceline .= ")";
+		$serviceline .= ")<br>";
 		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
 		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
-			$serviceline .= " ${nimage}ndpi category (${cb}".$attr{'CATEGORY'}."${ce})"; 
+			$serviceline .= "${nimage}ndpi category (${cb}$attr{'CATEGORY'}${ce})"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
 			$attr{'NDPI'} =~ s/,/, /g;
-			$serviceline .= " ${nimage}ndpi (${cb}".$attr{'NDPI'}."${ce})"; 
+			$serviceline .= "${nimage}ndpi (${cb}$attr{'NDPI'}${ce})"; 
 		}
 		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
-		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostname.png hspace=4>';
-		push(@cols, "${himage}${sb}${bb}".$attr{'HOSTNAMESET'}."${be}${se}" );
+		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
+		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostnameset.png hspace=4>';
+		push(@cols, "${himage}${sb}${bb}$attr{'HOSTNAMESET'}${be}${se}" );
 		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/riskset.png hspace=4>';
-		push(@cols, "${rimage}${sb}${bb}".$attr{'RISKSET'}."${be}${se}" );
+		push(@cols, "${rimage}${sb}${bb}$attr{'RISKSET'}${be}${se}" );
 		my $pimage = $attr{'RATELIMIT'} eq '' ? '' : '<img src=images/ratelimit.png hspace=4>';
-		push(@cols, "${pimage}${sb}${bb}".$attr{'RATELIMIT'}."${be}${se}" );
+		push(@cols, "${pimage}${sb}${bb}$attr{'RATELIMIT'}${be}${se}" );
 		my $type = $fw->GetItemType($attr{'TIME'});
 		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
-		push(@cols, "${cimage}${sb}${bb}".$attr{'TIME'}."${be}${se}" );
+		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
  		if( $attr{'TARGET'} eq 'ACCEPT' ) {
 			my $cb = $sb eq '' ? '<font color=green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
-			push(@cols, "${aimage}${sb}${bb}${cb}".$attr{'TARGET'}."${ce}${be}${se}" );
+			push(@cols, "${aimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
 		} elsif( $attr{'TARGET'} eq 'DROP' ) {
 			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
-			push(@cols, "${dimage}${sb}${bb}${cb}".$attr{'TARGET'}."${ce}${be}${se}" );
+			push(@cols, "${dimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
 		} elsif( $attr{'TARGET'} eq 'REJECT' ) {
 			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-reject.png hspace=4>' : '<img src=images/reject.png hspace=4>';
-			push(@cols, "${dimage}${sb}${bb}${cb}".$attr{'TARGET'}."${ce}${be}${se}" );
+			push(@cols, "${dimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
 		}
                 if( $attr{'LOG'} eq 'YES' ) {
 			my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin

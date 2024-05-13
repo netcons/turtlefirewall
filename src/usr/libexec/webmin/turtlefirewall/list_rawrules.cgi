@@ -83,26 +83,26 @@ sub showConntrackPreroute {
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}$attr{'SRC'}${be}${se}" );
 		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $type = $fw->GetItemType($attr{'DST'});
 		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}$attr{'DST'}${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
-		$serviceline .= "port (".$attr{'SERVICE'}."";
+		$serviceline .= "port ($attr{'SERVICE'}";
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/".$attr{'PORT'}."";
+				$serviceline .= "/$attr{'PORT'}";
 			} else {
 				$serviceline .= "/all";
 			}
 		}
 		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
+		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
 		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';
@@ -203,7 +203,7 @@ sub showConntrack {
 		my $href = &ui_link("edit_conntrack.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $zimage = '<img src=images/firewall.png hspace=4>';
-		push(@cols, "${zimage}${sb}${bb}".$attr{'SRC'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}$attr{'SRC'}${be}${se}" );
 		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $type = $fw->GetItemType($attr{'DST'});
 		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
@@ -211,19 +211,19 @@ sub showConntrack {
 		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		$attr{'DST'} =~ s/,/, /g;
-		push(@cols, "${zimage}${sb}${bb}".$attr{'DST'}."${be}${se}" );
+		push(@cols, "${zimage}${sb}${bb}$attr{'DST'}${be}${se}" );
 		local $serviceline;
-		$serviceline .= "port (".$attr{'SERVICE'}."";
+		$serviceline .= "port ($attr{'SERVICE'}";
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/".$attr{'PORT'}."";
+				$serviceline .= "/$attr{'PORT'}";
 			} else {
 				$serviceline .= "/all";
 			}
 		}
 		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}".$serviceline."${be}${se}");
+		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
 		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';

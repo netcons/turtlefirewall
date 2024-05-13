@@ -44,7 +44,7 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-				<td valign=\"top\"><img src=images/time.png hspace=4><b>".$text{'name'}."</b></td>
+				<td valign=\"top\"><img src=images/time.png hspace=4><b>$text{'name'}</b></td>
 			<td valign=\"top\">";
 if( $new ) {
 	print "		<input type=\"text\" name=\"time\">";

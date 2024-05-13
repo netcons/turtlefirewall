@@ -52,7 +52,7 @@ print "<br><br>
 			<td>
 			<table width=\"100%\"><tr>
 			<td>
-				<b><img src=images/geoip.png hspace=4>".$text{'name'}."</b></td>
+				<b><img src=images/geoip.png hspace=4>$text{'name'}</b></td>
 			<td>";
 if( $new ) {
 	print "		<input type=\"text\" name=\"geoip\">";

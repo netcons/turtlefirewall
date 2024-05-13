@@ -147,7 +147,7 @@ print				"<br>
                                 <td><br></td><td></td>
                         </tr>
 			<tr>
-				<td><img src=images/hostname.png hspace=4><b>$text{rule_hostname_set}</b></td>
+				<td><img src=images/hostnameset.png hspace=4><b>$text{rule_hostname_set}</b></td>
 				<td><select name=\"hostnameset\">$options_hostnameset</select></td>
 			</tr>
 			<tr>

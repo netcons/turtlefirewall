@@ -319,7 +319,7 @@ sub showTimeGroup {
 	print &ui_form_end();
 }
 sub showHostNameSet {
-	print &ui_subheading("<img src=images/hostname.png hspace=4>",$text{'hostnameset'});
+	print &ui_subheading("<img src=images/hostnameset.png hspace=4>",$text{'hostnameset'});
 	print &ui_form_start("save_hostnameset.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -337,10 +337,10 @@ sub showHostNameSet {
 		my %hostnameset = $fw->GetHostNameSet($k);
 		local @cols;
 		my $href = &ui_link("edit_hostnameset.cgi?hostnameset=$k",$k);
-		push(@cols, "<img src=images/hostname.png hspace=4>$href" );
+		push(@cols, "<img src=images/hostnameset.png hspace=4>$href" );
 		my $hostnamesetlist;
 		for my $hostname (split(/,/, $hostnameset{'HOSTNAMES'})) {
-			$hostnamesetlist .= "<img src=images/item.png hspace=4>$hostname<br>";
+			$hostnamesetlist .= "<img src=images/hostname.png hspace=4>$hostname<br>";
 		}
         	push(@cols, $hostnamesetlist );
 	        push(@cols, "".($hostnameset{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$hostnameset{'DESCRIPTION'}" : '&nbsp;')."" );

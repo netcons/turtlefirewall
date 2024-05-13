@@ -16,9 +16,9 @@ $hostnameset = $in{'hostnameset'};
 $newhostnameset = $in{'newhostnameset'};
 
 if( $new ) {
-	&ui_print_header( "<img src=images/hostname.png hspace=4>$text{'edit_hostnameset_title_create'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/hostnameset.png hspace=4>$text{'edit_hostnameset_title_create'}", $text{'title'}, "" );
 } else {
-	&ui_print_header( "<img src=images/hostname.png hspace=4>$text{'edit_hostnameset_title_edit'}", $text{'title'}, "" );
+	&ui_print_header( "<img src=images/hostnameset.png hspace=4>$text{'edit_hostnameset_title_edit'}", $text{'title'}, "" );
 }
 
 my %h = $fw->GetHostNameSet($hostnameset);
@@ -36,7 +36,7 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-				<td valign=\"top\"><img src=images/hostname.png hspace=4><b>".$text{'name'}."</b></td>
+				<td valign=\"top\"><img src=images/hostnameset.png hspace=4><b>$text{'name'}</b></td>
 			<td valign=\"top\">";
 if( $new ) {
 	print "		<input type=\"text\" name=\"hostnameset\">";
@@ -46,7 +46,7 @@ if( $new ) {
 }
 print			'</td></tr>
 			<tr>
-				<td valign="top"><img src=images/item.png hspace=4><b>'.$text{'hostnames'}.'</b></td>
+				<td valign="top"><img src=images/hostname.png hspace=4><b>'.$text{'hostnames'}.'</b></td>
 				<td valign="top">
 			<table width="100%">
                    	<tr><td>';

@@ -43,7 +43,7 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-				<td><img src=images/host.png hspace=4><b>".$text{'name'}."</b></td>
+				<td><img src=images/host.png hspace=4><b>$text{'name'}</b></td>
 			<td>";
 if( $new ) {
 	print "		<input type=\"text\" name=\"host\">";

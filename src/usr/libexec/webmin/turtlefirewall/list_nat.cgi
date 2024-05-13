@@ -79,32 +79,32 @@ sub showNat {
 		my %zone = $fw->GetZone($attr{'VIRTUAL'});
 		if( $zone{IF} ne '' ) {
 			my $zimage = '<img src=images/zone.png hspace=4>';
-			push(@cols, "${zimage}${sb}".$attr{'VIRTUAL'}." (".$zone{'IF'}.")${se}" );
+			push(@cols, "${zimage}${sb}$attr{'VIRTUAL'} ($zone{'IF'})${se}" );
 		} else {
 			my $himage = '<img src=images/host.png hspace=4>';
-			push(@cols, "${himage}${sb}".$attr{'VIRTUAL'}."${se}" );
+			push(@cols, "${himage}${sb}$attr{'VIRTUAL'}${se}" );
 		}
 		my $himage = '<img src=images/host.png hspace=4>';
-		push(@cols, "${himage}${sb}".$attr{'REAL'}."${se}" );
+		push(@cols, "${himage}${sb}$attr{'REAL'}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
-		$serviceline .= "port (".$attr{'SERVICE'}."";
+		$serviceline .= "port ($attr{'SERVICE'}";
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/".$attr{'PORT'}."";
+				$serviceline .= "/$attr{'PORT'}";
 			} else {
 				$serviceline .= "/all";
 			}
 		}
 		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}".$serviceline."${se}");
+		push(@cols, "${simage}${sb}${serviceline}${se}");
 		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
 		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
-		push(@cols, "${nimage}${sb}${cb}".$text{YES}."${ce}${se}" );
+		push(@cols, "${nimage}${sb}${cb}$text{YES}${ce}${se}" );
 		my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';
-		push(@cols, "${timage}${sb}".$attr{'TOPORT'}."${se}" );
+		push(@cols, "${timage}${sb}$attr{'TOPORT'}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 
@@ -198,27 +198,27 @@ sub showMasquerade {
 		push(@cols, "${zimage}${sb}".($attr{'DST'} ne '' ? $attr{'DST'} : '&nbsp;')."${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		local $serviceline;
-		$serviceline .= "port (".$attr{'SERVICE'}."";
+		$serviceline .= "port ($attr{'SERVICE'}";
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/".$attr{'PORT'}."";
+				$serviceline .= "/$attr{'PORT'}";
 			} else {
 				$serviceline .= "/all";
 			}
 		}
 		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}".$serviceline."${se}");
+		push(@cols, "${simage}${sb}${serviceline}${se}");
 		if( $attr{'MASQUERADE'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
-			push(@cols, "${dimage}${sb}${cb}".$text{NO}."${ce}${se}" );
+			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
 		} else {
 			my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
-			push(@cols, "${aimage}${sb}${cb}".$text{YES}."${ce}${se}" );
+			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
 		}
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
@@ -305,38 +305,38 @@ sub showRedirect {
                 if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}".$attr{'SRC'}."${se}" );
+		push(@cols, "${zimage}${sb}$attr{'SRC'}${se}" );
 		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $type = $fw->GetItemType($attr{'DST'});
                 if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}".$attr{'DST'}."${se}" );
+		push(@cols, "${zimage}${sb}$attr{'DST'}${se}" );
 		local $serviceline;
-		$serviceline .= "port (".$attr{'SERVICE'}."";
+		$serviceline .= "port ($attr{'SERVICE'}";
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/".$attr{'PORT'}."";
+				$serviceline .= "/$attr{'PORT'}";
 			} else {
 				$serviceline .= "/all";
 			}
 		}
 		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}".$serviceline."${se}");
+		push(@cols, "${simage}${sb}${serviceline}${se}");
 		if( $attr{'REDIRECT'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
-			push(@cols, "${dimage}${sb}${cb}".$text{NO}."${ce}${se}" );
+			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
 		} else {
 			my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
-			push(@cols, "${aimage}${sb}${cb}".$text{YES}."${ce}${se}" );
+			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
 		}
 		my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';
-		push(@cols, "${timage}${sb}".$attr{'TOPORT'}."${se}" );
+		push(@cols, "${timage}${sb}$attr{'TOPORT'}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		if( $i < $nRedirect ) {

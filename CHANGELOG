@@ -220,6 +220,7 @@ CHANGELOG
            - Feature : Removed Blacklist Flow Reports. 
            - Feature : Improve Blacklist view.
 18-02-2024 v.2.3
+           - Bug : Code cleanup.
            - Bug : Fixed --mac-source masquerade.
            - Bug : Removed depreciated HTML <tt> tag.
            - Bug : Limit Blacklist sizes.
