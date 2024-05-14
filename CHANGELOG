@@ -222,7 +222,7 @@ CHANGELOG
 18-02-2024 v.2.3
            - Bug : Code cleanup.
            - Bug : Fixed --mac-source masquerade.
-           - Bug : Removed depreciated HTML <tt> tag.
+           - Bug : Removed depreciated HTML <tt>, <strike> and <font> tags.
            - Bug : Limit Blacklist sizes.
            - Bug : Remove Domain Blacklist wildcard match.
            - Bug : Fixed zone name item verification.

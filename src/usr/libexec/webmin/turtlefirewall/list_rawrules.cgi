@@ -33,10 +33,10 @@ sub showConntrackPreroute {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-		"width=10% valign=top style='white-space: normal;'",
-		"width=10% valign=top style='white-space: normal;'",
-		"valign=top style='white-space: normal;'",
-		"width=1% valign=top style='white-space: normal;'",
+		"width=10% valign=top style=white-space:normal",
+		"width=10% valign=top style=white-space:normal",
+		"valign=top style=white-space:normal",
+		"width=1% valign=top style=white-space:normal",
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',
@@ -73,8 +73,8 @@ sub showConntrackPreroute {
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
-		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_conntrackpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $zimage = '<img src=images/zone.png hspace=4>';
@@ -103,8 +103,8 @@ sub showConntrackPreroute {
 		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
-		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
-		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
@@ -158,10 +158,10 @@ sub showConntrack {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-		"width=10% valign=top style='white-space: normal;'",
-		"width=10% valign=top style='white-space: normal;'",
-		"valign=top style='white-space: normal;'",
-		"width=1% valign=top style='white-space: normal;'",
+		"width=10% valign=top style=white-space:normal",
+		"width=10% valign=top style=white-space:normal",
+		"valign=top style=white-space:normal",
+		"width=1% valign=top style=white-space:normal",
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',
@@ -198,8 +198,8 @@ sub showConntrack {
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
-		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_conntrack.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $zimage = '<img src=images/firewall.png hspace=4>';
@@ -224,8 +224,8 @@ sub showConntrack {
 		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
-		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
-		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;

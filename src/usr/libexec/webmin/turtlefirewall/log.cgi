@@ -175,7 +175,7 @@ sub showLog {
 	$hmac .= "</select></b>";
 	push(@head, $hmac );
 
-	@tds = ( "style='white-space: nowrap;'", "align=center", "align=center", "", "", "", "align=center", "", "", "" );
+	@tds = ( "style=white-space:nowrap", "align=center", "align=center", "", "", "", "align=center", "", "", "" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
 	foreach my $l (@buffer) {

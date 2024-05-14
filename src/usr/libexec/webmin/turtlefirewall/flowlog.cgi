@@ -287,15 +287,15 @@ sub showLog {
 	$hrisk .= "<b>RISK<br></b>";
 	push(@head, $hrisk );
 
-	@tds = ( "style='white-space: nowrap;'",
-	       	 "style='white-space: nowrap;'",
+	@tds = ( "style=white-space:nowrap",
+	       	 "style=white-space:nowrap",
 		 "align=center",
 		 "align=center",
-		 "style='white-space: nowrap;'",
-		 "style='white-space: nowrap;'",
-		 "style='white-space: nowrap;'",
+		 "style=white-space:nowrap",
+		 "style=white-space:nowrap",
+		 "style=white-space:nowrap",
 		 "",
-		 "style='white-space: nowrap;'",
+		 "style=white-space:nowrap",
 		 "",
 		 "",
 		 "",
@@ -305,13 +305,13 @@ sub showLog {
 		 "",
 		 "",
 		 "",
-		 "style='white-space: nowrap;'",
-		 "style='white-space: nowrap;'",
-		 "style='white-space: nowrap;'",
-		 "style='white-space: nowrap;'",
-		 "style='white-space: nowrap;'",
+		 "style=white-space:nowrap",
+		 "style=white-space:nowrap",
+		 "style=white-space:nowrap",
+		 "style=white-space:nowrap",
+		 "style=white-space:nowrap",
 		 "align=center",
-		 "style='white-space: nowrap;'" );
+		 "style=white-space:nowrap" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
 	foreach my $l (@buffer) {

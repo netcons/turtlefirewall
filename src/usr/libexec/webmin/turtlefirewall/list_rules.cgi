@@ -27,16 +27,16 @@ sub showRule {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-		"width=10% valign=top style='white-space: normal;'",
-		"width=10% valign=top style='white-space: normal;'",
-		"valign=top style='white-space: normal;'",
-		"width=5% align=center valign=top style='white-space: normal;'",
-		"width=5% align=center valign=top style='white-space: normal;'",
-		"width=5% align=center valign=top style='white-space: normal;'",
-		"width=5% align=center valign=top style='white-space: normal;'",
+		"width=10% valign=top style=white-space:normal",
+		"width=10% valign=top style=white-space:normal",
+		"valign=top style=white-space:normal",
+		"width=5% align=center valign=top style=white-space:normal",
+		"width=5% align=center valign=top style=white-space:normal",
+		"width=5% align=center valign=top style=white-space:normal",
+		"width=5% align=center valign=top style=white-space:normal",
 		"valign=top",
 		"valign=top",
-		"valign=top valign=top style='white-space: normal;'",
+		"valign=top valign=top style=white-space:normal",
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',
@@ -86,8 +86,8 @@ sub showRule {
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
-		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_rule.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $srclist = '';
@@ -133,8 +133,8 @@ sub showRule {
 			}
 		}
 		$serviceline .= ")<br>";
-		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
-		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
+		my $cb = $sb eq '' ? '<span style=color:orange>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
 			$serviceline .= "${nimage}ndpi category (${cb}$attr{'CATEGORY'}${ce})"; 
@@ -155,24 +155,24 @@ sub showRule {
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
  		if( $attr{'TARGET'} eq 'ACCEPT' ) {
-			my $cb = $sb eq '' ? '<font color=green>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
+			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
 			push(@cols, "${aimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
 		} elsif( $attr{'TARGET'} eq 'DROP' ) {
-			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
+			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
 			push(@cols, "${dimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
 		} elsif( $attr{'TARGET'} eq 'REJECT' ) {
-			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
+			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-reject.png hspace=4>' : '<img src=images/reject.png hspace=4>';
 			push(@cols, "${dimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
 		}
                 if( $attr{'LOG'} eq 'YES' ) {
-			my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+			my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 			my $limage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-eye.png hspace=4>' : '<img src=images/eye.png hspace=4>';
 			push(@cols, "${limage}${sb}${bb}${cb}".($attr{'TARGET'} eq 'ACCEPT' ? 'FLO' : 'ACT')."${ce}${be}${se}" );
                 } else {
@@ -213,7 +213,7 @@ sub showRule {
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
-	print &ui_columns_row([undef, undef, "<img src=images/zone.png hspace=4>*", "<img src=images/zone.png hspace=4>*", "<img src=images/service.png hspace=4>port (all)", "", "", "", "", "<img src='images/no.png' hspace='4'><font color=red>DROP</font>", "<img src='images/eye.png' hspace='4'><font color=steelblue>ACT</font>", "Implicit Deny", undef], \@tds);
+	print &ui_columns_row([undef, undef, "<img src=images/zone.png hspace=4>*", "<img src=images/zone.png hspace=4>*", "<img src=images/service.png hspace=4>port (all)", "", "", "", "", "<img src='images/no.png' hspace='4'><span style=color:red>DROP</span>", "<img src='images/eye.png' hspace='4'><span style=color:steelblue>ACT</span>", "Implicit Deny", undef], \@tds);
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';

@@ -33,13 +33,13 @@ sub showConnmarkPreroute {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-		"width=10% valign=top style='white-space: normal;'",
-		"width=10% valign=top style='white-space: normal;'",
-		"valign=top style='white-space: normal;'",
-		"align=center valign=top style='white-space: normal;'",
-		"align=center valign=top style='white-space: normal;'",
-		"align=center valign=top style='white-space: normal;'",
-		"width=1% valign=top style='white-space: normal;'",
+		"width=10% valign=top style=white-space:normal",
+		"width=10% valign=top style=white-space:normal",
+		"valign=top style=white-space:normal",
+		"align=center valign=top style=white-space:normal",
+		"align=center valign=top style=white-space:normal",
+		"align=center valign=top style=white-space:normal",
+		"width=1% valign=top style=white-space:normal",
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',
@@ -79,8 +79,8 @@ sub showConnmarkPreroute {
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
-		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_connmarkpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $zimage = '<img src=images/zone.png hspace=4>';
@@ -106,8 +106,8 @@ sub showConnmarkPreroute {
 			}
 		}
 		$serviceline .= ")<br>";
-		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
-		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
+		my $cb = $sb eq '' ? '<span style=color:orange>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
 			$serviceline .= "${nimage}ndpi category (${cb}$attr{'CATEGORY'}${ce})"; 
@@ -125,8 +125,8 @@ sub showConnmarkPreroute {
 		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
-		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
-		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $mimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-mark.png hspace=4>' : '<img src=images/mark.png hspace=4>';
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
@@ -180,13 +180,13 @@ sub showConnmark {
 	@tds = ( 
 		"width=1%",
 		"width=1% align=center valign=center",
-	 	"width=10% valign=top style='white-space: normal;'",
-		"width=10% valign=top style='white-space: normal;'",
-		"valign=top style='white-space: normal;'",
-		"align=center valign=top style='white-space: normal;'",
-		"align=center valign=top style='white-space: normal;'",
-		"align=center valign=top style='white-space: normal;'",
-		"width=1% valign=top style='white-space: normal;'",
+	 	"width=10% valign=top style=white-space:normal",
+		"width=10% valign=top style=white-space:normal",
+		"valign=top style=white-space:normal",
+		"align=center valign=top style=white-space:normal",
+		"align=center valign=top style=white-space:normal",
+		"align=center valign=top style=white-space:normal",
+		"width=1% valign=top style=white-space:normal",
 		"width=1% valign=top" );
         print &ui_columns_start([
 			'',
@@ -226,8 +226,8 @@ sub showConnmark {
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
-		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $mimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-mark.png hspace=4>' : '<img src=images/mark.png hspace=4>';
 		my $href = &ui_link("edit_connmark.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
@@ -264,8 +264,8 @@ sub showConnmark {
 			}
 		}
 		$serviceline .= ")<br>";
-		my $cb = $sb eq '' ? '<font color=orange>' : '';	# ColourBegin
-		my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
+		my $cb = $sb eq '' ? '<span style=color:orange>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
 			$serviceline .= "${nimage}ndpi category (${cb}$attr{'CATEGORY'}${ce})"; 
@@ -283,8 +283,8 @@ sub showConnmark {
 		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
-		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
-		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";

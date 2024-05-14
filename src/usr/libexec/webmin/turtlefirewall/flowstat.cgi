@@ -55,7 +55,7 @@ sub reportFlowStat {
 		$options_type .= '<option'.($k eq $type ? ' selected' : '').'>'.$k.'</option>';
 	}
 
-	$td = "width=20% style='white-space: nowrap;'";
+	$td = "width=20% style=white-space:nowrap";
 	print &ui_form_start("report_flowstat.cgi", "post");
 	print qq~<table border width=\"100%\">
 		<tr $tb>

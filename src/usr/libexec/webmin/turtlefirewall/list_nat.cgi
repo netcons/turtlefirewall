@@ -36,11 +36,11 @@ sub showNat {
 		   "<a href=\"edit_nat.cgi?new=1\">$text{'list_nat_create_nat'}</a>" );
         @tds = ( "width=1% valign=top",
 		 "width=1% align=center valign=center",
-		 "width=10% valign=top style='white-space: normal;'",
-		 "width=10% valign=top style='white-space: normal;'",
-		 "valign=top style='white-space: normal;'",
+		 "width=10% valign=top style=white-space:normal",
+		 "width=10% valign=top style=white-space:normal",
+		 "valign=top style=white-space:normal",
 		 "width=1% align=center valign=center",
-		 "width=1% valign=top style='white-space: normal;'",
+		 "width=1% valign=top style=white-space:normal",
 		 "width=1% valign=top" );
         print &ui_columns_start([
                           "",
@@ -72,8 +72,8 @@ sub showNat {
 	for( my $i=1; $i<=$nNat; $i++ ) {
 		my %attr = $fw->GetNat( $i );
 		local @cols;
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
-		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_nat.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
 		my %zone = $fw->GetZone($attr{'VIRTUAL'});
@@ -99,8 +99,8 @@ sub showNat {
 		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${serviceline}${se}");
-		my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
-		my $ce = $se eq '' ? '</font>' : '';           		# ColourEnd
+		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
 		push(@cols, "${nimage}${sb}${cb}$text{YES}${ce}${se}" );
 		my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';
@@ -146,9 +146,9 @@ sub showMasquerade {
 		   "<a href=\"edit_masq.cgi?new=1\">$text{'list_nat_create_masq'}</a>" );
         @tds = ( "width=1% valign=top",
 		 "width=1% align=center valign=center",
-		 "width=10% valign=top style='white-space: normal;'",
-		 "width=10% valign=top style='white-space: normal;'",
-		 "valign=top style='white-space: normal;'",
+		 "width=10% valign=top style=white-space:normal",
+		 "width=10% valign=top style=white-space:normal",
+		 "valign=top style=white-space:normal",
 		 "width=1% align=center valign=center",
 		 "width=1% valign=top" );
         print &ui_columns_start([
@@ -180,8 +180,8 @@ sub showMasquerade {
 	for( my $i=1; $i<=$nMasq; $i++ ) {
 		my %attr = $fw->GetMasquerade( $i );
 		local @cols;
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
-		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_masq.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
 		my $zimage = '<img src=images/zone.png hspace=4>';
@@ -210,13 +210,13 @@ sub showMasquerade {
 		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${serviceline}${se}");
 		if( $attr{'MASQUERADE'} eq 'NO' ) {
-			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
+			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
 			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
 		} else {
-			my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
+			my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
 			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
 		}
@@ -260,11 +260,11 @@ sub showRedirect {
 		   "<a href=\"edit_redirect.cgi?new=1\">$text{'list_nat_create_redirect'}</a>" );
         @tds = ( "width=1% valign=top",
 		 "width=1% align=center valign=center",
-		 "width=10% valign=top style='white-space: normal;'",
-		 "width=10% valign=top style='white-space: normal;'",
-		 "valign=top style='white-space: normal;'",
+		 "width=10% valign=top style=white-space:normal",
+		 "width=10% valign=top style=white-space:normal",
+		 "valign=top style=white-space:normal",
 		 "width=1% align=center valign=center",
-		 "width=1% valign=top style='white-space: normal;'",
+		 "width=1% valign=top style=white-space:normal",
 		 "width=1% valign=top" );
         print &ui_columns_start([
                           "",
@@ -296,8 +296,8 @@ sub showRedirect {
 	for( my $i=1; $i<=$nRedirect; $i++ ) {
 		my %attr = $fw->GetRedirect( $i );
 		local @cols;
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<strike><font color=grey>' : '';	# StrikeBegin
-		my $se = $attr{'ACTIVE'} eq 'NO' ? '</strike></font>' : '';		# StrikeEnd
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_redirect.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
 		my $zimage = '<img src=images/zone.png hspace=4>';
@@ -325,13 +325,13 @@ sub showRedirect {
 		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${serviceline}${se}");
 		if( $attr{'REDIRECT'} eq 'NO' ) {
-			my $cb = $sb eq '' ? '<font color=red>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';		# ColourEnd
+			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
 			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
 		} else {
-			my $cb = $sb eq '' ? '<font color=steelblue>' : '';	# ColourBegin
-			my $ce = $se eq '' ? '</font>' : '';			# ColourEnd
+			my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
 			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
 		}
