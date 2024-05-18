@@ -21,7 +21,7 @@ print "<br><br>";
 #============================================================================
 
 sub showBlackLists {
-	@tds = ( "width=20%", "width=20%", "width=20%", "width=1% align=center valign=center", "width=1% align=center valign=center" );
+	@tds = ( "width=20%", "width=20%", "width=20%", "width=1% style=text-align:center", "width=1% style=text-align:center" );
 	print &ui_columns_start([ "<b>$text{'name'}</b>",
 		       		  "<b>$text{'description'}</b>",
 		       		  "<b>$text{'location'}</b>",

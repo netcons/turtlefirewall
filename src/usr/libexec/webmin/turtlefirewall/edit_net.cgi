@@ -79,7 +79,7 @@ if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
         print '<td>'.&ui_submit( $text{'button_save'}, "save").'</td>';
-        print '<td align="right">'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
+        print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
 print "</form>";

@@ -27,7 +27,7 @@ if( $in{upload} ) {
 		<th>$text{'backup_backuptitle'}</th>
 	</tr>
 	<tr $cb>
-		<td align="center">
+		<td style=text-align:center>
 		<br/>~;
 	print   &ui_form_start("backup.cgi?download=1", "post");
 	print   &ui_submit($text{'backup_index_download'});
@@ -42,7 +42,7 @@ if( $in{upload} ) {
 		<th>$text{'backup_restoretitle'}</th>
 	</tr>
 	<tr $cb>
-		<td align="center">
+		<td style=text-align:center>
 		<br/>~;
 	print   &ui_form_start("backup.cgi", "form-data");
 	print 	&ui_upload("backup", 40);
@@ -97,7 +97,7 @@ sub restore_upload {
 			<th>$text{'backup_restoretitle'}</th>
 		</tr>
 		<tr $cb>
-			<td align="center"><pre>~;
+			<td style=text-align:center><pre>~;
 	open FILE, "<$output";
 	while( <FILE> ) { print; }
 	close FILE;

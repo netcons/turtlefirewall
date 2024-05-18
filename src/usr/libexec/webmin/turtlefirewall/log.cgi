@@ -175,7 +175,7 @@ sub showLog {
 	$hmac .= "</select></b>";
 	push(@head, $hmac );
 
-	@tds = ( "style=white-space:nowrap", "align=center", "align=center", "", "", "", "align=center", "", "", "" );
+	@tds = ( "style=white-space:nowrap", "style=text-align:center", "style=text-align:center", "", "", "", "style=text-align:center", "", "", "" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
 	foreach my $l (@buffer) {
@@ -196,7 +196,7 @@ sub showLog {
 	print &ui_columns_end();
 
 	print "<table width=\"100%\"><tr>";
-	print '<td align=right>'.&ui_submit( $text{'log_update'} ).'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'log_update'} ).'</td>';
 	print "</tr></table>";
 
 	print &ui_form_end();

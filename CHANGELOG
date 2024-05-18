@@ -222,7 +222,7 @@ CHANGELOG
 18-02-2024 v.2.3
            - Bug : Code cleanup.
            - Bug : Fixed --mac-source masquerade.
-           - Bug : Removed depreciated HTML <tt>, <strike> and <font> tags.
+           - Bug : Removed depreciated HTML <tt>, <strike>, <font>, <align> and <valign> tags.
            - Bug : Limit Blacklist sizes.
            - Bug : Remove Domain Blacklist wildcard match.
            - Bug : Fixed zone name item verification.
@@ -230,4 +230,5 @@ CHANGELOG
            - Feature : Extend nDPI support.
            - Logging : Replaced JA3 server with JA4 client.
            - Theme : Rework group item selection.
+           - Theme : Split Port and nDPI service column in rule views
            - Theme : Standardize Webmin images.

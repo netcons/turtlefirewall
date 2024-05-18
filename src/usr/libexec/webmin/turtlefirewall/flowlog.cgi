@@ -289,8 +289,8 @@ sub showLog {
 
 	@tds = ( "style=white-space:nowrap",
 	       	 "style=white-space:nowrap",
-		 "align=center",
-		 "align=center",
+		 "style=text-align:center",
+		 "style=text-align:center",
 		 "style=white-space:nowrap",
 		 "style=white-space:nowrap",
 		 "style=white-space:nowrap",
@@ -300,8 +300,8 @@ sub showLog {
 		 "",
 		 "",
 		 "",
-		 "align=center",
-		 "align=center",
+		 "style=text-align:center",
+		 "style=text-align:center",
 		 "",
 		 "",
 		 "",
@@ -310,7 +310,7 @@ sub showLog {
 		 "style=white-space:nowrap",
 		 "style=white-space:nowrap",
 		 "style=white-space:nowrap",
-		 "align=center",
+		 "style=text-align:center",
 		 "style=white-space:nowrap" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
@@ -351,7 +351,7 @@ sub showLog {
 	print &ui_columns_end();
 
 	print "<table width=\"100%\"><tr>";
-	print '<td align=right>'.&ui_submit( $text{'log_update'} ).'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'log_update'} ).'</td>';
 	print "</tr></table>";
 
 	print &ui_form_end();

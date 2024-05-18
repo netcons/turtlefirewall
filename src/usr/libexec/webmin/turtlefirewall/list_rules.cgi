@@ -25,25 +25,27 @@ sub showRule {
        		   &select_invert_link("d"),
 		   "<a href=\"edit_rule.cgi?new=1\">$text{'list_rules_create_rule'}</a>" );
 	@tds = ( 
-		"width=1%",
-		"width=1% align=center valign=center",
-		"width=10% valign=top style=white-space:normal",
-		"width=10% valign=top style=white-space:normal",
-		"valign=top style=white-space:normal",
-		"width=5% align=center valign=top style=white-space:normal",
-		"width=5% align=center valign=top style=white-space:normal",
-		"width=5% align=center valign=top style=white-space:normal",
-		"width=5% align=center valign=top style=white-space:normal",
-		"valign=top",
-		"valign=top",
-		"valign=top valign=top style=white-space:normal",
-		"width=1% valign=top" );
+		"width=1% style=vertical-align:top",
+		"width=1% style=text-align:center;vertical-align:top",
+		"width=10% style=vertical-align:top;white-space:normal",
+		"width=10% style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"width=5% style=vertical-align:top;white-space:normal",
+		"width=5% style=vertical-align:top;white-space:normal",
+		"width=5% style=vertical-align:top;white-space:normal",
+		"width=5% style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top",
+		"style=vertical-align:top",
+		"style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",
                         "<b>$text{'rule_src'}</b>",
 			"<b>$text{'rule_dst'}</b>",
-			"<b>$text{'rule_service_head'}</b>",
+			"<b>$text{'rule_service'}</b>",
+			"<b>$text{'rule_ndpi'}</b>",
 			"<b>$text{'rule_hostname_set'}</b>",
 			"<b>$text{'rule_risk_set'}</b>",
 			"<b>$text{'rule_rate_limit'}</b>",
@@ -122,28 +124,34 @@ sub showRule {
 			$dstlist .= "${zimage}${d}<br>";
 		}
 		push(@cols, "${sb}${bb}${dstlist}${be}${se}" );
-		$attr{'SERVICE'} =~ s/,/, /g;
-		local $serviceline;
-		$serviceline .= "port ($attr{'SERVICE'}";
+		my $servicelist = '';
+		my $simage = '<img src=images/service.png hspace=4>';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/$attr{'PORT'}";
+				$servicelist .= "${simage}$attr{'SERVICE'}/$attr{'PORT'}";
 			} else {
-				$serviceline .= "/all";
+				$servicelist .= "${simage}$attr{'SERVICE'}/all";
+			}
+		} else {
+			my @services = split(/,/, $attr{'SERVICE'});
+			foreach my $s (@services) {
+				$servicelist .= "${simage}${s}<br>";
 			}
 		}
-		$serviceline .= ")<br>";
+		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
+		my $ndpilist = '';
 		my $cb = $sb eq '' ? '<span style=color:orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
-			$serviceline .= "${nimage}ndpi category (${cb}$attr{'CATEGORY'}${ce})"; 
+			$ndpilist .= "${nimage}${cb}category: $attr{'CATEGORY'}${ce}"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
-			$attr{'NDPI'} =~ s/,/, /g;
-			$serviceline .= "${nimage}ndpi (${cb}$attr{'NDPI'}${ce})"; 
+			my @ndpis = split(/,/, $attr{'NDPI'});
+			foreach my $n (@ndpis) {
+				$ndpilist .= "${nimage}${cb}${n}${ce}<br>";
+			}
 		}
-		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
+		push(@cols, "${sb}${bb}${ndpilist}${be}${se}");
 		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostnameset.png hspace=4>';
 		push(@cols, "${himage}${sb}${bb}$attr{'HOSTNAMESET'}${be}${se}" );
 		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/riskset.png hspace=4>';
@@ -178,7 +186,8 @@ sub showRule {
                 } else {
 			push(@cols, '&nbsp;' );
 		}
-		push(@cols, "${sb}${bb}".($attr{'DESCRIPTION'} ne '' ? $attr{'DESCRIPTION'} : '&nbsp;')."${be}${se}" );
+		my $iimage = $attr{'DESCRIPTION'} eq '' ? '' : '<img src=images/info.png hspace=4>';
+		push(@cols, "${iimage}${sb}${bb}".($attr{'DESCRIPTION'} ne '' ? $attr{'DESCRIPTION'} : '&nbsp;')."${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		#		if( $i < $nRules-1 ) {
@@ -213,11 +222,11 @@ sub showRule {
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
-	print &ui_columns_row([undef, undef, "<img src=images/zone.png hspace=4>*", "<img src=images/zone.png hspace=4>*", "<img src=images/service.png hspace=4>port (all)", "", "", "", "", "<img src='images/no.png' hspace='4'><span style=color:red>DROP</span>", "<img src='images/eye.png' hspace='4'><span style=color:steelblue>ACT</span>", "Implicit Deny", undef], \@tds);
+	print &ui_columns_row([undef, undef, "<img src=images/zone.png hspace=4>*", "<img src=images/zone.png hspace=4>*", "<img src=images/service.png hspace=4>all", "", "", "", "", "", "<img src='images/no.png' hspace='4'><span style=color:red>DROP</span>", "<img src='images/eye.png' hspace='4'><span style=color:steelblue>ACT</span>", "<img src=images/info.png hspace=4>Implicit Deny", undef], \@tds);
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }

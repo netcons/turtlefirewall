@@ -31,19 +31,19 @@ sub showConntrackPreroute {
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_conntrackpreroute.cgi?new=1\">$text{'list_conntrackpreroutes_create_rule'}</a>" );
 	@tds = ( 
-		"width=1%",
-		"width=1% align=center valign=center",
-		"width=10% valign=top style=white-space:normal",
-		"width=10% valign=top style=white-space:normal",
-		"valign=top style=white-space:normal",
-		"width=1% valign=top style=white-space:normal",
-		"width=1% valign=top" );
+		"width=1% style=vertical-align:top",
+		"width=1% style=vertical-align:top",
+		"width=10% style=vertical-align:top;white-space:normal",
+		"width=10% style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",
                         "<b>$text{'rule_src'}</b>",
 			"<b>$text{'rule_dst'}</b>",
-			"<b>$text{'rule_service_head'}</b>",
+			"<b>$text{'rule_service'}</b>",
 			"<b>$text{'rule_helper'}</b>",
 			"<b>$text{'rule_move'}</b>" ], 100, 0, \@tds);
 
@@ -91,18 +91,17 @@ sub showConntrackPreroute {
 		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}${bb}$attr{'DST'}${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
-		local $serviceline;
-		$serviceline .= "port ($attr{'SERVICE'}";
+		my $servicelist = '';
+		$servicelist .= $attr{'SERVICE'};
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/$attr{'PORT'}";
+				$servicelist .= "/$attr{'PORT'}";
 			} else {
-				$serviceline .= "/all";
+				$servicelist .= "/all";
 			}
 		}
-		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
+		push(@cols, "${simage}${sb}${bb}${servicelist}${be}${se}");
 		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';
@@ -144,7 +143,7 @@ sub showConntrackPreroute {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -156,19 +155,19 @@ sub showConntrack {
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_conntrack.cgi?new=1\">$text{'list_conntracks_create_rule'}</a>" );
 	@tds = ( 
-		"width=1%",
-		"width=1% align=center valign=center",
-		"width=10% valign=top style=white-space:normal",
-		"width=10% valign=top style=white-space:normal",
-		"valign=top style=white-space:normal",
-		"width=1% valign=top style=white-space:normal",
-		"width=1% valign=top" );
+		"width=1% style=vertical-align:top",
+		"width=1% style=vertical-align:top",
+		"width=10% style=vertical-align:top;white-space:normal",
+		"width=10% style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",
                         "<b>$text{'rule_src'}</b>",
 			"<b>$text{'rule_dst'}</b>",
-			"<b>$text{'rule_service_head'}</b>",
+			"<b>$text{'rule_service'}</b>",
 			"<b>$text{'rule_helper'}</b>",
 			"<b>$text{'rule_move'}</b>" ], 100, 0, \@tds);
 
@@ -212,18 +211,17 @@ sub showConntrack {
 		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		$attr{'DST'} =~ s/,/, /g;
 		push(@cols, "${zimage}${sb}${bb}$attr{'DST'}${be}${se}" );
-		local $serviceline;
-		$serviceline .= "port ($attr{'SERVICE'}";
+		my $servicelist = '';
+		$servicelist .= $attr{'SERVICE'};
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/$attr{'PORT'}";
+				$servicelist .= "/$attr{'PORT'}";
 			} else {
-				$serviceline .= "/all";
+				$servicelist .= "/all";
 			}
 		}
-		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
+		push(@cols, "${simage}${sb}${bb}${servicelist}${be}${se}");
 		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';
@@ -265,7 +263,7 @@ sub showConntrack {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }

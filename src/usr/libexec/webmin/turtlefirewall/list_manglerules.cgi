@@ -31,22 +31,24 @@ sub showConnmarkPreroute {
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_connmarkpreroute.cgi?new=1\">$text{'list_connmarkpreroutes_create_rule'}</a>" );
 	@tds = ( 
-		"width=1%",
-		"width=1% align=center valign=center",
-		"width=10% valign=top style=white-space:normal",
-		"width=10% valign=top style=white-space:normal",
-		"valign=top style=white-space:normal",
-		"align=center valign=top style=white-space:normal",
-		"align=center valign=top style=white-space:normal",
-		"align=center valign=top style=white-space:normal",
-		"width=1% valign=top style=white-space:normal",
-		"width=1% valign=top" );
+		"width=1% style=vertical-align:top",
+		"width=1% style=vertical-align:top",
+		"width=10% style=vertical-align:top;white-space:normal",
+		"width=10% style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",
                         "<b>$text{'rule_src'}</b>",
 			"<b>$text{'rule_dst'}</b>",
-			"<b>$text{'rule_service_head'}</b>",
+			"<b>$text{'rule_service'}</b>",
+			"<b>$text{'rule_ndpi'}</b>",
 			"<b>$text{'rule_hostname_set'}</b>",
 			"<b>$text{'rule_risk_set'}</b>",
 			"<b>$text{'rule_time'}</b>",
@@ -95,28 +97,34 @@ sub showConnmarkPreroute {
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}${bb}$attr{'DST'}${be}${se}" );
-		$attr{'SERVICE'} =~ s/,/, /g;
-		local $serviceline;
-		$serviceline .= "port ($attr{'SERVICE'}";
+		my $servicelist = '';
+		my $simage = '<img src=images/service.png hspace=4>';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/$attr{'PORT'}";
+				$servicelist .= "${simage}$attr{'SERVICE'}/$attr{'PORT'}";
 			} else {
-				$serviceline .= "/all";
+				$servicelist .= "${simage}$attr{'SERVICE'}/all";
+			}
+		} else {
+			my @services = split(/,/, $attr{'SERVICE'});
+			foreach my $s (@services) {
+				$servicelist .= "${simage}${s}<br>";
 			}
 		}
-		$serviceline .= ")<br>";
+		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
+		my $ndpilist = '';
 		my $cb = $sb eq '' ? '<span style=color:orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
-			$serviceline .= "${nimage}ndpi category (${cb}$attr{'CATEGORY'}${ce})"; 
+			$ndpilist .= "${nimage}${cb}category: $attr{'CATEGORY'}${ce}"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
-			$attr{'NDPI'} =~ s/,/, /g;
-			$serviceline .= "${nimage}ndpi (${cb}$attr{'NDPI'}${ce})"; 
+			my @ndpis = split(/,/, $attr{'NDPI'});
+			foreach my $n (@ndpis) {
+				$ndpilist .= "${nimage}${cb}${n}${ce}<br>";
+			}
 		}
-		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
+		push(@cols, "${sb}${bb}${ndpilist}${be}${se}");
 		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostnameset.png hspace=4>';
 		push(@cols, "${himage}${sb}${bb}$attr{'HOSTNAMESET'}${be}${se}" );
 		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/risk.png hspace=4>';
@@ -166,7 +174,7 @@ sub showConnmarkPreroute {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -178,22 +186,24 @@ sub showConnmark {
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_connmark.cgi?new=1\">$text{'list_connmarks_create_rule'}</a>" );
 	@tds = ( 
-		"width=1%",
-		"width=1% align=center valign=center",
-	 	"width=10% valign=top style=white-space:normal",
-		"width=10% valign=top style=white-space:normal",
-		"valign=top style=white-space:normal",
-		"align=center valign=top style=white-space:normal",
-		"align=center valign=top style=white-space:normal",
-		"align=center valign=top style=white-space:normal",
-		"width=1% valign=top style=white-space:normal",
-		"width=1% valign=top" );
+		"width=1% style=vertical-align:top",
+		"width=1% style=vertical-align:top",
+	 	"width=10% style=vertical-align:top;white-space:normal",
+		"width=10% style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",
                         "<b>$text{'rule_src'}</b>",
 			"<b>$text{'rule_dst'}</b>",
-			"<b>$text{'rule_service_head'}</b>",
+			"<b>$text{'rule_service'}</b>",
+			"<b>$text{'rule_ndpi'}</b>",
 			"<b>$text{'rule_hostname_set'}</b>",
 			"<b>$text{'rule_risk_set'}</b>",
 			"<b>$text{'rule_time'}</b>",
@@ -253,28 +263,34 @@ sub showConnmark {
 			elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		}
 		push(@cols, "${zimage}${sb}${bb}$attr{'DST'}${be}${se}" );
-		$attr{'SERVICE'} =~ s/,/, /g;
-		local $serviceline;
-		$serviceline .= "port ($attr{'SERVICE'}";
+		my $servicelist = '';
+		my $simage = '<img src=images/service.png hspace=4>';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/$attr{'PORT'}";
+				$servicelist .= "${simage}$attr{'SERVICE'}/$attr{'PORT'}";
 			} else {
-				$serviceline .= "/all";
+				$servicelist .= "${simage}$attr{'SERVICE'}/all";
+			}
+		} else {
+			my @services = split(/,/, $attr{'SERVICE'});
+			foreach my $s (@services) {
+				$servicelist .= "${simage}${s}<br>";
 			}
 		}
-		$serviceline .= ")<br>";
+		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
+		my $ndpilist = '';
 		my $cb = $sb eq '' ? '<span style=color:orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 		my $nimage = '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
-			$serviceline .= "${nimage}ndpi category (${cb}$attr{'CATEGORY'}${ce})"; 
+			$ndpilist .= "${nimage}${cb}category: $attr{'CATEGORY'}${ce}"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
-			$attr{'NDPI'} =~ s/,/, /g;
-			$serviceline .= "${nimage}ndpi (${cb}$attr{'NDPI'}${ce})"; 
+			my @ndpis = split(/,/, $attr{'NDPI'});
+			foreach my $n (@ndpis) {
+				$ndpilist .= "${nimage}${cb}${n}${ce}<br>";
+			}
 		}
-		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}${serviceline}${be}${se}");
+		push(@cols, "${sb}${bb}${ndpilist}${be}${se}");
 		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostnameset.png hspace=4>';
 		push(@cols, "${himage}${sb}${bb}$attr{'HOSTNAMESET'}${be}${se}" );
 		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/risk.png hspace=4>';
@@ -323,7 +339,7 @@ sub showConnmark {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }

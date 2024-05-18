@@ -45,11 +45,11 @@ if( $new ) {
 print			qq~</td></tr>
                    	<tr>
 				<td><img src=images/rate.png hspace=4><b>$text{'rate'}</b></td>
-				<td valign="top"><input type="text" name="rate" size="3" maxlength="3" value="$rate"> <i>Mbps</i></td>
+				<td style=vertical-align:top><input type="text" name="rate" size="3" maxlength="3" value="$rate"> <i>Mbps</i></td>
 			</tr>
  			<tr>
 				<td><img src=images/info.png hspace=4><b>$text{'description'}</b></td>
-				<td valign="top"><input type="text" name="description" size="60" value="$description"></td>
+				<td style=vertical-align:top><input type="text" name="description" size="60" value="$description"></td>
 			</tr>
 			</table>
 			</td>
@@ -61,7 +61,7 @@ if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
         print '<td>'.&ui_submit( $text{'button_save'}, "save").'</td>';
-        print '<td align="right">'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
+        print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
 print "</form>";

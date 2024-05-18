@@ -173,7 +173,7 @@ sub showstats {
 	if( $string ne '' ) { print " containing <i>".&ui_text_color($string, 'info')."</i>"; }
 	print " ( $firstflowtime --> $lastflowtime )";
 
-	@tds = ( "style=white-space:nowrap", "width=$graphwidth", "", "width=1% align=right style=white-space:nowrap" );
+	@tds = ( "style=white-space:nowrap", "width=$graphwidth", "", "width=1% style=text-align:right;white-space:nowrap" );
 
 	print &ui_columns_start([ "<b>$text{$type_name}</b>", "<b>$text{'flowstat_percent'}</b>", "", "<b>$text{'flowstat_traffic'}</b>" ], 100, 0, \@tds);
 

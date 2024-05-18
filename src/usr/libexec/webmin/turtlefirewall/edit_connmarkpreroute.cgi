@@ -134,7 +134,7 @@ print				"<br>
 				</td>
 			</tr>
 			<tr>
-				<td><img src=images/ndpi.png hspace=4><b>$text{rule_ndpiprotocol}</b></td>
+				<td><img src=images/ndpi.png hspace=4><b>$text{rule_ndpi}</b></td>
 				<td><br>";
 				formNdpiProtocol( $ndpi, $category, 1 );
 print				"<br>
@@ -176,7 +176,7 @@ if( $new ) {
 	print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
 	print '<td>'.&ui_submit( $text{'button_save'}, "save").'</td>';
-	print '<td align="right">'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
 print "</form>";

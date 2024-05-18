@@ -34,14 +34,14 @@ sub showNat {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_nat.cgi?new=1\">$text{'list_nat_create_nat'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "width=1% align=center valign=center",
-		 "width=10% valign=top style=white-space:normal",
-		 "width=10% valign=top style=white-space:normal",
-		 "valign=top style=white-space:normal",
-		 "width=1% align=center valign=center",
-		 "width=1% valign=top style=white-space:normal",
-		 "width=1% valign=top" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "width=1% style=text-align:center;vertical-align:top",
+		 "width=10% style=vertical-align:top;white-space:normal",
+		 "width=10% style=vertical-align:top;white-space:normal",
+		 "style=vertical-align:top;white-space:normal",
+		 "width=1% style=vertical-align:top;text-align:center",
+		 "width=1% style=vertical-align:top;white-space:normal",
+		 "width=1% style=vertical-align:top" );
         print &ui_columns_start([
                           "",
                           "<b>ID</b>",
@@ -86,19 +86,21 @@ sub showNat {
 		}
 		my $himage = '<img src=images/host.png hspace=4>';
 		push(@cols, "${himage}${sb}$attr{'REAL'}${se}" );
-		$attr{'SERVICE'} =~ s/,/, /g;
-		local $serviceline;
-		$serviceline .= "port ($attr{'SERVICE'}";
+		my $servicelist = '';
+		my $simage = '<img src=images/service.png hspace=4>';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/$attr{'PORT'}";
+				$servicelist .= "${simage}$attr{'SERVICE'}/$attr{'PORT'}";
 			} else {
-				$serviceline .= "/all";
+				$servicelist .= "${simage}$attr{'SERVICE'}/all";
+			}
+		} else {
+			my @services = split(/,/, $attr{'SERVICE'});
+			foreach my $s (@services) {
+				$servicelist .= "${simage}${s}<br>";
 			}
 		}
-		$serviceline .= ")";
-		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${serviceline}${se}");
+		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
 		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
@@ -133,7 +135,7 @@ sub showNat {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -144,13 +146,13 @@ sub showMasquerade {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_masq.cgi?new=1\">$text{'list_nat_create_masq'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "width=1% align=center valign=center",
-		 "width=10% valign=top style=white-space:normal",
-		 "width=10% valign=top style=white-space:normal",
-		 "valign=top style=white-space:normal",
-		 "width=1% align=center valign=center",
-		 "width=1% valign=top" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "width=1% style=text-align:center;vertical-align:top",
+		 "width=10% style=vertical-align:top;white-space:normal",
+		 "width=10% style=vertical-align:top;white-space:normal",
+		 "style=vertical-align:top;white-space:normal",
+		 "width=1% style=vertical-align:top;text-align:center",
+		 "width=1% style=vertical-align:top" );
         print &ui_columns_start([
                           "",
                           "<b>ID</b>",
@@ -196,19 +198,21 @@ sub showMasquerade {
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}".($attr{'DST'} ne '' ? $attr{'DST'} : '&nbsp;')."${se}" );
-		$attr{'SERVICE'} =~ s/,/, /g;
-		local $serviceline;
-		$serviceline .= "port ($attr{'SERVICE'}";
+		my $servicelist = '';
+		my $simage = '<img src=images/service.png hspace=4>';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/$attr{'PORT'}";
+				$servicelist .= "${simage}$attr{'SERVICE'}/$attr{'PORT'}";
 			} else {
-				$serviceline .= "/all";
+				$servicelist .= "${simage}$attr{'SERVICE'}/all";
+			}
+		} else {
+			my @services = split(/,/, $attr{'SERVICE'});
+			foreach my $s (@services) {
+				$servicelist .= "${simage}${s}<br>";
 			}
 		}
-		$serviceline .= ")";
-		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${serviceline}${se}");
+		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
 		if( $attr{'MASQUERADE'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
@@ -247,7 +251,7 @@ sub showMasquerade {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -258,14 +262,14 @@ sub showRedirect {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_redirect.cgi?new=1\">$text{'list_nat_create_redirect'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "width=1% align=center valign=center",
-		 "width=10% valign=top style=white-space:normal",
-		 "width=10% valign=top style=white-space:normal",
-		 "valign=top style=white-space:normal",
-		 "width=1% align=center valign=center",
-		 "width=1% valign=top style=white-space:normal",
-		 "width=1% valign=top" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "width=1% style=text-align:center;vertical-align:top",
+		 "width=10% style=vertical-align:top;white-space:normal",
+		 "width=10% style=vertical-align:top;white-space:normal",
+		 "style=vertical-align:top;white-space:normal",
+		 "width=1% style=vertical-align:top;text-align:center",
+		 "width=1% style=vertical-align:top;white-space:normal",
+		 "width=1% style=vertical-align:top" );
         print &ui_columns_start([
                           "",
                           "<b>ID</b>",
@@ -312,18 +316,17 @@ sub showRedirect {
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}$attr{'DST'}${se}" );
-		local $serviceline;
-		$serviceline .= "port ($attr{'SERVICE'}";
+		my $servicelist = '';
+		$servicelist .= $attr{'SERVICE'};
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$serviceline .= "/$attr{'PORT'}";
+				$servicelist .= "/$attr{'PORT'}";
 			} else {
-				$serviceline .= "/all";
+				$servicelist .= "/all";
 			}
 		}
-		$serviceline .= ")";
 		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${serviceline}${se}");
+		push(@cols, "${simage}${sb}${servicelist}${se}");
 		if( $attr{'REDIRECT'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
@@ -364,7 +367,7 @@ sub showRedirect {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }

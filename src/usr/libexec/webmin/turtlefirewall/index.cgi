@@ -81,7 +81,7 @@ if ( ($status && $in{stop} eq '') || $in{start} ne '') {
 }	
 print &ui_form_end();
 print '</td>';
-print '<td align="right">';
+print '<td style=text-align:right>';
 print &ui_form_start("stop.cgi", "post");
 if( ($status && $in{stop} eq '') || $in{start} ne '' ) {
 	print &ui_submit( $text{'index_stop'}, "stop");
@@ -100,7 +100,7 @@ print &ui_submit( $text{'index_showiptnat'}, "showiptnat");
 print &ui_submit( $text{'index_showiptmangle'}, "showiptmangle");
 print &ui_submit( $text{'index_showiptraw'}, "showiptraw");
 print '</td>';
-print '<td align="right">';
+print '<td style=text-align:right>';
 print &ui_submit( $text{'index_showconntrack'}, "showconntrack");
 print &ui_submit( $text{'index_flushconntrack'}, "flushconntrack");
 print '</td>';

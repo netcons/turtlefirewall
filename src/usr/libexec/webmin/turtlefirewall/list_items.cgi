@@ -63,10 +63,10 @@ sub showZone {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_zone.cgi?new=1\">$text{'list_items_create_zone'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "",
-		 "",
-		 "" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -88,7 +88,7 @@ sub showZone {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -98,12 +98,12 @@ sub showNet {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_net.cgi?new=1\">$text{'list_items_create_net'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "",
-		 "",
-		 "",
-		 "",
-		 "" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -125,7 +125,7 @@ sub showNet {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -135,12 +135,12 @@ sub showHost {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_host.cgi?new=1\">$text{'list_items_create_host'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "",
-		 "",
-		 "",
-		 "",
-		 "" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -162,7 +162,7 @@ sub showHost {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -172,11 +172,11 @@ sub showGeoip {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_geoip.cgi?new=1\">$text{'list_items_create_geoip'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "",
-		 "",
-		 "",
-		 "" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -197,7 +197,7 @@ sub showGeoip {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -207,10 +207,10 @@ sub showGroup {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_group.cgi?new=1\">$text{'list_items_create_group'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "valign=top",
-		 "valign=top",
-		 "valign=top" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -242,7 +242,7 @@ sub showGroup {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -252,12 +252,12 @@ sub showTime {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_time.cgi?new=1\">$text{'list_items_create_time'}</a>" );
-        @tds = ( "width=1% valign=top",
-	 	 "",
-		 "",
-		 "",
-		 "",
-		 "" );
+        @tds = ( "width=1% style=vertical-align:top",
+	 	 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -279,7 +279,7 @@ sub showTime {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -289,10 +289,10 @@ sub showTimeGroup {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_timegroup.cgi?new=1\">$text{'list_items_create_timegroup'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "valign=top",
-		 "valign=top",
-		 "valign=top" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -314,7 +314,7 @@ sub showTimeGroup {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -324,10 +324,10 @@ sub showHostNameSet {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_hostnameset.cgi?new=1\">$text{'list_items_create_hostnameset'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "valign=top",
-		 "valign=top",
-		 "valign=top" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -349,7 +349,7 @@ sub showHostNameSet {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -359,10 +359,10 @@ sub showRiskSet {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_riskset.cgi?new=1\">$text{'list_items_create_riskset'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "",
-		 "",
-		 "" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -385,7 +385,7 @@ sub showRiskSet {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }
@@ -395,10 +395,10 @@ sub showRateLimit {
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_ratelimit.cgi?new=1\">$text{'list_items_create_ratelimit'}</a>" );
-        @tds = ( "width=1% valign=top",
-		 "valign=top",
-		 "valign=top",
-		 "valign=top" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -416,7 +416,7 @@ sub showRateLimit {
 	print &ui_columns_end();
 	print "<table width=\"100%\"><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
-	print '<td align="right">'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();
 }

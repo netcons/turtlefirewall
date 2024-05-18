@@ -36,8 +36,8 @@ print "<br><br>
 		<tr $cb>
 			<td>
 			<table width=\"100%\"><tr>
-				<td valign=\"top\"><img src=images/hostnameset.png hspace=4><b>$text{'name'}</b></td>
-			<td valign=\"top\">";
+				<td style=vertical-align:top><img src=images/hostnameset.png hspace=4><b>$text{'name'}</b></td>
+			<td style=vertical-align:top>";
 if( $new ) {
 	print "		<input type=\"text\" name=\"hostnameset\">";
 } else {
@@ -46,8 +46,8 @@ if( $new ) {
 }
 print			'</td></tr>
 			<tr>
-				<td valign="top"><img src=images/hostname.png hspace=4><b>'.$text{'hostnames'}.'</b></td>
-				<td valign="top">
+				<td style=vertical-align:top><img src=images/hostname.png hspace=4><b>'.$text{'hostnames'}.'</b></td>
+				<td style=vertical-align:top>
 			<table width="100%">
                    	<tr><td>';
 print	    		  &ui_textarea("hostnamesetlist", join("\n", @hostnamesetlist), 10, 20);
@@ -55,8 +55,8 @@ print			'</td></tr>
 			</table>
 			</td></tr>';
 
-print 			'<tr><td valign="top"><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>';
-print			'<td valign="top"><input type="text" name="description" size="60" value="'.$description.'"></td>';
+print 			'<tr><td style=vertical-align:top><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>';
+print			'<td style=vertical-align:top><input type="text" name="description" size="60" value="'.$description.'"></td>';
 print			'</tr>';
 
 print			'</table>
@@ -69,7 +69,7 @@ if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
         print '<td>'.&ui_submit( $text{'button_save'}, "save").'</td>';
-        print '<td align="right">'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
+        print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
 print "</form>";

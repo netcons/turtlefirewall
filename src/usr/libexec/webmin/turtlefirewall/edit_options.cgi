@@ -54,10 +54,10 @@ sub showOption {
 	my( $var, $type, $value, $default, $addunchangeopz, $name, $desc ) = @_;
 	print qq|
 			<tr>
-				<td valign="top">
+				<td style=vertical-align:top>
 					<b>$name</b>
 				</td>
-				<td valign="top"><nobr>|;
+				<td style=vertical-align:top><nobr>|;
 	if( $type eq 'radio' ) {
 		print qq|		<input type="radio" name="$var" value="on"|.($value eq 'on' ? ' checked':'').qq|> on
 					<input type="radio" name="$var" value="off"|.($value eq 'off' ? ' checked':'').'> off';
@@ -70,7 +70,7 @@ sub showOption {
 	}
 	print qq|
 				</nobr></td>
-				<td valign="top">
+				<td style=vertical-align:top>
 					$desc<br>
 					Default: <b>$default</b>
 				</td>
