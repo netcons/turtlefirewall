@@ -19,4 +19,4 @@ if( $in{save} ne '' ) {
 	$fw->SaveFirewall();
 }
 
-redirect( '' );
+&redirect( '' );

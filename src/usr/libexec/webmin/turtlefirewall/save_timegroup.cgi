@@ -13,9 +13,10 @@ do 'turtlefirewall-lib.pl';
 
 my $timegroup = $in{'timegroup'};
 my $newtimegroup = $in{'newtimegroup'};
+my @items = split(/\0/, $in{'items'});
 my $description = $in{'description'};
 
-if( ! $fw->checkName($newtimegroup) ) { error( $text{save_timegroup_error6} ); }
+if( ! $fw->checkName($newtimegroup) ) { &error( $text{save_timegroup_error6} ); }
 
 if( $in{'delete'} ) {
 	# delete timegroup
@@ -24,11 +25,11 @@ if( $in{'delete'} ) {
 		foreach $d (sort { $b <=> $a } @d) {
 			my $timegroup = $d;
 			$whatfailed = $text{save_timegroup_error_title1};
-			if( !$fw->DeleteTimeGroup($timegroup) ) { error( $text{save_timegroup_error1} ); }
+			if( !$fw->DeleteTimeGroup($timegroup) ) { &error( $text{save_timegroup_error1} ); }
 		}
 	} elsif( $timegroup ne '' ) {
 		$whatfailed = $text{save_timegroup_error_title1};
-		if( !$fw->DeleteTimeGroup($timegroup) ) { error( $text{save_timegroup_error1} ); }
+		if( !$fw->DeleteTimeGroup($timegroup) ) { &error( $text{save_timegroup_error1} ); }
 	}
 } else {
 	if( $in{'new'} ) {
@@ -36,29 +37,23 @@ if( $in{'delete'} ) {
 		my @allitems = $fw->GetAllItemsList();
 		foreach my $i (@allitems) {
 			if( $i eq $timegroup ) {
-				error( $text{save_timegroup_error2} );
+				&error( $text{save_timegroup_error2} );
 			}
 		}
 	} else {
 		$whatfailed = $text{save_timegroup_error_title3};
 	}
-	if ( $timegroup eq '' ) { error( $text{save_timegroup_error3} ); }
-	if ( $timegroup eq 'always' ) { error( $text{save_timegroup_error7} ); }
+	if ( $timegroup eq '' ) { &error( $text{save_timegroup_error3} ); }
+	if ( $timegroup eq 'always' ) { &error( $text{save_timegroup_error7} ); }
 
-	my @items = ();
-	foreach my $k (keys %in) {
-		if( $k =~ /^item_(.*)$/ ) {
-			push @items, $1;
-		}
-	}
-	if( $#items < 0 ) { error( $text{save_timegroup_error4} ); }
+	if( $#items < 0 ) { &error( $text{save_timegroup_error4} ); }
 	$fw->AddTimeGroup( $timegroup, $description, @items );
 	if( !$in{'new'} && $newtimegroup ne $timegroup ) {
 		if( !$fw->RenameItem( $timegroup, $newtimegroup ) ) {
-			error( text('save_timegroup_error5', $timegroup, $newtimegroup) );
+			&error( $text('save_timegroup_error5', $timegroup, $newtimegroup) );
 		}
 	}
 }
 
 $fw->SaveFirewall();
-redirect( 'list_items.cgi' );
+&redirect( 'list_items.cgi' );

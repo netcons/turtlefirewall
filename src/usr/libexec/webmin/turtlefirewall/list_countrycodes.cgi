@@ -27,7 +27,7 @@ sub showCountryCodes {
         my @countrycodes = $fw->GetCountryCodesList();
 	foreach my $name (@countrycodes) {
 		my %countrycode = $fw->GetCountryCode($name);
-	        print &ui_columns_row([ "<img src=images/countrycode.png hspace=4>$name", $countrycode{'DESCRIPTION'} ], \@tds);
+	        print &ui_columns_row([ "<img src=images/countrycode.png hspace=4>$name", "<img src=images/info.png hspace=4>$countrycode{'DESCRIPTION'}" ], \@tds);
         }
 	print &ui_columns_end();
 }

@@ -34,86 +34,45 @@ if( $new ) {
 	$active = $rule{'ACTIVE'} ne 'NO';
 }
 
-my $options_src = '';
-$options_src .= '<option selected>'.$src.'</option>';
-
-my $options_dst = '';
 my @items_dst = ('*');
-push @items_dst, $fw->GetZoneList();
+push @items_dst, grep(!/FIREWALL/, $fw->GetZoneList());
 push @items_dst, $fw->GetGeoipList();
 push @items_dst, $fw->GetNetList();
 push @items_dst, $fw->GetHostList();
 push @items_dst, $fw->GetGroupList();
 @items_dst = sort(@items_dst);
-for my $k (@items_dst) {
-	if( $k ne 'FIREWALL' ) {
-		my $selected = 0;
-		if( $k eq $dst ) { $selected = 1; }
-		$options_dst .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
-	}
-}
 
-my $options_service = '';
 my @services = ('tcp','udp');
-for my $k (@services) {
-	$options_service .= '<option'.($k eq $service ? ' selected' : '').'>'.$k.'</option>';
-}
 
-my $options_helper = '';
 my @helpers = ('amanda','ftp','irc','netbios-ns','pptp','RAS','sane','sip','snmp','tftp','Q.931');
-for my $k (@helpers) {
-	$options_helper .= '<option'.($k eq $helper ? ' selected' : '').'>'.$k.'</option>';
-}
 
-print "<br>
-	<form action=\"save_conntrack.cgi\">
-	<input type=\"hidden\" name=\"idx\" value=\"$idx\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{edit_conntrack_title_create} : $text{edit_conntrack_title_edit})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\">";
+print &ui_subheading($new ? $text{'edit_conntrack_title_create'} : $text{'edit_conntrack_title_edit'});
+print &ui_form_start("save_conntrack.cgi", "post");
+print &ui_hidden("idx", $idx);
+my @tds = ( "width=20%", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( !$new ) {
-	print		"<tr>
-				<td><img src=images/hash.png hspace=4><b>ID</b></td>
-				<td><b>$idx</b></td>
-			</tr>";
+	$col = "<b>$idx</b>";
+	print &ui_columns_row([ "<img src=images/hash.png hspace=4><b>ID</b>", $col ], \@tds);
 }
-print			"<tr>
-				<td><img src=images/zone.png hspace=4><b>$text{rule_src}</b></td>
-				<td><select name=\"src\">$options_src</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/zone.png hspace=4><b>$text{rule_dst}</b></td>
-				<td><select name=\"dst\">$options_dst</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/service.png hspace=4><b>$text{rule_service}</b></td>
-				<td><select name=\"service\">$options_service</select>
-				$text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"11\" maxlength=\"11\"> <small><i>$text{port_help}</i></small></td>
-			</tr>
-			<tr>
-                                <td><br></td><td></td>
-                        </tr>
-			<tr>
-				<td><img src=images/grey-helper.png hspace=4><b>$text{rule_helper}</b></td>
-				<td><select name=\"helper\">$options_helper</select></td>
-			</tr>
-			<tr>
-                                <td><br></td><td></td>
-                        </tr>
-			<tr>
-				<td><img src=images/active.png hspace=4><b>$text{rule_active}</b></td>
-				<td><input type=\"checkbox\" name=\"active\" value=\"1\"".($active ? ' checked' : '')."></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>";
+$col = "$src";
+$col .= &ui_hidden("src", $src);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'rule_src'}</b>", $col ], \@tds);
+$col = &ui_select("dst", $dst, \@items_dst);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'rule_dst'}</b>", $col ], \@tds);
+$col = &ui_select("service", $service, \@services);
+$col .= "$text{rule_port} : ";
+$col .= &ui_textbox("port", $port, 11, 0, 11);
+$col .= "<small><i>$text{port_help}</i></small>";
+print &ui_columns_row([ "<img src=images/service.png hspace=4><b>$text{'rule_service'}</b>", $col ], \@tds);
+$col = &ui_select("helper", $helper, \@helpers);
+print &ui_columns_row([ "<img src=images/grey-helper.png hspace=4><b>$text{'rule_helper'}</b>", $col ], \@tds);
+$col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
+print &ui_columns_row([ "<img src=images/active.png hspace=4><b>$text{'rule_active'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
 	print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
@@ -121,7 +80,8 @@ if( $new ) {
 	print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
 &ui_print_footer("list_rawrules.cgi?idx=$idx",'Raw Rules list');

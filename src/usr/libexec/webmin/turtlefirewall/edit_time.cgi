@@ -21,7 +21,7 @@ if( $new ) {
 	&ui_print_header( "<img src=images/time.png hspace=4>$text{'edit_time_title_edit'}", $text{'title'}, "" );
 }
 
-@aWeekdays = ('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
+my @aWeekdays = ('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
 
 my %t = $fw->GetTime($time);
 my $weekdays = $t{'WEEKDAYS'};
@@ -30,69 +30,40 @@ my $timestop = $t{'TIMESTOP'};
 my $description = $t{DESCRIPTION};
 
 my @timeWeekdays = split(/,/, $weekdays);
-%aSelectedWeekdays = ();
+my %aSelectedWeekdays = ();
 foreach my $k (@timeWeekdays) {
 	$aSelectedWeekdays{$k} = 1;
 }
 
-print "<br><br>
-	<form action=\"save_time.cgi\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{'edit_time_title_create'} : $text{'edit_time_title_edit'})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\"><tr>
-				<td style=vertical-align:top><img src=images/time.png hspace=4><b>$text{'name'}</b></td>
-			<td style=vertical-align:top>";
+print &ui_subheading($new ? $text{'edit_time_title_create'} : $text{'edit_time_title_edit'});
+print &ui_form_start("save_time.cgi", "post");
+my @tds = ( "width=20% style=vertical-align:top", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( $new ) {
-	print "		<input type=\"text\" name=\"time\">";
+	$col = &ui_textbox("time");
 } else {
-	print '		<input type="text" name="newtime" value="'.$time.'">';
-	print '		<input type="hidden" name="time" value="'.$time.'">';
+	$col = &ui_textbox("newtime", $in{'time'});
+	$col .= &ui_hidden("time", $in{'time'});
 }
-print			'</td></tr>
-			<tr>
-				<td style=vertical-align:top><img src=images/item.png hspace=4><b>'.$text{'timeitems'}.'</b></td>
-				<td style=vertical-align:top>
-					<table width="100%">';
-
-my $col = 0;
+print &ui_columns_row([ "<img src=images/time.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+$col = "<table width=100%><tr>";
 foreach my $i (@aWeekdays) {
-	if( $col == 0 ) { print "<tr>"; }
-	print "<td width=\"10%\"><nobr><input type=\"checkbox\" name=\"item_$i\" value=\"1\" ";
-	print ($aSelectedWeekdays{$i} ? ' checked' : '');
-	print "> $i</nobr></td>";
-	if( ++$col == 7 ) {
-		$col = 0;
-		print "</tr>";
-	}
+	$col .= "<td><nobr>";
+	$col .= &ui_checkbox("item_$i", 1, $i, $aSelectedWeekdays{$i} ? 1 : 0);
+	$col .= "</nobr></td>";
 }
-if( $col < 6 ) { print "</tr>"; }
+$col .= "</tr></table>";
+print &ui_columns_row([ "<img src=images/item.png hspace=4><b>$text{'timeitems'}</b>", $col ], \@tds);
+$col = &ui_textbox("timestart", $timestart, 5, 0, 5);
+print &ui_columns_row([ "<img src=images/stopwatch.png hspace=4><b>$text{'timestart'}</b>", $col ], \@tds);
+$col = &ui_textbox("timestop", $timestop, 5, 0, 5);
+print &ui_columns_row([ "<img src=images/stopwatch.png hspace=4><b>$text{'timestop'}</b>", $col ], \@tds);
+$col = &ui_textbox("description", $description, 60, 0, 60);
+print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print					'</table>
-				</td>
-			</tr>';
-
-print 			'<tr><td style=vertical-align:top><img src=images/stopwatch.png hspace=4><b>'.$text{'timestart'}.'</b></td>';
-print			'<td style=vertical-align:top><input type="text" name="timestart" size="5" value="'.$timestart.'"></td>';
-print			'</tr>';
-
-print 			'<tr><td style=vertical-align:top><img src=images/stopwatch.png hspace=4><b>'.$text{'timestop'}.'</b></td>';
-print			'<td style=vertical-align:top><input type="text" name="timestop" size="5" value="'.$timestop.'"></td>';
-print			'</tr>';
-
-print 			'<tr><td style=vertical-align:top><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>';
-print			'<td style=vertical-align:top><input type="text" name="description" size="60" value="'.$description.'"></td>';
-print			'</tr>';
-
-print			'</table>
-			</td>
-		</tr>
-	</table>';
-
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
@@ -100,7 +71,8 @@ if( $new ) {
         print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
 &ui_print_footer('list_items.cgi','items list');

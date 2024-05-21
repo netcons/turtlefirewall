@@ -44,134 +44,64 @@ if( $new ) {
 	$active = $rule{'ACTIVE'} ne 'NO';
 }
 
-my $options_src = '';
 my @items_src = ();
-push @items_src, $fw->GetZoneList();
+push @items_src, grep(!/FIREWALL/, $fw->GetZoneList());
 push @items_src, $fw->GetGeoipList();
 push @items_src, $fw->GetNetList();
 push @items_src, $fw->GetHostList();
 @items_src = sort(@items_src);
-for my $k (@items_src) {
-	if( $k ne 'FIREWALL' ) {
-		my $selected = 0;
-		if( $k eq $src ) { $selected = 1; }
-		$options_src .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
-	}
-}
 
-my $options_dst = '';
 my @items_dst = ('*');
 push @items_dst, $fw->GetGeoipList();
 push @items_dst, $fw->GetNetList();
 push @items_dst, $fw->GetHostList();
 @items_dst = sort(@items_dst);
-for my $k (@items_dst) {
-	my $selected = 0;
-	if( $k eq $dst ) { $selected = 1; }
-	$options_dst .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
-}
 
-my $options_hostnameset = '';
 if( $hostnameset eq '' ) { $hostnameset = 'any'; }
 my @hostnamesets = ('any');
 push @hostnamesets, $fw->GetHostNameSetList();
-for my $k (@hostnamesets) {
-	my $selected = 0;
-	if( $k eq $hostnameset ) { $selected = 1; }
-	$options_hostnameset .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
-}
 
-my $options_riskset = '';
 if( $riskset eq '' ) { $riskset = 'none'; }
 my @risksets = ('none');
 push @risksets, $fw->GetRiskSetList();
-for my $k (@risksets) {
-	my $selected = 0;
-	if( $k eq $riskset ) { $selected = 1; }
-	$options_riskset .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
-}
 
-my $options_time = '';
 if( $time eq '' ) { $time = 'always'; }
 my @times = ('always');
 push @times, $fw->GetTimeList();
 push @times, $fw->GetTimeGroupList();
-for my $k (@times) {
-	my $selected = 0;
-	if( $k eq $time ) { $selected = 1; }
-	$options_time .= '<option'.($selected ? ' selected' : '').'>'.$k.'</option>';
-}
 
-print "<br>
-	<form action=\"save_connmarkpreroute.cgi\">
-	<input type=\"hidden\" name=\"idx\" value=\"$idx\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{edit_connmarkpreroute_title_create} : $text{edit_connmarkpreroute_title_edit})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\">";
+print &ui_subheading($new ? $text{'edit_connmarkpreroute_title_create'} : $text{'edit_connmarkpreroute_title_edit'});
+print &ui_form_start("save_connmarkpreroute.cgi", "post");
+print &ui_hidden("idx", $idx);
+my @tds = ( "width=20%", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( !$new ) {
-	print		"<tr>
-				<td><img src=images/hash.png hspace=4><b>ID</b></td>
-				<td><b>$idx</b></td>
-			</tr>";
+	$col = "<b>$idx</b>";
+	print &ui_columns_row([ "<img src=images/hash.png hspace=4><b>ID</b>", $col ], \@tds);
 }
-print			"<tr>
-				<td><img src=images/zone.png hspace=4><b>$text{rule_src}</b></td>
-				<td><select name=\"src\">$options_src</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/zone.png hspace=4><b>$text{rule_dst}</b></td>
-				<td><select name=\"dst\">$options_dst</select> <small><i>$text{preroute_help}</i></small></td>
-			</tr>
-			<tr>
-				<td><img src=images/service.png hspace=4><b>$text{rule_service}</b></td>
-				<td><br>";
-				formService( $service, $port, 1 );
-print				"<br>
-				</td>
-			</tr>
-			<tr>
-				<td><img src=images/ndpi.png hspace=4><b>$text{rule_ndpi}</b></td>
-				<td><br>";
-				formNdpiProtocol( $ndpi, $category, 1 );
-print				"<br>
-				<td>
-			</tr>
-			<tr>
-                                <td><br></td><td></td>
-                        </tr>
-			<tr>
-				<td><img src=images/hostnameset.png hspace=4><b>$text{rule_hostname_set}</b></td>
-				<td><select name=\"hostnameset\">$options_hostnameset</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/risk.png hspace=4><b>$text{rule_risk_set}</b></td>
-				<td><select name=\"riskset\">$options_riskset</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/time.png hspace=4><b>$text{rule_time}</b></td>
-				<td><select name=\"time\">$options_time</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/grey-mark.png hspace=4><b>$text{rule_mark}</b></td>
-				<td><input type=\"text\" name=\"mark\" value=\"$mark\" size=\"13\"></td>
-			</tr>
-			<tr>
-                                <td><br></td><td></td>
-                        </tr>
-			<tr>
-				<td><img src=images/active.png hspace=4><b>$text{rule_active}</b></td>
-				<td><input type=\"checkbox\" name=\"active\" value=\"1\"".($active ? ' checked' : '')."></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>";
+$col = &ui_select("src", $src, \@items_src);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'rule_src'}</b>", $col ], \@tds);
+$col = &ui_select("dst", $dst, \@items_dst);
+$col .= "<small><i>$text{preroute_help}</i></small>";
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'rule_dst'}</b>", $col ], \@tds);
+$col = &formService($service, $port, 1);
+print &ui_columns_row([ "<img src=images/service.png hspace=4><b>$text{'rule_service'}</b>", $col ], \@tds);
+$col = &formNdpiProtocol($ndpi, $category, 1);
+print &ui_columns_row([ "<img src=images/grey-ndpi.png hspace=4><b>$text{'rule_ndpi'}</b>", $col ], \@tds);
+$col = &ui_select("hostnameset", $hostnameset, \@hostnamesets);
+print &ui_columns_row([ "<img src=images/hostnameset.png hspace=4><b>$text{'rule_hostname_set'}</b>", $col ], \@tds);
+$col = &ui_select("riskset", $riskset, \@risksets);
+print &ui_columns_row([ "<img src=images/riskset.png hspace=4><b>$text{'rule_risk_set'}</b>", $col ], \@tds);
+$col = &ui_select("time", $time, \@times);
+print &ui_columns_row([ "<img src=images/time.png hspace=4><b>$text{'rule_time'}</b>", $col ], \@tds);
+$col = &ui_textbox("mark", $mark, 13, 0, 13);
+print &ui_columns_row([ "<img src=images/grey-mark.png hspace=4><b>$text{'rule_mark'}</b>", $col ], \@tds);
+$col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
+print &ui_columns_row([ "<img src=images/active.png hspace=4><b>$text{'rule_active'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
 	print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
@@ -179,7 +109,8 @@ if( $new ) {
 	print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
 &ui_print_footer("list_manglerules.cgi?idx=$idx",'Mangle Rules list');

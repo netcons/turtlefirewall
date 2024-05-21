@@ -115,7 +115,7 @@ sub showConnmarkPreroute {
 		my $ndpilist = '';
 		my $cb = $sb eq '' ? '<span style=color:orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
-		my $nimage = '<img src=images/ndpi.png hspace=4>';
+		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-ndpi.png hspace=4>' : '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
 			$ndpilist .= "${nimage}${cb}category: $attr{'CATEGORY'}${ce}"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
@@ -172,7 +172,7 @@ sub showConnmarkPreroute {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -281,7 +281,7 @@ sub showConnmark {
 		my $ndpilist = '';
 		my $cb = $sb eq '' ? '<span style=color:orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
-		my $nimage = '<img src=images/ndpi.png hspace=4>';
+		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-ndpi.png hspace=4>' : '<img src=images/ndpi.png hspace=4>';
 		if( $attr{'CATEGORY'} ne '' ) { 
 			$ndpilist .= "${nimage}${cb}category: $attr{'CATEGORY'}${ce}"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
@@ -337,7 +337,7 @@ sub showConnmark {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";

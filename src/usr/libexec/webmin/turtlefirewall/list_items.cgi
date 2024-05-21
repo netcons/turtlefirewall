@@ -86,7 +86,7 @@ sub showZone {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -123,7 +123,7 @@ sub showNet {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -160,7 +160,7 @@ sub showHost {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -195,7 +195,7 @@ sub showGeoip {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -240,7 +240,7 @@ sub showGroup {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -277,7 +277,7 @@ sub showTime {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -312,7 +312,7 @@ sub showTimeGroup {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -347,7 +347,7 @@ sub showHostNameSet {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -383,7 +383,7 @@ sub showRiskSet {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -414,7 +414,7 @@ sub showRateLimit {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";

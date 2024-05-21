@@ -133,7 +133,7 @@ sub showNat {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -249,7 +249,7 @@ sub showMasquerade {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -294,7 +294,6 @@ sub showRedirect {
 			$fw->AddRedirectAttr($idx, %appo);
 		}
 		$fw->SaveFirewall();
-		#redirect( 'list_nat.cgi' );
 	}
 
 	for( my $i=1; $i<=$nRedirect; $i++ ) {
@@ -332,14 +331,15 @@ sub showRedirect {
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
 			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
+			push(@cols, "" );
 		} else {
 			my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
 			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
+			my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';
+			push(@cols, "${timage}${sb}$attr{'TOPORT'}${se}" );
 		}
-		my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';
-		push(@cols, "${timage}${sb}$attr{'TOPORT'}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 		if( $i < $nRedirect ) {
@@ -365,7 +365,7 @@ sub showRedirect {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";

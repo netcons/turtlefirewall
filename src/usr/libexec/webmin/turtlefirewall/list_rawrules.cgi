@@ -141,7 +141,7 @@ sub showConntrackPreroute {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";
@@ -261,7 +261,7 @@ sub showConntrack {
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
 	print &ui_columns_end();
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
 	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
 	print "</tr></table>";

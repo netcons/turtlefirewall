@@ -71,7 +71,7 @@ print &ui_hr();
 # $status == 1 if Firewall is ON
 $status = $fw->GetStatus();
 
-print '<table width="100%"><tr>';
+print '<table width=100%><tr>';
 print '<td>';
 print &ui_form_start("start.cgi", "post");
 if ( ($status && $in{stop} eq '') || $in{start} ne '') {

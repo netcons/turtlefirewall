@@ -350,7 +350,7 @@ sub showLog {
 	}
 	print &ui_columns_end();
 
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td style=text-align:right>'.&ui_submit( $text{'log_update'} ).'</td>';
 	print "</tr></table>";
 

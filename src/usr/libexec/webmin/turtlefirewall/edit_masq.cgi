@@ -34,92 +34,44 @@ if( $new ) {
 	$active = $masq{'ACTIVE'} ne 'NO';
 }
 
-$options_src = '<option>*</option>';	# All sources
-$options_dst = '';
-@zones = $fw->GetZoneList();
-for my $k (@zones) {
-	if( $k ne 'FIREWALL' ) {
-		$options_src .= '<option'.($k eq $src ? ' selected' : '').'>'.$k.'</option>';
-		# I cannot specify a zone as destination (iptables PREROUTING can have -o oprion)
-		$options_dst .= '<option'.($k eq $dst ? ' selected' : '').'>'.$k.'</option>';
-	}
+my @items_src = ('*');
+push @items_src, grep(!/FIREWALL/, $fw->GetZoneList());
+push @items_src, $fw->GetNetList();
+push @items_src, $fw->GetHostList();
+push @items_src, $fw->GetGroupList();
+@items_src = sort(@items_src);
+
+my @items_dst = ();
+push @items_dst, grep(!/FIREWALL/, $fw->GetZoneList());
+push @items_dst, $fw->GetNetList();
+push @items_dst, $fw->GetHostList();
+push @items_dst, $fw->GetGroupList();
+@items_dst = sort(@items_dst);
+
+print &ui_subheading($new ? $text{'edit_masq_title_create'} : $text{'edit_masq_title_edit'});
+print &ui_form_start("save_masq.cgi", "post");
+print &ui_hidden("idx", $idx);
+my @tds = ( "width=20%", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
+if( !$new ) {
+	$col = "<b>$idx</b>";
+	print &ui_columns_row([ "<img src=images/hash.png hspace=4><b>ID</b>", $col ], \@tds);
 }
+$col = &ui_select("src", $src, \@items_src);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'masq_src'}</b>", $col ], \@tds);
+$col = &ui_select("dst", $dst, \@items_dst);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'masq_dst'}</b>", $col ], \@tds);
+$col = &formService($service, $port, 1);
+print &ui_columns_row([ "<img src=images/service.png hspace=4><b>$text{'rule_service'}</b>", $col ], \@tds);
+my @opts = ( [ 0, "$text{NO}<br>" ], [ 1, $text{YES} ] );
+$col = &ui_radio("masquerade", $is_masquerade ? 1 : 0, \@opts);
+print &ui_columns_row([ "<img src=images/grey-nat.png hspace=4><b>$text{'masq_masquerade'}</b>", $col ], \@tds);
+$col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
+print &ui_columns_row([ "<img src=images/active.png hspace=4><b>$text{'masq_active'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-
-@nets = $fw->GetNetList();
-for my $k (@nets) {
-	$options_src .= '<option'.($k eq $src ? ' selected' : '').'>'.$k.'</option>';
-	$options_dst .= '<option'.($k eq $dst ? ' selected' : '').'>'.$k.'</option>';
-}
-@hosts = $fw->GetHostList();
-for my $k (@hosts) {
-	$options_src .= '<option'.($k eq $src ? ' selected' : '').'>'.$k.'</option>';
-	$options_dst .= '<option'.($k eq $dst ? ' selected' : '').'>'.$k.'</option>';
-}
-@groups = $fw->GetGroupList();
-for my $k (@groups) {
-	$options_src .= '<option'.($k eq $src ? ' selected' : '').'>'.$k.'</option>';
-	$options_dst .= '<option'.($k eq $dst ? ' selected' : '').'>'.$k.'</option>';
-}
-
-
-
-
-print "<br>
-	<form action=\"save_masq.cgi\">
-	<input type=\"hidden\" name=\"idx\" value=\"$idx\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{edit_masq_title_create} : $text{edit_masq_title_edit})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\">";
-if( ! $new ) { print "
-			<tr>
-				<td><img src=images/hash.png hspace=4><b>ID</b></td>
-				<td><b>$idx</b></td>
-			</tr>";
-}
-print			"<tr>
-				<td><img src=images/zone.png hspace=4><b>$text{masq_src}</b></td>
-				<td><select name=\"src\">$options_src</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/zone.png hspace=4><b>$text{masq_dst}</b></td>
-				<td><select name=\"dst\">$options_dst</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/service.png hspace=4><b>$text{masq_service}</b></td>
-				<td><br>";
-				formService( $service, $port, 1 );
-print			qq~	<br></td>
-			</tr>
-			<tr>
-                                <td><br></td><td></td>
-                        </tr>
-			<tr>
-				<td><img src=images/grey-nat.png hspace=4><b>$text{masq_masquerade}</b></td>
-				<td>
-				<input type="radio" name="masquerade" value="0" ~.($is_masquerade ? '' : 'checked').qq~>
-				$text{NO}<br>
-				<input type="radio" name="masquerade" value="1" ~.($is_masquerade ? 'checked' : '').qq~>
-				$text{YES}
-				</td>
-			</tr>
-			<tr>
-				<td><br></td><td></td>
-			</tr>
-			<tr>
-				<td><img src=images/active.png hspace=4><b>$text{masq_active}</b></td>
-				<td><input type=\"checkbox\" name=\"active\" value=\"1\"~.($active ? ' checked' : '').qq~></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>~;
-
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
@@ -127,7 +79,8 @@ if( $new ) {
         print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
 &ui_print_footer('list_nat.cgi','NAT list');

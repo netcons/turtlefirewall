@@ -12,7 +12,7 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( "<img src=images/option.png hspace=4>$text{'edit_options_title'}", $text{'title'}, "" );
 
-getOptionsList();
+&getOptionsList();
 
 foreach $option (@optionkeys) {
 	$options{$option}{value} = $fw->GetOption( $option );
@@ -21,58 +21,43 @@ foreach $option (@optionkeys) {
 	}
 }
 
-print qq~<br>
-	<form action="save_options.cgi">
-	<table border width="100%">
-		<tr $tb>
-			<th>$text{edit_options_title}</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width="100%" border>~;
-
+print &ui_subheading($text{'edit_options_heading'});
+print &ui_form_start("save_options.cgi", "post");
+my @tds = ( "width=20% style=vertical-align:top", "width=20%", "width=60%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 foreach $option (@optionkeys) {
-	showOption( $option, $options{$option}{type}, $options{$option}{value},
+	&showOption( $option, $options{$option}{type}, $options{$option}{value},
 		$options{$option}{default}, $options{$option}{addunchangeopz},
 		$text{"options_${option}_name"}, $text{"options_${option}_desc"} );
 }
+print &ui_columns_end();
 
-print qq~			</table>
-			</td>
-		</tr>
-	</table>
-
-	<table width="100%"><tr>~;
+print "<table width=100%><tr>";
 print '<td>'.&ui_submit( $text{'button_save'}, "save").'</td>';
-print qq~	</tr></table>
-	</form>
-	<br><br>~;
+print "</tr></table>";
 
+print &ui_form_end();
+
+print "<br><br>";
 &ui_print_footer('index.cgi',$text{'index'});
+
+#============================================================================
 
 sub showOption {
 	my( $var, $type, $value, $default, $addunchangeopz, $name, $desc ) = @_;
-	print qq|
-			<tr>
-				<td style=vertical-align:top>
-					<b>$name</b>
-				</td>
-				<td style=vertical-align:top><nobr>|;
+	my $col = '';
 	if( $type eq 'radio' ) {
-		print qq|		<input type="radio" name="$var" value="on"|.($value eq 'on' ? ' checked':'').qq|> on
-					<input type="radio" name="$var" value="off"|.($value eq 'off' ? ' checked':'').'> off';
+		my @opts = ();
+		if( $addunchangeopz ) {
+			@opts = ( [ "off", $text{off} ], [ "on", $text{on} ], [ "unchange", $text{unchange} ] );
+		} else {
+			@opts = ( [ "off", $text{off} ], [ "on", $text{on} ] );
+		}
+		$col = &ui_radio($var, $value, \@opts);
 	}
 	if( $type eq 'text' ) {
-		print qq|		<input type="text" name="$var" value="$value">|;
+		$col = &ui_textbox($var, $value);
 	}
-	if( $addunchangeopz ) {
-		print qq|		<input type="radio" name="$var" value="unchange"|.($value eq 'unchange' ? ' checked':'').'> unchange';
-	}
-	print qq|
-				</nobr></td>
-				<td style=vertical-align:top>
-					$desc<br>
-					Default: <b>$default</b>
-				</td>
-			</tr>|;
+	print &ui_columns_row([ "<img src=images/option.png hspace=4><b>$name</b>", $col, "$desc<br>Default: <b>$default</b>" ], \@tds);
 }

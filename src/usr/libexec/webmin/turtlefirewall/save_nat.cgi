@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 my $idx = $in{'idx'};
 my $virtual = $in{'virtual'};
 my $real = $in{'real'};
-my ($service, $port) = formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
+my ($service, $port) = &formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
 if( $service eq '' ) { $service = 'all'; }
 my $toport = $in{'toport'};
 my $active = $in{'active'};
@@ -39,7 +39,7 @@ if( $in{'delete'} ) {
         $whatfailed = $in{'new'} ? $text{save_nat_error_title2} : $text{save_nat_error_title3};
 
         if( $real eq '' ) {
-                error( $text{save_nat_error1} );
+                &error( $text{save_nat_error1} );
         }
 
 	if( $port ne '' ) {
@@ -48,7 +48,7 @@ if( $in{'delete'} ) {
 			# ensure integer
 			$p = $p + 0;
 			if( $p < 1 || $p > 65535 ) {
-				error( $text{save_nat_error2} );
+				&error( $text{save_nat_error2} );
 			}
 		}
 		$port = join(":", @ports);
@@ -58,10 +58,10 @@ if( $in{'delete'} ) {
 		# ensure integer
 		$toport = $toport + 0;
 		if( $toport < 1 || $toport > 65535 ) {
-			error( $text{save_nat_error3} );
+			&error( $text{save_nat_error3} );
 		}
 		if( $service ne 'tcp' && $service ne 'udp' ) {
-			error( $text{save_nat_error4} );
+			&error( $text{save_nat_error4} );
 		}
 	}
 
@@ -73,4 +73,4 @@ if( $in{'delete'} ) {
 }
 
 $fw->SaveFirewall();
-redirect( 'list_nat.cgi' );
+&redirect( 'list_nat.cgi' );

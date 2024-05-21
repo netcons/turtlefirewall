@@ -25,38 +25,26 @@ my %r = $fw->GetRateLimit($ratelimit);
 my $rate = $r{'RATE'};
 my $description = $r{'DESCRIPTION'};
 
-print "<br><br>
-	<form action=\"save_ratelimit.cgi\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{'edit_ratelimit_title_create'} : $text{'edit_ratelimit_title_edit'})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\"><tr>
-				<td><img src=images/ratelimit.png hspace=4><b>$text{'name'}</b></td>
-			<td>";
+print &ui_subheading($new ? $text{'edit_ratelimit_title_create'} : $text{'edit_ratelimit_title_edit'});
+print &ui_form_start("save_ratelimit.cgi", "post");
+my @tds = ( "width=20% style=vertical-align:top", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( $new ) {
-	print "		<input type=\"text\" name=\"ratelimit\">";
+	$col = &ui_textbox("ratelimit");
 } else {
-	print '		<input type="text" name="newratelimit" value="'.$ratelimit.'">';
-	print '		<input type="hidden" name="ratelimit" value="'.$ratelimit.'">';
+	$col = &ui_textbox("newratelimit", $in{'ratelimit'});
+	$col .= &ui_hidden("ratelimit", $in{'ratelimit'});
 }
-print			qq~</td></tr>
-                   	<tr>
-				<td><img src=images/rate.png hspace=4><b>$text{'rate'}</b></td>
-				<td style=vertical-align:top><input type="text" name="rate" size="3" maxlength="3" value="$rate"> <i>Mbps</i></td>
-			</tr>
- 			<tr>
-				<td><img src=images/info.png hspace=4><b>$text{'description'}</b></td>
-				<td style=vertical-align:top><input type="text" name="description" size="60" value="$description"></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>~;
+print &ui_columns_row([ "<img src=images/ratelimit.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+$col = &ui_textbox("rate", $rate, 3, 0, 3);
+$col .= "<i>Mbps</i>";
+print &ui_columns_row([ "<img src=images/rate.png hspace=4><b>$text{'rate'}</b>", $col ], \@tds);
+$col = &ui_textbox("description", $description, 60, 0, 60);
+print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
@@ -64,7 +52,8 @@ if( $new ) {
         print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
 &ui_print_footer('list_items.cgi','items list');

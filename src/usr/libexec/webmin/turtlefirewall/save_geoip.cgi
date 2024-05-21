@@ -17,7 +17,7 @@ my $ip = $in{'ip'};
 my $zone = $in{'zone'};
 my $description = $in{'description'};
 
-if( ! $fw->checkName($newgeoip) ) { error( $text{save_geoip_error7} ); }
+if( ! $fw->checkName($newgeoip) ) { &error( $text{save_geoip_error7} ); }
 
 if( $in{'delete'} ) {
 	# delete geoip
@@ -26,11 +26,11 @@ if( $in{'delete'} ) {
                 foreach $d (sort { $b <=> $a } @d) {
                         my $geoip = $d;
                         $whatfailed = $text{save_geoip_error_title1};
-                        if( !$fw->DeleteGeoip($geoip) ) { error( $text{save_geoip_error1} ); }
+                        if( !$fw->DeleteGeoip($geoip) ) { &error( $text{save_geoip_error1} ); }
                 }
         } elsif( $geoip ne '' ) {
                 $whatfailed = $text{save_geoip_error_title1};
-                if( !$fw->DeleteGeoip($geoip) ) { error( $text{save_geoip_error1} ); }
+                if( !$fw->DeleteGeoip($geoip) ) { &error( $text{save_geoip_error1} ); }
         }
 } else {
 	if( $in{'new'} ) {
@@ -38,22 +38,22 @@ if( $in{'delete'} ) {
 		my @allitems = $fw->GetAllItemsList();
 		foreach my $i (@allitems) {
 			if( $i eq $geoip ) {
-				error( $text{save_geoip_error2} );
+				&error( $text{save_geoip_error2} );
 			}
 		}
 	} else {
 		$whatfailed = $text{save_geoip_error_title3};
 	}
-	if ( $geoip eq '' ) { error( $text{save_geoip_error3} ); }
-	if ( ! $fw->GetZone($zone) ) { error( $text{save_geoip_error4} ); }
-	if ( $ip !~ /^[A-Z1-2]{2}$/ ) { error( $text{save_geoip_error5} ); }
+	if ( $geoip eq '' ) { &error( $text{save_geoip_error3} ); }
+	if ( ! $fw->GetZone($zone) ) { &error( $text{save_geoip_error4} ); }
+	if ( $ip !~ /^[A-Z1-2]{2}$/ ) { &error( $text{save_geoip_error5} ); }
 	$fw->AddGeoip( $geoip, $ip, $zone, $description );
 	if( !$in{'new'} && $newgeoip ne $geoip ) {
 		if( !$fw->RenameItem( $geoip, $newgeoip ) ) {
-			error( text('save_geoip_error6', $geoip, $newgeoip) );
+			&error( $text('save_geoip_error6', $geoip, $newgeoip) );
 		}
 	}
 }
 
 $fw->SaveFirewall();
-redirect( 'list_items.cgi' );
+&redirect( 'list_items.cgi' );

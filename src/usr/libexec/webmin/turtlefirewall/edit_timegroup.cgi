@@ -21,67 +21,31 @@ if( $new ) {
 	&ui_print_header( "<img src=images/timegroup.png hspace=4>$text{'edit_timegroup_title_edit'}", $text{'title'}, "" );
 }
 
-@aItems = $fw->GetItemsAllowToTimeGroup( $timegroup );
-
 my %g = $fw->GetTimeGroup($timegroup);
-my @timegroupItems = @{$g{ITEMS}};
+my @selected_items = @{$g{ITEMS}};
 my $description = $g{DESCRIPTION};
 
-%aSelectedItems = ();
-foreach my $k (@timegroupItems) {
-	$aSelectedItems{$k} = 1;
-}
+my @items = $fw->GetItemsAllowToTimeGroup($timegroup);
 
-print "<br><br>
-	<form action=\"save_timegroup.cgi\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{'edit_timegroup_title_create'} : $text{'edit_timegroup_title_edit'})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\"><tr>
-				<td style=vertical-align:top><img src=images/timegroup.png hspace=4><b>$text{'name'}</b></td>
-			<td style=vertical-align:top>";
+print &ui_subheading($new ? $text{'edit_timegroup_title_create'} : $text{'edit_timegroup_title_edit'});
+print &ui_form_start("save_timegroup.cgi", "post");
+my @tds = ( "width=20% style=vertical-align:top", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( $new ) {
-	print "		<input type=\"text\" name=\"timegroup\">";
+	$col = &ui_textbox("timegroup");
 } else {
-	print '		<input type="text" name="newtimegroup" value="'.$timegroup.'">';
-	print '		<input type="hidden" name="timegroup" value="'.$timegroup.'">';
+	$col = &ui_textbox("newtimegroup", $in{'timegroup'});
+	$col .= &ui_hidden("timegroup", $in{'timegroup'});
 }
-print			'</td></tr>
-			<tr>
-				<td style=vertical-align:top><img src=images/item.png hspace=4><b>'.$text{'timegroupitems'}.'</b></td>
-				<td style=vertical-align:top>
-					<table width="100%">';
+print &ui_columns_row([ "<img src=images/timegroup.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+$col = &ui_select("items", \@selected_items, \@items, 5, 1);
+print &ui_columns_row([ "<img src=images/item.png hspace=4><b>$text{'groupitems'}</b>", $col ], \@tds);
+$col = &ui_textbox("description", $description, 60, 0, 60);
+print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-my $col = 0;
-foreach my $i (@aItems) {
-	if( $col == 0 ) { print "<tr>"; }
-	print "<td width=\"25%\"><nobr><input type=\"checkbox\" name=\"item_$i\" value=\"1\" ";
-	print ($aSelectedItems{$i} ? ' checked' : '');
-	print "> <img src=images/time.png hspace=4>$i</nobr></td>";
-	if( ++$col == 4 ) {
-		$col = 0;
-		print "</tr>";
-	}
-}
-if( $col < 3 ) { print "</tr>"; }
-
-print					'</table>
-				</td>
-			</tr>';
-
-print 			'<tr><td style=vertical-align:top><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>';
-print			'<td style=vertical-align:top><input type="text" name="description" size="60" value="'.$description.'"></td>';
-print			'</tr>';
-
-print			'</table>
-			</td>
-		</tr>
-	</table>';
-
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
@@ -89,8 +53,8 @@ if( $new ) {
         print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
 &ui_print_footer('list_items.cgi','items list');
-

@@ -12,13 +12,13 @@ do 'turtlefirewall-lib.pl';
 &ReadParse();
 
 if( $in{download} ) {
-	backup_download();
+	&backup_download();
 }
 
 &ui_print_header( "<img src=images/shield.png hspace=4>$text{'backup_title'}", $text{'title'}, "" );
 
 if( $in{upload} ) {
-	restore_upload( $in{backup} );
+	&restore_upload( $in{backup} );
 	&ui_print_footer('backup.cgi',$text{'backup_title'});
 } else {
 	print qq~<br/>
@@ -63,7 +63,7 @@ sub backup_download {
 	my $confdir = confdir();
 
 	open TARGZ, "tar cz --directory $confdir fw.xml fwuserdefservices.xml |"
-		or error( "Errore in fase di backup" );
+		or &error( "Errore in fase di backup" );
 	print "Content-type: application/x-gzip\n";
 	print "Expires: Mon, 26 Jul 1997 05:00:00 GMT\n";    # Date in the past
 	print "Cache-Control: no-store, no-cache, must-revalidate\n";  # HTTP/1.1
@@ -88,7 +88,7 @@ sub restore_upload {
 
 	#chdir '/etc/turtlefirewall';
 	#chdir '/tmp';
-	open TARGZ, "| tar xvz --directory $confdir fw.xml fwuserdefservices.xml >$output 2>&1" or error( $text{backup_error1} );
+	open TARGZ, "| tar xvz --directory $confdir fw.xml fwuserdefservices.xml >$output 2>&1" or &error( $text{backup_error1} );
 	syswrite(TARGZ, $backup, length($backup));
 	close TARGZ;
 

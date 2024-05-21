@@ -30,7 +30,7 @@ if( ! $gotXmlParser ) {
 
 my $tfwlib = '/usr/lib/turtlefirewall/TurtleFirewall.pm';
 if( ! -f $tfwlib ) {
-	error( 'Turtle Firewall Library not found. Install Turtle Firewall.' );
+	&error( 'Turtle Firewall Library not found. Install Turtle Firewall.' );
 }
 
 if( -f $config{fw_logfile} ) {
@@ -121,11 +121,12 @@ sub LoadCountryCodes {
 # Generates html for service input
 sub formService {
 	my( $service, $port, $multiple ) = @_;
+	my $this = '';
 
 	my @services = split( /,/, $service );
 
 	my $options_service = '';
-	LoadServices( $fw );
+	&LoadServices($fw);
 	for my $k ($fw->GetServicesList()) {
 		if( !($k =~ /^(tcp|udp|all)$/) ) {
 			my %service = $fw->GetService($k);
@@ -140,24 +141,25 @@ sub formService {
 		}
 	}
 
-	print '<table border="0" cellpadding="0">';
-	print '<tr><td><input type="RADIO" name="servicetype" value="1"'.($service eq 'all' ? ' CHECKED' : '')."></td><td>$text{rule_all_services}</td></tr>";
+	$this .= '<table border="0" cellpadding="0">';
+	$this .= '<tr><td><input type="RADIO" name="servicetype" value="1"'.($service eq 'all' ? ' CHECKED' : '')."></td><td>$text{rule_all_services}</td></tr>";
 
-	print '<tr><td><input type="RADIO" name="servicetype" value="2"'.(!($service =~ /^(tcp|udp|all)$/) ? ' CHECKED' : '').'></td>';
-	if( $multiple ) {
-		print '<td><select name="service2" size="15" MULTIPLE>';
+	$this .= '<tr><td><input type="RADIO" name="servicetype" value="2"'.(!($service =~ /^(tcp|udp|all)$/) ? ' CHECKED' : '').'></td>';
+		if( $multiple ) {
+	$this .= '<td><select name="service2" size="5" MULTIPLE>';
 	} else {
-		print '<td><select name="service2" size="1">';
+		$this .= '<td><select name="service2" size="1">';
 	}
-	print $options_service;
-	print '</select></td></tr>';
+	$this .= $options_service;
+	$this .= '</select></td></tr>';
 
-	print '<tr><td><input type="RADIO" name="servicetype" value="3"'.($service =~ /^(tcp|udp)$/ ? ' CHECKED' : '').'></td>';
-	print '<td><select name="service3" size="1">';
-	print '<option'.($service eq 'tcp' ? ' SELECTED' : '').'>tcp</option>';
-	print '<option'.($service eq 'udp' ? ' SELECTED' : '').'>udp</option>';
-	print '</select>';
-	print " $text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"11\" maxlength=\"11\"> <small><i>$text{port_help}</i></small></td></tr></table>";
+	$this .= '<tr><td><input type="RADIO" name="servicetype" value="3"'.($service =~ /^(tcp|udp)$/ ? ' CHECKED' : '').'></td>';
+	$this .= '<td><select name="service3" size="1">';
+	$this .= '<option'.($service eq 'tcp' ? ' SELECTED' : '').'>tcp</option>';
+	$this .= '<option'.($service eq 'udp' ? ' SELECTED' : '').'>udp</option>';
+	$this .= '</select>';
+	$this .= " $text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"11\" maxlength=\"11\"> <small><i>$text{port_help}</i></small></td></tr></table>";
+	return $this;
 }
 
 # Parse service inputs and return name of service choosed
@@ -180,13 +182,14 @@ sub formServiceParse {
 # Generates html for ndpiprotocol input
 sub formNdpiProtocol {
 	my( $ndpiprotocol, $category, $multiple ) = @_;
+	my $this = '';
 
 	my @ndpiprotocols = split( /,/, $ndpiprotocol );
 
 	my @categorys = ();
 
 	my $options_ndpiprotocol = '';
-	LoadNdpiProtocols( $fw );
+	&LoadNdpiProtocols($fw);
 	for my $k ($fw->GetNdpiProtocolsList()) {
 		if( !($k =~ /^(all)$/) ) {
 			my %ndpiprotocol = $fw->GetNdpiProtocol($k);
@@ -214,23 +217,24 @@ sub formNdpiProtocol {
 		$options_category .= qq~<option value="$k"~.($selected ? ' SELECTED' : '').">$k";
 	}
 
-	print '<table border="0" cellpadding="0">';
-	print '<tr><td><input type="RADIO" name="ndpiprotocoltype" value="1"'.($ndpiprotocol eq 'all' ? ' CHECKED' : '')."></td><td>$text{rule_all_ndpiprotocols}</td></tr>";
+	$this .= '<table border="0" cellpadding="0">';
+	$this .= '<tr><td><input type="RADIO" name="ndpiprotocoltype" value="1"'.($ndpiprotocol eq 'all' ? ' CHECKED' : '')."></td><td>$text{rule_all_ndpiprotocols}</td></tr>";
 
-	print '<tr><td><input type="RADIO" name="ndpiprotocoltype" value="2"'.(!($ndpiprotocol =~ /^(all)$/) ? ' CHECKED' : '').'></td>';
+	$this .= '<tr><td><input type="RADIO" name="ndpiprotocoltype" value="2"'.(!($ndpiprotocol =~ /^(all)$/) ? ' CHECKED' : '').'></td>';
 	if( $multiple ) {
-		print '<td><select name="ndpiprotocol2" size="15" MULTIPLE>';
+		$this .= '<td><select name="ndpiprotocol2" size="5" MULTIPLE>';
 	} else {
-		print '<td><select name="ndpiprotocol2" size="1">';
+		$this .= '<td><select name="ndpiprotocol2" size="1">';
 	}
-	print $options_ndpiprotocol;
-	print '</select></td></tr>';
+	$this .= $options_ndpiprotocol;
+	$this .= '</select></td></tr>';
 
-	print '<tr><td><input type="RADIO" name="ndpiprotocoltype" value="3"'.($category ne '' ? ' CHECKED' : '').'></td>';
-	print "<td>$text{category} : ";
-	print '<select name="category" size="1">';
-	print $options_category;
-	print '</select></td></tr></table>';
+	$this .= '<tr><td><input type="RADIO" name="ndpiprotocoltype" value="3"'.($category ne '' ? ' CHECKED' : '').'></td>';
+	$this .= "<td>$text{category} : ";
+	$this .= '<select name="category" size="1">';
+	$this .= $options_category;
+	$this .= '</select></td></tr></table>';
+	return $this;
 }
 
 # Parse ndpiprotocol inputs and return name of ndpiprotocol choosen

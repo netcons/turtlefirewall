@@ -31,8 +31,8 @@ sub showBlackLists {
         foreach my $b (sort keys %blacklists) {
 		local @cols;
 		push(@cols, "<img src=images/blacklist.png hspace=4>$b");
-		push(@cols, $blacklists{$b}{DESCRIPTION});
-		push(@cols, $blacklists{$b}{LOCATION});
+		push(@cols, "<img src=images/info.png hspace=4>$blacklists{$b}{DESCRIPTION}");
+		push(@cols, "<img src=images/address.png hspace=4>$blacklists{$b}{LOCATION}");
 		my $blacklistcount = qx{wc -l < $blacklists{$b}{LOCATION} 2>/dev/null};
 		if( $blacklistcount eq '' ) { $blacklistcount = '0'; }
 		push(@cols, "$blacklistcount");

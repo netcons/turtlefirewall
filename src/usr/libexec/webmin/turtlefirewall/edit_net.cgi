@@ -19,62 +19,39 @@ if( $new ) {
 	&ui_print_header( "<img src=images/net.png hspace=4>$text{'edit_net_title_edit'}", $text{'title'}, "" );
 }
 
-$net = $in{'net'};
-$newnet = $in{'newnet'};
-%n = $fw->GetNet($net);
-$ip = $n{'IP'};
-$netmask = $n{'NETMASK'};
-$zone = $n{'ZONE'};
-$description = $n{'DESCRIPTION'};
+my $net = $in{'net'};
+my $newnet = $in{'newnet'};
+my %n = $fw->GetNet($net);
+my $ip = $n{'IP'};
+my $netmask = $n{'NETMASK'};
+my $zone = $n{'ZONE'};
+my $description = $n{'DESCRIPTION'};
 
-$options_zone = '';
-@zones = $fw->GetZoneList();
-for my $k (@zones) {
-	if( $k ne 'FIREWALL' ) {
-		$options_zone .= '<option'.($k eq $zone ? ' selected' : '').'>'.$k.'</option>';
-	}
-}
+my @zones = grep(!/FIREWALL/, $fw->GetZoneList());
 
-print "<br><br>
-	<form action=\"save_net.cgi\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{'edit_net_title_create'} : $text{'edit_net_title_edit'})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\"><tr>
-				<td><img src=images/net.png hspace=4><b>$text{'name'}</b></td>
-			<td>";
+print &ui_subheading($new ? $text{'edit_net_title_create'} : $text{'edit_net_title_edit'});
+print &ui_form_start("save_net.cgi", "post");
+my @tds = ( "width=20%", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( $new ) {
-	print "		<input type=\"text\" name=\"net\">";
+	$col = &ui_textbox("net");
 } else {
-	print '		<input type="text" name="newnet" value="'.$in{'net'}.'">';
-	print '		<input type="hidden" name="net" value="'.$in{'net'}.'">';
+	$col = &ui_textbox("newnet", $in{'net'});
+	$col .= &ui_hidden("net", $in{'net'});
 }
-print			'</td></tr>
-			<tr>
-				<td><img src=images/address.png hspace=4><b>'.$text{'netaddress'}.'</b></td>
-				<td><input type="text" name="ip" value="'.$ip.'"></td>
-			</tr>
-			<tr>
-				<td><img src=images/mask.png hspace=4><b>'.$text{'netmask'}.'</b></td>
-				<td><input type="text" name="netmask" value="'.$netmask.'"></td>
-			</tr>
-			<tr>
-				<td><img src=images/zone.png hspace=4><b>'.$text{'zone'}.'</b></td>
-				<td><select name="zone">'.$options_zone.'</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>
-				<td><input type="text" size="60" name="description" value="'.$description.'"></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>';
+print &ui_columns_row([ "<img src=images/net.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+$col = &ui_textbox("ip", $ip);
+print &ui_columns_row([ "<img src=images/address.png hspace=4><b>$text{'netaddress'}</b>", $col ], \@tds);
+$col = &ui_textbox("netmask", $netmask);
+print &ui_columns_row([ "<img src=images/mask.png hspace=4><b>$text{'netmask'}</b>", $col ], \@tds);
+$col = &ui_select("zone", $zone, \@zones);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'zone'}</b>", $col ], \@tds);
+$col = &ui_textbox("description", $description, 60, 0, 60);
+print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
@@ -82,8 +59,8 @@ if( $new ) {
         print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
 &ui_print_footer('list_items.cgi','items list');
-

@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 my $idx = $in{'idx'};
 my $src = $in{'src'};
 my $dst = $in{'dst'};
-my ($service, $port) = formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
+my ($service, $port) = &formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
 my $is_masquerade = $in{'masquerade'};
 my $active = $in{'active'};
 
@@ -44,18 +44,18 @@ if( $in{'delete'} ) {
 			# ensure integer
 			$p = $p + 0;
 			if( $p < 1 || $p > 65535 ) {
-				error( $text{save_masq_error1} );
+				&error( $text{save_masq_error1} );
 			}
 		}
 		$port = join(":", @ports);
 	}
 
 	if( $port ne '' && $service ne 'tcp' && $service ne 'udp' ) {
-		error( $text{save_masq_error2} );
+		&error( $text{save_masq_error2} );
 	}
 	
 	$fw->AddMasquerade( $in{'new'} ? 0 : $idx, $src, $dst, $service, $port, $is_masquerade, $active );
 }
 
 $fw->SaveFirewall();
-redirect( 'list_nat.cgi' );
+&redirect( 'list_nat.cgi' );

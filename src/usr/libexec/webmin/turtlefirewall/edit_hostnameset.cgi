@@ -27,44 +27,25 @@ my $description = $h{'DESCRIPTION'};
 
 my @hostnamesetlist = split(/,/, $hostnames);
 
-print "<br><br>
-	<form action=\"save_hostnameset.cgi\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{'edit_hostnameset_title_create'} : $text{'edit_hostnameset_title_edit'})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\"><tr>
-				<td style=vertical-align:top><img src=images/hostnameset.png hspace=4><b>$text{'name'}</b></td>
-			<td style=vertical-align:top>";
+print &ui_subheading($new ? $text{'edit_hostnameset_title_create'} : $text{'edit_hostnameset_title_edit'});
+print &ui_form_start("save_hostnameset.cgi", "post");
+my @tds = ( "width=20% style=vertical-align:top", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( $new ) {
-	print "		<input type=\"text\" name=\"hostnameset\">";
+	$col = &ui_textbox("hostnameset");
 } else {
-	print '		<input type="text" name="newhostnameset" value="'.$hostnameset.'">';
-	print '		<input type="hidden" name="hostnameset" value="'.$hostnameset.'">';
+	$col = &ui_textbox("newhostnameset", $in{'hostnameset'});
+	$col .= &ui_hidden("hostnameset", $in{'hostnameset'});
 }
-print			'</td></tr>
-			<tr>
-				<td style=vertical-align:top><img src=images/hostname.png hspace=4><b>'.$text{'hostnames'}.'</b></td>
-				<td style=vertical-align:top>
-			<table width="100%">
-                   	<tr><td>';
-print	    		  &ui_textarea("hostnamesetlist", join("\n", @hostnamesetlist), 10, 20);
-print			'</td></tr>
-			</table>
-			</td></tr>';
+print &ui_columns_row([ "<img src=images/hostnameset.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+$col = &ui_textarea("hostnamesetlist", join("\n", @hostnamesetlist), 10, 20);
+print &ui_columns_row([ "<img src=images/hostname.png hspace=4><b>$text{'hostnames'}</b>", $col ], \@tds);
+$col = &ui_textbox("description", $description, 60, 0, 60);
+print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print 			'<tr><td style=vertical-align:top><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>';
-print			'<td style=vertical-align:top><input type="text" name="description" size="60" value="'.$description.'"></td>';
-print			'</tr>';
-
-print			'</table>
-			</td>
-		</tr>
-	</table>';
-
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
@@ -72,7 +53,8 @@ if( $new ) {
         print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
 &ui_print_footer('list_items.cgi','items list');

@@ -19,66 +19,47 @@ if( $new ) {
 	&ui_print_header( "<img src=images/geoip.png hspace=4>$text{'edit_geoip_title_edit'}", $text{'title'}, "" );
 }
 
-$geoip = $in{'geoip'};
-$newgeoip = $in{'newgeoip'};
-%n = $fw->GetGeoip($geoip);
-$ip = $n{'IP'};
-$zone = $n{'ZONE'};
-$description = $n{'DESCRIPTION'};
+my $geoip = $in{'geoip'};
+my $newgeoip = $in{'newgeoip'};
+my %n = $fw->GetGeoip($geoip);
+my $ip = $n{'IP'};
+my $zone = $n{'ZONE'};
+my $description = $n{'DESCRIPTION'};
 
-$options_zone = '';
-@zones = $fw->GetZoneList();
-for my $k (@zones) {
-	if( $k ne 'FIREWALL' ) {
-		$options_zone .= '<option'.($k eq $zone ? ' selected' : '').'>'.$k.'</option>';
-	}
-}
+my @zones = grep(!/FIREWALL/, $fw->GetZoneList());
 
-LoadCountryCodes( $fw );
-$options_countrycode = '';
-@countrycodes = $fw->GetCountryCodesList();
+&LoadCountryCodes($fw);
+my $options_countrycode = '';
+my @countrycodes = $fw->GetCountryCodesList();
 for my $k (@countrycodes) {
 	my %country = $fw->GetCountryCode($k);
 	$options_countrycode .= qq~<option value="$k"~.($k eq $ip ? ' selected' : '').">$k - $country{DESCRIPTION}</option>";
 }
 
-print "<br><br>
-	<form action=\"save_geoip.cgi\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{'edit_geoip_title_create'} : $text{'edit_geoip_title_edit'})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\"><tr>
-			<td>
-				<b><img src=images/geoip.png hspace=4>$text{'name'}</b></td>
-			<td>";
+print &ui_subheading($new ? $text{'edit_geoip_title_create'} : $text{'edit_geoip_title_edit'});
+print &ui_form_start("save_geoip.cgi", "post");
+my @tds = ( "width=20%", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( $new ) {
-	print "		<input type=\"text\" name=\"geoip\">";
+	$col = &ui_textbox("geoip");
 } else {
-	print '		<input type="text" name="newgeoip" value="'.$in{'geoip'}.'">';
-	print '		<input type="hidden" name="geoip" value="'.$in{'geoip'}.'">';
+	$col = &ui_textbox("newgeoip", $in{'geoip'});
+	$col .= &ui_hidden("geoip", $in{'geoip'});
 }
-print			'</td></tr>
-                        <tr>
-                                <td><img src=images/countrycode.png hspace=4><b>'.$text{'countrycode'}.'</b></td>
-				<td><select name="ip">'.$options_countrycode.'</select></td>
-                        </tr>
-			<tr>
-				<td><img src=images/zone.png hspace=4><b>'.$text{'zone'}.'</b></td>
-				<td><select name="zone">'.$options_zone.'</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/info.png hspace=4><b>'.$text{'description'}.'</b></td>
-				<td><input type="text" size="60" name="description" value="'.$description.'"></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>';
+print &ui_columns_row([ "<img src=images/host.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+# FIXME
+#$col = &ui_select("ip", "$ip", \@countrycodes);
+$col = "<select name=ip>$options_countrycode</select>";
+# FIXME
+print &ui_columns_row([ "<img src=images/countrycode.png hspace=4><b>$text{'countrycode'}</b>", $col ], \@tds);
+$col = &ui_select("zone", $zone, \@zones);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'zone'}</b>", $col ], \@tds);
+$col = &ui_textbox("description", $description, 60, 0, 60);
+print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
@@ -86,8 +67,8 @@ if( $new ) {
         print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
 &ui_print_footer('list_items.cgi','items list');
-

@@ -41,58 +41,58 @@ if( $in{'delete'} ) {
 			# ensure integer
 			$p = $p + 0;
 			if( $p < 1 || $p > 65535 ) {
-				error( $text{save_conntrack_error1} );
+				&error( $text{save_conntrack_error1} );
 			}
 		}
 		$port = join(":", @ports);
 	}
 
 	if( $src eq '' || $dst eq '' ) {
-		error( $text{save_conntrack_error2} );
+		&error( $text{save_conntrack_error2} );
 	}
 
 	if( $helper eq 'ftp' && $service ne 'tcp' ) {
-		error( $text{save_conntrack_error3} );
+		&error( $text{save_conntrack_error3} );
 	}
 
 	if( $helper eq 'tftp' && $service ne 'udp' ) {
-		error( $text{save_conntrack_error4} );
+		&error( $text{save_conntrack_error4} );
 	}
 
 	if( $helper eq 'pptp' && $service ne 'tcp' ) {
-		error( $text{save_conntrack_error5} );
+		&error( $text{save_conntrack_error5} );
 	}
 
 	if( $helper eq 'RAS' && $service ne 'udp' ) {
-		error( $text{save_conntrack_error6} );
+		&error( $text{save_conntrack_error6} );
 	}
 
 	if( $helper eq 'Q.931' && $service ne 'tcp' ) {
-		error( $text{save_conntrack_error7} );
+		&error( $text{save_conntrack_error7} );
 	}
 
 	if( $helper eq 'amanda' && $service ne 'udp' ) {
-		error( $text{save_conntrack_error8} );
+		&error( $text{save_conntrack_error8} );
 	}
 
 	if( $helper eq 'irc' && $service ne 'tcp' ) {
-		error( $text{save_conntrack_error9} );
+		&error( $text{save_conntrack_error9} );
 	}
 
 	if( $helper eq 'sane' && $service ne 'tcp' ) {
-		error( $text{save_conntrack_error10} );
+		&error( $text{save_conntrack_error10} );
 	}
 
 	if( $helper eq 'snmp' && $service ne 'udp' ) {
-		error( $text{save_conntrack_error11} );
+		&error( $text{save_conntrack_error11} );
 	}
 
 	if( $helper eq 'netbios-ns' && $service ne 'udp' ) {
-		error( $text{save_conntrack_error12} );
+		&error( $text{save_conntrack_error12} );
 	}
 
 	$fw->AddConntrackPreroute( $in{'new'} ? 0 : $idx, $src, $dst, $service, $port, $helper, $active );
 }
 
 $fw->SaveFirewall();
-redirect( 'list_rawrules.cgi'.($in{'delete'} ? "?idx=$idx" : '') );
+&redirect( 'list_rawrules.cgi'.($in{'delete'} ? "?idx=$idx" : '') );

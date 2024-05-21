@@ -34,62 +34,27 @@ sub reportFlowStat {
 	my $top = $tops[0];
 	my $string = '';
 
-	my $options_log = '';
 	my @logs = glob("${log}*");
-	for my $k (@logs) {
-		$options_log .= '<option'.($k eq $log ? ' selected' : '').'>'.$k.'</option>';
-	}
 
-	my $options_max = '';
-	for my $k (@maxs) {
-		$options_max .= '<option'.($k eq $max ? ' selected' : '').'>'.$k.'</option>';
-	}
-
-	my $options_top = '';
-	for my $k (@tops) {
-		$options_top .= '<option'.($k eq $top ? ' selected' : '').'>'.$k.'</option>';
-	}
-
-	my $options_type = '';
-	for my $k (@types) {
-		$options_type .= '<option'.($k eq $type ? ' selected' : '').'>'.$k.'</option>';
-	}
-
-	$td = "width=20% style=white-space:nowrap";
+	print &ui_subheading($text{'edit_flowstat_title_create'});
 	print &ui_form_start("report_flowstat.cgi", "post");
-	print qq~<table border width=\"100%\">
-		<tr $tb>
-			<th>$text{'edit_flowstat_title_create'}</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\">
-			<tr>
-				<td $td><b>$text{'edit_flowstat_log'}</b></td>
-				<td><select name="log">$options_log</select></td>
-			</tr>
-			<tr>
-				<td $td><b>$text{'edit_flowstat_type'}</b></td>
-				<td><select name="type">$options_type</select></td>
-			</tr>
-	  		<tr>
-				<td $td><b>$text{'edit_flowstat_max'}</b></td>
-				<td><select name="max">$options_max</select> <small><i>$text{flowstat_max_help}</i></small></td>
-			</tr>
-			<tr>
-				<td $td><b>$text{'edit_flowstat_top'}</b></td>
-				<td><select name="top">$options_top</select></td>
-			</tr>
-			<tr>
-				<td><b>$text{'edit_flowstat_string'}</b></td>
-				<td><input type="text" size="60" name="string" value="$string"></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>~;
+	my @tds = ( "width=20% style=white-space:nowrap ", "width=80%" );
+	print &ui_columns_start(undef, 100, 0, \@tds);
+	my $col = '';
+	$col = &ui_select("log", $log, \@logs);
+	print &ui_columns_row([ "<b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
+	$col = &ui_select("type", $type, \@types);
+	print &ui_columns_row([ "<b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);
+	$col = &ui_select("max", $max, \@maxs);
+	$col .= "<small><i>$text{flowstat_max_help}</i></small>";
+	print &ui_columns_row([ "<b>$text{'edit_flowstat_max'}</b>", $col ], \@tds);
+	$col = &ui_select("top", $top, \@tops);
+	print &ui_columns_row([ "<b>$text{'edit_flowstat_top'}</b>", $col ], \@tds);
+	$col = &ui_textbox("string", $string, 60, 0, 60);
+	print &ui_columns_row([ "<b>$text{'edit_flowstat_string'}</b>", $col ], \@tds);
+	print &ui_columns_end();
 
-	print "<table width=\"100%\"><tr>";
+	print "<table width=100%><tr>";
 	print '<td>'.&ui_submit( $text{'button_create'}, "create").'</td>';
 	print "</tr></table>";
 	print &ui_form_end();

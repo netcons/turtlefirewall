@@ -28,7 +28,7 @@ my $description = $r{'DESCRIPTION'};
 my $options_risk = '';
 my @selected_risk = split(/,/, $risks);
 
-LoadNdpiRisks( $fw );
+&LoadNdpiRisks($fw);
 my @items = ();
 push @items, $fw->GetNdpiRisksList();
 @items = sort { $a <=> $b } @items;
@@ -44,38 +44,28 @@ for my $k (@items) {
 	$options_risk .= qq~<option value="$k"~.($selected ? ' selected' : '').">$k - $risk{'DESCRIPTION'}</option>";
 }
 
-print "<br><br>
-	<form action=\"save_riskset.cgi\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{'edit_riskset_title_create'} : $text{'edit_riskset_title_edit'})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\"><tr>
-				<td><img src=images/riskset.png hspace=4><b>$text{'name'}</b></td>
-			<td>";
+print &ui_subheading($new ? $text{'edit_riskset_title_create'} : $text{'edit_riskset_title_edit'});
+print &ui_form_start("save_riskset.cgi", "post");
+my @tds = ( "width=20% style=vertical-align:top", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( $new ) {
-	print "		<input type=\"text\" name=\"riskset\">";
+	$col = &ui_textbox("riskset");
 } else {
-	print '		<input type="text" name="newriskset" value="'.$riskset.'">';
-	print '		<input type="hidden" name="riskset" value="'.$riskset.'">';
+	$col = &ui_textbox("newriskset", $in{'riskset'});
+	$col .= &ui_hidden("riskset", $in{'riskset'});
 }
-print			qq~</td></tr>
-                   	<tr>
-                                <td><img src=images/risk.png hspace=4><b>$text{'risks'}</b></td>
-				<td><select name="risks" size="5" multiple>$options_risk</select></td>
-			</tr>
- 			<tr>
-				<td><img src=images/info.png hspace=4><b>$text{'description'}</b></td>
-				<td style=vertical-align:top><input type="text" name="description" size="60" value="$description"></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>~;
+print &ui_columns_row([ "<img src=images/riskset.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+# FIXME
+#$col = &ui_select("risks", \@selected_risk, \@items, 5, 1);
+$col = "<select name=risks size=5 multiple>$options_risk</select>";
+# FIXME
+print &ui_columns_row([ "<img src=images/risk.png hspace=4><b>$text{'risks'}</b>", $col ], \@tds);
+$col = &ui_textbox("description", $description, 60, 0, 60);
+print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
@@ -83,7 +73,8 @@ if( $new ) {
         print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
 &ui_print_footer('list_items.cgi','items list');

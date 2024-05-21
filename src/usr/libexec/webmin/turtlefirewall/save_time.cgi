@@ -17,7 +17,7 @@ my $timestart = $in{'timestart'};
 my $timestop = $in{'timestop'};
 my $description = $in{'description'};
 
-if( ! $fw->checkName($newtime) ) { error( $text{save_time_error8} ); }
+if( ! $fw->checkName($newtime) ) { &error( $text{save_time_error8} ); }
 
 if( $in{'delete'} ) {
 	# delete time
@@ -26,11 +26,11 @@ if( $in{'delete'} ) {
                 foreach $d (sort { $b <=> $a } @d) {
                         my $time = $d;
                         $whatfailed = $text{save_time_error_title1};
-                        if( !$fw->DeleteTime($time) ) { error( $text{save_time_error1} ); }
+                        if( !$fw->DeleteTime($time) ) { &error( $text{save_time_error1} ); }
                 }
         } elsif( $time ne '' ) {
                 $whatfailed = $text{save_time_error_title1};
-                if( !$fw->DeleteTime($time) ) { error( $text{save_time_error1} ); }
+                if( !$fw->DeleteTime($time) ) { &error( $text{save_time_error1} ); }
         }
 } else {
 	if( $in{'new'} ) {
@@ -38,20 +38,20 @@ if( $in{'delete'} ) {
 		my @allitems = $fw->GetAllItemsList();
 		foreach my $i (@allitems) {
 			if( $i eq $time ) {
-				error( $text{save_time_error2} );
+				&error( $text{save_time_error2} );
 			}
 		}
 	} else {
 		$whatfailed = $text{save_time_error_title3};
 	}
-	if ( $time eq '' ) { error( $text{save_time_error3} ); }
-	if ( $time eq 'always' ) { error( $text{save_time_error9} ); }
-	if ( $timestart eq '' || $timestop eq '' ) { error( $text{save_time_error5} ); }
+	if ( $time eq '' ) { &error( $text{save_time_error3} ); }
+	if ( $time eq 'always' ) { &error( $text{save_time_error9} ); }
+	if ( $timestart eq '' || $timestop eq '' ) { &error( $text{save_time_error5} ); }
 	if ( $timestart ne '' && $timestart !~ /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/ ) {
-		error( $text{save_time_error6} );
+		&error( $text{save_time_error6} );
 	}
 	if ( $timestop ne '' && $timestop !~ /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/ ) {
-		error( $text{save_time_error6} );
+		&error( $text{save_time_error6} );
 	}
 
         my @items = ();
@@ -61,15 +61,15 @@ if( $in{'delete'} ) {
                 }
 	}
 
-	if( $#items < 0 ) { error( $text{save_time_error4} ); }
+	if( $#items < 0 ) { &error( $text{save_time_error4} ); }
 	$weekdays = join(",", @items);
 	$fw->AddTime($time, $weekdays, $timestart, $timestop, $description);
 	if( !$in{'new'} && $newtime ne $time ) {
 		if( !$fw->RenameItem( $time, $newtime ) ) {
-			error( text('save_time_error6', $time, $newtime) );
+			&error( $text('save_time_error6', $time, $newtime) );
 		}
 	}
 }
 
 $fw->SaveFirewall();
-redirect( 'list_items.cgi' );
+&redirect( 'list_items.cgi' );

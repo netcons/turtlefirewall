@@ -35,72 +35,39 @@ if( $new ) {
 }
 
 
-$options_virtual = '';
-$options_real = '';
-@zones = $fw->GetZoneList();
-@hosts = $fw->GetHostList();
-for my $k (@hosts) {
-	$options_virtual .= '<option'.($k eq $virtual ? ' selected' : '').'>'.$k.'</option>';
-	$options_real .= '<option'.($k eq $real ? ' selected' : '').'>'.$k.'</option>';
-}
-for my $k (@zones) {
-	if( $k ne 'FIREWALL' ) {
-		my %zone = $fw->GetZone($k);
-		$options_virtual .= '<option'.($k eq $virtual ? ' selected' : '').'>'.$k.' ('.$zone{IF}.')</option>';
-	}
-}
+my @items_virtual = ();
+push @items_virtual, grep(!/FIREWALL/, $fw->GetZoneList());
+push @items_virtual, $fw->GetHostList();
 
+my @items_real = ();
+push @items_real, $fw->GetHostList();
 
-print "<br>
-	<form action=\"save_nat.cgi\">
-	<input type=\"hidden\" name=\"idx\" value=\"$idx\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{edit_nat_title_create} : $text{edit_nat_title_edit})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\">";
-if( ! $new ) { print "
-			<tr>
-				<td><img src=images/hash.png hspace=4><b>ID</b></td>
-				<td><b>$idx</b></td>
-			</tr>";
+print &ui_subheading($new ? $text{'edit_nat_title_create'} : $text{'edit_nat_title_edit'});
+print &ui_form_start("save_nat.cgi", "post");
+print &ui_hidden("idx", $idx);
+my @tds = ( "width=20%", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
+if( !$new ) {
+	$col = "<b>$idx</b>";
+	print &ui_columns_row([ "<img src=images/hash.png hspace=4><b>ID</b>", $col ], \@tds);
 }
-print "			<tr>
-				<td width=\"20%\"><b><nobr><img src=images/zone.png hspace=4>$text{virtual_host}<nobr></b></td>
-				<td><select name=\"virtual\">$options_virtual</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/host.png hspace=4><b>$text{real_host}</b></td>
-				<td><select name=\"real\">$options_real</select></td>
-			</tr>
-			<tr>
-				<td><img src=images/service.png hspace=4><b>$text{nat_service}</b></td>
-				<td><br>";
-				formService( $service, $port, 1 );
-print "				<br></td>
-			</tr>
-			<tr>
-                                <td><br></td><td></td>
-                        </tr>
-			<tr>
-				<td><img src=images/grey-nat.png hspace=4><b>$text{nat}</b></td>
-			       	<td>$text{YES} : $text{real_port} $text{nat_port} : <input type=\"text\" name=\"toport\" size=\"5\" maxlength=\"5\" value=\"$toport\"></td>
-			</tr>
-			<tr>
-                                <td><br></td><td></td>
-                        </tr>
-			<tr>
-				<td><img src=images/active.png hspace=4><b>$text{nat_active}</b></td>
-				<td><input type=\"checkbox\" name=\"active\" value=\"1\"".($active ? ' checked' : '')."></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>";
+$col = &ui_select("virtual", $virtual, \@items_virtual);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'virtual_host'}</b>", $col ], \@tds);
+$col = &ui_select("real", $real, \@items_real);
+print &ui_columns_row([ "<img src=images/host.png hspace=4><b>$text{'real_host'}</b>", $col ], \@tds);
+$col = &formService($service, $port, 1);
+print &ui_columns_row([ "<img src=images/service.png hspace=4><b>$text{'rule_service'}</b>", $col ], \@tds);
+my @opts = ( [ 1, "$text{YES}" ] );
+$col = &ui_radio("dummy", 1, \@opts);
+$col .= " : $text{real_port} $text{nat_port} : ";
+$col .= &ui_textbox("toport", $toport, 5, 0, 5);
+print &ui_columns_row([ "<img src=images/grey-nat.png hspace=4><b>$text{'nat'}</b>", $col ], \@tds);
+$col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
+print &ui_columns_row([ "<img src=images/active.png hspace=4><b>$text{'nat_active'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
         print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
@@ -108,7 +75,8 @@ if( $new ) {
         print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
 &ui_print_footer('list_nat.cgi','NAT list');
