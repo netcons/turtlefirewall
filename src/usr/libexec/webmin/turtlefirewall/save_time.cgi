@@ -66,7 +66,7 @@ if( $in{'delete'} ) {
 	$fw->AddTime($time, $weekdays, $timestart, $timestop, $description);
 	if( !$in{'new'} && $newtime ne $time ) {
 		if( !$fw->RenameItem( $time, $newtime ) ) {
-			&error( $text('save_time_error6', $time, $newtime) );
+			&error( text('save_time_error6', $time, $newtime) );
 		}
 	}
 }

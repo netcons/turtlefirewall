@@ -13,7 +13,7 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( "<img src=images/blacklist.png hspace=4>$text{'list_blacklists_title'}", $text{'title'}, "" );
 
-showBlackLists();
+&showBlackLists();
 print "<br><br>";
 
 &ui_print_footer('index.cgi',$text{'index'});

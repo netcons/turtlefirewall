@@ -21,18 +21,18 @@ my $max = $in{'max'};
 my $top = $in{'top'};
 my $string = $in{'string'};
 
-if( $type eq 'risk' ) { LoadNdpiRisks( $fw ); }
+if( $type eq 'risk' ) { &LoadNdpiRisks($fw); }
 
 my $flowtotal = 0;
 my %type_list = ();
-my @flows = getflows($log);
+my @flows = &getflows($log);
 
 my $index = $flowreports{$type}{INDEX};
 
-my @stats = getstats($index,\%type_list,\@flows);
+my @stats = &getstats($index,\%type_list,\@flows);
 
 $type_name = "flowstat_type_${type}";
-showstats($type_name,@stats);
+&showstats($type_name,@stats);
 
 &ui_print_footer("flowstat.cgi",'flow statistics');
 

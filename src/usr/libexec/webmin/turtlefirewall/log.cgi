@@ -13,7 +13,7 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( "<img src=images/grey-eye.png hspace=4>$text{'log_title'}", $text{'title'}, "" );
 
-showLog();
+&showLog();
 
 &ui_print_footer('index.cgi',$text{'index'});
 
@@ -181,16 +181,16 @@ sub showLog {
 	foreach my $l (@buffer) {
 		local @cols;
 		my ($time, $action, $in, $out, $mac, $src, $dst, $proto, $spt, $dpt) = @$l;
-		showTD( $time );
-		showTD( $action );
-		showTD( $in );
-		showTD( $out );
-		showTD( $src );
-		showTD( $dst );
-		showTD( $proto );
-		showTD( $spt );
-		showTD( $dpt );
-		showTD( $mac );
+		&showTD($time);
+		&showTD($action);
+		&showTD($in);
+		&showTD($out);
+		&showTD($src);
+		&showTD($dst);
+		&showTD($proto);
+		&showTD($spt);
+		&showTD($dpt);
+		&showTD($mac);
 	        print &ui_columns_row(\@cols, \@tds);
 	}
 	print &ui_columns_end();

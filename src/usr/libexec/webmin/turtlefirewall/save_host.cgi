@@ -57,7 +57,7 @@ if( $in{'delete'} ) {
 	$fw->AddHost($host, $ip, $mac, $zone, $description);
 	if( !$in{'new'} && $newhost ne $host ) {
 		if( !$fw->RenameItem( $host, $newhost ) ) {
-			&error( $text('save_host_error7', $host, $newhost) );
+			&error( text('save_host_error7', $host, $newhost) );
 		}
 	}
 }

@@ -12,8 +12,8 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( "<img src=images/risk.png hspace=4>$text{'list_ndpirisks_title'}", $text{'title'}, "" );
 
-LoadNdpiRisks( $fw );
-showNdpiRisks();
+&LoadNdpiRisks( $fw );
+&showNdpiRisks();
 print "<br><br>";
 
 &ui_print_footer('index.cgi',$text{'index'});

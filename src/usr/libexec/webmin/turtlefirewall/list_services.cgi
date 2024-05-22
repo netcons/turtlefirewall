@@ -12,8 +12,8 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( "<img src=images/service.png hspace=4>$text{'list_services_title'}", $text{'title'}, "" );
 
-LoadServices( $fw );
-showServices();
+&LoadServices($fw);
+&showServices();
 print "<br><br>";
 
 &ui_print_footer('index.cgi',$text{'index'});
@@ -29,5 +29,4 @@ sub showServices {
 	        print &ui_columns_row([ "<img src=images/service.png hspace=4>$name", "<img src=images/info.png hspace=4>$service{'DESCRIPTION'}" ], \@tds);
         }
         print &ui_columns_end();
-	#print '<a href="edit_service.cgi?new=1">create new service</a><br>';
 }

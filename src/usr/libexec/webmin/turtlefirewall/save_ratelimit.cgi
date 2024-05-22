@@ -53,7 +53,7 @@ if( $in{'delete'} ) {
 	$fw->AddRateLimit( $ratelimit, $rate, $description );
 	if( !$in{'new'} && $newratelimit ne $ratelimit ) {
 		if( !$fw->RenameItem( $ratelimit, $newratelimit ) ) {
-			&error( $text('save_ratelimit_error5', $ratelimit, $newratelimit) );
+			&error( text('save_ratelimit_error5', $ratelimit, $newratelimit) );
 		}
 	}
 }

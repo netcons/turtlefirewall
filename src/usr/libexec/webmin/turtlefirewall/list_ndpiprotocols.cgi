@@ -12,8 +12,8 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( "<img src=images/grey-ndpi.png hspace=4>$text{'list_ndpiprotocols_title'}", $text{'title'}, "" );
 
-LoadNdpiProtocols( $fw );
-showNdpiProtocols();
+&LoadNdpiProtocols($fw);
+&showNdpiProtocols();
 print "<br><br>";
 
 &ui_print_footer('index.cgi',$text{'index'});

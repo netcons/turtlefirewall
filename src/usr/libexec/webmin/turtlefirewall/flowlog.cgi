@@ -14,8 +14,8 @@ use Time::Piece;
 
 &ui_print_header( "<img src=images/grey-eye.png hspace=4>$text{'flowlog_title'}", $text{'title'}, "" );
 
-LoadNdpiRisks( $fw );
-showLog();
+&LoadNdpiRisks($fw);
+&showLog();
 
 &ui_print_footer('index.cgi',$text{'index'});
 
@@ -318,34 +318,34 @@ sub showLog {
 		local @cols;
 		my ($stime, $etime, $l3proto, $l4proto, $src, $sport, $dst, $dport, $ubytes, $dbytes, $upackets, $dpackets, $ifindex,
 		    $connmark, $srcnat, $dstnat, $proto, $host, $ja4c, $ja3c, $tlsfp, $tlsv, $risk) = @$l;
-	    	showTD( localtime($stime)->strftime('%b %d %X') );
-	    	showTD( localtime($etime)->strftime('%b %d %X') );
-		showTD( l3protoname($l3proto) );
-		showTD( l4protoname($l4proto) );
-		showTD( $proto );
-		showTD( $host );
-		showTD( $src );
-		showTD( $sport );
-		showTD( $dst );
-		showTD( $dport );
-		showTD( roundbytes($ubytes + $dbytes) );
-		showTD( roundbytes($ubytes) );
-		showTD( roundbytes($dbytes) );
-		showTD( $upackets );
-		showTD( $dpackets );
+	    	&showTD(localtime($stime)->strftime('%b %d %X'));
+	    	&showTD(localtime($etime)->strftime('%b %d %X'));
+		&showTD(&l3protoname($l3proto));
+		&showTD(&l4protoname($l4proto));
+		&showTD($proto);
+		&showTD($host);
+		&showTD($src);
+		&showTD($sport);
+		&showTD($dst);
+		&showTD($dport);
+		&showTD(&roundbytes($ubytes + $dbytes));
+		&showTD(&roundbytes($ubytes));
+		&showTD(&roundbytes($dbytes));
+		&showTD($upackets);
+		&showTD($dpackets);
 		$t = $ifindex;
 		if( $t =~ /I=(.*?)(,|$)/ ) { $inifindex = $1; };
-		showTD( getifname($inifindex) );
+		&showTD(&getifname($inifindex));
 		if( $t =~ /,(.*?)$/ ) { $outifindex = $1; };
-		showTD( getifname($outifindex) );
-		showTD( $connmark );
-		showTD( $srcnat );
-		showTD( $dstnat );
-		showTD( $ja4c );
-		showTD( $ja3c );
-		showTD( $tlsfp );
-		showTD( $tlsv );
-		showTD( getrisknames($risk) );
+		&showTD(&getifname($outifindex));
+		&showTD($connmark);
+		&showTD($srcnat);
+		&showTD($dstnat);
+		&showTD($ja4c);
+		&showTD($ja3c);
+		&showTD($tlsfp);
+		&showTD($tlsv);
+		&showTD(&getrisknames($risk));
 	        print &ui_columns_row(\@cols, \@tds);
 	}
 	print &ui_columns_end();

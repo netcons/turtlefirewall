@@ -13,7 +13,7 @@ use Tie::File;
 
 &ui_print_header( "<img src=images/graph.png hspace=4>$text{'flowstat_title'}", $text{'title'}, "" );
 
-reportFlowStat();
+&reportFlowStat();
 print "<br><br>";
 
 &ui_print_footer('index.cgi',$text{'index'});

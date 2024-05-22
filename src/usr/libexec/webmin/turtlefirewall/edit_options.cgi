@@ -25,7 +25,6 @@ print &ui_subheading($text{'edit_options_heading'});
 print &ui_form_start("save_options.cgi", "post");
 my @tds = ( "width=20% style=vertical-align:top", "width=20%", "width=60%" );
 print &ui_columns_start(undef, 100, 0, \@tds);
-my $col = '';
 foreach $option (@optionkeys) {
 	&showOption( $option, $options{$option}{type}, $options{$option}{value},
 		$options{$option}{default}, $options{$option}{addunchangeopz},
