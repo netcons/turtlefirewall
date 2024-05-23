@@ -15,17 +15,19 @@ $new = $in{'new'};
 $ratelimit = $in{'ratelimit'};
 $newratelimit = $in{'newratelimit'};
 
+my $heading = '';
 if( $new ) {
-	&ui_print_header( "<img src=images/ratelimit.png hspace=4>$text{'edit_ratelimit_title_create'}", $text{'title'}, "" );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_ratelimit_title_create'}";
 } else {
-	&ui_print_header( "<img src=images/ratelimit.png hspace=4>$text{'edit_ratelimit_title_edit'}", $text{'title'}, "" );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_ratelimit_title_edit'}";
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
 my %r = $fw->GetRateLimit($ratelimit);
 my $rate = $r{'RATE'};
 my $description = $r{'DESCRIPTION'};
 
-print &ui_subheading($new ? $text{'edit_ratelimit_title_create'} : $text{'edit_ratelimit_title_edit'});
+print &ui_subheading($heading);
 print &ui_form_start("save_ratelimit.cgi", "post");
 my @tds = ( "width=20% style=vertical-align:top", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);

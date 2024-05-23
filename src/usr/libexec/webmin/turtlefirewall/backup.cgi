@@ -18,8 +18,10 @@ if( $in{download} ) {
 &ui_print_header( "<img src=images/shield.png hspace=4>$text{'backup_title'}", $text{'title'}, "" );
 
 if( $in{upload} ) {
+	# FIXME
 	&restore_upload( $in{backup} );
 	&ui_print_footer('backup.cgi',$text{'backup_title'});
+	# FIXME
 } else {
 	print qq~<br/>
 	<table border width="100%">
@@ -60,7 +62,7 @@ if( $in{upload} ) {
 sub backup_download {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
 	my $d = sprintf("%04d%02d%02d-%02d%02d", $year+1900, $mday+1, $mday, $hour, $min);
-	my $confdir = confdir();
+	my $confdir = &confdir();
 
 	open TARGZ, "tar cz --directory $confdir fw.xml fwuserdefservices.xml |"
 		or &error( "Errore in fase di backup" );
@@ -81,8 +83,8 @@ sub backup_download {
 
 sub restore_upload {
 	my $backup = shift;
-	my $output = tempname();
-	my $confdir = confdir();
+	my $output = &tempname();
+	my $confdir = &confdir();
 
 	$whatfailed = $text{backup_error_title1};
 

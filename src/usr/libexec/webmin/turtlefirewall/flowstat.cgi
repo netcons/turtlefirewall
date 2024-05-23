@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 use Tie::File;
 
-&ui_print_header( "<img src=images/graph.png hspace=4>$text{'flowstat_title'}", $text{'title'}, "" );
+&ui_print_header( "<img src=images/create.png hspace=4>$text{'edit_flowstat_title_create'}", $text{'title'}, "" );
 
 &reportFlowStat();
 print "<br><br>";
@@ -36,7 +36,7 @@ sub reportFlowStat {
 
 	my @logs = glob("${log}*");
 
-	print &ui_subheading($text{'edit_flowstat_title_create'});
+	print &ui_subheading("<img src=images/create.png hspace=4>$text{'edit_flowstat_title_create'}");
 	print &ui_form_start("report_flowstat.cgi", "post");
 	my @tds = ( "width=20% style=white-space:nowrap ", "width=80%" );
 	print &ui_columns_start(undef, 100, 0, \@tds);

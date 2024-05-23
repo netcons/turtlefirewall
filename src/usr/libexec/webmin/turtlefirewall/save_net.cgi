@@ -52,7 +52,7 @@ if( $in{'delete'} ) {
 	$fw->AddNet( $net, $ip, $netmask, $zone, $description );
 	if( !$in{'new'} && $newnet ne $net ) {
 		if( !$fw->RenameItem( $net, $newnet ) ) {
-			&error( text('save_net_error7', $net, $newnet) );
+			&error( &text('save_net_error7', $net, $newnet) );
 		}
 	}
 }

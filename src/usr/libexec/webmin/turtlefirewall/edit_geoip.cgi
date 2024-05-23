@@ -13,11 +13,13 @@ do 'turtlefirewall-lib.pl';
 
 $new = $in{'new'};
 
+my $heading = '';
 if( $new ) {
-	&ui_print_header( "<img src=images/geoip.png hspace=4>$text{'edit_geoip_title_create'}", $text{'title'}, "" );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_geoip_title_create'}";
 } else {
-	&ui_print_header( "<img src=images/geoip.png hspace=4>$text{'edit_geoip_title_edit'}", $text{'title'}, "" );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_geoip_title_edit'}";
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
 my $geoip = $in{'geoip'};
 my $newgeoip = $in{'newgeoip'};
@@ -29,14 +31,15 @@ my $description = $n{'DESCRIPTION'};
 my @zones = grep(!/FIREWALL/, $fw->GetZoneList());
 
 &LoadCountryCodes($fw);
-my $options_countrycode = '';
+my @items_countrycode = ();
 my @countrycodes = $fw->GetCountryCodesList();
 for my $k (@countrycodes) {
 	my %country = $fw->GetCountryCode($k);
-	$options_countrycode .= qq~<option value="$k"~.($k eq $ip ? ' selected' : '').">$k - $country{DESCRIPTION}</option>";
+	my @opts = ( "$k", "$k - $country{DESCRIPTION}" );
+	push(@items_countrycode, \@opts);
 }
 
-print &ui_subheading($new ? $text{'edit_geoip_title_create'} : $text{'edit_geoip_title_edit'});
+print &ui_subheading($heading);
 print &ui_form_start("save_geoip.cgi", "post");
 my @tds = ( "width=20%", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);
@@ -48,10 +51,7 @@ if( $new ) {
 	$col .= &ui_hidden("geoip", $in{'geoip'});
 }
 print &ui_columns_row([ "<img src=images/host.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
-# FIXME
-#$col = &ui_select("ip", "$ip", \@countrycodes);
-$col = "<select name=ip>$options_countrycode</select>";
-# FIXME
+$col = &ui_select("ip", "$ip", \@items_countrycode);
 print &ui_columns_row([ "<img src=images/countrycode.png hspace=4><b>$text{'countrycode'}</b>", $col ], \@tds);
 $col = &ui_select("zone", $zone, \@zones);
 print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'zone'}</b>", $col ], \@tds);

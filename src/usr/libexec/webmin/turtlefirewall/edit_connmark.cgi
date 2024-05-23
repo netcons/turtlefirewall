@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( "<img src=images/grey-mark.png hspace=4>$text{'edit_connmark_title_create'}", $text{'title'}, "" );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_connmark_title_create'}";
 	$idx = '';
 	$src = '';
 	$dst = '';
@@ -28,7 +28,7 @@ if( $new ) {
 	$mark = '';
 	$active = 1;
 } else {
-	&ui_print_header( "<img src=images/grey-mark.png hspace=4>$text{'edit_connmark_title_edit'}", $text{'title'}, "" );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_connmark_title_edit'}";
 	$idx = $in{'idx'};
 	%rule = $fw->GetConnmark($idx);
 	$src = $rule{'SRC'};
@@ -43,6 +43,7 @@ if( $new ) {
 	$mark = $rule{'MARK'};
 	$active = $rule{'ACTIVE'} ne 'NO';
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
 my @selected_src = split(/,/, $src);
 my @selected_dst = split(/,/, $dst);
@@ -67,7 +68,7 @@ my @times = ('always');
 push @times, $fw->GetTimeList();
 push @times, $fw->GetTimeGroupList();
 
-print &ui_subheading($new ? $text{'edit_connmark_title_create'} : $text{'edit_connmark_title_edit'});
+print &ui_subheading($heading);
 print &ui_form_start("save_connmark.cgi", "post");
 print &ui_hidden("idx", $idx);
 my @tds = ( "width=20%", "width=80%" );

@@ -51,7 +51,7 @@ if( $in{'delete'} ) {
 	$fw->AddRiskSet( $riskset, $risks, $description );
 	if( !$in{'new'} && $newriskset ne $riskset ) {
 		if( !$fw->RenameItem( $riskset, $newriskset ) ) {
-			&error( text('save_riskset_error5', $riskset, $newriskset) );
+			&error( &text('save_riskset_error5', $riskset, $newriskset) );
 		}
 	}
 }

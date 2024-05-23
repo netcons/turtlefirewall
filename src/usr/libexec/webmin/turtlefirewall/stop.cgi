@@ -8,12 +8,11 @@
 # License
 #======================================================================
 
-
 do 'turtlefirewall-lib.pl';
 
 &ui_print_header( undef, $text{'title'}, "" );
 
-print "<table border width=\"100%\">
+print "<table border width=100%>
        <tr $cb><td>";
 print "<pre>\n";
 print qx{/usr/sbin/turtlefirewall --stop 2>&1};

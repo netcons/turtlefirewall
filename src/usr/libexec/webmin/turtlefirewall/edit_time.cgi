@@ -15,11 +15,13 @@ $new = $in{'new'};
 $time = $in{'time'};
 $newtime = $in{'newtime'};
 
+my $heading = '';
 if( $new ) {
-	&ui_print_header( "<img src=images/time.png hspace=4>$text{'edit_time_title_create'}", $text{'title'}, "" );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_time_title_create'}";
 } else {
-	&ui_print_header( "<img src=images/time.png hspace=4>$text{'edit_time_title_edit'}", $text{'title'}, "" );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_time_title_edit'}";
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
 my @aWeekdays = ('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
 
@@ -35,7 +37,7 @@ foreach my $k (@timeWeekdays) {
 	$aSelectedWeekdays{$k} = 1;
 }
 
-print &ui_subheading($new ? $text{'edit_time_title_create'} : $text{'edit_time_title_edit'});
+print &ui_subheading($heading);
 print &ui_form_start("save_time.cgi", "post");
 my @tds = ( "width=20% style=vertical-align:top", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);

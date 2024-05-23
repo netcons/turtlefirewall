@@ -15,11 +15,13 @@ $new = $in{'new'};
 $hostnameset = $in{'hostnameset'};
 $newhostnameset = $in{'newhostnameset'};
 
+my $heading = '';
 if( $new ) {
-	&ui_print_header( "<img src=images/hostnameset.png hspace=4>$text{'edit_hostnameset_title_create'}", $text{'title'}, "" );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_hostnameset_title_create'}";
 } else {
-	&ui_print_header( "<img src=images/hostnameset.png hspace=4>$text{'edit_hostnameset_title_edit'}", $text{'title'}, "" );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_hostnameset_title_edit'}";
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
 my %h = $fw->GetHostNameSet($hostnameset);
 my $hostnames = $h{'HOSTNAMES'};
@@ -27,7 +29,7 @@ my $description = $h{'DESCRIPTION'};
 
 my @hostnamesetlist = split(/,/, $hostnames);
 
-print &ui_subheading($new ? $text{'edit_hostnameset_title_create'} : $text{'edit_hostnameset_title_edit'});
+print &ui_subheading($heading);
 print &ui_form_start("save_hostnameset.cgi", "post");
 my @tds = ( "width=20% style=vertical-align:top", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);

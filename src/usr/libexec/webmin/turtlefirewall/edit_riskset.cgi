@@ -15,11 +15,13 @@ $new = $in{'new'};
 $riskset = $in{'riskset'};
 $newriskset = $in{'newriskset'};
 
+my $heading = '';
 if( $new ) {
-	&ui_print_header( "<img src=images/riskset.png hspace=4>$text{'edit_riskset_title_create'}", $text{'title'}, "" );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_riskset_title_create'}";
 } else {
-	&ui_print_header( "<img src=images/riskset.png hspace=4>$text{'edit_riskset_title_edit'}", $text{'title'}, "" );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_riskset_title_edit'}";
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
 my %r = $fw->GetRiskSet($riskset);
 my $risks = $r{'RISKS'};
@@ -29,10 +31,11 @@ my $options_risk = '';
 my @selected_risk = split(/,/, $risks);
 
 &LoadNdpiRisks($fw);
-my @items = ();
-push @items, $fw->GetNdpiRisksList();
-@items = sort { $a <=> $b } @items;
-for my $k (@items) {
+my @items_risk = ();
+my @risks = ();
+push @risks, $fw->GetNdpiRisksList();
+@risks = sort { $a <=> $b } @risks;
+for my $k (@risks) {
 	my $selected = 0;
 	for my $s (@selected_risk) {
 		if( $k eq $s ) {
@@ -41,10 +44,11 @@ for my $k (@items) {
 		}
 	}
 	my %risk = $fw->GetNdpiRisk($k);
-	$options_risk .= qq~<option value="$k"~.($selected ? ' selected' : '').">$k - $risk{'DESCRIPTION'}</option>";
+	my @opts = ( "$k", "$k - $risk{DESCRIPTION}" );
+	push(@items_risk, \@opts);
 }
 
-print &ui_subheading($new ? $text{'edit_riskset_title_create'} : $text{'edit_riskset_title_edit'});
+print &ui_subheading($heading);
 print &ui_form_start("save_riskset.cgi", "post");
 my @tds = ( "width=20% style=vertical-align:top", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);
@@ -56,10 +60,7 @@ if( $new ) {
 	$col .= &ui_hidden("riskset", $in{'riskset'});
 }
 print &ui_columns_row([ "<img src=images/riskset.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
-# FIXME
-#$col = &ui_select("risks", \@selected_risk, \@items, 5, 1);
-$col = "<select name=risks size=5 multiple>$options_risk</select>";
-# FIXME
+$col = &ui_select("risks", \@selected_risk, \@items_risk, 5, 1);
 print &ui_columns_row([ "<img src=images/risk.png hspace=4><b>$text{'risks'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);
 print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);

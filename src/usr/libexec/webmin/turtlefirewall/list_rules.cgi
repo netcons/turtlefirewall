@@ -13,7 +13,7 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( "<img src=images/filter.png hspace=4>$text{'list_rules_title'}", $text{'title'}, "" );
 
-showRule();
+&showRule();
 
 &ui_print_footer('index.cgi',$text{'index'});
 

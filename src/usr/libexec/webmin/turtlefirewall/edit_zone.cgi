@@ -17,17 +17,19 @@ if( $in{'zone'} eq 'FIREWALL' ) {
 
 $new = $in{'new'};
 
+my $heading = '';
 if( $new ) {
-	&ui_print_header( "<img src=images/zone.png hspace=4>$text{'edit_zone_title_create'}", $text{'title'}, "" );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_zone_title_create'}";
 } else {
-	&ui_print_header( "<img src=images/zone.png hspace=4>$text{'edit_zone_title_edit'}", $text{'title'}, "" );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_zone_title_edit'}";
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
 my %z = $fw->GetZone($in{'zone'});
 my $if = $z{'IF'};
 my $description = $z{'DESCRIPTION'};
 
-print &ui_subheading($new ? $text{'edit_zone_title_create'} : $text{'edit_zone_title_edit'});
+print &ui_subheading($heading);
 print &ui_form_start("save_zone.cgi", "post");
 my @tds = ( "width=20%", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);

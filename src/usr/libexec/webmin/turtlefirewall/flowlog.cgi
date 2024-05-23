@@ -19,6 +19,8 @@ use Time::Piece;
 
 &ui_print_footer('index.cgi',$text{'index'});
 
+#============================================================================
+
 sub showLog {
 
 	my $pag = $in{pag};

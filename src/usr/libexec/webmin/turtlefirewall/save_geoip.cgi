@@ -50,7 +50,7 @@ if( $in{'delete'} ) {
 	$fw->AddGeoip( $geoip, $ip, $zone, $description );
 	if( !$in{'new'} && $newgeoip ne $geoip ) {
 		if( !$fw->RenameItem( $geoip, $newgeoip ) ) {
-			&error( text('save_geoip_error6', $geoip, $newgeoip) );
+			&error( &text('save_geoip_error6', $geoip, $newgeoip) );
 		}
 	}
 }

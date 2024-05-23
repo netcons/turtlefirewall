@@ -17,6 +17,8 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_footer('index.cgi',$text{'index'});
 
+#============================================================================
+
 sub showLog {
 
 	my $pag = $in{pag};
@@ -110,7 +112,6 @@ sub showLog {
 	}
 
 	print &ui_form_start("log.cgi", "post");
-
 	print "<center>$pageindex</center>\n";
 
 	my $opz;

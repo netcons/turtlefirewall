@@ -13,8 +13,8 @@ do 'turtlefirewall-lib.pl';
 
 &ui_print_header( "<img src=images/countrycode.png hspace=4>$text{'list_countrycodes_title'}", $text{'title'}, "" );
 
-LoadCountryCodes( $fw );
-showCountryCodes();
+&LoadCountryCodes($fw);
+&showCountryCodes();
 print "<br><br>";
 
 &ui_print_footer('index.cgi',$text{'index'});

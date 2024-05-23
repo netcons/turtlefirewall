@@ -13,11 +13,13 @@ do 'turtlefirewall-lib.pl';
 
 $new = $in{'new'};
 
+my $heading = '';
 if( $new ) {
-	&ui_print_header( "<img src=images/net.png hspace=4>$text{'edit_net_title_create'}", $text{'title'}, "" );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_net_title_create'}";
 } else {
-	&ui_print_header( "<img src=images/net.png hspace=4>$text{'edit_net_title_edit'}", $text{'title'}, "" );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_net_title_edit'}";
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
 my $net = $in{'net'};
 my $newnet = $in{'newnet'};
@@ -29,7 +31,7 @@ my $description = $n{'DESCRIPTION'};
 
 my @zones = grep(!/FIREWALL/, $fw->GetZoneList());
 
-print &ui_subheading($new ? $text{'edit_net_title_create'} : $text{'edit_net_title_edit'});
+print &ui_subheading($heading);
 print &ui_form_start("save_net.cgi", "post");
 my @tds = ( "width=20%", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);

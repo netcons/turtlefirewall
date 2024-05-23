@@ -108,7 +108,7 @@ print '</tr></table>';
 print &ui_form_end();
 
 if( $in{showiptfilter} ne '' ) {
-	print "<br><table border width=\"100%\">
+	print "<br><table border width=100%>
 		<tr $tb><th>FILTER</th></tr>
 		<tr $cb><td>";
 	print "<pre><small>";
@@ -119,7 +119,7 @@ if( $in{showiptfilter} ne '' ) {
 }
 
 if( $in{showiptnat} ne '' ) {
-	print "<br><table border width=\"100%\">
+	print "<br><table border width=100%>
 		<tr $tb><th>NAT</th></tr>
 		<tr $cb><td>";
 	print "<pre><small>";
@@ -130,7 +130,7 @@ if( $in{showiptnat} ne '' ) {
 }
 
 if( $in{showiptmangle} ne '' ) {
-	print "<br><table border width=\"100%\">
+	print "<br><table border width=100%>
 		<tr $tb><th>MANGLE</th></tr>
 		<tr $cb><td>";
 	print "<pre><small>";
@@ -141,7 +141,7 @@ if( $in{showiptmangle} ne '' ) {
 }
 
 if( $in{showiptraw} ne '' ) {
-	print "<br><table border width=\"100%\">
+	print "<br><table border width=100%>
 		<tr $tb><th>RAW</th></tr>
 		<tr $cb><td>";
 	print "<pre><small>";
@@ -152,7 +152,7 @@ if( $in{showiptraw} ne '' ) {
 }
 
 if( $in{showconntrack} ne '' ) {
-	print "<br><table border width=\"100%\">
+	print "<br><table border width=100%>
 		<tr $tb><th>CONNTRACK</th></tr>
 		<tr $cb><td>";
 	print "<pre><small>";
@@ -162,7 +162,7 @@ if( $in{showconntrack} ne '' ) {
 }
 
 if( $in{flushconntrack} ne '' ) {
-	print "<br><table border width=\"100%\">
+	print "<br><table border width=100%>
 		<tr $tb><th>CONNTRACK</th></tr>
 		<tr $cb><td>";
 	print "<pre><small>";

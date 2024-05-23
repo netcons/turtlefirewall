@@ -14,15 +14,15 @@ do 'turtlefirewall-lib.pl';
 &ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'list_nat_title'}", $text{'title'}, "" );
 
 $form = 0;
-showNat();
+&showNat();
 
 $form++;
 print "<br><br>";
-showMasquerade();
+&showMasquerade();
 
 $form++;
 print "<br><br>";
-showRedirect();
+&showRedirect();
 
 &ui_print_footer('index.cgi',$text{'index'});
 

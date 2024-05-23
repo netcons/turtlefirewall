@@ -49,7 +49,7 @@ if( $in{'delete'} ) {
 	$fw->AddGroup( $group, $description, @items );
 	if( !$in{'new'} && $newgroup ne $group ) {
 		if( !$fw->RenameItem( $group, $newgroup ) ) {
-			&error( text('save_group_error5', $group, $newgroup) );
+			&error( &text('save_group_error5', $group, $newgroup) );
 		}
 	}
 }

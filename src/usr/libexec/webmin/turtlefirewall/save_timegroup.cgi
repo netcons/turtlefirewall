@@ -50,7 +50,7 @@ if( $in{'delete'} ) {
 	$fw->AddTimeGroup( $timegroup, $description, @items );
 	if( !$in{'new'} && $newtimegroup ne $timegroup ) {
 		if( !$fw->RenameItem( $timegroup, $newtimegroup ) ) {
-			&error( text('save_timegroup_error5', $timegroup, $newtimegroup) );
+			&error( &text('save_timegroup_error5', $timegroup, $newtimegroup) );
 		}
 	}
 }

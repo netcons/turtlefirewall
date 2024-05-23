@@ -61,7 +61,7 @@ if( $in{'delete'} ) {
 	$fw->AddHostNameSet( $hostnameset, $hostnames, $description );
 	if( !$in{'new'} && $newhostnameset ne $hostnameset ) {
 		if( !$fw->RenameItem( $hostnameset, $newhostnameset ) ) {
-			&error( text('save_hostnameset_error5', $hostnameset, $newhostnameset) );
+			&error( &text('save_hostnameset_error5', $hostnameset, $newhostnameset) );
 		}
 	}
 }

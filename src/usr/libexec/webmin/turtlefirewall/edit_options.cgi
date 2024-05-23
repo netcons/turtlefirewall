@@ -10,7 +10,7 @@
 
 do 'turtlefirewall-lib.pl';
 
-&ui_print_header( "<img src=images/option.png hspace=4>$text{'edit_options_title'}", $text{'title'}, "" );
+&ui_print_header( "<img src=images/edit.png hspace=4>$text{'edit_options_title'}", $text{'title'}, "" );
 
 &getOptionsList();
 
@@ -21,7 +21,7 @@ foreach $option (@optionkeys) {
 	}
 }
 
-print &ui_subheading($text{'edit_options_heading'});
+print &ui_subheading("<img src=images/edit.png hspace=4>$text{'edit_options_title'}");
 print &ui_form_start("save_options.cgi", "post");
 my @tds = ( "width=20% style=vertical-align:top", "width=20%", "width=60%" );
 print &ui_columns_start(undef, 100, 0, \@tds);

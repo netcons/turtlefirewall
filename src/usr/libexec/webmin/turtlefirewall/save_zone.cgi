@@ -53,7 +53,7 @@ if( $in{'delete'} ) {
 		$fw->AddZone( $zone, $if, $description );
 		if( $newzone ne $zone ) {
 			if( !$fw->RenameItem( $zone, $newzone ) ) {
-				&error( text('save_zone_error7', $zone, $newzone) );
+				&error( &text('save_zone_error7', $zone, $newzone) );
 			}
 		}
 	}

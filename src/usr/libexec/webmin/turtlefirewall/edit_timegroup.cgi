@@ -15,11 +15,13 @@ $new = $in{'new'};
 $timegroup = $in{'timegroup'};
 $newtimegroup = $in{'newtimegroup'};
 
+my $heading = '';
 if( $new ) {
-	&ui_print_header( "<img src=images/timegroup.png hspace=4>$text{'edit_timegroup_title_create'}", $text{'title'}, "" );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_timegroup_title_create'}";
 } else {
-	&ui_print_header( "<img src=images/timegroup.png hspace=4>$text{'edit_timegroup_title_edit'}", $text{'title'}, "" );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_timegroup_title_edit'}";
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
 my %g = $fw->GetTimeGroup($timegroup);
 my @selected_items = @{$g{ITEMS}};
@@ -27,7 +29,7 @@ my $description = $g{DESCRIPTION};
 
 my @items = $fw->GetItemsAllowToTimeGroup($timegroup);
 
-print &ui_subheading($new ? $text{'edit_timegroup_title_create'} : $text{'edit_timegroup_title_edit'});
+print &ui_subheading($heading);
 print &ui_form_start("save_timegroup.cgi", "post");
 my @tds = ( "width=20% style=vertical-align:top", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);

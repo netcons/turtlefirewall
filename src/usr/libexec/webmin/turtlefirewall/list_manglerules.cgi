@@ -14,11 +14,11 @@ do 'turtlefirewall-lib.pl';
 &ui_print_header( "<img src=images/grey-mark.png hspace=4>$text{'list_manglerules_title'}", $text{'title'}, "" );
 
 $form = 0;
-showConnmarkPreroute();
+&showConnmarkPreroute();
 
 $form++;
 print "<br><br>";
-showConnmark();
+&showConnmark();
 
 &ui_print_footer('index.cgi',$text{'index'});
 

@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	&ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'edit_masq_title_create'}", $text{'title'}, "" );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_masq_title_create'}";
 	$idx = '';
 	$src = '';
 	$dst = '';
@@ -23,7 +23,7 @@ if( $new ) {
 	$is_masquerade = 1;
 	$active = 1;
 } else {
-	&ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'edit_masq_title_edit'}", $text{'title'}, "" );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_masq_title_edit'}";
 	$idx = $in{'idx'};
 	%masq = $fw->GetMasquerade($idx);
 	$src = $masq{'SRC'};
@@ -33,6 +33,7 @@ if( $new ) {
 	$is_masquerade = $masq{'MASQUERADE'} ne 'NO';
 	$active = $masq{'ACTIVE'} ne 'NO';
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
 my @items_src = ('*');
 push @items_src, grep(!/FIREWALL/, $fw->GetZoneList());
@@ -48,7 +49,7 @@ push @items_dst, $fw->GetHostList();
 push @items_dst, $fw->GetGroupList();
 @items_dst = sort(@items_dst);
 
-print &ui_subheading($new ? $text{'edit_masq_title_create'} : $text{'edit_masq_title_edit'});
+print &ui_subheading($heading);
 print &ui_form_start("save_masq.cgi", "post");
 print &ui_hidden("idx", $idx);
 my @tds = ( "width=20%", "width=80%" );
