@@ -65,7 +65,7 @@ sub backup_download {
 	my $confdir = &confdir();
 
 	open TARGZ, "tar cz --directory $confdir fw.xml fwuserdefservices.xml |"
-		or &error( "Errore in fase di backup" );
+		or &error( "Error during backup" );
 	print "Content-type: application/x-gzip\n";
 	print "Expires: Mon, 26 Jul 1997 05:00:00 GMT\n";    # Date in the past
 	print "Cache-Control: no-store, no-cache, must-revalidate\n";  # HTTP/1.1

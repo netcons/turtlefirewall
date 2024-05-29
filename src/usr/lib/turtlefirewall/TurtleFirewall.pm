@@ -1602,10 +1602,6 @@ sub startFirewall {
 	print "connmark_module: on\n";
 	$this->command('modprobe xt_connmark', '/dev/null');
 
-	# Enable connection labels
-	print "connlabel_module: on\n";	
-	$this->command('modprobe xt_connlabel', '/dev/null');
-
 	# PreLoad module for Policing
 	print "ratelimit_module: on\n";	
 	$this->command('modprobe xt_ratelimit', '/dev/null');
