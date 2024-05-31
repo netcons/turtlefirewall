@@ -170,17 +170,17 @@ sub showLog {
 			'&tlsfp='.$in{tlsfp}.'&tlsv='.$in{tlsv}.'&risk='.$in{risk};
 	my $pageindex = '';
 	if( $pag > 1 ) {
-		$pageindex .= "&nbsp;<a href=\"flowlog.cgi?pag=1&$urlparam\">&lt;&lt;</a>&nbsp;";
-		$pageindex .= "&nbsp;<a href=\"flowlog.cgi?pag=".($pag-1)."&$urlparam\">&lt;</a>&nbsp;";
+		$pageindex .= "&nbsp;<a href=\"list_flowlog.cgi?pag=1&$urlparam\">&lt;&lt;</a>&nbsp;";
+		$pageindex .= "&nbsp;<a href=\"list_flowlog.cgi?pag=".($pag-1)."&$urlparam\">&lt;</a>&nbsp;";
 	}
 	$pageindex .= "&nbsp;(<b>$pag</b>)&nbsp;";
 	$lastpag = int(($count-1) / $pagelen) + 1;
 	if( $pag < $lastpag ) {
-		$pageindex .= "&nbsp;<a href=\"flowlog.cgi?pag=".($pag+1)."&$urlparam\">&gt;</a>&nbsp;";
-		$pageindex .= qq~&nbsp;<a href="flowlog.cgi?pag=$lastpag&$urlparam">&gt;&gt;</a>&nbsp;~;
+		$pageindex .= "&nbsp;<a href=\"list_flowlog.cgi?pag=".($pag+1)."&$urlparam\">&gt;</a>&nbsp;";
+		$pageindex .= qq~&nbsp;<a href="list_flowlog.cgi?pag=$lastpag&$urlparam">&gt;&gt;</a>&nbsp;~;
 	}
 
-	print &ui_form_start("flowlog.cgi", "post");
+	print &ui_form_start("list_flowlog.cgi", "post");
 	print "<center>$pageindex</center>\n";
 
 	my $opz;

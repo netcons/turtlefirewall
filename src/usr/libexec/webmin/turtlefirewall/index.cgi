@@ -56,9 +56,9 @@ my @ricons = ('images/rules.png',
 &icons_table(\@rlinks, \@rtitles, \@ricons, 4);
 print &ui_hr();
 
-my @llinks = ('log.cgi',
-	      'flowlog.cgi',
-	      'flowstat.cgi');
+my @llinks = ('list_actionlog.cgi',
+	      'list_flowlog.cgi',
+	      'edit_flowstat.cgi');
 my @ltitles = ($text{'index_icon_log'},
 	       $text{'index_icon_flowlog'},
                $text{'index_icon_flowstat'});

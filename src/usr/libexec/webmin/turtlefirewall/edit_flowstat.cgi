@@ -37,7 +37,7 @@ sub reportFlowStat {
 	my @logs = glob("${log}*");
 
 	print &ui_subheading("<img src=images/create.png hspace=4>$text{'edit_flowstat_title_create'}");
-	print &ui_form_start("report_flowstat.cgi", "post");
+	print &ui_form_start("list_flowstat.cgi", "post");
 	my @tds = ( "width=20% style=white-space:nowrap ", "width=80%" );
 	print &ui_columns_start(undef, 100, 0, \@tds);
 	my $col = '';

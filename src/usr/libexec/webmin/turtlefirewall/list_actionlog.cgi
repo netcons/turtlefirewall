@@ -101,17 +101,17 @@ sub showLog {
 			'&spt='.$in{spt}.'&dpt='.$in{dpt};
 	my $pageindex = '';
 	if( $pag > 1 ) {
-		$pageindex .= "&nbsp;<a href=\"log.cgi?pag=1&$urlparam\">&lt;&lt;</a>&nbsp;";
-		$pageindex .= "&nbsp;<a href=\"log.cgi?pag=".($pag-1)."&$urlparam\">&lt;</a>&nbsp;";
+		$pageindex .= "&nbsp;<a href=\"list_actionlog.cgi?pag=1&$urlparam\">&lt;&lt;</a>&nbsp;";
+		$pageindex .= "&nbsp;<a href=\"list_actionlog.cgi?pag=".($pag-1)."&$urlparam\">&lt;</a>&nbsp;";
 	}
 	$pageindex .= "&nbsp;(<b>$pag</b>)&nbsp;";
 	$lastpag = int(($count-1) / $pagelen) + 1;
 	if( $pag < $lastpag ) {
-		$pageindex .= "&nbsp;<a href=\"log.cgi?pag=".($pag+1)."&$urlparam\">&gt;</a>&nbsp;";
-		$pageindex .= qq~&nbsp;<a href="log.cgi?pag=$lastpag&$urlparam">&gt;&gt;</a>&nbsp;~;
+		$pageindex .= "&nbsp;<a href=\"list_actionlog.cgi?pag=".($pag+1)."&$urlparam\">&gt;</a>&nbsp;";
+		$pageindex .= qq~&nbsp;<a href="list_actionlog.cgi?pag=$lastpag&$urlparam">&gt;&gt;</a>&nbsp;~;
 	}
 
-	print &ui_form_start("log.cgi", "post");
+	print &ui_form_start("list_actionlog.cgi", "post");
 	print "<center>$pageindex</center>\n";
 
 	my $opz;

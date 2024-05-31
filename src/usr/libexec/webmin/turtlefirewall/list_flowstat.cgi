@@ -34,7 +34,7 @@ my @stats = &getstats($index,\%type_list,\@flows);
 $type_name = "flowstat_type_${type}";
 &showstats($type_name,@stats);
 
-&ui_print_footer("flowstat.cgi",'flow statistics');
+&ui_print_footer("edit_flowstat.cgi",'flow statistics');
 
 #============================================================================
 
