@@ -102,7 +102,7 @@ sub showConntrackPreroute {
 		}
 		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${bb}${servicelist}${be}${se}");
-		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
@@ -222,7 +222,7 @@ sub showConntrack {
 		}
 		my $simage = '<img src=images/service.png hspace=4>';
 		push(@cols, "${simage}${sb}${bb}${servicelist}${be}${se}");
-		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );

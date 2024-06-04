@@ -50,7 +50,7 @@ if( $new ) {
 	$col = &ui_textbox("newgeoip", $in{'geoip'});
 	$col .= &ui_hidden("geoip", $in{'geoip'});
 }
-print &ui_columns_row([ "<img src=images/host.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+print &ui_columns_row([ "<img src=images/geoip.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
 $col = &ui_select("ip", "$ip", \@items_countrycode);
 print &ui_columns_row([ "<img src=images/countrycode.png hspace=4><b>$text{'countrycode'}</b>", $col ], \@tds);
 $col = &ui_select("zone", $zone, \@zones);

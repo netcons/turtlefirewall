@@ -104,6 +104,7 @@ systemctl enable turtlefirewall --now
 
 Activate Repos.
 ```
+yum -y install yum-utils
 yum-config-manager --enable repository extras
 yum -y install epel-release
 yum -y install centos-release-scl

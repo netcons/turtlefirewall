@@ -101,7 +101,7 @@ sub showNat {
 			}
 		}
 		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
-		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
 		push(@cols, "${nimage}${sb}${cb}$text{YES}${ce}${se}" );
@@ -219,7 +219,7 @@ sub showMasquerade {
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
 			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
 		} else {
-			my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
 			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
@@ -333,7 +333,7 @@ sub showRedirect {
 			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
 			push(@cols, "" );
 		} else {
-			my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
 			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );

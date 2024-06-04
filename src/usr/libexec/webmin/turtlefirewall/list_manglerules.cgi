@@ -133,7 +133,7 @@ sub showConnmarkPreroute {
 		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
-		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $mimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-mark.png hspace=4>' : '<img src=images/mark.png hspace=4>';
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
@@ -299,7 +299,7 @@ sub showConnmark {
 		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
-		my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
+		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
