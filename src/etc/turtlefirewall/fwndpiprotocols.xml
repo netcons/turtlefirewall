@@ -99,6 +99,7 @@
 	<ndpiprotocol name="ether-s-bus" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="ethersio" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="facebook" category="social-media"> </ndpiprotocol>
+	<ndpiprotocol name="facebookmessenger" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="facebookvoip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="fastcgi" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="fbookreelstory" category="social-media"> </ndpiprotocol>
@@ -204,7 +205,6 @@
 	<ndpiprotocol name="megaco" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="memcached" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="merakicloud" category="other"> </ndpiprotocol>
-	<ndpiprotocol name="messenger" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="mgcp" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="microsoft" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="microsoft365" category="other"> </ndpiprotocol>
@@ -416,5 +416,6 @@
 	<ndpiprotocol name="zattoo" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="zeromq" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="zoom" category="collaboration"> </ndpiprotocol>
+	<ndpiprotocol name="zug" category="crypto-currency"> </ndpiprotocol>
 
 </ndpiprotocols>
