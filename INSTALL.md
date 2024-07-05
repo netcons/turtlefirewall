@@ -1,9 +1,10 @@
-## CentOS/RHEL 9
+## CentOS/RHEL 10
 
 Activate Repos.
 ```
 dnf config-manager --set-enabled extras-common
-dnf -y install epel-release
+dnf config-manager --set-enabled crb
+dnf -y install createrepo
 
 echo "[Webmin]
 name=Webmin Distribution Neutral
@@ -19,7 +20,57 @@ baseurl=file:/tmp/tfw/
 enabled=1
 gpgckeck=0" > /etc/yum.repos.d/tfw.repo
 
+mkdir -p /tmp/tfw
+cd /tmp/tfw
+curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
+| grep "browser_download_url.*.el10.*rpm" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
+createrepo ./
+sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/dnf.conf
+ ```
+
+Install Turtle Firewall.
+```
+dnf -y install turtlefirewall
+systemctl enable dkms --now
+reboot
+```
+
+Disable Firewalld.
+```
+systemctl disable firewalld --now
+```
+
+Configure */etc/turtlefirewall/fw.xml* or via Webmin and enable Turtle Firewall.
+```
+systemctl enable turtlefirewall --now
+```
+
+## CentOS/RHEL 9
+
+Activate Repos.
+```
+dnf config-manager --set-enabled extras-common
+dnf config-manager --set-enabled crb
+dnf -y install epel-release
 dnf -y install createrepo
+
+echo "[Webmin]
+name=Webmin Distribution Neutral
+#baseurl=https://download.webmin.com/download/yum
+mirrorlist=https://download.webmin.com/download/yum/mirrorlist
+enabled=1
+gpgkey=https://download.webmin.com/jcameron-key.asc
+gpgcheck=1" > /etc/yum.repos.d/webmin.repo
+
+echo "[TFW]
+name=Turtle Firewall
+baseurl=file:/tmp/tfw/
+enabled=1
+gpgckeck=0" > /etc/yum.repos.d/tfw.repo
+
 mkdir -p /tmp/tfw
 cd /tmp/tfw
 curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
@@ -29,6 +80,7 @@ curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | wget -qi -
 createrepo ./
 sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/yum.conf
+sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/dnf.conf
  ```
 
 Install Turtle Firewall.
@@ -54,7 +106,9 @@ systemctl enable turtlefirewall --now
 Activate Repos.
 ```
 dnf config-manager --set-enabled extras-common
+dnf config-manager --set-enabled crb
 dnf -y install epel-release
+dnf -y install createrepo
 
 echo "[Webmin]
 name=Webmin Distribution Neutral
@@ -70,7 +124,6 @@ baseurl=file:/tmp/tfw/
 enabled=1
 gpgckeck=0" > /etc/yum.repos.d/tfw.repo
 
-dnf -y install createrepo
 mkdir -p /tmp/tfw
 cd /tmp/tfw
 curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
@@ -80,6 +133,7 @@ curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | wget -qi -
 createrepo ./
 sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/yum.conf
+sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/dnf.conf
  ```
 
 Install Turtle Firewall.
@@ -108,6 +162,7 @@ yum -y install yum-utils
 yum-config-manager --enable repository extras
 yum -y install epel-release
 yum -y install centos-release-scl
+yum -y install createrepo
 
 echo "[Webmin]
 name=Webmin Distribution Neutral
@@ -123,7 +178,6 @@ baseurl=file:/tmp/tfw/
 enabled=1
 gpgckeck=0" > /etc/yum.repos.d/tfw.repo
 
-yum -y install createrepo
 mkdir -p /tmp/tfw
 cd /tmp/tfw
 curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
@@ -156,7 +210,7 @@ Configure */etc/turtlefirewall/fw.xml* or via Webmin and enable Turtle Firewall.
 systemctl enable turtlefirewall --now
 ```
 
-## CentOS/RHEL 7/8/9
+## CentOS/RHEL 7/8/9/10
 
 If dkms does not auto build kernel modules after reboot
 ```
@@ -190,6 +244,15 @@ if [ $? = 0 ]
     dkms add -m ipt-ratelimit -v $ver
     dkms build -m ipt-ratelimit -v $ver
     dkms install -m ipt-ratelimit -v $ver
+  fi
+  lsmod | grep xt_time > /dev/null
+  if [ $? != 0 ]
+   then
+    ver=`readlink -f /usr/src/xtables-time-* | cut -d "-" -f3`
+    dkms remove -m xtables-time/${ver} --all
+    dkms add -m xtables-time -v $ver
+    dkms build -m xtables-time -v $ver
+    dkms install -m xtables-time -v $ver
   fi
   turtlefirewall
 fi
