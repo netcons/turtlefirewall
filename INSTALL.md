@@ -55,6 +55,7 @@ Activate Repos.
 dnf config-manager --set-enabled extras-common
 dnf config-manager --set-enabled crb
 dnf -y install epel-release
+dnf -y install centos-release-hyperscale-experimental
 dnf -y install createrepo
 
 echo "[Webmin]
