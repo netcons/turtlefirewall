@@ -179,6 +179,7 @@
 	<ndpiprotocol name="iso9506-1-mms" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="iqiyi" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="jabber" category="instant-messaging"> </ndpiprotocol>
+	<ndpiprotocol name="jrmi" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="json-rpc" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="kafka" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="kakaotalk" category="collaboration"> </ndpiprotocol>
@@ -277,6 +278,7 @@
 	<ndpiprotocol name="reddit" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="resp" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="riotgames" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="ripeatlas" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="rmcp" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="roblox" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="roughtime" category="other"> </ndpiprotocol>
