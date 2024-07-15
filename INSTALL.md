@@ -4,32 +4,35 @@ Activate Repos.
 ```
 dnf config-manager --set-enabled extras-common
 dnf config-manager --set-enabled crb
-dnf -y install createrepo
+dnf -y install createrepo wget
 
-echo "[Webmin]
-name=Webmin Distribution Neutral
-#baseurl=https://download.webmin.com/download/yum
-mirrorlist=https://download.webmin.com/download/yum/mirrorlist
-enabled=1
-gpgkey=https://download.webmin.com/jcameron-key.asc
-gpgcheck=1" > /etc/yum.repos.d/webmin.repo
+wget https://download.webmin.com/developers-key.asc -O /etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
 
-echo "[TFW]
-name=Turtle Firewall
-baseurl=file:/tmp/tfw/
-enabled=1
-gpgckeck=0" > /etc/yum.repos.d/tfw.repo
+echo '[webmin]
+name=CentOS Stream $releasever - Webmin
+baseurl=https://download.webmin.com/download/newkey/yum/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
+enabled=1'  > /etc/yum.repos.d/webmin.repo
 
-mkdir -p /tmp/tfw
-cd /tmp/tfw
+mkdir -p /var/tmp/tfw
+cd /var/tmp/tfw
 curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | grep "browser_download_url.*.el10.*rpm" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
 createrepo ./
-sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/dnf.conf
- ```
+
+wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/RPM-GPG-KEY-tfw -O /etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+
+echo '[tfw]
+name=CentOS Stream $releasever - Turtlefirewall
+baseurl=file:/var/tmp/tfw/
+gpgckeck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+enabled=1' > /etc/yum.repos.d/tfw.repo
+```
 
 Install Turtle Firewall.
 ```
@@ -56,33 +59,35 @@ dnf config-manager --set-enabled extras-common
 dnf config-manager --set-enabled crb
 dnf -y install epel-release
 dnf -y install centos-release-hyperscale-experimental
-dnf -y install createrepo
+dnf -y install createrepo wget
 
-echo "[Webmin]
-name=Webmin Distribution Neutral
-#baseurl=https://download.webmin.com/download/yum
-mirrorlist=https://download.webmin.com/download/yum/mirrorlist
-enabled=1
-gpgkey=https://download.webmin.com/jcameron-key.asc
-gpgcheck=1" > /etc/yum.repos.d/webmin.repo
+wget https://download.webmin.com/developers-key.asc -O /etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
 
-echo "[TFW]
-name=Turtle Firewall
-baseurl=file:/tmp/tfw/
-enabled=1
-gpgckeck=0" > /etc/yum.repos.d/tfw.repo
+echo '[webmin]
+name=CentOS Stream $releasever - Webmin
+baseurl=https://download.webmin.com/download/newkey/yum/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
+enabled=1'  > /etc/yum.repos.d/webmin.repo
 
-mkdir -p /tmp/tfw
-cd /tmp/tfw
+mkdir -p /var/tmp/tfw
+cd /var/tmp/tfw
 curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | grep "browser_download_url.*.el9.*rpm" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
 createrepo ./
-sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/yum.conf
-sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/dnf.conf
- ```
+
+wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/RPM-GPG-KEY-tfw -O /etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+
+echo '[tfw]
+name=CentOS Stream $releasever - Turtlefirewall
+baseurl=file:/var/tmp/tfw/
+gpgckeck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+enabled=1' > /etc/yum.repos.d/tfw.repo
+```
 
 Install Turtle Firewall.
 ```
@@ -109,33 +114,35 @@ Activate Repos.
 dnf config-manager --set-enabled extras-common
 dnf config-manager --set-enabled crb
 dnf -y install epel-release
-dnf -y install createrepo
+dnf -y install createrepo wget
 
-echo "[Webmin]
-name=Webmin Distribution Neutral
-#baseurl=https://download.webmin.com/download/yum
-mirrorlist=https://download.webmin.com/download/yum/mirrorlist
-enabled=1
-gpgkey=https://download.webmin.com/jcameron-key.asc
-gpgcheck=1" > /etc/yum.repos.d/webmin.repo
+wget https://download.webmin.com/developers-key.asc -O /etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
 
-echo "[TFW]
-name=Turtle Firewall
-baseurl=file:/tmp/tfw/
-enabled=1
-gpgckeck=0" > /etc/yum.repos.d/tfw.repo
+echo '[webmin]
+name=CentOS Stream $releasever - Webmin
+baseurl=https://download.webmin.com/download/newkey/yum/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
+enabled=1'  > /etc/yum.repos.d/webmin.repo
 
-mkdir -p /tmp/tfw
-cd /tmp/tfw
+mkdir -p /var/tmp/tfw
+cd /var/tmp/tfw
 curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | grep "browser_download_url.*.el8.*rpm" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
 createrepo ./
-sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/yum.conf
-sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/dnf.conf
- ```
+
+wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/RPM-GPG-KEY-tfw -O /etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+
+echo '[tfw]
+name=CentOS Stream $releasever - Turtlefirewall
+baseurl=file:/var/tmp/tfw/
+gpgckeck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+enabled=1' > /etc/yum.repos.d/tfw.repo
+```
 
 Install Turtle Firewall.
 ```
@@ -163,32 +170,35 @@ yum -y install yum-utils
 yum-config-manager --enable repository extras
 yum -y install epel-release
 yum -y install centos-release-scl
-yum -y install createrepo
+yum -y install createrepo wget
 
-echo "[Webmin]
-name=Webmin Distribution Neutral
-#baseurl=https://download.webmin.com/download/yum
-mirrorlist=https://download.webmin.com/download/yum/mirrorlist
-enabled=1
-gpgkey=https://download.webmin.com/jcameron-key.asc
-gpgcheck=1" > /etc/yum.repos.d/webmin.repo
+wget https://download.webmin.com/developers-key.asc -O /etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
 
-echo "[TFW]
-name=Turtle Firewall
-baseurl=file:/tmp/tfw/
-enabled=1
-gpgckeck=0" > /etc/yum.repos.d/tfw.repo
+echo '[webmin]
+name=CentOS-$releasever - Webmin
+baseurl=https://download.webmin.com/download/newkey/yum/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
+enabled=1'  > /etc/yum.repos.d/webmin.repo
 
-mkdir -p /tmp/tfw
-cd /tmp/tfw
+mkdir -p /var/tmp/tfw
+cd /var/tmp/tfw
 curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | grep "browser_download_url.*.el7.*rpm" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
 createrepo ./
-sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/yum.conf
- ```
+
+wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/RPM-GPG-KEY-tfw -O /etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+
+echo '[tfw]
+name=CentOS-$releasever - Turtlefirewall
+baseurl=file:/var/tmp/tfw/
+gpgckeck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+enabled=1' > /etc/yum.repos.d/tfw.repo
+```
 
 Install Turtle Firewall.
 ```
