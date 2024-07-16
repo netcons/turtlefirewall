@@ -91,7 +91,8 @@ enabled=1' > /etc/yum.repos.d/tfw.repo
 
 Install Turtle Firewall.
 ```
-dnf -y upgrade kernel kernel-devel kernel-headers
+dnf -y upgrade kernel
+dnf -y install kernel-devel kernel-headers
 dnf -y install turtlefirewall
 systemctl enable dkms --now
 reboot
@@ -111,10 +112,19 @@ systemctl enable turtlefirewall --now
 
 Activate Repos.
 ```
+sed -i "s/mirror.centos.org/vault.centos.org/g" /etc/yum.repos.d/*.repo
+sed -i "s/^#baseurl=/baseurl=/" /etc/yum.repos.d/*.repo
+sed -i "s/^mirrorlist=/#mirrorlist=/" /etc/yum.repos.d/*.repo
+
 dnf config-manager --set-enabled extras-common
-dnf config-manager --set-enabled crb
+dnf config-manager --set-enabled powertools
 dnf -y install epel-release
 dnf -y install createrepo wget
+
+dnf -y install centos-release-hyperscale-experimental
+sed -i "s/mirror.centos.org/vault.centos.org/g" /etc/yum.repos.d/CentOS-Stream-Hyperscale*
+sed -i "s/^#baseurl=/baseurl=/" /etc/yum.repos.d/CentOS-Stream-Hyperscale*
+sed -i "s/^mirrorlist=/#mirrorlist=/" /etc/yum.repos.d/CentOS-Stream-Hyperscale*
 
 wget https://download.webmin.com/developers-key.asc -O /etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
 
@@ -134,19 +144,17 @@ curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | wget -qi -
 createrepo ./
 
-wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/RPM-GPG-KEY-tfw -O /etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
-
 echo '[tfw]
 name=CentOS Stream $releasever - Turtlefirewall
 baseurl=file:/var/tmp/tfw/
-gpgckeck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+gpgckeck=0
 enabled=1' > /etc/yum.repos.d/tfw.repo
 ```
 
 Install Turtle Firewall.
 ```
-dnf -y upgrade kernel kernel-devel kernel-headers
+dnf -y upgrade kernel
+dnf -y install kernel-devel kernel-headers
 dnf -y install turtlefirewall
 systemctl enable dkms --now
 reboot
@@ -166,11 +174,19 @@ systemctl enable turtlefirewall --now
 
 Activate Repos.
 ```
+sed -i "s/mirror.centos.org/vault.centos.org/g" /etc/yum.repos.d/*.repo
+sed -i "s/^#baseurl=/baseurl=/" /etc/yum.repos.d/*.repo
+sed -i "s/^mirrorlist=/#mirrorlist=/" /etc/yum.repos.d/*.repo
+
 yum -y install yum-utils
 yum-config-manager --enable repository extras
 yum -y install epel-release
-yum -y install centos-release-scl
 yum -y install createrepo wget
+
+yum -y install centos-release-scl
+sed -i "s/mirror.centos.org/vault.centos.org/g" /etc/yum.repos.d/CentOS-SCLo-scl*
+sed -i "s/^# baseurl=/baseurl=/" /etc/yum.repos.d/CentOS-SCLo-scl*
+sed -i "s/^mirrorlist=/#mirrorlist=/" /etc/yum.repos.d/CentOS-SCLo-scl*
 
 wget https://download.webmin.com/developers-key.asc -O /etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
 
@@ -190,19 +206,19 @@ curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | wget -qi -
 createrepo ./
 
-wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/RPM-GPG-KEY-tfw -O /etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
-
 echo '[tfw]
 name=CentOS-$releasever - Turtlefirewall
 baseurl=file:/var/tmp/tfw/
-gpgckeck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+gpgckeck=0
 enabled=1' > /etc/yum.repos.d/tfw.repo
+
+sed -i "s/^gpgcheck=.*$/gpgcheck=0/" /etc/yum.conf
 ```
 
 Install Turtle Firewall.
 ```
-yum -y upgrade kernel kernel-devel kernel-headers
+yum -y upgrade kernel
+yum -y install kernel-devel kernel-headers
 yum -y upgrade iptables iptables-ebtables
 yum -y install turtlefirewall
 yum -y install devtoolset-9-*
