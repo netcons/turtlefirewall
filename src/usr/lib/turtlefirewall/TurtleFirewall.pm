@@ -1724,19 +1724,16 @@ sub startFirewall {
 
 	# Apply Rate Limits
 	for my $r ($this->GetRateLimitList()) {
-		my $r_inuse = '';
 		my %ratelimit = $this->GetRateLimit($r);
 		for( my $i=0; $i<=$#{$this->{fw}{RULE}}; $i++ ) {
 		       	if( $this->{fw}{RULE}[$i]{RATELIMIT} eq $r && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
-			       	$r_inuse = 'YES';
+				# Convert to bps
+				my $rate = $ratelimit{'RATE'} * 1024000; 
+				print "run ipt_ratelimit $r($ratelimit{'RATE'} Mbps)\n";
+				$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/go-$r" );
+				$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/back-$r" );
+                        	last;
 		       	}
-	       	}
-		if( $r_inuse ne '' ) {
-			# Convert to Mbps
-			my $rate = $ratelimit{'RATE'} * 1024000; 
-			print "run ipt_ratelimit $r($ratelimit{'RATE'} Mbps)\n";
-			$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/go-$r" );
-			$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/back-$r" );
 	       	}
 	}
 }
