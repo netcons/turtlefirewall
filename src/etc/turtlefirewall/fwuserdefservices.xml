@@ -202,9 +202,13 @@
                 <filter direction="go" p="tcp" dport="389"/>
                 <filter direction="back" p="tcp" sport="389"/>
         </service>
-	<service name="eset" description="ESET (tcp 2222)">
+	<service name="eset" description="ESET">
                 <filter direction="go" p="tcp" dport="2222"/>
                 <filter direction="back" p="tcp" sport="2222"/>
+                <filter direction="go" p="tcp" dport="8883"/>
+                <filter direction="back" p="tcp" sport="8883"/>
+                <filter direction="go" p="udp" dport="53535"/>
+                <filter direction="back" p="udp" sport="53535"/>
         </service>
 	<service name="winbox" description="Mikrotik Winbox (tcp 8291)">
                 <filter direction="go" p="tcp" dport="8291"/>
