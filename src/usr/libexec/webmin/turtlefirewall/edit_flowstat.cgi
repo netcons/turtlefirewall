@@ -42,16 +42,16 @@ sub reportFlowStat {
 	print &ui_columns_start(undef, 100, 0, \@tds);
 	my $col = '';
 	$col = &ui_select("log", $log, \@logs);
-	print &ui_columns_row([ "<b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "<img src=images/item.png hspace=4><b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
 	$col = &ui_select("type", $type, \@types);
-	print &ui_columns_row([ "<b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "<img src=images/grey-ndpi.png hspace=4><b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);
 	$col = &ui_select("max", $max, \@maxs);
 	$col .= "<small><i>$text{flowstat_max_help}</i></small>";
-	print &ui_columns_row([ "<b>$text{'edit_flowstat_max'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "<img src=images/ratelimit.png hspace=4><b>$text{'edit_flowstat_max'}</b>", $col ], \@tds);
 	$col = &ui_select("top", $top, \@tops);
-	print &ui_columns_row([ "<b>$text{'edit_flowstat_top'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "<img src=images/graph.png hspace=4><b>$text{'edit_flowstat_top'}</b>", $col ], \@tds);
 	$col = &ui_textbox("string", $string, 60, 0, 60);
-	print &ui_columns_row([ "<b>$text{'edit_flowstat_string'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "<img src=images/target.png hspace=4><b>$text{'edit_flowstat_string'}</b>", $col ], \@tds);
 	print &ui_columns_end();
 
 	print "<table width=100%><tr>";

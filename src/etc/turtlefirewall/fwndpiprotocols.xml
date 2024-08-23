@@ -52,6 +52,7 @@
 	<ndpiprotocol name="ciscoskinny" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="ciscovpn" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="citrix" category="remote-access"> </ndpiprotocol>
+	<ndpiprotocol name="clickhouse" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="cloudflare" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="cloudflarewarp" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="cnn" category="other"> </ndpiprotocol>
@@ -145,6 +146,7 @@
 	<ndpiprotocol name="heroes_of_the_storm" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="hislip" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="hl7" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="hls" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="hotspotshield" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="hp_virtgrp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="hsrp" category="networking"> </ndpiprotocol>
@@ -223,6 +225,7 @@
 	<ndpiprotocol name="ms-rpch" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="mssql-tds" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="mysql" category="database"> </ndpiprotocol>
+	<ndpiprotocol name="nano" category="crypto-currency"> </ndpiprotocol>
 	<ndpiprotocol name="nat-pmp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="nats" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="nestlogsink" category="other"> </ndpiprotocol>
@@ -245,6 +248,7 @@
 	<ndpiprotocol name="opendns" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="openflow" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="openvpn" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="openwire" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="operavpn" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="oracle" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="ospf" category="networking"> </ndpiprotocol>

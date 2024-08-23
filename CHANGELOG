@@ -234,3 +234,7 @@ CHANGELOG
            - Theme : Split Port and nDPI service column in rule views.
            - Theme : Update edit forms to use ui standard.
            - Theme : Standardize Webmin images.
+22-08-2024 v.2.4
+           - OS : Discontinue CentOS 7 and CentOS 8 RPM packaging.
+           - OS : Remove old fw.xml format fixes, from RPM spec.
+           - Feature : nDPI 4.9.11 support.
