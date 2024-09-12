@@ -24,16 +24,6 @@
                 <filter direction="go" p="udp" dport="37"/>
                 <filter direction="back" p="udp" sport="37"/>
         </service>
-	<service name="openvpn" description="OpenVPN (udp 1194-1197)">
-                <filter direction="go" p="udp" dport="1194"/>
-                <filter direction="back" p="udp" sport="1194"/>
-                <filter direction="go" p="udp" dport="1195"/>
-                <filter direction="back" p="udp" sport="1195"/>
-                <filter direction="go" p="udp" dport="1196"/>
-                <filter direction="back" p="udp" sport="1196"/>
-                <filter direction="go" p="udp" dport="1197"/>
-                <filter direction="back" p="udp" sport="1197"/>
-        </service>
 	<service name="snmp" description="SNMP (tcp/udp 161)">
                 <filter direction="go" p="udp" dport="161"/>
                 <filter direction="back" p="udp" sport="161"/>
@@ -70,11 +60,7 @@
                 <filter direction="go" p="tcp" dport="993"/>
                 <filter direction="back" p="tcp" sport="993"/>
         </service>
-	<service name="smtps" description="SMTPS (tcp 465)">
-                <filter direction="go" p="tcp" dport="465"/>
-                <filter direction="back" p="tcp" sport="465"/>
-        </service>
-	<service name="smtp587" description="SMTP (tcp 587)">
+	<service name="smtps" description="SMTPS (tcp 587)">
                 <filter direction="go" p="tcp" dport="587"/>
                 <filter direction="back" p="tcp" sport="587"/>
         </service>
@@ -241,5 +227,9 @@
 	<service name="quic" description="Google Quic (udp 443)">
 		<filter direction="go" p="udp" dport="443"/>
 		<filter direction="back" p="udp" sport="443"/>
+	</service>
+	<service name="dns-over-tls" description="Domain Name Service over TLS (tcp/udp 853)">
+		<filter direction="go" p="tcp" dport="853"/>
+		<filter direction="back" p="tcp" sport="853"/>
 	</service>
 </services>

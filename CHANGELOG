@@ -237,4 +237,6 @@ CHANGELOG
 22-08-2024 v.2.4
            - OS : Discontinue CentOS 7 and CentOS 8 RPM packaging.
            - OS : Remove old fw.xml format fixes, from RPM spec.
+           - Services : Removed depreciated smtps TCP port 465 service.
+           - Services : Added DNS over TLS TCP port 853 service.
            - Feature : nDPI 4.9.11 support.

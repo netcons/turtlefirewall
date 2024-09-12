@@ -36,8 +36,8 @@ sub showNat {
 		   "<a href=\"edit_nat.cgi?new=1\">$text{'list_nat_create_nat'}</a>" );
         @tds = ( "width=1% style=vertical-align:top",
 		 "width=1% style=text-align:center;vertical-align:top",
-		 "width=10% style=vertical-align:top;white-space:normal",
-		 "width=10% style=vertical-align:top;white-space:normal",
+		 "width=25% style=vertical-align:top;white-space:normal",
+		 "width=25% style=vertical-align:top;white-space:normal",
 		 "style=vertical-align:top;white-space:normal",
 		 "width=1% style=vertical-align:top;text-align:center",
 		 "width=1% style=vertical-align:top;white-space:normal",
@@ -148,8 +148,8 @@ sub showMasquerade {
 		   "<a href=\"edit_masq.cgi?new=1\">$text{'list_nat_create_masq'}</a>" );
         @tds = ( "width=1% style=vertical-align:top",
 		 "width=1% style=text-align:center;vertical-align:top",
-		 "width=10% style=vertical-align:top;white-space:normal",
-		 "width=10% style=vertical-align:top;white-space:normal",
+		 "width=25% style=vertical-align:top;white-space:normal",
+		 "width=25% style=vertical-align:top;white-space:normal",
 		 "style=vertical-align:top;white-space:normal",
 		 "width=1% style=vertical-align:top;text-align:center",
 		 "width=1% style=vertical-align:top" );
@@ -264,8 +264,8 @@ sub showRedirect {
 		   "<a href=\"edit_redirect.cgi?new=1\">$text{'list_nat_create_redirect'}</a>" );
         @tds = ( "width=1% style=vertical-align:top",
 		 "width=1% style=text-align:center;vertical-align:top",
-		 "width=10% style=vertical-align:top;white-space:normal",
-		 "width=10% style=vertical-align:top;white-space:normal",
+		 "width=25% style=vertical-align:top;white-space:normal",
+		 "width=25% style=vertical-align:top;white-space:normal",
 		 "style=vertical-align:top;white-space:normal",
 		 "width=1% style=vertical-align:top;text-align:center",
 		 "width=1% style=vertical-align:top;white-space:normal",

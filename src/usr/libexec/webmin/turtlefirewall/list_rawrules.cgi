@@ -33,8 +33,8 @@ sub showConntrackPreroute {
 	@tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=vertical-align:top",
-		"width=10% style=vertical-align:top;white-space:normal",
-		"width=10% style=vertical-align:top;white-space:normal",
+		"width=25% style=vertical-align:top;white-space:normal",
+		"width=25% style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
 		"width=1% style=vertical-align:top;white-space:normal",
 		"width=1% style=vertical-align:top" );
@@ -157,8 +157,8 @@ sub showConntrack {
 	@tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=vertical-align:top",
-		"width=10% style=vertical-align:top;white-space:normal",
-		"width=10% style=vertical-align:top;white-space:normal",
+		"width=25% style=vertical-align:top;white-space:normal",
+		"width=25% style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
 		"width=1% style=vertical-align:top;white-space:normal",
 		"width=1% style=vertical-align:top" );

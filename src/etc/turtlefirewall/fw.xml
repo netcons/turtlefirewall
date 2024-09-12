@@ -37,6 +37,6 @@
 <rule target="ACCEPT" description="Allow Firewall to anyware" dst="*" service="all" src="FIREWALL"/>
 <rule target="ACCEPT" src="internet" dst="FIREWALL" service="icmp_all,openvpn" description="Allow Internet to Firewall"/>
 <rule service="dns,http,icmp_all,imap,ntp,pop3,proxy8080,shellinabox,smtp,ssh,unifi,webmin" src="lan" dst="FIREWALL" description="Allow Lan to Firewall" target="ACCEPT"/>
-<rule service="ftp,http,https,icmp_all,imap,imaps,ntp,pop3,pop3s,smtp587,smtps" src="lan" dst="internet" log="YES" description="Allow Lan to Internet" target="ACCEPT"/>
+<rule service="ftp,http,https,icmp_all,imap,imaps,ntp,pop3,pop3s,smtps" src="lan" dst="internet" log="YES" description="Allow Lan to Internet" target="ACCEPT"/>
 
 </firewall>
