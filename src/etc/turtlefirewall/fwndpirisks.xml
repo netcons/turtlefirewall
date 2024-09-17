@@ -52,10 +52,10 @@
 	<ndpirisk id="48" description="Periodic Flow"> </ndpirisk>
 	<ndpirisk id="49" description="Minor Issues"> </ndpirisk>
 	<ndpirisk id="50" description="TCP Connection Issues"> </ndpirisk>
-	<ndpirisk id="51" description="Fully encrypted flow"> </ndpirisk>
+	<ndpirisk id="51" description="Fully Encrypted Flow"> </ndpirisk>
 	<ndpirisk id="52" description="ALPN/SNI Mismatch"> </ndpirisk>
-	<ndpirisk id="53" description="Client contacted a malware host"> </ndpirisk>
-	<ndpirisk id="54" description="Binary file/data transfer (attempt)"> </ndpirisk>
-	<ndpirisk id="55" description="Probing attempt"> </ndpirisk>
+	<ndpirisk id="53" description="Client Contacted A Malware Host"> </ndpirisk>
+	<ndpirisk id="54" description="Binary File/Data Transfer (Attempt)"> </ndpirisk>
+	<ndpirisk id="55" description="Probing Attempt"> </ndpirisk>
 
 </ndpirisks>
