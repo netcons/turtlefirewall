@@ -44,6 +44,12 @@
                 <filter direction="go" p="udp" dport="5060"/>
                 <filter direction="back" p="udp" sport="5060"/>
         </service>
+	<service name="sips" description="SIPS (tcp/udp 5061)">
+                <filter direction="go" p="tcp" dport="5061"/>
+                <filter direction="back" p="tcp" sport="5061"/>
+                <filter direction="go" p="udp" dport="5061"/>
+                <filter direction="back" p="udp" sport="5061"/>
+        </service>
 	<service name="rtp" description="RTP (udp 16384-32768)">
                 <filter direction="go" p="udp" dport="16384:32768"/>
                 <filter direction="back" p="udp" sport="16384:32768"/>
@@ -144,25 +150,13 @@
                 <filter direction="go" p="50"/>
                 <filter direction="back" p="50" jump="ACCEPT"/>
         </service>
-        <service name="3cx" description="3CX">
-                <filter direction="go" p="tcp" dport="5000"/>
-                <filter direction="back" p="tcp" sport="5000"/>
-                <filter direction="go" p="tcp" dport="5001"/>
-                <filter direction="back" p="tcp" sport="5001"/>
-                <filter direction="go" p="tcp" dport="5015"/>
-                <filter direction="back" p="tcp" sport="5015"/>
+	<service name="3cx" description="3CX">
                 <filter direction="go" p="tcp" dport="5090"/>
                 <filter direction="back" p="tcp" sport="5090"/>
                 <filter direction="go" p="udp" dport="5090"/>
                 <filter direction="back" p="udp" sport="5090"/>
-	</service>
-	<service name="3cx-rtp-wan" description="3CX RTP WAN">
                 <filter direction="go" p="udp" dport="9000:10999"/>
                 <filter direction="back" p="udp" sport="9000:10999"/>
-        </service>
-        <service name="3cx-rtp-lan" description="3CX RTP LAN">
-                <filter direction="go" p="udp" dport="7000:8999"/>
-                <filter direction="back" p="udp" sport="7000:8999"/>
         </service>
         <service name="veeam-transfer" description="veeam-transfer">
                 <filter direction="go" p="tcp" dport="2500:5000"/>

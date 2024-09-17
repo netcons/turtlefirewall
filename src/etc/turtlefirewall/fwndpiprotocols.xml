@@ -28,6 +28,7 @@
 	<ndpiprotocol name="applestore" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="appletvplus" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="armagetron" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="atg" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="avast" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="avastsecuredns" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="azure" category="other"> </ndpiprotocol>
@@ -44,6 +45,7 @@
 	<ndpiprotocol name="bloomberg" category="financial"> </ndpiprotocol>
 	<ndpiprotocol name="bluesky" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="cachefly" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="cactusvpn" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="cassandra" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="ceph" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="capwap" category="networking"> </ndpiprotocol>
@@ -56,6 +58,7 @@
 	<ndpiprotocol name="cloudflare" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="cloudflarewarp" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="cnn" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="cnp-ip" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="coap" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="cod_mobile" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="collectd" category="infrastructure"> </ndpiprotocol>
@@ -192,6 +195,7 @@
 	<ndpiprotocol name="knxnet_ip" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="lastfm" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="ldap" category="authentication"> </ndpiprotocol>
+	<ndpiprotocol name="ldp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="likee" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="line" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="linecall" category="telephony"> </ndpiprotocol>
@@ -201,7 +205,7 @@
 	<ndpiprotocol name="llmnr" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="lolwildrift" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="lotusnotes" category="other"> </ndpiprotocol>
-	<ndpiprotocol name="ldp" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="lustre" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="maplestory" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="mastodon" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="mdns" category="networking"> </ndpiprotocol>
@@ -237,6 +241,7 @@
 	<ndpiprotocol name="nintendo" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="noe" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="nomachine" category="remote-access"> </ndpiprotocol>
+	<ndpiprotocol name="nordvpn" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="ntop" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ntp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="nvidia" category="other"> </ndpiprotocol>
@@ -334,6 +339,7 @@
 	<ndpiprotocol name="steamdatagramrelay" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="stun" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="stomp" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="surfshark" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="syncthing" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="syslog" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="tailscale" category="tunnelling"> </ndpiprotocol>
@@ -363,6 +369,7 @@
 	<ndpiprotocol name="tocaboca" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="tor" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="tplink_shp" category="iot-scada"> </ndpiprotocol>
+	<ndpiprotocol name="trdp" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="truphone" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="tumblr" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="tunein" category="video-audio"> </ndpiprotocol>
@@ -398,6 +405,7 @@
 	<ndpiprotocol name="whois-das" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="wikipedia" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="windowsupdate" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="windscribe" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="wireguard" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="worldofkungfu" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="worldofwarcraft" category="gaming"> </ndpiprotocol>
