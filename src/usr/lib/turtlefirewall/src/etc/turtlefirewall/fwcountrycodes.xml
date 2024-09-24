@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+
+<countrycodes>
+
+	<countrycode name="A1" description="Anonymous Proxy"> </countrycode>
+	<countrycode name="A2" description="Satellite Provider"> </countrycode>
+	<countrycode name="O1" description="Other Country"> </countrycode>
+	<countrycode name="AD" description="Andorra"> </countrycode>
+	<countrycode name="AE" description="United Arab Emirates"> </countrycode>
+	<countrycode name="AF" description="Afghanistan"> </countrycode>
+	<countrycode name="AG" description="Antigua and Barbuda"> </countrycode>
+	<countrycode name="AI" description="Anguilla"> </countrycode>
+	<countrycode name="AL" description="Albania"> </countrycode>
+	<countrycode name="AM" description="Armenia"> </countrycode>
+	<countrycode name="AO" description="Angola"> </countrycode>
+	<countrycode name="AP" description="Asia/Pacific Region"> </countrycode>
+	<countrycode name="AQ" description="Antarctica"> </countrycode>
+	<countrycode name="AR" description="Argentina"> </countrycode>
+	<countrycode name="AS" description="American Samoa"> </countrycode>
+	<countrycode name="AT" description="Austria"> </countrycode>
+	<countrycode name="AU" description="Australia"> </countrycode>
+	<countrycode name="AW" description="Aruba"> </countrycode>
+	<countrycode name="AX" description="Aland Islands"> </countrycode>
+	<countrycode name="AZ" description="Azerbaijan"> </countrycode>
+	<countrycode name="BA" description="Bosnia and Herzegovina"> </countrycode>
+	<countrycode name="BB" description="Barbados"> </countrycode>
+	<countrycode name="BD" description="Bangladesh"> </countrycode>
+	<countrycode name="BE" description="Belgium"> </countrycode>
+	<countrycode name="BF" description="Burkina Faso"> </countrycode>
+	<countrycode name="BG" description="Bulgaria"> </countrycode>
+	<countrycode name="BH" description="Bahrain"> </countrycode>
+	<countrycode name="BI" description="Burundi"> </countrycode>
+	<countrycode name="BJ" description="Benin"> </countrycode>
+	<countrycode name="BL" description="Saint Barthelemy"> </countrycode>
+	<countrycode name="BM" description="Bermuda"> </countrycode>
+	<countrycode name="BN" description="Brunei Darussalam"> </countrycode>
+	<countrycode name="BO" description="Bolivia"> </countrycode>
+	<countrycode name="BQ" description="Bonaire, Saint Eustatius and Saba"> </countrycode>
+	<countrycode name="BR" description="Brazil"> </countrycode>
+	<countrycode name="BS" description="Bahamas"> </countrycode>
+	<countrycode name="BT" description="Bhutan"> </countrycode>
+	<countrycode name="BV" description="Bouvet Island"> </countrycode>
+	<countrycode name="BW" description="Botswana"> </countrycode>
+	<countrycode name="BY" description="Belarus"> </countrycode>
+	<countrycode name="BZ" description="Belize"> </countrycode>
+	<countrycode name="CA" description="Canada"> </countrycode>
+	<countrycode name="CC" description="Cocos (Keeling) Islands"> </countrycode>
+	<countrycode name="CD" description="Congo, The Democratic Republic of the"> </countrycode>
+	<countrycode name="CF" description="Central African Republic"> </countrycode>
+	<countrycode name="CG" description="Congo"> </countrycode>
+	<countrycode name="CH" description="Switzerland"> </countrycode>
+	<countrycode name="CI" description="Cote d'Ivoire"> </countrycode>
+	<countrycode name="CK" description="Cook Islands"> </countrycode>
+	<countrycode name="CL" description="Chile"> </countrycode>
+	<countrycode name="CM" description="Cameroon"> </countrycode>
+	<countrycode name="CN" description="China"> </countrycode>
+	<countrycode name="CO" description="Colombia"> </countrycode>
+	<countrycode name="CR" description="Costa Rica"> </countrycode>
+	<countrycode name="CU" description="Cuba"> </countrycode>
+	<countrycode name="CV" description="Cape Verde"> </countrycode>
+	<countrycode name="CW" description="Curacao"> </countrycode>
+	<countrycode name="CX" description="Christmas Island"> </countrycode>
+	<countrycode name="CY" description="Cyprus"> </countrycode>
+	<countrycode name="CZ" description="Czech Republic"> </countrycode>
+	<countrycode name="DE" description="Germany"> </countrycode>
+	<countrycode name="DJ" description="Djibouti"> </countrycode>
+	<countrycode name="DK" description="Denmark"> </countrycode>
+	<countrycode name="DM" description="Dominica"> </countrycode>
+	<countrycode name="DO" description="Dominican Republic"> </countrycode>
+	<countrycode name="DZ" description="Algeria"> </countrycode>
+	<countrycode name="EC" description="Ecuador"> </countrycode>
+	<countrycode name="EE" description="Estonia"> </countrycode>
+	<countrycode name="EG" description="Egypt"> </countrycode>
+	<countrycode name="EH" description="Western Sahara"> </countrycode>
+	<countrycode name="ER" description="Eritrea"> </countrycode>
+	<countrycode name="ES" description="Spain"> </countrycode>
+	<countrycode name="ET" description="Ethiopia"> </countrycode>
+	<countrycode name="EU" description="Europe"> </countrycode>
+	<countrycode name="FI" description="Finland"> </countrycode>
+	<countrycode name="FJ" description="Fiji"> </countrycode>
+	<countrycode name="FK" description="Falkland Islands (Malvinas)"> </countrycode>
+	<countrycode name="FM" description="Micronesia, Federated States of"> </countrycode>
+	<countrycode name="FO" description="Faroe Islands"> </countrycode>
+	<countrycode name="FR" description="France"> </countrycode>
+	<countrycode name="GA" description="Gabon"> </countrycode>
+	<countrycode name="GB" description="United Kingdom"> </countrycode>
+	<countrycode name="GD" description="Grenada"> </countrycode>
+	<countrycode name="GE" description="Georgia"> </countrycode>
+	<countrycode name="GF" description="French Guiana"> </countrycode>
+	<countrycode name="GG" description="Guernsey"> </countrycode>
+	<countrycode name="GH" description="Ghana"> </countrycode>
+	<countrycode name="GI" description="Gibraltar"> </countrycode>
+	<countrycode name="GL" description="Greenland"> </countrycode>
+	<countrycode name="GM" description="Gambia"> </countrycode>
+	<countrycode name="GN" description="Guinea"> </countrycode>
+	<countrycode name="GP" description="Guadeloupe"> </countrycode>
+	<countrycode name="GQ" description="Equatorial Guinea"> </countrycode>
+	<countrycode name="GR" description="Greece"> </countrycode>
+	<countrycode name="GS" description="South Georgia and the South Sandwich Islands"> </countrycode>
+	<countrycode name="GT" description="Guatemala"> </countrycode>
+	<countrycode name="GU" description="Guam"> </countrycode>
+	<countrycode name="GW" description="Guinea-Bissau"> </countrycode>
+	<countrycode name="GY" description="Guyana"> </countrycode>
+	<countrycode name="HK" description="Hong Kong"> </countrycode>
+	<countrycode name="HM" description="Heard Island and McDonald Islands"> </countrycode>
+	<countrycode name="HN" description="Honduras"> </countrycode>
+	<countrycode name="HR" description="Croatia"> </countrycode>
+	<countrycode name="HT" description="Haiti"> </countrycode>
+	<countrycode name="HU" description="Hungary"> </countrycode>
+	<countrycode name="ID" description="Indonesia"> </countrycode>
+	<countrycode name="IE" description="Ireland"> </countrycode>
+	<countrycode name="IL" description="Israel"> </countrycode>
+	<countrycode name="IM" description="Isle of Man"> </countrycode>
+	<countrycode name="IN" description="India"> </countrycode>
+	<countrycode name="IO" description="British Indian Ocean Territory"> </countrycode>
+	<countrycode name="IQ" description="Iraq"> </countrycode>
+	<countrycode name="IR" description="Iran, Islamic Republic of"> </countrycode>
+	<countrycode name="IS" description="Iceland"> </countrycode>
+	<countrycode name="IT" description="Italy"> </countrycode>
+	<countrycode name="JE" description="Jersey"> </countrycode>
+	<countrycode name="JM" description="Jamaica"> </countrycode>
+	<countrycode name="JO" description="Jordan"> </countrycode>
+	<countrycode name="JP" description="Japan"> </countrycode>
+	<countrycode name="KE" description="Kenya"> </countrycode>
+	<countrycode name="KG" description="Kyrgyzstan"> </countrycode>
+	<countrycode name="KH" description="Cambodia"> </countrycode>
+	<countrycode name="KI" description="Kiribati"> </countrycode>
+	<countrycode name="KM" description="Comoros"> </countrycode>
+	<countrycode name="KN" description="Saint Kitts and Nevis"> </countrycode>
+	<countrycode name="KP" description="Korea, Democratic People's Republic of"> </countrycode>
+	<countrycode name="KR" description="Korea, Republic of"> </countrycode>
+	<countrycode name="KW" description="Kuwait"> </countrycode>
+	<countrycode name="KY" description="Cayman Islands"> </countrycode>
+	<countrycode name="KZ" description="Kazakhstan"> </countrycode>
+	<countrycode name="LA" description="Lao People's Democratic Republic"> </countrycode>
+	<countrycode name="LB" description="Lebanon"> </countrycode>
+	<countrycode name="LC" description="Saint Lucia"> </countrycode>
+	<countrycode name="LI" description="Liechtenstein"> </countrycode>
+	<countrycode name="LK" description="Sri Lanka"> </countrycode>
+	<countrycode name="LR" description="Liberia"> </countrycode>
+	<countrycode name="LS" description="Lesotho"> </countrycode>
+	<countrycode name="LT" description="Lithuania"> </countrycode>
+	<countrycode name="LU" description="Luxembourg"> </countrycode>
+	<countrycode name="LV" description="Latvia"> </countrycode>
+	<countrycode name="LY" description="Libyan Arab Jamahiriya"> </countrycode>
+	<countrycode name="MA" description="Morocco"> </countrycode>
+	<countrycode name="MC" description="Monaco"> </countrycode>
+	<countrycode name="MD" description="Moldova, Republic of"> </countrycode>
+	<countrycode name="ME" description="Montenegro"> </countrycode>
+	<countrycode name="MF" description="Saint Martin"> </countrycode>
+	<countrycode name="MG" description="Madagascar"> </countrycode>
+	<countrycode name="MH" description="Marshall Islands"> </countrycode>
+	<countrycode name="MK" description="Macedonia"> </countrycode>
+	<countrycode name="ML" description="Mali"> </countrycode>
+	<countrycode name="MM" description="Myanmar"> </countrycode>
+	<countrycode name="MN" description="Mongolia"> </countrycode>
+	<countrycode name="MO" description="Macao"> </countrycode>
+	<countrycode name="MP" description="Northern Mariana Islands"> </countrycode>
+	<countrycode name="MQ" description="Martinique"> </countrycode>
+	<countrycode name="MR" description="Mauritania"> </countrycode>
+	<countrycode name="MS" description="Montserrat"> </countrycode>
+	<countrycode name="MT" description="Malta"> </countrycode>
+	<countrycode name="MU" description="Mauritius"> </countrycode>
+	<countrycode name="MV" description="Maldives"> </countrycode>
+	<countrycode name="MW" description="Malawi"> </countrycode>
+	<countrycode name="MX" description="Mexico"> </countrycode>
+	<countrycode name="MY" description="Malaysia"> </countrycode>
+	<countrycode name="MZ" description="Mozambique"> </countrycode>
+	<countrycode name="NA" description="Namibia"> </countrycode>
+	<countrycode name="NC" description="New Caledonia"> </countrycode>
+	<countrycode name="NE" description="Niger"> </countrycode>
+	<countrycode name="NF" description="Norfolk Island"> </countrycode>
+	<countrycode name="NG" description="Nigeria"> </countrycode>
+	<countrycode name="NI" description="Nicaragua"> </countrycode>
+	<countrycode name="NL" description="Netherlands"> </countrycode>
+	<countrycode name="NO" description="Norway"> </countrycode>
+	<countrycode name="NP" description="Nepal"> </countrycode>
+	<countrycode name="NR" description="Nauru"> </countrycode>
+	<countrycode name="NU" description="Niue"> </countrycode>
+	<countrycode name="NZ" description="New Zealand"> </countrycode>
+	<countrycode name="OM" description="Oman"> </countrycode>
+	<countrycode name="PA" description="Panama"> </countrycode>
+	<countrycode name="PE" description="Peru"> </countrycode>
+	<countrycode name="PF" description="French Polynesia"> </countrycode>
+	<countrycode name="PG" description="Papua New Guinea"> </countrycode>
+	<countrycode name="PH" description="Philippines"> </countrycode>
+	<countrycode name="PK" description="Pakistan"> </countrycode>
+	<countrycode name="PL" description="Poland"> </countrycode>
+	<countrycode name="PM" description="Saint Pierre and Miquelon"> </countrycode>
+	<countrycode name="PN" description="Pitcairn"> </countrycode>
+	<countrycode name="PR" description="Puerto Rico"> </countrycode>
+	<countrycode name="PS" description="Palestinian Territory"> </countrycode>
+	<countrycode name="PT" description="Portugal"> </countrycode>
+	<countrycode name="PW" description="Palau"> </countrycode>
+	<countrycode name="PY" description="Paraguay"> </countrycode>
+	<countrycode name="QA" description="Qatar"> </countrycode>
+	<countrycode name="RE" description="Reunion"> </countrycode>
+	<countrycode name="RO" description="Romania"> </countrycode>
+	<countrycode name="RS" description="Serbia"> </countrycode>
+	<countrycode name="RU" description="Russian Federation"> </countrycode>
+	<countrycode name="RW" description="Rwanda"> </countrycode>
+	<countrycode name="SA" description="Saudi Arabia"> </countrycode>
+	<countrycode name="SB" description="Solomon Islands"> </countrycode>
+	<countrycode name="SC" description="Seychelles"> </countrycode>
+	<countrycode name="SD" description="Sudan"> </countrycode>
+	<countrycode name="SE" description="Sweden"> </countrycode>
+	<countrycode name="SG" description="Singapore"> </countrycode>
+	<countrycode name="SH" description="Saint Helena"> </countrycode>
+	<countrycode name="SI" description="Slovenia"> </countrycode>
+	<countrycode name="SJ" description="Svalbard and Jan Mayen"> </countrycode>
+	<countrycode name="SK" description="Slovakia"> </countrycode>
+	<countrycode name="SL" description="Sierra Leone"> </countrycode>
+	<countrycode name="SM" description="San Marino"> </countrycode>
+	<countrycode name="SN" description="Senegal"> </countrycode>
+	<countrycode name="SO" description="Somalia"> </countrycode>
+	<countrycode name="SR" description="Suriname"> </countrycode>
+	<countrycode name="SS" description="South Sudan"> </countrycode>
+	<countrycode name="ST" description="Sao Tome and Principe"> </countrycode>
+	<countrycode name="SV" description="El Salvador"> </countrycode>
+	<countrycode name="SX" description="Sint Maarten"> </countrycode>
+	<countrycode name="SY" description="Syrian Arab Republic"> </countrycode>
+	<countrycode name="SZ" description="Swaziland"> </countrycode>
+	<countrycode name="TC" description="Turks and Caicos Islands"> </countrycode>
+	<countrycode name="TD" description="Chad"> </countrycode>
+	<countrycode name="TF" description="French Southern Territories"> </countrycode>
+	<countrycode name="TG" description="Togo"> </countrycode>
+	<countrycode name="TH" description="Thailand"> </countrycode>
+	<countrycode name="TJ" description="Tajikistan"> </countrycode>
+	<countrycode name="TK" description="Tokelau"> </countrycode>
+	<countrycode name="TL" description="Timor-Leste"> </countrycode>
+	<countrycode name="TM" description="Turkmenistan"> </countrycode>
+	<countrycode name="TN" description="Tunisia"> </countrycode>
+	<countrycode name="TO" description="Tonga"> </countrycode>
+	<countrycode name="TR" description="Turkey"> </countrycode>
+	<countrycode name="TT" description="Trinidad and Tobago"> </countrycode>
+	<countrycode name="TV" description="Tuvalu"> </countrycode>
+	<countrycode name="TW" description="Taiwan"> </countrycode>
+	<countrycode name="TZ" description="Tanzania, United Republic of"> </countrycode>
+	<countrycode name="UA" description="Ukraine"> </countrycode>
+	<countrycode name="UG" description="Uganda"> </countrycode>
+	<countrycode name="UM" description="United States Minor Outlying Islands"> </countrycode>
+	<countrycode name="US" description="United States"> </countrycode>
+	<countrycode name="UY" description="Uruguay"> </countrycode>
+	<countrycode name="UZ" description="Uzbekistan"> </countrycode>
+	<countrycode name="VA" description="Holy See (Vatican City State)"> </countrycode>
+	<countrycode name="VC" description="Saint Vincent and the Grenadines"> </countrycode>
+	<countrycode name="VE" description="Venezuela"> </countrycode>
+	<countrycode name="VG" description="Virgin Islands, British"> </countrycode>
+	<countrycode name="VI" description="Virgin Islands, U.S."> </countrycode>
+	<countrycode name="VN" description="Vietnam"> </countrycode>
+	<countrycode name="VU" description="Vanuatu"> </countrycode>
+	<countrycode name="WF" description="Wallis and Futuna"> </countrycode>
+	<countrycode name="WS" description="Samoa"> </countrycode>
+	<countrycode name="YE" description="Yemen"> </countrycode>
+	<countrycode name="YT" description="Mayotte"> </countrycode>
+	<countrycode name="ZA" description="South Africa"> </countrycode>
+	<countrycode name="ZM" description="Zambia"> </countrycode>
+	<countrycode name="ZW" description="Zimbabwe"> </countrycode>
+
+</countrycodes>
