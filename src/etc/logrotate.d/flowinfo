@@ -1,0 +1,6 @@
+/var/log/flowinfo.log {
+        daily
+        missingok
+        rotate 31
+        copytruncate
+}

@@ -1,0 +1,93 @@
+#!/usr/bin/perl
+
+#======================================================================
+# Turtle Firewall webmin module
+#
+# Copyright (c) Andrea Frigido
+# You may distribute under the terms of either the GNU General Public
+# License
+#======================================================================
+
+do 'turtlefirewall-lib.pl';
+&ReadParse();
+
+$new = $in{'new'};
+
+if( $new ) {
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_redirect_title_create'}";
+	$idx = '';
+	$src = '';
+	$dst = '';
+	$service = '';
+	$port = '';
+	$toport = '';
+	$is_redirect = 1;
+	$active = 1;
+} else {
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_redirect_title_edit'}";
+	$idx = $in{'idx'};
+	%redirect = $fw->GetRedirect($idx);
+	$src = $redirect{'SRC'};
+	$dst = $redirect{'DST'};
+	$service = $redirect{'SERVICE'};
+	$port = $redirect{'PORT'};
+	$toport = $redirect{'TOPORT'};
+	$is_redirect = $redirect{'REDIRECT'} ne 'NO';
+	$active = $redirect{'ACTIVE'} ne 'NO';
+}
+&ui_print_header( $heading, $text{'title'}, "" );
+
+my @items_src = ();
+push @items_src, grep(!/FIREWALL/, $fw->GetZoneList());
+push @items_src, $fw->GetNetList();
+push @items_src, $fw->GetHostList();
+push @items_src, $fw->GetGroupList();
+@items_src = sort(@items_src);
+
+my @items_dst = ('*');
+# I cannot specify a zone as destination (iptables PREROUTING cant have -o option)
+#push @items_dst, grep(!/FIREWALL/, $fw->GetZoneList());
+push @items_dst, $fw->GetNetList();
+push @items_dst, $fw->GetHostList();
+push @items_dst, $fw->GetGroupList();
+@items_dst = sort(@items_dst);
+
+print &ui_subheading($heading);
+print &ui_form_start("save_redirect.cgi", "post");
+print &ui_hidden("idx", $idx);
+my @tds = ( "width=20%", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
+if( !$new ) {
+	$col = "<b>$idx</b>";
+	print &ui_columns_row([ "<img src=images/hash.png hspace=4><b>ID</b>", $col ], \@tds);
+}
+$col = &ui_select("src", $src, \@items_src);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'redirect_src'}</b>", $col ], \@tds);
+$col = &ui_select("dst", $dst, \@items_dst);
+$col .= "<small><i>$text{preroute_help}</i></small>";
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'redirect_dst'}</b>", $col ], \@tds);
+$col = &formService($service, $port, 1);
+print &ui_columns_row([ "<img src=images/service.png hspace=4><b>$text{'rule_service'}</b>", $col ], \@tds);
+my @opts = ( [ 0, "$text{NO}<br>" ], [ 1, "$text{YES}" ] );
+$col = &ui_radio("redirect", $is_redirect ? 1 : 0, \@opts);
+$col .= " : $text{redirect_toport} : ";
+$col .= &ui_textbox("toport", $toport, 5, 0, 5);
+print &ui_columns_row([ "<img src=images/grey-nat.png hspace=4><b>$text{'redirect_redirect'}</b>", $col ], \@tds);
+$col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
+print &ui_columns_row([ "<img src=images/active.png hspace=4><b>$text{'redirect_active'}</b>", $col ], \@tds);
+print &ui_columns_end();
+
+print "<table width=100%><tr>";
+if( $new ) {
+        print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
+} else {
+        print '<td>'.&ui_submit( $text{'button_save'}, "save").'</td>';
+        print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
+}
+print "</tr></table>";
+
+print &ui_form_end();
+
+print "<br><br>";
+&ui_print_footer('list_nat.cgi','NAT list');

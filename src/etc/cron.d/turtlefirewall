@@ -1,0 +1,6 @@
+# Turtlefirewall Maintenance, Check Running
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=""
+HOME=/
+*/5 * * * * root systemctl is-enabled turtlefirewall && ! turtlefirewall --status && turtlefirewall --start > /dev/null 2>&1

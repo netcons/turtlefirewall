@@ -1,0 +1,101 @@
+#!/usr/bin/perl
+#
+# TurtleFw: Turtle Firewall
+#
+# Software for configuring a linux firewall (netfilter)
+#
+#   2001/11/23 13:25:00
+#
+#======================================================================
+# Copyright (c) 2001-2024 Andrea Frigido <andrea@frisoft.it>
+# You may distribute under the terms of either the GNU General Public
+# License
+#======================================================================
+#
+
+require '/usr/lib/turtlefirewall/TurtleFirewall.pm';
+
+$firewall = new TurtleFirewall();
+
+print "\nTurtle Firewall ".$firewall->Version()."\n";
+print "Copyright (c) 2001-2024 Andrea Frigido\n\n";
+
+# parsing dei parametri
+my $outputFile;
+my $fwFile;
+my $servicesFile;
+my $userdefServicesFile;
+my $countrycodesFile;
+my $ndpiprotocolsFile;
+my $ndpirisksFile;
+foreach my $arg (@ARGV) {
+	if( $arg =~ /^(-o|--output)\=(.*)/ ) {
+		$outputFile = $2;
+	} elsif( $arg =~ /^(-f|--firewall)\=(.*)/ ) {
+		$fwFile = $2;
+	} elsif( $arg =~ /^(-s|--services)\=(.*)/ ) {
+		$servicesFile = $2;
+	} elsif( $arg =~ /^--userdefservices\=(.*)/ ) {
+		$userdefServicesFile = $2;
+	} elsif( $arg =~ /^--countrycodes\=(.*)/ ) {
+		$countrycodesFile = $2;
+	} elsif( $arg =~ /^--ndpiprotocols\=(.*)/ ) {
+		$ndpiprotocolsFile = $2;
+	} elsif( $arg =~ /^--ndpirisks\=(.*)/ ) {
+		$ndpirisksFile = $2;
+	} elsif( $arg eq '--start' ) {
+		# Start Firewall (optional)
+	} elsif( $arg eq '--stop' ) {
+		# Stop Firewall
+		$firewall->stopFirewall();
+		print "Firewall Stopped.\n\n";
+		exit(0);
+	} elsif( $arg eq '--status' ) {
+		# Status
+		firewallStatus();
+	} else {
+		if( $arg ne '--help' ) {
+			print "Wrong parameters...\n";
+		}
+
+		print "Use: turtlefirewall [--start|--stop|--status] [--output=outputfile] [--firewall=firewallfile] [--services=servicesfile] [--userdefservices=userdefservicesfile] [--countrycodes=countrycodesfile] [--ndpiprotocols=ndpiprotocolsfile] [--ndpirisks=ndpirisksfile]\n";
+		print "or turtlefirewall [--start|--stop|--status] [-o=outputfile] [-f=firewallfile] [-s=servicesfile]\n";
+		print "Example: turtlefirewall --start -o=fw.sh -f=fw.xml -s=services.xml\n";
+		exit(1);
+	}
+}
+
+if( $fwFile eq '' )	  { $fwFile = "/etc/turtlefirewall/fw.xml"; }
+if( $servicesFile eq '' ) { $servicesFile = "/etc/turtlefirewall/fwservices.xml"; }
+if( $userdefServicesFile eq '' ) { $userdefServicesFile = "/etc/turtlefirewall/fwuserdefservices.xml"; }
+if( $countrycodesFile eq '' ) { $countrycodesFile = "/etc/turtlefirewall/fwcountrycodes.xml"; }
+if( $ndpiprotocolsFile eq '' ) { $ndpiprotocolsFile = "/etc/turtlefirewall/fwndpiprotocols.xml"; }
+if( $ndpirisksFile eq '' ) { $ndpirisksFile = "/etc/turtlefirewall/fwndpirisks.xml"; }
+
+#===================================
+# Carico le regole del firewall
+
+$firewall->LoadFirewall( $fwFile );
+$firewall->LoadServices( $servicesFile, $userdefServicesFile );
+#$firewall->LoadCountryCodes( $countrycodesFile ); # Only required within Webmin
+$firewall->LoadNdpiProtocols( $ndpiprotocolsFile );
+#$firewall->LoadNdpiRisks( $ndpirisksFile ); # Only required within Webmin
+
+####
+# Nuovo 
+$firewall->startFirewall();
+
+# FINE :)
+
+sub firewallStatus {
+	#
+	# Print "Firewall ON" and return 0 or "Fireall OFF" and return 1
+	#
+	if( $firewall->GetStatus() ) {
+		print "Firewall ON\n\n";
+		exit( 0 );
+	} else {
+		print "Firewall OFF\n\n";
+		exit( 1 );
+	}
+}

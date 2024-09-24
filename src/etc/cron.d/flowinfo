@@ -1,0 +1,6 @@
+# Turtlefirewall Flowinfo, Logging
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=""
+HOME=/
+*/5 * * * * root [ -e /proc/net/xt_ndpi/flows ] && cat /proc/net/xt_ndpi/flows | sed 1d >> /var/log/flowinfo.log 2> /dev/null
