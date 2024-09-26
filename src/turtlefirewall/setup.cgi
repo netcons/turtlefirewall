@@ -34,4 +34,4 @@ if( -f "./setup/turtlefirewall" ) {
 
 print "<br><br>\n";
 
-&footer('/',$text{'index'});
+&ui_print_footer('/',$text{'index'});
