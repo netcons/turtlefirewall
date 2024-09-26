@@ -44,6 +44,6 @@ xt_ratelimit. ( https://github.com/aabc/ipt-ratelimit ) <br>
 ./build-wbm
 ```
 
-## install
+## Install
 
 Install the .wbm.gz module using your [Webmin](http://www.webmin.com/) interface.
