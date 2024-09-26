@@ -28,6 +28,25 @@ if( ! $gotXmlParser ) {
 	exit;
 }
 
+# do you need to install startup scripts?
+if( -f "./setup/turtlefirewall" ) {
+	&ui_print_header( undef, $text{'title'}, "" );
+	print "<br>";
+	print "<b>This is the first execution of Turtle Firewall, you need to install/update startup scripts.</b>\n";
+	print "<br><br>";
+	print &ui_form_start("setup.cgi","post");
+	print &ui_submit("Install Turtle Firewall Startup scripts","install");
+	print &ui_form_end();
+	print "<br><b>Notes:</b> ";
+	print "Remember to install xt_ndpi, xt_geoip and xt_ratelimit kernel modules.";
+	#print "Remember to enable your Linux box to act as a router ";
+	#print "(select \"Act as router\"=yes in Hardware->Network->Routing webmin form).";
+	#print "<li>Remember to install XML::Parser Perl module</li>";
+	print "<br>\n";
+	&ui_print_footer('/',$text{'index'});
+	exit;
+}
+
 my $tfwlib = '/usr/lib/turtlefirewall/TurtleFirewall.pm';
 if( ! -f $tfwlib ) {
 	&error( 'Turtle Firewall Library not found. Install Turtle Firewall.' );

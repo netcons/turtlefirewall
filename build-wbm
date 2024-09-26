@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ ! -d "build" ]; then
+  mkdir build
+fi
+cd ./src
+VERSION=`grep version turtlefirewall/module.info | cut -d "=" -f 2`
+echo $VERSION
+tar -czvf ../build/turtlefirewall-$VERSION.wbm.gz turtlefirewall
