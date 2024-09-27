@@ -20,7 +20,7 @@ if( -f "./setup/turtlefirewall" ) {
 	my $err = 1;
 	print "<br>";
 	if( chdir("./setup") ) {
-		$err = system( '/usr/bin/perl setup.pl' );
+		$err = system( '/usr/bin/perl setup' );
 		chdir("../");
 	}
 	if( $err == 0 ) {

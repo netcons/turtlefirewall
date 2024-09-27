@@ -43,8 +43,9 @@ system( "chmod 700 $path_bin/turtlefirewall" );
 
 # Ensure Lib folder
 system( "mkdir -p $path_lib" );
-# delete old turtlefirewall package
-unlink( "$path_lib/turtlefirewall.pm" );
+# delete old turtlefirewall packages
+unlink( "/usr/lib/turtlefirewall.pm" );
+unlink( "/usr/lib/TurtleFirewall.pm" );
 # add new TurtleFirewall package
 system( "cp -v -f TurtleFirewall.pm $path_lib" );
 

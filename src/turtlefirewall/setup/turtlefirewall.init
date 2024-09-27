@@ -18,7 +18,11 @@ fi
 RETVAL=0
 
 start() {
-	/usr/sbin/turtlefirewall
+	/usr/sbin/turtlefirewall --start
+	/usr/lib/turtlefirewall/ip_blacklist -x
+    /usr/lib/turtlefirewall/domain_blacklist -x
+    /usr/lib/turtlefirewall/ja3_blacklist -x
+    /usr/lib/turtlefirewall/sha1_blacklist -x
 	if [ $? == 0 ] ; then
 		touch $FLAG_FILE
 	fi
