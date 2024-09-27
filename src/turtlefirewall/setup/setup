@@ -24,7 +24,7 @@ system( "cp -v -f fwservices.xml $path_config" );
 
 # Il file fwuserdefservices.xml lo copio solo se non presente
 if( ! -f "$path_config/fwuserdefservices.xml" ) {
-	system( "cp -v fwuserdefservices.xml $path_config/" );
+	system( "cp -v fwuserdefservices.xml $path_config" );
 } else {
 	system( "cp -v -f $path_config/fwuserdefservices.xml $path_config/fwuserdefservices.xml.new" );
 }
@@ -116,7 +116,7 @@ if( -f '/etc/slackware-version' ) {
 
 }
 
-# Auto update blacklists
+# Auto update Blacklists
 system( "cp -v -f ip_blacklist $path_lib" );
 system( "cp -v -f domain_blacklist $path_lib" );
 system( "cp -v -f ja3_blacklist $path_lib" );
@@ -126,6 +126,9 @@ system( "ln -sf /usr/lib/turtlefirewall/ip_blacklist /etc/cron.daily/ip_blacklis
 system( "ln -sf /usr/lib/turtlefirewall/domain_blacklist /etc/cron.daily/domain_blacklist > /dev/null 2>&1" );
 system( "ln -sf /usr/lib/turtlefirewall/ja3_blacklist /etc/cron.daily/ja3_blacklist > /dev/null 2>&1" );
 system( "ln -sf /usr/lib/turtlefirewall/sha1_blacklist /etc/cron.daily/sha1_blacklist > /dev/null 2>&1" );
+
+# Auto update GeoIP Database
+system( "cp -v -f xt_geoip_update /etc/cron.daily" );
 
 # Ensure runnning if enabled
 system( "cp -v -f turtlefirewall.cron /etc/cron.d/turtlefirewall" );
