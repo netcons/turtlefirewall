@@ -129,6 +129,7 @@ system( "ln -sf /usr/lib/turtlefirewall/sha1_blacklist /etc/cron.daily/sha1_blac
 
 # Auto update GeoIP Database
 system( "cp -v -f xt_geoip_update /etc/cron.daily" );
+system( "chmod 700 /etc/cron.daily/xt_geoip_update" );
 
 # Ensure runnning if enabled
 system( "cp -v -f turtlefirewall.cron /etc/cron.d/turtlefirewall" );
