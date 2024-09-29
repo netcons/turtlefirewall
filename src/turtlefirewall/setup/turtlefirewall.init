@@ -1,0 +1,63 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:            turtlefirewall
+# Required-Start:      $network $local_fs $syslog
+# Required-Stop:
+# Default-Start:       2 3 4 5
+# Default-Stop:        0 1 6
+# Short-Description:   Turtle Firewall.
+# Description:         Enable Turtle Firewall.
+### END INIT INFO
+
+if [ -d "/var/lock/subsys" ] ; then
+	FLAG_FILE=/var/lock/subsys/turtlefirewall
+else
+	FLAG_FILE=/var/lock/turtlefirewall
+fi
+RETVAL=0
+
+start() {
+	/usr/sbin/turtlefirewall --start
+	if [ $? == 0 ] ; then
+		touch $FLAG_FILE
+	fi
+	RETVAL=$?
+	return $RETVAL
+}
+
+stop() {
+	/usr/sbin/turtlefirewall --stop
+	rm -f $FLAG_FILE
+	RETVAL=$?
+	return $RETVAL
+}
+
+case "$1" in
+	start)
+		start
+		/usr/lib/turtlefirewall/ip_blacklist -x
+		/usr/lib/turtlefirewall/domain_blacklist -x
+		/usr/lib/turtlefirewall/ja3_blacklist -x
+		/usr/lib/turtlefirewall/sha1_blacklist -x
+		;;
+	stop)
+		stop
+		;;
+	status)
+		echo "\nNAT/MASQUERADING:"
+		iptables -t nat -L -n -v
+		echo "\nRULES:"
+		iptables -L -n -v
+		/usr/sbin/turtlefirewall --status
+		;;
+	restart|reload)
+		stop
+		start
+		;;
+	*)
+		echo "Usage: $0 { start | stop | status | restart }"
+		exit 1
+		;;
+esac
+exit $RETVAL

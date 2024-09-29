@@ -8,95 +8,86 @@
 # License
 #======================================================================
 
-
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 $new = $in{'new'};
 
 if( $new ) {
-	&header( $text{edit_nat_title_create}, '' );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_nat_title_create'}";
 	$idx = '';
 	$virtual = '';
 	$real = '';
 	$service = '';
 	$port = '';
+        $toport = '';
 	$active = 1;
 } else {
-	&header( $text{edit_nat_title_edit}, '' );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_nat_title_edit'}";
 	$idx = $in{'idx'};
 	%nat = $fw->GetNat($idx);
 	$virtual = $nat{'VIRTUAL'};
 	$real = $nat{'REAL'};
 	$service = $nat{'SERVICE'};
 	$port = $nat{'PORT'};
+        $toport = $nat{'TOPORT'};
 	$active = $nat{'ACTIVE'} ne 'NO';
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
-
-$options_virtual = '';
-$options_real = '';
-@zones = $fw->GetZoneList();
-@hosts = $fw->GetHostList();
-for my $k (@hosts) {
-	$options_virtual .= '<option'.($k eq $virtual ? ' selected' : '').'>'.$k.'</option>';
-	$options_real .= '<option'.($k eq $real ? ' selected' : '').'>'.$k.'</option>';
-}
-for my $k (@zones) {
-	if( $k ne 'FIREWALL' ) {
-		my %zone = $fw->GetZone($k);
-		$options_virtual .= '<option'.($k eq $virtual ? ' selected' : '').'>'.$k.' ('.$zone{IF}.')</option>';
+my @items_virtual = ();
+my @virtuals = ();
+push @virtuals, grep(!/FIREWALL/, $fw->GetZoneList());
+push @virtuals, $fw->GetHostList();
+for my $k (@virtuals) {
+	my @opts = ();
+	my %zone = $fw->GetZone($k);
+        if( $zone{IF} ne '' ) {
+		@opts = ( "$k", "$k ($zone{IF})" );
+	} else {
+		@opts = ( "$k", "$k" );
 	}
+	push(@items_virtual, \@opts);
 }
 
+my @items_real = ();
+push @items_real, $fw->GetHostList();
 
-print "<br>
-	<form action=\"save_nat.cgi\">
-	<input type=\"hidden\" name=\"idx\" value=\"$idx\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{edit_nat_title_create} : $text{edit_nat_title_edit})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\">";
-if( ! $new ) { print "
-			<tr>
-				<td><b>#</b></td>
-				<td><b><tt>$idx</tt></b></td>
-			</tr>";
+print &ui_subheading($heading);
+print &ui_form_start("save_nat.cgi", "post");
+print &ui_hidden("idx", $idx);
+my @tds = ( "width=20%", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
+if( !$new ) {
+	$col = "<b>$idx</b>";
+	print &ui_columns_row([ "<img src=images/hash.png hspace=4><b>ID</b>", $col ], \@tds);
 }
-print "			<tr>
-				<td width=\"10%\"><b><nobr>$text{virtual_host}<nobr></b></td>
-				<td><select name=\"virtual\">$options_virtual</select></td>
-			</tr>
-			<tr>
-				<td><b>$text{real_host}</b></td>
-				<td><select name=\"real\">$options_real</select></td>
-			</tr>
-			<tr>
-				<td><b>$text{nat_service}</b></td>
-				<td><br>";
-				formService( $service, $port, 1 );
-print "				<br></td>
-			</tr>
-			<tr>
-				<td><b>$text{nat_active}</b></td>
-				<td><input type=\"checkbox\" name=\"active\" value=\"1\"".($active ? ' checked' : '')."></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>";
+$col = &ui_select("virtual", $virtual, \@items_virtual);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'virtual_host'}</b>", $col ], \@tds);
+$col = &ui_select("real", $real, \@items_real);
+print &ui_columns_row([ "<img src=images/host.png hspace=4><b>$text{'real_host'}</b>", $col ], \@tds);
+$col = &formService($service, $port, 1);
+print &ui_columns_row([ "<img src=images/service.png hspace=4><b>$text{'rule_service'}</b>", $col ], \@tds);
+my @opts = ( [ 1, "$text{YES}" ] );
+$col = &ui_radio("dummy", 1, \@opts);
+$col .= " : $text{real_port} $text{nat_port} : ";
+$col .= &ui_textbox("toport", $toport, 5, 0, 5);
+print &ui_columns_row([ "<img src=images/grey-nat.png hspace=4><b>$text{'nat'}</b>", $col ], \@tds);
+$col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
+print &ui_columns_row([ "<img src=images/active.png hspace=4><b>$text{'nat_active'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
-	print '<td><input type="submit" name="new" value="'.$text{button_create}.'"></td>';
+        print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
-	print '<td><input type="submit" name="save" value="'.$text{button_save}.'"></td>';
-	print '<td align="right"><input type="submit" name="delete" value="'.$text{button_delete}.'"></td>';
+        print '<td>'.&ui_submit( $text{'button_save'}, "save").'</td>';
+        print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
-&footer('list_nat.cgi','NAT list');
+&ui_print_footer('list_nat.cgi','NAT list');

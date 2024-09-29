@@ -8,8 +8,8 @@
 # License
 #======================================================================
 
-
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 if( $in{save} ne '' ) {
 	getOptionsList();
@@ -19,4 +19,4 @@ if( $in{save} ne '' ) {
 	$fw->SaveFirewall();
 }
 
-redirect( '' );
+&redirect( '' );

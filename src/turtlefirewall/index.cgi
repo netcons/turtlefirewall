@@ -8,94 +8,169 @@
 # License
 #======================================================================
 
+do 'turtlefirewall-lib.pl';
+&ReadParse();
 
-do 'lib.pl';
+&ui_print_header( "<img src=images/shield.png hspace=4> v ".$fw->Version(), $text{'title'}, "", undef, 1, 1, 0,
+        &help_search_link("iptables", "man", "doc"));
 
-&header( $text{'title'}, '', undef, 1 );
+my @links = ('list_items.cgi',
+	     'list_services.cgi',
+	     'list_ndpiprotocols.cgi',
+	     'list_ndpirisks.cgi',
+	     'list_countrycodes.cgi',
+	     'list_blacklists.cgi',
+	     'edit_options.cgi',
+	     'backup.cgi');
+my @titles = ($text{'index_icon_firewall_items'},
+	      $text{'index_icon_firewall_services'},
+	      $text{'index_icon_firewall_ndpiprotocols'},
+	      $text{'index_icon_firewall_ndpirisks'},
+	      $text{'index_icon_firewall_countrycodes'},
+	      $text{'index_icon_firewall_blacklists'},
+              $text{'index_icon_edit_options'},
+              $text{'index_icon_backup'});
+my @icons = ('images/items.png',
+	     'images/services.png',
+	     'images/ndpiprotocols.png',
+	     'images/ndpirisks.png',
+	     'images/countrycodes.png',
+	     'images/blacklists.png',
+	     'images/options.png',
+	     'images/backup.png');
+&icons_table(\@links, \@titles, \@icons, 11);
+print &ui_hr();
 
-print "<br>\n";
+my @rlinks = ('list_rules.cgi',
+	      'list_nat.cgi',
+	      'list_manglerules.cgi',
+	      'list_rawrules.cgi');
+my @rtitles = ($text{'index_icon_firewall_rules'},
+               $text{'index_icon_firewall_nat'},
+               $text{'index_icon_firewall_manglerules'},
+               $text{'index_icon_firewall_rawrules'});
+my @ricons = ('images/rules.png',
+	      'images/nats.png',
+	      'images/manglerules.png',
+	      'images/rawrules.png');
+&icons_table(\@rlinks, \@rtitles, \@ricons, 4);
+print &ui_hr();
 
-@links = ('list_items.cgi','list_nat.cgi','list_rules.cgi','list_services.cgi','edit_options.cgi','log.cgi','backup.cgi');
-@titles = ($text{'index_icon_firewall_items'}, $text{'index_icon_nat'}, $text{'index_icon_firewall_rules'},
-	$text{'index_icon_firewall_services'}, $text{'index_icon_edit_options'}, $text{'index_icon_log'},
-	$text{'index_icon_backup'});
-@icons = ('images/items.gif','images/nats.gif','images/rules.gif','images/services.gif',
-	'images/options.gif','images/log.gif','images/backup.gif');
-
-icons_table( \@links, \@titles, \@icons );
+my @llinks = ('list_actionlog.cgi',
+	      'list_flowlog.cgi',
+	      'edit_flowstat.cgi');
+my @ltitles = ($text{'index_icon_log'},
+	       $text{'index_icon_flowlog'},
+               $text{'index_icon_flowstat'});
+my @licons = ('images/log.png',
+ 	      'images/flowlog.png',
+	      'images/flowstat.png');
+&icons_table(\@llinks, \@ltitles, \@licons, 3);
+print &ui_hr();
 
 # $status == 1 if Firewall is ON
 $status = $fw->GetStatus();
 
-print '<form action="index.cgi">
-	<input name="start" type="submit" value="'.
-	( ($status && $in{stop} eq '') || $in{start} ne '' ? $text{'index_restart'} : $text{'index_start'}).'">
-	&nbsp;';
-	if( ($status && $in{stop} eq '') || $in{start} ne '' ) {
-		print '<input name="stop" type="submit" value="'.$text{'index_stop'}.'">&nbsp;';
-	}
-print '<input name="showiptables" type="submit" value="'.$text{'index_showiptables'}.'">
-	<br><br>
-	<table width="100%" border="0"><tr>
-	<td>
-	<i>Turtle Firewall '.$fw->Version().'</i>
-	</td>
-	<td align="right">
-	<i><a href="http://www.turtlefirewall.com" target="_new">www.turtlefirewall.com</a></i>
-	</td></tr></table>
-	</form>';
+print '<table width=100%><tr>';
+print '<td>';
+print &ui_form_start("start.cgi", "post");
+if ( ($status && $in{stop} eq '') || $in{start} ne '') {
+	print &ui_submit( $text{'index_restart'}, "restart");
+} else {
+	print &ui_submit( $text{'index_start'}, "start");
+}	
+print &ui_form_end();
+print '</td>';
+print '<td style=text-align:right>';
+print &ui_form_start("stop.cgi", "post");
+if( ($status && $in{stop} eq '') || $in{start} ne '' ) {
+	print &ui_submit( $text{'index_stop'}, "stop");
+}
+print &ui_form_end();
+print '</td>';
+print '</tr></table>';
 
-if( $in{start} ne '' ) {
-	print "<table border width=\"100%\">
+print &ui_hr();
+
+print &ui_form_start("index.cgi", "post");
+print '<table width="100%"><tr>';
+print '<td>';
+print &ui_submit( $text{'index_showiptfilter'}, "showiptfilter");
+print &ui_submit( $text{'index_showiptnat'}, "showiptnat");
+print &ui_submit( $text{'index_showiptmangle'}, "showiptmangle");
+print &ui_submit( $text{'index_showiptraw'}, "showiptraw");
+print '</td>';
+print '<td style=text-align:right>';
+print &ui_submit( $text{'index_showconntrack'}, "showconntrack");
+print &ui_submit( $text{'index_flushconntrack'}, "flushconntrack");
+print '</td>';
+print '</tr></table>';
+print &ui_form_end();
+
+if( $in{showiptfilter} ne '' ) {
+	print "<br><table border width=100%>
+		<tr $tb><th>FILTER</th></tr>
 		<tr $cb><td>";
-	print "<pre><tt>\n";
-	print qx{/usr/sbin/turtlefirewall 2>&1};
-	print "</tt></pre>";
+	print "<pre><small>";
+	print qx{iptables -L -n -v -x 2>&1};
+	#print qx{nft list table ip filter 2>&1};
+	print "</small></pre>";
 	print "</td></tr></table>";
 }
-if( $in{stop} ne '' ) {
-	print "<table border width=\"100%\">
-		<tr $cb><td>";
-	print "<pre><tt>\n";
-	print qx{/usr/sbin/turtlefirewall --stop 2>&1};
-	print "</tt></pre>";
-	print "</td></tr></table>";
-}
-if( $in{showiptables} ne '' ) {
-	print "<br><table border width=\"100%\">
+
+if( $in{showiptnat} ne '' ) {
+	print "<br><table border width=100%>
 		<tr $tb><th>NAT</th></tr>
 		<tr $cb><td>";
-	print "<pre><tt><small>";
-	print qx{iptables -t nat -L -n -v 2>&1};
-	print "</small></tt></pre>";
-	print "</td></tr></table>";
-
-	print "<br><table border width=\"100%\">
-		<tr $tb><th>MANGLE</th></tr>
-		<tr $cb><td>";
-	print "<pre><tt><small>";
-	print qx{iptables -t mangle -L -n -v 2>&1};
-	print "</small></tt></pre>";
-	print "</td></tr></table>";
-
-	print "<br><table border width=\"100%\">
-		<tr $tb><th>FILTERS</th></tr>
-		<tr $cb><td>";
-	print "<pre><tt><small>";
-	print qx{iptables -L -n -v 2>&1};
-	print "</small></tt></pre>";
+	print "<pre><small>";
+	print qx{iptables -t nat -L -n -v -x 2>&1};
+	#print qx{nft list table ip nat 2>&1};
+	print "</small></pre>";
 	print "</td></tr></table>";
 }
-if( $in{log} ne '' ) {
-	print "<table border width=\"100%\">
+
+if( $in{showiptmangle} ne '' ) {
+	print "<br><table border width=100%>
+		<tr $tb><th>MANGLE</th></tr>
 		<tr $cb><td>";
-	#print qx{grep "TFW DROP" $SysLogFile 2>&1};
-	showLog();
+	print "<pre><small>";
+	print qx{iptables -t mangle -L -n -v -x 2>&1};
+	#print qx{nft list table ip mangle 2>&1};
+	print "</small></pre>";
+	print "</td></tr></table>";
+}
+
+if( $in{showiptraw} ne '' ) {
+	print "<br><table border width=100%>
+		<tr $tb><th>RAW</th></tr>
+		<tr $cb><td>";
+	print "<pre><small>";
+	print qx{iptables -t raw -L -n -v -x 2>&1};
+	#print qx{nft list table ip raw 2>&1};
+	print "</small></pre>";
+	print "</td></tr></table>";
+}
+
+if( $in{showconntrack} ne '' ) {
+	print "<br><table border width=100%>
+		<tr $tb><th>CONNTRACK</th></tr>
+		<tr $cb><td>";
+	print "<pre><small>";
+	print qx{/usr/sbin/conntrack -L -o extended};
+	print "</small></pre>";
+	print "</td></tr></table>";
+}
+
+if( $in{flushconntrack} ne '' ) {
+	print "<br><table border width=100%>
+		<tr $tb><th>CONNTRACK</th></tr>
+		<tr $cb><td>";
+	print "<pre><small>";
+	print qx{/usr/sbin/conntrack -F 2>&1};
+	print "</small></pre>";
 	print "</td></tr></table>";
 }
 
 print "<br>\n";
 
-&footer('/',$text{'index'});
-
-
+&ui_print_footer("/", $text{'index'});

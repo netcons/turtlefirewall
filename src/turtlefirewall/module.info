@@ -1,3 +1,7 @@
+os_support=*-linux
+version=2.4
+longdesc=Configure a Linux firewall in a simple and fast way.
 name=turtlefirewall
 desc=Turtle Firewall
 category=net
+depends=2.201

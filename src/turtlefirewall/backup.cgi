@@ -8,18 +8,20 @@
 # License
 #======================================================================
 
-
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 if( $in{download} ) {
-	backup_download();
+	&backup_download();
 }
 
-&header( $text{'backup_title'}, '' );
+&ui_print_header( "<img src=images/shield.png hspace=4>$text{'backup_title'}", $text{'title'}, "" );
 
 if( $in{upload} ) {
-	restore_upload( $in{backup} );
-	&footer('backup.cgi',$text{'backup_title'});
+	# FIXME
+	&restore_upload( $in{backup} );
+	&ui_print_footer('backup.cgi',$text{'backup_title'});
+	# FIXME
 } else {
 	print qq~<br/>
 	<table border width="100%">
@@ -27,10 +29,12 @@ if( $in{upload} ) {
 		<th>$text{'backup_backuptitle'}</th>
 	</tr>
 	<tr $cb>
-		<td align="center">
-		<br/>
-		<a href="backup.cgi?download=1"><b>$text{backup_backupdownload}</b></a>
-		<br/><br/>
+		<td style=text-align:center>
+		<br/>~;
+	print   &ui_form_start("backup.cgi?download=1", "post");
+	print   &ui_submit($text{'backup_index_download'});
+	print   &ui_form_end();
+	print qq~<br/><br/>
 		</td>
 	</tr>
 	</table>
@@ -40,29 +44,28 @@ if( $in{upload} ) {
 		<th>$text{'backup_restoretitle'}</th>
 	</tr>
 	<tr $cb>
-		<td align="center">
-		<br/>
-		<form action="backup.cgi" method="POST" enctype="multipart/form-data">
-			<input name="backup" type="file" size="40">&nbsp;
-			<input name="upload" type="submit" value="$text{backup_restoreupload}">
-		</form>
+		<td style=text-align:center>
+		<br/>~;
+	print   &ui_form_start("backup.cgi", "form-data");
+	print 	&ui_upload("backup", 40);
+	print 	&ui_submit($text{'backup_index_restore'});
+	print   &ui_form_end();
+	print qq~<br/><br/>
 		<br/>
 		</td>
 	</tr>
 	</table><br>~;
 
-	&footer('','turtle firewall index');
+	&ui_print_footer('index.cgi',$text{'index'});
 }
-
-
 
 sub backup_download {
 	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
 	my $d = sprintf("%04d%02d%02d-%02d%02d", $year+1900, $mday+1, $mday, $hour, $min);
-	my $confdir = confdir();
+	my $confdir = &confdir();
 
 	open TARGZ, "tar cz --directory $confdir fw.xml fwuserdefservices.xml |"
-		or error( "Errore in fase di backup" );
+		or &error( "Error during backup" );
 	print "Content-type: application/x-gzip\n";
 	print "Expires: Mon, 26 Jul 1997 05:00:00 GMT\n";    # Date in the past
 	print "Cache-Control: no-store, no-cache, must-revalidate\n";  # HTTP/1.1
@@ -80,14 +83,14 @@ sub backup_download {
 
 sub restore_upload {
 	my $backup = shift;
-	my $output = tempname();
-	my $confdir = confdir();
+	my $output = &tempname();
+	my $confdir = &confdir();
 
 	$whatfailed = $text{backup_error_title1};
 
 	#chdir '/etc/turtlefirewall';
 	#chdir '/tmp';
-	open TARGZ, "| tar xvz --directory $confdir fw.xml fwuserdefservices.xml >$output 2>&1" or error( $text{backup_error1} );
+	open TARGZ, "| tar xvz --directory $confdir fw.xml fwuserdefservices.xml >$output 2>&1" or &error( $text{backup_error1} );
 	syswrite(TARGZ, $backup, length($backup));
 	close TARGZ;
 
@@ -96,12 +99,10 @@ sub restore_upload {
 			<th>$text{'backup_restoretitle'}</th>
 		</tr>
 		<tr $cb>
-			<td align="center"><pre><tt>~;
+			<td style=text-align:center><pre>~;
 	open FILE, "<$output";
 	while( <FILE> ) { print; }
 	close FILE;
 	unlink $output;
-	print qq~	</tt></pre></td></tr></table>~;
+	print qq~	</pre></td></tr></table>~;
 }
-
-

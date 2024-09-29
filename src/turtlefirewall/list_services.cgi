@@ -8,35 +8,25 @@
 # License
 #======================================================================
 
+do 'turtlefirewall-lib.pl';
 
-do 'lib.pl';
+&ui_print_header( "<img src=images/service.png hspace=4>$text{'list_services_title'}", $text{'title'}, "" );
 
-&header( $text{list_services_title}, '' );
-
-LoadServices( $fw );
-showServices();
-
+&LoadServices($fw);
+&showServices();
 print "<br><br>";
-&footer('','turtle firewall index');
 
+&ui_print_footer('index.cgi',$text{'index'});
 
 #============================================================================
 
 sub showServices {
-	print "<br>
-		<table border width=\"100%\">
-			<tr $tb>
-				<th>$text{name}</th>
-				<th>$text{description}</th>
-			</tr>";
+	@tds = ( "width=20%", "width=80%" );
+        print &ui_columns_start([ "<b>$text{'name'}</b>", "<b>$text{'description'}</b>" ], 100, 0, \@tds);
 	my @services = $fw->GetServicesList();
-	foreach $name (@services) {
+	foreach my $name (@services) {
 		my %service = $fw->GetService($name);
-		print "<tr $cb>";
-		print "<td width=\"30%\">$name</td>";
-		print "<td>".$service{DESCRIPTION}."</td>";
-		print "</tr>";
-	}
-	print "</table>\n";
-	#print '<a href="edit_service.cgi?new=1">create new service</a><br>';
+	        print &ui_columns_row([ "<img src=images/service.png hspace=4>$name", "<img src=images/info.png hspace=4>$service{'DESCRIPTION'}" ], \@tds);
+        }
+        print &ui_columns_end();
 }
