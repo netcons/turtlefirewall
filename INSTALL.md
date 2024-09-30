@@ -24,7 +24,12 @@ curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | wget -qi -
 createrepo ./
 
-wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/RPM-GPG-KEY-tfw -O /etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+cd /etc/pki/rpm-gpg
+curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
+| grep "browser_download_url.*.el10.RPM-GPG-KEY-tfw" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
 
 echo '[tfw]
 name=CentOS Stream $releasever - Turtlefirewall
@@ -79,7 +84,12 @@ curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | wget -qi -
 createrepo ./
 
-wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/RPM-GPG-KEY-tfw -O /etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
+cd /etc/pki/rpm-gpg
+curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
+| grep "browser_download_url.*.el9.RPM-GPG-KEY-tfw" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
 
 echo '[tfw]
 name=CentOS Stream $releasever - Turtlefirewall
