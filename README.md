@@ -37,13 +37,3 @@ xt_time. <br>
 xt_ndpi, ( https://github.com/vel21ripn/nDPI ) <br>
 xt_geoip, ( https://codeberg.org/jengelh/xtables-addons ) <br>
 xt_ratelimit. ( https://github.com/aabc/ipt-ratelimit ) <br>
-
-## Build
-
-```
-./build-wbm
-```
-
-## Install
-
-Install the .wbm.gz module using your [Webmin](http://www.webmin.com/) interface.

@@ -1,4 +1,4 @@
-## CentOS/RHEL 10
+## RHEL 10
 
 Activate Repos.
 ```
@@ -56,7 +56,7 @@ Configure */etc/turtlefirewall/fw.xml* or via Webmin and enable Turtle Firewall.
 systemctl enable turtlefirewall --now
 ```
 
-## CentOS/RHEL 9
+## RHEL 9
 
 Activate Repos.
 ```
@@ -118,7 +118,7 @@ Configure */etc/turtlefirewall/fw.xml* or via Webmin and enable Turtle Firewall.
 systemctl enable turtlefirewall --now
 ```
 
-## CentOS/RHEL 9/10
+## RHEL 9/10
 
 If dkms does not auto build kernel modules after reboot
 ```
