@@ -18,7 +18,7 @@ chmod +x build-wbm
 
 Install RHEL.
 ```
-dnf -y install perl-XML-Parser perl-Net-CIDR-Lite perl-Text-CSV_XS ipset conntrack-tools rsyslog wget dos2unix awk
+dnf -y install perl-XML-Parser perl-Net-CIDR-Lite perl-Text-CSV_XS ipset conntrack-tools rsyslog wget dos2unix gawk
 /usr/libexec/webmin/install-module.pl /tmp/turtlefirewall-master/build/turtlefirewall-*.wbm.gz
 ```
 
