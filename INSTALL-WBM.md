@@ -1,5 +1,7 @@
 ## Turtlefirewall Webmin Module
 
+A running Webmin instance is required.
+
 Download source.
 ```
 cd /tmp
