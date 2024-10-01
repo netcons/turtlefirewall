@@ -141,10 +141,11 @@ system( "cp -v -f flowinfo.cron /etc/cron.d/flowinfo" );
 system( "cp -v -f flowinfo.logrotate /etc/logrotate.d/flowinfo" );
 
 # Doc
-if( -d $path_doc ) {
-	system( "cp -v -f fixconfig.sh $path_doc" );
-	system( "cp -v -f fw.xml.sample $path_doc" );
-	system( "chmod 700 $path_doc/fixconfig.sh" );
+if( ! -d $path_doc ) {
+	mkdir $path_doc, 0755;
 }
+system( "cp -v -f fixconfig.sh $path_doc" );
+system( "cp -v -f fw.xml.sample $path_doc" );
+system( "chmod 700 $path_doc/fixconfig.sh" );
 
 exit( 0 );
