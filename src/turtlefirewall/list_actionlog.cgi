@@ -53,7 +53,7 @@ sub showLog {
 			my $spt = '';
 			my $dpt = '';
 
-			if( $l =~ /^(.*?\d\d\:\d\d\:\d\d) / ) {
+			if( $l =~ /^(.*?\d\d\:\d\d\:\d\d.*?) / ) {
 				$time = $1;
 			}
 			if( $l =~ /TFW=(.*?) / ) { $action = $1; }
