@@ -1,7 +1,0 @@
-fw_file=Firewall Definition File,8
-fwservices_file=Firewall Services Definition File,8
-fwuserdefservices_file=User Defined Firewall Services Definition File,8
-fwcountrycodes_file=Firewall Country Code File,8
-fwndpiprotocols_file=Firewall nDPI Protocol File,8
-fwndpirisks_file=Firewall nDPI Risk File,8
-fw_logfile=Syslog file,8
