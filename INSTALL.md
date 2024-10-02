@@ -1,157 +1,191 @@
-## CentOS/RHEL 10
+## Webmin
 
-Activate Repos.
-```
-dnf config-manager --set-enabled extras-common
-dnf config-manager --set-enabled crb
-dnf -y install createrepo wget
-
-wget https://download.webmin.com/developers-key.asc -O /etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
-
-echo '[webmin]
-name=CentOS Stream $releasever - Webmin
-baseurl=https://download.webmin.com/download/newkey/yum/
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
-enabled=1'  > /etc/yum.repos.d/webmin.repo
-
-mkdir -p /var/tmp/tfw
-cd /var/tmp/tfw
-curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
-| grep "browser_download_url.*.el10.*rpm" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
-createrepo ./
-
-wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/RPM-GPG-KEY-tfw -O /etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
-
-echo '[tfw]
-name=CentOS Stream $releasever - Turtlefirewall
-baseurl=file:/var/tmp/tfw/
-gpgckeck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
-enabled=1' > /etc/yum.repos.d/tfw.repo
-```
-
-Install Turtle Firewall.
-```
-dnf -y install turtlefirewall
-systemctl enable dkms --now
-reboot
-```
-
-Disable Firewalld.
-```
-systemctl disable firewalld --now
-```
-
-Configure */etc/turtlefirewall/fw.xml* or via Webmin and enable Turtle Firewall.
-```
-systemctl enable turtlefirewall --now
-```
-
-## CentOS/RHEL 9
-
-Activate Repos.
+RHEL.
 ```
 dnf config-manager --set-enabled extras-common
 dnf config-manager --set-enabled crb
 dnf -y install epel-release
+
+dnf -y install wget
+wget https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
+sh setup-repos.sh -f
+
+dnf -y install webmin
+```
+
+Debian.
+```
+apt-get -y install wget
+wget https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
+sh setup-repos.sh -f
+
+apt-get install webmin --install-recommends
+```
+
+## Turtlefirewall Webmin Module
+
+Download source.
+```
+cd /tmp
+wget https://github.com/netcons/turtlefirewall/archive/master.zip -O turtlefirewall-master.zip
+unzip turtlefirewall-master.zip
+cd turtlefirewall-master
+```
+
+Build source.
+```
+chmod +x build-wbm
+./build-wbm
+```
+
+Install RHEL.
+```
+dnf -y install perl-XML-Parser perl-Net-CIDR-Lite perl-Text-CSV_XS iptables-nft ipset conntrack-tools rsyslog dos2unix gawk
+/usr/libexec/webmin/install-module.pl /tmp/turtlefirewall-master/build/turtlefirewall-*.wbm.gz
+```
+
+Install Debian.
+```
+apt-get -y install libxml-parser-perl libnet-cidr-lite-perl libtext-csv-xs-perl iptables ipset conntrack rsyslog dos2unix gawk
+/usr/share/webmin/install-module.pl /tmp/turtlefirewall-master/build/turtlefirewall-*.wbm.gz
+```
+
+## Kernel Module Build Requirements
+
+RHEL.
+```
 dnf -y install centos-release-hyperscale-experimental
-dnf -y install createrepo wget
-
-wget https://download.webmin.com/developers-key.asc -O /etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
-
-echo '[webmin]
-name=CentOS Stream $releasever - Webmin
-baseurl=https://download.webmin.com/download/newkey/yum/
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-webmin
-enabled=1'  > /etc/yum.repos.d/webmin.repo
-
-mkdir -p /var/tmp/tfw
-cd /var/tmp/tfw
-curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
-| grep "browser_download_url.*.el9.*rpm" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
-createrepo ./
-
-wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/RPM-GPG-KEY-tfw -O /etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
-
-echo '[tfw]
-name=CentOS Stream $releasever - Turtlefirewall
-baseurl=file:/var/tmp/tfw/
-gpgckeck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-tfw
-enabled=1' > /etc/yum.repos.d/tfw.repo
-```
-
-Install Turtle Firewall.
-```
 dnf -y upgrade kernel
-dnf -y install kernel-devel kernel-headers
-dnf -y install turtlefirewall
-systemctl enable dkms --now
 reboot
+
+dnf -y install kernel-devel kernel-headers
+dnf -y install iptables-devel libpcap-devel json-c-devel libgcrypt-devel perl-File-Path
+dnf -y install autoconf automake libtool
+dnf -y install dkms
+dnf enable dkms --now
 ```
 
-Disable Firewalld.
+Debian.
 ```
+apt-get -y install libxtables-dev libpcap-dev libjson-c-dev libgcrypt-dev libmodule-path-perl
+apt-get -y install autoconf automake libtool
+apt-get -y install dkms
+```
+
+## IPT Ratelimit Kernel Module
+
+Download source.
+```
+cd /usr/src
+wget https://github.com/aabc/ipt-ratelimit/archive/master.zip -O ipt-ratelimit-master.zip
+unzip ipt-ratelimit-master.zip
+mv ipt-ratelimit-master ipt-ratelimit-0.3.3
+rm -rf ipt-ratelimit-master.zip
+cd ipt-ratelimit-0.3.3
+```
+
+Install module.
+```
+cp /tmp/turtlefirewall-master/dkms/dkms-ipt-ratelimit.conf ./dkms.conf
+dkms add -m ipt-ratelimit -v 0.3.3
+dkms build -m ipt-ratelimit -v 0.3.3
+dkms install -m ipt-ratelimit -v 0.3.3
+```
+
+Install library.
+```
+make all install
+```
+
+## XTables Addons Kernel Module.
+
+Download source.
+```
+cd /usr/src
+wget https://inai.de/files/xtables-addons/xtables-addons-3.26.tar.xz -O xtables-addons-3.26.tar.xz
+tar -xvf xtables-addons-3.26.tar.xz
+rm -rf xtables-addons-3.26.tar.xz
+cd xtables-addons-3.26
+```
+
+Install module.
+```
+cp /tmp/turtlefirewall-master/dkms/dkms-xtables-addons.conf ./dkms.conf
+dkms add -m xtables-addons -v 3.26
+dkms build -m xtables-addons -v 3.26
+dkms install -m xtables-addons -v 3.26 
+```
+
+Install library.
+```
+./configure --without-kbuild --prefix=/usr
+make
+make install
+```
+
+## nDPI Netfilter Kernel Module
+
+Download source.
+```
+cd /usr/src
+wget https://github.com/vel21ripn/nDPI/archive/master.zip -O nDPI-flow_info-4.zip
+unzip nDPI-flow_info-4.zip
+mv nDPI-flow_info-4 ndpi-netfilter-4.11.0
+rm -rf nDPI-flow_info-4.zip
+cd ndpi-netfilter-4.11.0
+rm -rf windows
+```
+
+Install module.
+```
+cp /tmp/turtlefirewall-master/dkms/dkms-ndpi-netfilter.conf ./dkms.conf
+dkms add -m ndpi-netfilter -v 4.11.0
+dkms build -m ndpi-netfilter -v 4.11.0
+dkms install -m ndpi-netfilter -v 4.11.0
+```
+
+Install library.
+```
+./autogen.sh
+cd ndpi-netfilter
+make
+make install
+```
+
+## XTables Time Kernel Module ( RHEL ONLY )
+
+Download source.
+```
+cd /usr/src
+cp /tmp/turtlefirewall-master/dkms/xt_time-0.0.tar.gz ./
+tar -xvf xt_time-0.0.tar.gz 
+mv xt_time-0.0 xtables-time-1.0.0
+rm -rf xt_time-0.0.tar.gz 
+cd xtables-time-1.0.0
+```
+
+Install module.
+```
+cp /tmp/turtlefirewall-master/dkms/dkms-xtables-time.conf ./dkms.conf
+dkms add -m xtables-time -v 1.0.0
+dkms build -m xtables-time -v 1.0.0
+dkms install -m xtables-time -v 1.0.0
+```
+
+## Turtlefirewall Setup
+
+First finalise setup via Webmin, then enable service.
+
+RHEL.
+```
+/etc/cron.daily/xt_geoip_update
 systemctl disable firewalld --now
-```
-
-Configure */etc/turtlefirewall/fw.xml* or via Webmin and enable Turtle Firewall.
-```
 systemctl enable turtlefirewall --now
+
 ```
 
-## CentOS/RHEL 9/10
-
-If dkms does not auto build kernel modules after reboot
+Debian.
 ```
-systemctl is-enabled turtlefirewall > /dev/null
-if [ $? = 0 ]
- then
-  turtlefirewall
-  lsmod | grep xt_geoip > /dev/null
-  if [ $? != 0 ]
-   then
-    ver=`readlink -f /usr/src/xtables-addons-* | cut -d "-" -f3`
-    dkms remove -m xtables-addons/${ver} --all
-    dkms add -m xtables-addons -v $ver
-    dkms build -m xtables-addons -v $ver
-    dkms install -m xtables-addons -v $ver
-  fi
-  lsmod | grep xt_ndpi > /dev/null
-  if [ $? != 0 ]
-   then
-    ver=`readlink -f /usr/src/ndpi-netfilter-* | cut -d "-" -f3`
-    dkms remove -m ndpi-netfilter/${ver} --all
-    dkms add -m ndpi-netfilter -v $ver
-    dkms build -m ndpi-netfilter -v $ver
-    dkms install -m ndpi-netfilter -v $ver
-  fi
-  lsmod | grep xt_ratelimit > /dev/null
-  if [ $? != 0 ]
-   then
-    ver=`readlink -f /usr/src/ipt-ratelimit-* | cut -d "-" -f3`
-    dkms remove -m ipt-ratelimit/${ver} --all
-    dkms add -m ipt-ratelimit -v $ver
-    dkms build -m ipt-ratelimit -v $ver
-    dkms install -m ipt-ratelimit -v $ver
-  fi
-  lsmod | grep xt_time > /dev/null
-  if [ $? != 0 ]
-   then
-    ver=`readlink -f /usr/src/xtables-time-* | cut -d "-" -f3`
-    dkms remove -m xtables-time/${ver} --all
-    dkms add -m xtables-time -v $ver
-    dkms build -m xtables-time -v $ver
-    dkms install -m xtables-time -v $ver
-  fi
-  turtlefirewall
-fi
+/etc/cron.daily/xt_geoip_update
+systemctl enable turtlefirewall --now
 ```

@@ -238,6 +238,7 @@ CHANGELOG
            - OS : Discontinue el7 and el8 RPM packaging.
            - OS : Move old fw.xml format fixes, from RPM spec to fixconfig.sh.
            - OS : Restore setup.cgi for wbm install.
+           - OS : Support for Debian 12 syslog date format.
            - Services : Removed depreciated smtps TCP port 465 service.
            - Services : Added DNS over TLS TCP port 853 service.
            - Feature : nDPI 4.9.11 support.

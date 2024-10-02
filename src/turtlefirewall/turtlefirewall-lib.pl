@@ -53,9 +53,11 @@ if( ! -f $tfwlib ) {
 }
 
 if( -f $config{fw_logfile} ) {
-	$SysLogFile = $config{fw_logfile} ;
-} else {
+	$SysLogFile = $config{fw_logfile};
+} elsif( -f  "/var/log/messages" ) {
 	$SysLogFile =  "/var/log/messages";
+} elsif( -f  "/var/log/syslog" ) {
+	$SysLogFile =  "/var/log/syslog";
 }
 
 $FlowLogFile = "/var/log/flowinfo.log";

@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir -p /usr/share/xt_geoip
 cd /var/tmp
 /usr/libexec/xtables-addons/xt_geoip_dl
 /usr/libexec/xtables-addons/xt_geoip_build -s
