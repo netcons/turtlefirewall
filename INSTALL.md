@@ -84,7 +84,7 @@ cd ipt-ratelimit-0.3.3
 
 Install module.
 ```
-wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/dkms-ipt-ratelimit.conf -O ./dkms.conf
+cp /tmp/turtlefirewall-master/dkms/dkms-ipt-ratelimit.conf ./dkms.conf
 dkms add -m ipt-ratelimit -v 0.3.3
 dkms build -m ipt-ratelimit -v 0.3.3
 dkms install -m ipt-ratelimit -v 0.3.3
@@ -108,7 +108,7 @@ cd xtables-addons-3.26
 
 Install module.
 ```
-wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/dkms-xtables-addons.conf -O ./dkms.conf
+cp /tmp/turtlefirewall-master/dkms/dkms-xtables-addons.conf ./dkms.conf
 dkms add -m xtables-addons -v 3.26
 dkms build -m xtables-addons -v 3.26
 dkms install -m xtables-addons -v 3.26 
@@ -136,7 +136,7 @@ rm -rf windows
 
 Install module.
 ```
-wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/dkms-ndpi-netfilter.conf -O ./dkms.conf
+cp /tmp/turtlefirewall-master/dkms/dkms-ndpi-netfilter.conf ./dkms.conf
 dkms add -m ndpi-netfilter -v 4.11.0
 dkms build -m ndpi-netfilter -v 4.11.0
 dkms install -m ndpi-netfilter -v 4.11.0
@@ -155,7 +155,7 @@ make install
 Download source.
 ```
 cd /usr/src
-wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/xt_time-0.0.tar.gz -O xt_time-0.0.tar.gz
+cp /tmp/turtlefirewall-master/dkms/xt_time-0.0.tar.gz ./
 tar -xvf xt_time-0.0.tar.gz 
 mv xt_time-0.0 xtables-time-1.0.0
 rm -rf xt_time-0.0.tar.gz 
@@ -164,7 +164,7 @@ cd xtables-time-1.0.0
 
 Install module.
 ```
-wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/dkms-xtables-time.conf -O ./dkms.conf
+cp /tmp/turtlefirewall-master/dkms/dkms-xtables-time.conf ./dkms.conf
 dkms add -m xtables-time -v 1.0.0
 dkms build -m xtables-time -v 1.0.0
 dkms install -m xtables-time -v 1.0.0
