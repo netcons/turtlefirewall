@@ -1,6 +1,24 @@
-## Turtlefirewall Webmin Module
+## Webmin
 
-A running Webmin instance is required.
+RHEL.
+```
+dnf -y install wget
+wget https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
+sh setup-repos.sh -f
+
+dnf -y install webmin
+```
+
+Debian.
+```
+apt-get -y install wget
+wget https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
+sh setup-repos.sh -f
+
+apt-get install webmin --install-recommends
+```
+
+## Turtlefirewall Webmin Module
 
 Download source.
 ```
@@ -18,13 +36,13 @@ chmod +x build-wbm
 
 Install RHEL.
 ```
-dnf -y install perl-XML-Parser perl-Net-CIDR-Lite perl-Text-CSV_XS ipset conntrack-tools rsyslog wget dos2unix gawk
+dnf -y install perl-XML-Parser perl-Net-CIDR-Lite perl-Text-CSV_XS iptables-nft ipset conntrack-tools rsyslog dos2unix gawk
 /usr/libexec/webmin/install-module.pl /tmp/turtlefirewall-master/build/turtlefirewall-*.wbm.gz
 ```
 
 Install Debian.
 ```
-apt-get -y install libxml-parser-perl libnet-cidr-lite-perl libtext-csv-xs-perl ipset conntrack rsyslog wget dos2unix gawk
+apt-get -y install libxml-parser-perl libnet-cidr-lite-perl libtext-csv-xs-perl iptables ipset conntrack rsyslog dos2unix gawk
 /usr/share/webmin/install-module.pl /tmp/turtlefirewall-master/build/turtlefirewall-*.wbm.gz
 ```
 
@@ -32,6 +50,12 @@ apt-get -y install libxml-parser-perl libnet-cidr-lite-perl libtext-csv-xs-perl 
 
 RHEL.
 ```
+dnf config-manager --set-enabled extras-common
+dnf config-manager --set-enabled crb
+dnf -y install centos-release-hyperscale-experimental
+dnf -y upgrade kernel
+reboot
+
 dnf -y install kernel-devel kernel-headers
 dnf -y install iptables-devel libpcap-devel json-c-devel libgcrypt-devel perl-File-Path
 dnf -y install autoconf automake libtool
@@ -97,11 +121,6 @@ make
 make install
 ```
 
-Download database.
-```
-/etc/cron.daily/xt_geoip_update
-```
-
 ## nDPI Netfilter Kernel Module
 
 Download source.
@@ -129,4 +148,22 @@ Install library.
 cd ndpi-netfilter
 make
 make install
+```
+
+## Turtlefirewall Setup
+
+First finalise setup via Webmin, then enable service.
+
+RHEL.
+```
+/etc/cron.daily/xt_geoip_update
+systemctl disable firewalld --now
+systemctl enable turtlefirewall --now
+
+```
+
+Debian.
+```
+/etc/cron.daily/xt_geoip_update
+systemctl enable turtlefirewall --now
 ```
