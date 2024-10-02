@@ -2,6 +2,10 @@
 
 RHEL.
 ```
+dnf config-manager --set-enabled extras-common
+dnf config-manager --set-enabled crb
+dnf -y install epel-release
+
 dnf -y install wget
 wget https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
 sh setup-repos.sh -f
@@ -50,8 +54,6 @@ apt-get -y install libxml-parser-perl libnet-cidr-lite-perl libtext-csv-xs-perl 
 
 RHEL.
 ```
-dnf config-manager --set-enabled extras-common
-dnf config-manager --set-enabled crb
 dnf -y install centos-release-hyperscale-experimental
 dnf -y upgrade kernel
 reboot
