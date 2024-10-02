@@ -150,6 +150,26 @@ make
 make install
 ```
 
+## XTables Time Kernel Module ( RHEL ONLY )
+
+Download source.
+```
+cd /usr/src
+wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/xt_time-0.0.tar.gz -O xt_time-0.0.tar.gz
+tar -xvf xt_time-0.0.tar.gz 
+mv xt_time-0.0 xtables-time-1.0.0
+rm -rf xt_time-0.0.tar.gz 
+cd xtables-time-1.0.0
+```
+
+Install module.
+```
+wget https://raw.githubusercontent.com/netcons/turtlefirewall/master/dkms-xtables-time.conf -O ./dkms.conf
+dkms add -m xtables-time -v 1.0.0
+dkms build -m xtables-time -v 1.0.0
+dkms install -m xtables-time -v 1.0.0
+```
+
 ## Turtlefirewall Setup
 
 First finalise setup via Webmin, then enable service.
