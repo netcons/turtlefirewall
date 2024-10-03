@@ -116,7 +116,6 @@ if [ -s $blacklist_file ]
   fi
 
   sed "s/^/ja3_blacklist:RISK_JA3_/" $blacklist_file > /proc/net/xt_ndpi/host_proto
-  #sed "s/^/ja3_blacklist:JA3C_/" $blacklist_file > /proc/net/xt_ndpi/host_proto
   count=`wc -l < $blacklist_file`
   if [ $? = 0 ]
    then
