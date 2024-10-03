@@ -34,7 +34,6 @@ cd turtlefirewall-master
 
 Build source.
 ```
-chmod +x build-wbm
 ./build-wbm
 ```
 
@@ -157,11 +156,10 @@ make install
 Download source.
 ```
 cd /usr/src
-cp /tmp/turtlefirewall-master/dkms/xt_time-0.0.tar.gz ./
-tar -xvf xt_time-0.0.tar.gz 
-mv xt_time-0.0 xtables-time-1.0.0
-rm -rf xt_time-0.0.tar.gz 
+mkdir xtables-time-1.0.0
 cd xtables-time-1.0.0
+wget https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/net/netfilter/xt_time.c -O ./xt_time.c
+cp /tmp/turtlefirewall-master/dkms/Makefile.xt_time ./Makefile
 ```
 
 Install module.

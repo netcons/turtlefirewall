@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Add version 2 settings and remove depreciated version 1 settings
 #

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Enable Auto Update with :
 # ln -sf /usr/lib/turtlefirewall/ip_blacklist /etc/cron.daily/ip_blacklist
