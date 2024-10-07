@@ -31,7 +31,6 @@ Turtle Firewall is an Open Source project written using the perl language and re
 nf_tables, <br>
 nf_conntrack, <br>
 xt_connmark, <br>
-xt_connlabel, <br>
 xt_time. <br>
 - Extra Netfilter kernel modules : <br>
 xt_ndpi, ( https://github.com/vel21ripn/nDPI ) <br>

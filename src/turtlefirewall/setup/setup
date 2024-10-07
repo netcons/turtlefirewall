@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # creo la directory per i file di configurazione
 $path_config = '/etc/turtlefirewall';
