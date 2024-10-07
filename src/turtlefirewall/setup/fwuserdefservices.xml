@@ -2,4 +2,228 @@
 
 <services>
 	<!-- Here you can put your own services definition -->
+        <service name="proxy3129" description="HTTP/HTTPS/FTP Proxy (tcp 3129)">
+                <filter direction="go" p="tcp" dport="3129"/>
+                <filter direction="back" p="tcp" sport="3129"/>
+        </service>
+	<service name="netbios_ds" description="Netbios Ds (tcp/udp 445)">
+                <filter direction="go" p="tcp" dport="445"/>
+                <filter direction="back" p="tcp" sport="445"/>
+                <filter direction="go" p="tcp" dport="445"/>
+                <filter direction="back" p="tcp" sport="445"/>
+        </service>
+        <service name="reginet" description="Reginet">
+                <filter direction="go" p="tcp" dport="44455"/>
+                <filter direction="back" p="tcp" sport="44455"/>
+                <filter direction="go" p="tcp" dport="55504"/>
+                <filter direction="back" p="tcp" sport="55504"/>
+        </service>
+	<service name="rdate" description="Rdate (tcp/udp 37)">
+                <filter direction="go" p="tcp" dport="37"/>
+                <filter direction="back" p="tcp" sport="37"/>
+                <filter direction="go" p="udp" dport="37"/>
+                <filter direction="back" p="udp" sport="37"/>
+        </service>
+	<service name="snmp" description="SNMP (tcp/udp 161)">
+                <filter direction="go" p="udp" dport="161"/>
+                <filter direction="back" p="udp" sport="161"/>
+               <filter direction="go" p="tcp" dport="161"/>
+                <filter direction="back" p="tcp" sport="161"/>
+        </service>
+	<service name="nrpe" description="Nagios (tcp 5666)">
+                <filter direction="go" p="tcp" dport="5666"/>
+                <filter direction="back" p="tcp" sport="5666"/>
+        </service>
+	<service name="ntop" description="NTOP (tcp 3000)">
+                <filter direction="go" p="tcp" dport="3000"/>
+                <filter direction="back" p="tcp" sport="3000"/>
+        </service>
+	<service name="sip" description="SIP (tcp/udp 5060)">
+                <filter direction="go" p="tcp" dport="5060"/>
+                <filter direction="back" p="tcp" sport="5060"/>
+                <filter direction="go" p="udp" dport="5060"/>
+                <filter direction="back" p="udp" sport="5060"/>
+        </service>
+	<service name="sips" description="SIPS (tcp/udp 5061)">
+                <filter direction="go" p="tcp" dport="5061"/>
+                <filter direction="back" p="tcp" sport="5061"/>
+                <filter direction="go" p="udp" dport="5061"/>
+                <filter direction="back" p="udp" sport="5061"/>
+        </service>
+	<service name="rtp" description="RTP (udp 16384-32768)">
+                <filter direction="go" p="udp" dport="16384:32768"/>
+                <filter direction="back" p="udp" sport="16384:32768"/>
+        </service>
+	<service name="smtp2525" description="SMTP (tcp 2525)">
+                <filter direction="go" p="tcp" dport="2525"/>
+                <filter direction="back" p="tcp" sport="2525"/>
+        </service>
+	<service name="pop3s" description="POP3S (tcp 995)">
+                <filter direction="go" p="tcp" dport="995"/>
+                <filter direction="back" p="tcp" sport="995"/>
+        </service>
+	<service name="imaps" description="IMAPS (tcp 993)">
+                <filter direction="go" p="tcp" dport="993"/>
+                <filter direction="back" p="tcp" sport="993"/>
+        </service>
+	<service name="smtps" description="SMTPS (tcp 587)">
+                <filter direction="go" p="tcp" dport="587"/>
+                <filter direction="back" p="tcp" sport="587"/>
+        </service>
+	<service name="shellinabox" description="Shellinabox (tcp 4200)">
+                <filter direction="go" p="tcp" dport="4200"/>
+                <filter direction="back" p="tcp" sport="4200"/>
+        </service>
+        <service name="whatsapp" description="WhatsApp">
+                <filter direction="go" p="tcp" dport="5222"/>
+                <filter direction="back" p="tcp" sport="5222"/>
+                <filter direction="go" p="tcp" dport="5223"/>
+                <filter direction="back" p="tcp" sport="5223"/>
+                <filter direction="go" p="tcp" dport="5228"/>
+                <filter direction="back" p="tcp" sport="5228"/>
+                <filter direction="go" p="tcp" dport="5242"/>
+                <filter direction="back" p="tcp" sport="5242"/>
+                <filter direction="go" p="tcp" dport="4244"/>
+                <filter direction="back" p="tcp" sport="4244"/>
+                <filter direction="go" p="udp" dport="3478"/>
+                <filter direction="back" p="udp" sport="3478"/>
+        </service>
+	<service name="jetdirect" description="JetDirect (tcp 9100)">
+                <filter direction="go" p="tcp" dport="9100"/>
+                <filter direction="back" p="tcp" sport="9100"/>
+        </service>
+        <service name="citrix" description="Citrix">
+                <filter direction="go" p="tcp" dport="1494"/>
+                <filter direction="back" p="tcp" sport="1494"/>
+                <filter direction="go" p="tcp" dport="2598"/>
+                <filter direction="back" p="tcp" sport="2598"/>
+        </service>
+	<service name="spiceworks" description="Spiceworks">
+                <filter direction="go" p="tcp" dport="9675"/>
+                <filter direction="back" p="tcp" sport="9675"/>
+                <filter direction="go" p="tcp" dport="9676"/>
+                <filter direction="back" p="tcp" sport="9676"/>
+        </service>
+	<service name="manageengine" description="ManageEngine (tcp 8181)">
+                <filter direction="go" p="tcp" dport="8181"/>
+                <filter direction="back" p="tcp" sport="8181"/>
+        </service>
+	<service name="logio" description="Logio (tcp 6688)">
+                <filter direction="go" p="tcp" dport="6688"/>
+                <filter direction="back" p="tcp" sport="6688"/>
+        </service>
+	<service name="netflow-export" description="Netflow (udp 2055)">
+                <filter direction="go" p="udp" dport="2055"/>
+                <filter direction="back" p="udp" sport="2055"/>
+        </service>
+        <service name="unifi" description="Unifi Controller">
+                <filter direction="go" p="udp" dport="3478"/>
+                <filter direction="back" p="udp" sport="3478"/>
+                <filter direction="go" p="tcp" dport="8080"/>
+                <filter direction="back" p="tcp" sport="8080"/>
+                <filter direction="go" p="tcp" dport="8443"/>
+                <filter direction="back" p="tcp" sport="8443"/>
+                <filter direction="go" p="tcp" dport="8843"/>
+                <filter direction="back" p="tcp" sport="8843"/>
+                <filter direction="go" p="tcp" dport="8880"/>
+                <filter direction="back" p="tcp" sport="8880"/>
+                <filter direction="go" p="udp" dport="10001"/>
+                <filter direction="back" p="udp" sport="10001"/>
+        </service>
+        <service name="usermin" description="Usermin (tcp 20000)">
+                <filter direction="go" p="tcp" dport="20000"/>
+                <filter direction="back" p="tcp" sport="20000"/>
+        </service>
+        <service name="teamviewer-mobile" description="Teamviewer (tcp/udp 5938)">
+                <filter direction="go" p="tcp" dport="5938"/>
+                <filter direction="back" p="tcp" sport="5938"/>
+                <filter direction="go" p="udp" dport="5938"/>
+                <filter direction="back" p="udp" sport="5938"/>
+        </service>
+        <service name="l2tp" description="L2TP">
+                <filter direction="go" p="udp" dport="500"/>
+                <filter direction="back" p="udp" sport="500"/>
+                <filter direction="go" p="udp" dport="1701"/>
+                <filter direction="back" p="udp" sport="1701"/>
+                <filter direction="go" p="udp" dport="4500"/>
+                <filter direction="back" p="udp" sport="4500"/>
+                <filter direction="go" p="50"/>
+                <filter direction="back" p="50" jump="ACCEPT"/>
+        </service>
+	<service name="3cx" description="3CX">
+                <filter direction="go" p="tcp" dport="5090"/>
+                <filter direction="back" p="tcp" sport="5090"/>
+                <filter direction="go" p="udp" dport="5090"/>
+                <filter direction="back" p="udp" sport="5090"/>
+                <filter direction="go" p="udp" dport="9000:10999"/>
+                <filter direction="back" p="udp" sport="9000:10999"/>
+        </service>
+        <service name="veeam-transfer" description="veeam-transfer">
+                <filter direction="go" p="tcp" dport="2500:5000"/>
+                <filter direction="back" p="tcp" sport="2500:5000"/>
+        </service>
+	<service name="steam" description="Steam">
+                <filter direction="go" p="udp" dport="27000:27037"/>
+                <filter direction="back" p="udp" sport="27000:27037"/>
+                <filter direction="go" p="tcp" dport="27036:27037"/>
+                <filter direction="back" p="tcp" sport="27036:27037"/>
+                <filter direction="go" p="udp" dport="4380"/>
+                <filter direction="back" p="udp" sport="4380"/>
+	</service>
+	<service name="mssql" description="Microsoft SQL (tcp 1433)">
+                <filter direction="go" p="tcp" dport="1433"/>
+                <filter direction="back" p="tcp" sport="1433"/>
+        </service>
+	<service name="tftp" description="TFTP (tcp 69)">
+                <filter direction="go" p="udp" dport="69"/>
+                <filter direction="back" p="udp" sport="69"/>
+        </service>
+	<service name="ldap" description="LDAP (tcp 389)">
+                <filter direction="go" p="tcp" dport="389"/>
+                <filter direction="back" p="tcp" sport="389"/>
+        </service>
+	<service name="eset" description="ESET">
+                <filter direction="go" p="tcp" dport="2222"/>
+                <filter direction="back" p="tcp" sport="2222"/>
+                <filter direction="go" p="tcp" dport="8883"/>
+                <filter direction="back" p="tcp" sport="8883"/>
+                <filter direction="go" p="udp" dport="53535"/>
+                <filter direction="back" p="udp" sport="53535"/>
+        </service>
+	<service name="winbox" description="Mikrotik Winbox (tcp 8291)">
+                <filter direction="go" p="tcp" dport="8291"/>
+                <filter direction="back" p="tcp" sport="8291"/>
+        </service>
+        <service name="zoom" description="Zoom">
+                <filter direction="go" p="tcp" dport="5090"/>
+                <filter direction="back" p="tcp" sport="5090"/>
+                <filter direction="go" p="udp" dport="5090"/>
+                <filter direction="back" p="udp" sport="5090"/>
+                <filter direction="go" p="udp" dport="20000:64000"/>
+                <filter direction="back" p="udp" sport="20000:64000"/>
+                <filter direction="go" p="udp" dport="3478"/>
+                <filter direction="back" p="udp" sport="3478"/>
+                <filter direction="go" p="udp" dport="3479"/>
+                <filter direction="back" p="udp" sport="3479"/>
+                <filter direction="go" p="udp" dport="8801:8810"/>
+                <filter direction="back" p="udp" sport="8801:8810"/>
+                <filter direction="go" p="tcp" dport="8801:8810"/>
+                <filter direction="back" p="tcp" sport="8801:8810"/>
+        </service>
+	<service name="google-meet" description="Google Meet Hangouts">
+		<filter direction="go" p="udp" dport="19302:19309"/>
+		<filter direction="back" p="udp" sport="19302:19309"/>
+	</service>
+	<service name="teams" description="Microsoft Teams">
+		<filter direction="go" p="udp" dport="3478:3481"/>
+		<filter direction="back" p="udp" sport="3478:3481"/>
+	</service>
+	<service name="quic" description="Google Quic (udp 443)">
+		<filter direction="go" p="udp" dport="443"/>
+		<filter direction="back" p="udp" sport="443"/>
+	</service>
+	<service name="dns-over-tls" description="Domain Name Service over TLS (tcp/udp 853)">
+		<filter direction="go" p="tcp" dport="853"/>
+		<filter direction="back" p="tcp" sport="853"/>
+	</service>
 </services>

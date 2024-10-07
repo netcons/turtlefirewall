@@ -1,38 +1,61 @@
-#!/usr/bin/perl
-
+#!/usr/bin/env perl
 
 # creo la directory per i file di configurazione
 $path_config = '/etc/turtlefirewall';
+$path_bin = '/usr/sbin';
+$path_lib = '/usr/lib/turtlefirewall';
+$path_doc = '/usr/share/doc/turtlefirewall';
 
 if( ! -d $path_config ) {
 	mkdir $path_config, 0700;
 }
+
 # copio i 3 file predefiniti per la configurazione del firewall
 if( ! -f "$path_config/fw.xml" ) {
 	system( "cp -v fw.xml $path_config" );
+} else {
+	system( "cp -v -f $path_config/fw.xml $path_config/fw.xml.new" );
 }
+
 if( -f "$path_config/fwservices.xml" ) {
-	system( "cp -v $path_config/fwservices.xml $path_config/fwservices.xml.bck" );
+	system( "cp -v -f $path_config/fwservices.xml $path_config/fwservices.xml.bck" );
 }
 system( "cp -v -f fwservices.xml $path_config" );
+
 # Il file fwuserdefservices.xml lo copio solo se non presente
 if( ! -f "$path_config/fwuserdefservices.xml" ) {
-	system( "cp -v fwuserdefservices.xml $path_config/" );
+	system( "cp -v fwuserdefservices.xml $path_config" );
+} else {
+	system( "cp -v -f $path_config/fwuserdefservices.xml $path_config/fwuserdefservices.xml.new" );
 }
+
+system( "cp -v -f fwcountrycodes.xml $path_config" );
+system( "cp -v -f fwndpiprotocols.xml $path_config" );
+system( "cp -v -f fwndpirisks.xml $path_config" );
 
 # Diritti di lettura/scrittura solo a root
 system( "chmod 600 $path_config/*" );
 system( "chmod 700 $path_config" );
 
-# copio lo script turtlefw in /usr/sbin
-system( "cp -v -f turtlefirewall /usr/sbin" );
-chmod 0700, '/usr/sbin/turtlefirewall';
+# copio lo script turtlefw in $path_bin
+system( "cp -v -f turtlefirewall $path_bin" );
+system( "chmod 700 $path_bin/turtlefirewall" );
 
-# delete old turtlefirewall package
+# Ensure Lib folder
+system( "mkdir -p $path_lib" );
+# delete old turtlefirewall packages
 unlink( "/usr/lib/turtlefirewall.pm" );
+unlink( "/usr/lib/TurtleFirewall.pm" );
 # add new TurtleFirewall package
-system( "cp -v -f TurtleFirewall.pm /usr/lib" );
+system( "cp -v -f TurtleFirewall.pm $path_lib" );
 
+$path_systemd = '/usr/lib/systemd/system';
+if( -d $path_systemd ) {
+
+	system( "cp -v -f turtlefirewall.service $path_systemd" );
+	system( "systemctl daemon-reload > /dev/null 2>&1" );
+
+} else {
 
 # Cerco il percorso della dir init.d
 $path_initd = '';
@@ -52,73 +75,8 @@ if( $path_initd eq '' ) {
 	exit( 1 );
 }
 
-$startscript = "$path_initd/turtlefirewall";
-open( FILE, ">$startscript" );
-
-print FILE q~#!/bin/bash
-
-### BEGIN INIT INFO
-# Provides:            turtlefirewall
-# Required-Start:      $network $local_fs $syslog
-# Required-Stop:
-# Default-Start:       2 3 4 5
-# Default-Stop:        0 1 6
-# Short-Description:   Turtle Firewall.
-# Description:         Enable Turtle Firewall.
-### END INIT INFO
-
-if [ -d "/var/lock/subsys" ] ; then
-	FLAG_FILE=/var/lock/subsys/turtlefirewall
-else
-	FLAG_FILE=/var/lock/turtlefirewall
-fi
-RETVAL=0
-
-start() {
-	/usr/sbin/turtlefirewall
-	if [ $? == 0 ] ; then
-		touch $FLAG_FILE
-	fi
-	RETVAL=$?
-	return $RETVAL
-}
-
-stop() {
-	/usr/sbin/turtlefirewall --stop
-	rm -f $FLAG_FILE
-	RETVAL=$?
-	return $RETVAL
-}
-
-case "$1" in
-	start)
-		start
-		;;
-	stop)
-		stop
-		;;
-	status)
-		echo "\nNAT/MASQUERADING:"
-		iptables -t nat -L -n -v
-		echo "\nRULES:"
-		iptables -L -n -v
-		/usr/sbin/turtlefirewall --status
-		;;
-	restart|reload)
-		stop
-		start
-		;;
-	*)
-		echo "Usage: $0 { start | stop | status | restart }"
-		exit 1
-		;;
-esac
-exit $RETVAL~;
-
-close( FILE );
-chmod 0700, $startscript;
-
-
+system( "cp -v -f turtlefirewall.init $path_initd/turtlefirewall" );
+system( "chmod 700 $path_initd/turtlefirewall" );
 
 # Cerco il percorso della dir rc.d
 $path_rcd = '';
@@ -148,7 +106,7 @@ if( -f '/etc/slackware-version' ) {
 	}
 } else {
 
-	$script = $startscript;
+	$script = "$path_initd/turtlefirewall";
 	if( $path_initd = "$path_rcd/init.d" ) {
 		$script = "../init.d/turtlefirewall";
 	}
@@ -156,5 +114,38 @@ if( -f '/etc/slackware-version' ) {
 	system( "insserv turtlefirewall" );
 }
 
-exit( 0 );
+}
 
+# Auto update Blacklists
+system( "cp -v -f ip_blacklist $path_lib" );
+system( "cp -v -f domain_blacklist $path_lib" );
+system( "cp -v -f ja3_blacklist $path_lib" );
+system( "cp -v -f sha1_blacklist $path_lib" );
+system( "chmod 700 $path_lib/*_blacklist" );
+system( "ln -sf /usr/lib/turtlefirewall/ip_blacklist /etc/cron.daily/ip_blacklist > /dev/null 2>&1" );
+system( "ln -sf /usr/lib/turtlefirewall/domain_blacklist /etc/cron.daily/domain_blacklist > /dev/null 2>&1" );
+system( "ln -sf /usr/lib/turtlefirewall/ja3_blacklist /etc/cron.daily/ja3_blacklist > /dev/null 2>&1" );
+system( "ln -sf /usr/lib/turtlefirewall/sha1_blacklist /etc/cron.daily/sha1_blacklist > /dev/null 2>&1" );
+
+# Auto update GeoIP Database
+system( "cp -v -f xt_geoip_update /etc/cron.daily" );
+system( "chmod 700 /etc/cron.daily/xt_geoip_update" );
+
+# Ensure runnning if enabled
+system( "cp -v -f turtlefirewall.cron /etc/cron.d/turtlefirewall" );
+
+# Dump nDPI flows to log
+system( "cp -v -f flowinfo.cron /etc/cron.d/flowinfo" );
+
+# Rotate nDPI flow log
+system( "cp -v -f flowinfo.logrotate /etc/logrotate.d/flowinfo" );
+
+# Doc
+if( ! -d $path_doc ) {
+	mkdir $path_doc, 0755;
+}
+system( "cp -v -f fixconfig.sh $path_doc" );
+system( "cp -v -f fw.xml.sample $path_doc" );
+system( "chmod 700 $path_doc/fixconfig.sh" );
+
+exit( 0 );

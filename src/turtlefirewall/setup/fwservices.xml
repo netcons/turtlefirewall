@@ -40,7 +40,7 @@
 			1) Active ftp.
 			   This involves a connection INbound from port 20 on the remote machine,
 			   to a local port passed over the ftp channel via a PORT command.
-			   The ip_conntrack_ftp module recognizes the connection as RELATED to
+			   The nf_conntrack_ftp module recognizes the connection as RELATED to
 			   the original outgoing connection to port 21 so we don't need NEW as
 			   a state match.
 		-->
@@ -51,7 +51,7 @@
 			2) Passive ftp.
 			   This involves a connection outbound from a port upper 1023 on the
 			   local machine, to a port upper 1023 on the remote machine previously
-			   passed over the ftp channel via a PORT command. The ip_conntrack_ftp
+			   passed over the ftp channel via a PORT command. The nf_conntrack_ftp
 			   module recognizes the connection as RELATED to the original outgoing
 			   connection to port 21 so we don't need NEW as a state match.
 		-->
@@ -60,59 +60,54 @@
 
 	</service>
 
-	<service name="dns" description="Domain Name Service">
+	<service name="dns" description="Domain Name Service (tcp/udp 53)">
 		<filter direction="go" p="tcp" dport="53"/>
 		<filter direction="back" p="tcp" sport="53"/>
 		<filter direction="go" p="udp" dport="53"/>
 		<filter direction="back" p="udp" sport="53"/>
 	</service>
 
-	<service name="www" description="World Wide Web HTTP">
+	<service name="http" description="World Wide Web HTTP (tcp 80)">
 		<filter direction="go" p="tcp" dport="80"/>
 		<filter direction="back" p="tcp" sport="80"/>
 	</service>
 
-	<service name="http" description="World Wide Web HTTP">
-		<filter direction="go" p="tcp" dport="80"/>
-		<filter direction="back" p="tcp" sport="80"/>
-	</service>
-
-	<service name="https" description="HTTP protocol over TLS/SSL">
+	<service name="https" description="HTTP protocol over TLS/SSL (tcp 443)">
 		<filter direction="go" p="tcp" dport="443"/>
 		<filter direction="back" p="tcp" sport="443"/>
 	</service>
 
-	<service name="auth" description="Authentication Service">
+	<service name="auth" description="Authentication Service (tcp 113)">
 		<filter direction="go" p="tcp" dport="113"/>
 		<filter direction="back" p="tcp" sport="113"/>
 	</service>
 
-	<service name="smtp" description="Simple Mail Transfer Protocol">
+	<service name="smtp" description="Simple Mail Transfer Protocol (tcp 25)">
 		<filter direction="go" p="tcp" dport="25"/>
 		<filter direction="back" p="tcp" sport="25"/>
 	</service>
 
-	<service name="pop3" description="Post Office Protocol version 3">
+	<service name="pop3" description="Post Office Protocol version 3 (tcp 110)">
 		<filter direction="go" p="tcp" dport="110"/>
 		<filter direction="back" p="tcp" sport="110"/>
 	</service>
 
-	<service name="imap" description="Internet Message Access Protocol">
+	<service name="imap" description="Internet Message Access Protocol (tcp 143)">
 		<filter direction="go" p="tcp" dport="143"/>
 		<filter direction="back" p="tcp" sport="143"/>
 	</service>
 
-	<service name="ssh" description="Secure Shell Protocol">
+	<service name="ssh" description="Secure Shell Protocol (tcp 22)">
 		<filter direction="go" p="tcp" dport="22"/>
 		<filter direction="back" p="tcp" sport="22"/>
 	</service>
 
-	<service name="ntp" description="Network Time Protocol">
+	<service name="ntp" description="Network Time Protocol (tcp 123)">
 		<filter direction="go" p="udp" dport="123"/>
 		<filter direction="back" p="udp" sport="123"/>
 	</service>
 
-	<service name="netbios_ns" description="NETBIOS Name Service">
+	<service name="netbios_ns" description="NETBIOS Name Service (tcp 137)">
 		<filter direction="go" p="udp" dport="137"/>
 		<filter direction="back" p="udp" sport="137"/>
 	</service>
@@ -128,27 +123,27 @@
 		<filter direction="back" p="tcp" sport="445"/>
 	</service>
 
-	<service name="netbios_ssn" description="NETBIOS Session Service">
+	<service name="netbios_ssn" description="NETBIOS Session Service (tcp 139)">
 		<filter direction="go" p="tcp" dport="139"/>
 		<filter direction="back" p="tcp" sport="139"/>
 	</service>
 
-	<service name="cvs" description="CVS Server Service">
+	<service name="cvs" description="CVS Server Service (tcp 2401)">
 		<filter direction="go" p="tcp" dport="2401"/>
 		<filter direction="back" p="tcp" sport="2401"/>
 	</service>
 
-	<service name="nntp" description="NNTP Network News Transport Protocol">
+	<service name="nntp" description="NNTP Network News Transport Protocol (tcp 119)">
 		<filter direction="go" p="tcp" dport="119"/>
 		<filter direction="back" p="tcp" sport="119"/>
 	</service>
 
-	<service name="telnet" description="Telnet Protocol">
+	<service name="telnet" description="Telnet Protocol (tcp 23)">
 		<filter direction="go" p="tcp" dport="23"/>
 		<filter direction="back" p="tcp" sport="23"/>
 	</service>
 
-	<service name="webmin" description="Webmin (port 10000)">
+	<service name="webmin" description="Webmin (tcp 10000)">
 		<filter direction="go" p="tcp" dport="10000"/>
 		<filter direction="back" p="tcp" sport="10000"/>
 	</service>
@@ -205,7 +200,7 @@
 		<filter direction="back" p="51" jump="ACCEPT"/>
 	</service>
 
-	<service name="afp-over-tcp" description="AFP (Apple Filing Protocol) over TCP">
+	<service name="afp" description="Apple Filing Protocol (tcp/udp 548)">
 		<filter direction="go" p="tcp" dport="548"/>
 		<filter direction="back" p="tcp" sport="548"/>
 		<filter direction="go" p="udp" dport="548"/>
@@ -227,14 +222,14 @@
 		<filter direction="back" p="udp"/>
 	</service>
 
-	<service name="mysql" description="MySQL-Server">
+	<service name="mysql" description="MySQL-Server (tcp/udp 3306)">
 		<filter direction="go" p="tcp" dport="mysql"/>
 		<filter direction="back" p="tcp" sport="mysql"/>
 		<filter direction="go" p="udp" dport="mysql"/>
 		<filter direction="back" p="udp" sport="mysql"/>
 	</service>
 
-	<service name="kazaa" description="KaZaa Filesharing">
+	<service name="kazaa" description="KaZaa Filesharing (tcp/udp 1214)">
 		<filter direction="go" p="tcp" dport="1214"/>
 		<filter direction="back" p="tcp" sport="1214"/>
 		<filter direction="go" p="udp" dport="1214"/>
@@ -248,11 +243,6 @@
 		<filter direction="back" p="tcp" sport="1723" jump="ACCEPT"/>
 	</service>
 
-	<service name="rdp" description="Remote Desktop Protocol">
-		<filter direction="go" p="tcp" dport="3389"/>
-		<filter direction="back" p="tcp" sport="3389"/>
-	</service>
-
 	<service name="pc-anywhere" description="PC-Anywhere service (admin to hosts)">
 	    <filter direction="go" p="tcp" dport="5631:5632"/>
 	    <filter direction="back" p="tcp" sport="5631:5632"/>
@@ -263,19 +253,14 @@
 		<filter direction="back" p="tcp" sport="6000:6063"/>
 	</service>
 
-	<service name="proxy8080" description="HTTP/HTTPS/FTP Proxy on port 8080">
+	<service name="proxy8080" description="HTTP/HTTPS/FTP Proxy (tcp 8080)">
 		<filter direction="go" p="tcp" dport="8080"/>
 		<filter direction="back" p="tcp" sport="8080"/>
 	</service>
 
-	<service name="proxy3128" description="HTTP/HTTPS/FTP Proxy on port 3128">
+	<service name="proxy3128" description="HTTP/HTTPS/FTP Proxy (tcp 3128)">
 		<filter direction="go" p="tcp" dport="3128"/>
 		<filter direction="back" p="tcp" sport="3128"/>
-	</service>
-
-	<service name="ssh21" description="SSH over port 21">
-		<filter direction="go" p="tcp" dport="21"/>
-		<filter direction="back" p="tcp" sport="21"/>
 	</service>
 
 	<service name="dhcp" description="DHCP/BOOTP protocol">
@@ -289,12 +274,12 @@
 		<filter direction="back" p="tcp" sport="68"/>
 	</service>
 
-	<service name="snmptrap" description="snmptrap">
+	<service name="snmptrap" description="snmptrap (tcp 162)">
 		<filter direction="go" p="udp" dport="162"/>
 		<filter direction="back" p="udp" sport="162"/>
 	</service>
 
-	<service name="socks" description="Socks Proxy">
+	<service name="socks" description="Socks Proxy (tcp 1080)">
 		<filter direction="go" p="tcp" dport="1080"/>
 		<filter direction="back" p="tcp" sport="1080"/>
 	</service>
@@ -343,44 +328,44 @@
 		<filter direction="back" p="udp" sport="5194" jump="ACCEPT"/>
 	</service>
 
-	<service name="oracle" description="Oracle (1521)">
+	<service name="oracle" description="Oracle (tcp 1521)">
 		<filter direction="go" p="tcp" dport="1521"/>
 		<filter direction="back" p="tcp" sport="1521"/>
 	</service>
 
-	<service name="vnc" description="VNC">
+	<service name="vnc" description="VNC (tcp 5900)">
 		<filter direction="go" p="tcp" dport="5900"/>
 		<filter direction="back" p="tcp" sport="5900"/>
 	</service>
 
-	<service name="vnc-http" description="VNC-http">
+	<service name="vnc-http" description="VNC-http (tcp 5800)">
 		<filter direction="go" p="tcp" dport="5800"/>
 		<filter direction="back" p="tcp" sport="5800"/>
 	</service>
 
-	<service name="rip" description="Router Information Protocol">
+	<service name="rip" description="Router Information Protocol (udp 520)">
 		<filter direction="go" p="udp" dport="520"/>
 		<filter direction="back" p="udp" sport="520"/>
 	</service>
 
-	<service name="syslog" description="syslog protocol">
+	<service name="syslog" description="syslog protocol (udp 514)">
 		<filter direction="go" p="udp" dport="514"/>
 		<filter direction="back" p="udp" sport="514"/>
 	</service>
 
-	<service name="icecast" description="ICEcast streaming protocol">
+	<service name="icecast" description="ICEcast streaming protocol (tcp 8000)">
 		<filter direction="go" p="tcp" dport="8000"/>
 		<filter direction="back" p="tcp" sport="8000"/>
 	</service>
 
-	<service name="icp" description="Internet Cache Protocol">
+	<service name="icp" description="Internet Cache Protocol (tcp/udp 3130)">
 		<filter direction="go" p="tcp" dport="3130"/>
 		<filter direction="back" p="tcp" sport="3130"/>
 		<filter direction="go" p="udp" dport="3130"/>
 		<filter direction="back" p="udp" sport="3130"/>
 	</service>
 
-	<service name="irc" description="Internet Relay Chat">
+	<service name="irc" description="Internet Relay Chat (tcp/udp 6667)">
 		<filter direction="go" p="tcp" dport="6667"/>
 		<filter direction="back" p="tcp" sport="6667"/>
 		<filter direction="go" p="udp" dport="6667"/>
@@ -399,29 +384,29 @@
 		<filter direction="back" p="tcp" sport="5269"/>
 	</service>
 	
-	<service name="lpr" description="Line Printer Protocol">
+	<service name="lpr" description="Line Printer Protocol (tcp 515)">
 		<filter direction="go" p="tcp" dport="515"/>
 		<filter direction="back" p="tcp" sport="515"/>
 	</service>
 
-	<service name="rdp" description="Windows Remote Desktop Protocol (RDP)">
+	<service name="rdp" description="Windows Remote Desktop Protocol (tcp 3389)">
 		<filter direction="go" p="tcp" dport="3389"/>
 		<filter direction="back" p="tcp" sport="3389"/>
 	</service>
 
-	<service name="openvpn" description="OpenVPN (tcp,udp)">
+	<service name="openvpn" description="OpenVPN (tcp/udp 1194)">
 		<filter direction="go" p="tcp" dport="1194"/>
 		<filter direction="back" p="tcp" sport="1194"/>
 		<filter direction="go" p="udp" dport="1194"/>
 		<filter direction="back" p="udp" sport="1194"/>
 	</service>
 
-	<service name="igmp" description="Internet Group Management Protocol">
+	<service name="igmp" description="Internet Group Management Protocol (udp 465)">
 		<filter direction="go" p="igmp"/>
 		<filter direction="back" p="igmp"/>
 	</service>
 	
-	<service name="bpalogin" description="BPALogin">
+	<service name="bpalogin" description="BPALogin (udp 5051)">
 		<filter direction="go" p="udp" sport="5051"/>
 		<filter direction="back" p="udp" sport="5051"/>
 	</service>

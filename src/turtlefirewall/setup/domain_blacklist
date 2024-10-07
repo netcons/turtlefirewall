@@ -1,0 +1,159 @@
+#!/bin/bash
+#
+# Enable Auto Update with :
+# ln -sf /usr/lib/turtlefirewall/domain_blacklist /etc/cron.daily/domain_blacklist
+#
+
+echo -e "\nTurtle Firewall 2.3 - Domain Blacklist";
+echo -e "Copyright (c) 2001-2024 Andrea Frigido\n";
+
+fw_file="/etc/turtlefirewall/fw.xml"
+
+blacklist_file="/etc/turtlefirewall/domain_blacklist.dat"
+never_blacklist_file="/etc/turtlefirewall/never_domain_blacklist.dat"
+
+# Some older CPU's cant load large lists
+item_limit="32768"
+
+Help () {
+ echo "Usage :  domain_blacklist [OPTION]"
+ echo " "
+ echo "  -I, --initialise"
+ echo "     initialise blacklist firewall item"
+ echo " "
+ echo "  -f, --flush"
+ echo "     flush blacklist firewall item"
+ echo " "
+ echo "  -d, --download"
+ echo "     download blacklist file"
+ echo " "
+ echo "  -i, --import"
+ echo "     import blacklist file into firewall item"
+ echo " "
+ echo "  -h, --help"
+ echo "     this menu"
+ echo " "
+ echo "  -x, --exclude-download"
+ echo "     do intialise, flush and import"
+ echo " "
+ exit 0
+}
+
+Verify () {
+if [ ! -d /proc/net/xt_ndpi ]
+ then
+  echo "xt_ndpi kernel module not loaded"
+  echo
+  exit 1
+fi
+}
+
+Initialise () {
+echo -e "Initialise : \c"
+cat /proc/net/xt_ndpi/proto | grep -w domain_blacklist > /dev/null 2>&1
+if [ $? = 0 ]
+ then
+  echo -e "SKIP"
+ else
+  echo "add_custom domain_blacklist" > /proc/net/xt_ndpi/proto
+  if [ $? = 0 ]
+   then
+    echo -e "OK"
+  else
+    echo -e "FAIL"
+  fi
+fi
+}
+
+Flush () {
+echo -e "Flush : \c"
+echo "-domain_blacklist:*" > /proc/net/xt_ndpi/host_proto
+if [ $? = 0 ]
+ then
+  echo -e "OK"
+else
+  echo -e "FAIL"
+fi
+}
+
+Download () {
+echo -e "Download : \c"
+systemctl is-enabled turtlefirewall > /dev/null 2>&1
+if [ $? = 0 ]
+ then
+  > $blacklist_file
+  result="1"
+  # ThreatFox Malware List
+  wget -q -O - https://threatfox.abuse.ch/downloads/hostfile \
+   | dos2unix \
+   | awk -F "\t" '(!/^#/ && $2~/^[A-z0-9\-\.]+$/){print $2}' \
+   >> $blacklist_file
+  [ $? = 0 ] && result=0
+  # URLhaus Malware List
+  wget -q -O - https://urlhaus.abuse.ch/downloads/hostfile \
+   | dos2unix \
+   | awk -F "\t" '(!/^#/ && $2~/^[A-z0-9\-\.]+$/){print $2}' \
+   >> $blacklist_file
+  [ $? = 0 ] && result=0
+  # nDPI Malware List
+  wget -q -O - https://raw.githubusercontent.com/ntop/nDPI/dev/lists/100_malware.list \
+   | dos2unix \
+   | awk '(!/^#/ && $1~/^[A-z0-9\-\.]+$/){print $1}' \
+   >> $blacklist_file
+  [ $? = 0 ] && result=0
+  if [ $result = 0 ]
+   then
+    echo -e "OK"
+  else
+    echo -e "FAIL"
+  fi
+  sed -i ${item_limit}q $blacklist_file
+  sort -u $blacklist_file -o $blacklist_file
+  chmod 600 $blacklist_file
+else
+  echo -e "turtlefirewall not enabled"
+  echo
+  exit 1
+fi
+}
+
+Import () {
+echo -e "Import : \c"
+if [ -s $blacklist_file ]
+ then
+
+  # Ensure exclude
+  if [ -s $never_blacklist_file ]
+   then
+    while read blacklist_exclude
+     do
+      sed -i "/^$blacklist_exclude$/d" $blacklist_file
+    done < $never_blacklist_file
+  fi
+
+  # Workaround for Risk 27 not working as expected
+  sed "s/^/domain_blacklist:|/;s/$/|/" $blacklist_file > /proc/net/xt_ndpi/host_proto
+  #sed "s/^/domain_blacklist:RISK_DOMAIN_/" $blacklist_file > /proc/net/xt_ndpi/host_proto
+  count=`wc -l < $blacklist_file`
+  if [ $? = 0 ]
+   then
+    echo -e "$count"
+  else
+    echo -e "FAIL"
+  fi
+ else
+  echo -e "$blacklist_file empty"
+fi
+}
+
+case $1 in
+ -I|--initialise) Verify;Initialise;;
+ -f|--flush) Verify;Flush;;
+ -d|--download) Download;;
+ -i|--import) Verify;Import;;
+ -h|--help) Help;;
+ -x|--exclude-download) Verify;Initialise;Flush;Import;;
+ *) Verify;Initialise;Flush;Download;Import;;
+esac
+
+echo

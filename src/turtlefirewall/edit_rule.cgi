@@ -8,134 +8,125 @@
 # License
 #======================================================================
 
-
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 $new = $in{'new'};
 
 if( $new ) {
-	&header( $text{edit_rule_title_create}, '' );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_rule_title_create'}";
 	$idx = '';
 	$src = '';
 	$dst = '';
 	$service = '';
 	$port = '';
+	$ndpi = '';
+	$category = '';
+	$hostnameset = '';
+	$riskset = '';
+	$ratelimit = '';
+	$time = '';
 	$target = '';
-	$mark = '';
 	$active = 1;
+	$log = '';
 	$description = '';
 } else {
-	&header( $text{edit_rule_title_edit}, '' );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_rule_title_edit'}";
 	$idx = $in{'idx'};
 	%rule = $fw->GetRule($idx);
 	$src = $rule{'SRC'};
 	$dst = $rule{'DST'};
 	$service = $rule{'SERVICE'};
 	$port = $rule{'PORT'};
+	$ndpi = $rule{'NDPI'};
+	$category = $rule{'CATEGORY'};
+	$hostnameset = $rule{'HOSTNAMESET'};
+	$riskset = $rule{'RISKSET'};
+	$ratelimit = $rule{'RATELIMIT'};
+	$time = $rule{'TIME'};
 	$target = $rule{'TARGET'};
-	$mark = $rule{'MARK'};
 	$active = $rule{'ACTIVE'} ne 'NO';
+	$log = $rule{'LOG'} eq 'YES';
 	$description = $rule{'DESCRIPTION'};
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
-my $options_src = '';
-my $options_dst = '';
 my @selected_src = split(/,/, $src);
 my @selected_dst = split(/,/, $dst);
 my @items = ('*');
 push @items, $fw->GetZoneList();
+push @items, $fw->GetGeoipList();
 push @items, $fw->GetNetList();
 push @items, $fw->GetHostList();
 push @items, $fw->GetGroupList();
 @items = sort(@items);
-for my $k (@items) {
-	my $selected = 0;
-	for my $s (@selected_src) {
-		if( $k eq $s ) {
-			$selected = 1;
-			last;
-		}
-	}
-	$options_src .= '<option'.($selected ? ' selected' : '').'>'.$k;
-	$selected = 0;
-	for my $s (@selected_dst) {
-		if( $k eq $s ) {
-			$selected = 1;
-			last;
-		}
-	}
-	$options_dst .= '<option'.($selected ? ' selected' : '').'>'.$k;
-}
 
-print "<br>
-	<form action=\"save_rule.cgi\">
-	<input type=\"hidden\" name=\"idx\" value=\"$idx\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{edit_rule_title_create} : $text{edit_rule_title_edit})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\">";
+if( $hostnameset eq '' ) { $hostnameset = 'any'; }
+my @hostnamesets = ('any');
+push @hostnamesets, $fw->GetHostNameSetList();
+
+if( $riskset eq '' ) { $riskset = 'none'; }
+my @risksets = ('none');
+push @risksets, $fw->GetRiskSetList();
+
+if( $ratelimit eq '' ) { $ratelimit = 'none'; }
+my @ratelimits = ('none');
+push @ratelimits, $fw->GetRateLimitList();
+
+if( $time eq '' ) { $time = 'always'; }
+my @times = ('always');
+push @times, $fw->GetTimeList();
+push @times, $fw->GetTimeGroupList();
+
+my @targets = ( 'ACCEPT', 'DROP', 'REJECT' );
+
+print &ui_subheading($heading);
+print &ui_form_start("save_rule.cgi", "post");
+print &ui_hidden("idx", $idx);
+my @tds = ( "width=20%", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( !$new ) {
-	print		"<tr>
-				<td><b>#</b></td>
-				<td><b><tt>$idx</tt></b></td>
-			</tr>";
+	$col = "<b>$idx</b>";
+	print &ui_columns_row([ "<img src=images/hash.png hspace=4><b>ID</b>", $col ], \@tds);
 }
-print			"<tr>
-				<td><b>$text{rule_src}</b></td>
-				<td><select name=\"src\" size=\"5\" multiple>$options_src</select></td>
-			</tr>
-			<tr>
-				<td><b>$text{rule_dst}</b></td>
-				<td><select name=\"dst\" size=\"5\" multiple>$options_dst</select></td>
-			</tr>
-			<tr>
-				<td><b>$text{rule_service}</b></td>
-				<td><br>";
-				formService( $service, $port, 1 );
-print				"<br>
-				</td>
-			</tr>
-			<tr>
-				<td><b>$text{rule_target}</b></td>
-				<td>
-				<select name=\"target\">
-				<option ".($target eq 'ACCEPT' ? 'SELECTED' : '').">ACCEPT</option>
-				<option ".($target eq 'DROP' ? 'SELECTED' : '').">DROP</option>
-				<option ".($target eq 'REJECT' ? 'SELECTED' : '').">REJECT</option>
-				</select>
-				</td>
-			</tr>
-			<tr>
-				<td><b>$text{rule_mark}</b></td>
-				<td><input type=\"text\" name=\"mark\" value=\"$mark\" size=\"13\"></td>
-			</tr>
-			<tr>
-				<td><b>$text{rule_active}</b></td>
-				<td><input type=\"checkbox\" name=\"active\" value=\"1\"".($active ? ' checked' : '')."></td>
-			</tr>
-			<tr>
-				<td><b>$text{description}</b></td>
-				<td><input type=\"text\" name=\"description\" value=\"$description\" size=\"60\"></td>
-			</tr>
-			</table>
-			</td>
-		</tr>
-	</table>";
+$col = &ui_select("src", \@selected_src, \@items, 5, 1);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'rule_src'}</b>", $col ], \@tds);
+$col = &ui_select("dst", \@selected_dst, \@items, 5, 1);
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'rule_dst'}</b>", $col ], \@tds);
+$col = &formService($service, $port, 1);
+print &ui_columns_row([ "<img src=images/service.png hspace=4><b>$text{'rule_service'}</b>", $col ], \@tds);
+$col = &formNdpiProtocol($ndpi, $category, 1);
+print &ui_columns_row([ "<img src=images/grey-ndpi.png hspace=4><b>$text{'rule_ndpi'}</b>", $col ], \@tds);
+$col = &ui_select("hostnameset", $hostnameset, \@hostnamesets);
+print &ui_columns_row([ "<img src=images/hostnameset.png hspace=4><b>$text{'rule_hostname_set'}</b>", $col ], \@tds);
+$col = &ui_select("riskset", $riskset, \@risksets);
+print &ui_columns_row([ "<img src=images/riskset.png hspace=4><b>$text{'rule_risk_set'}</b>", $col ], \@tds);
+$col = &ui_select("ratelimit", $ratelimit, \@ratelimits);
+print &ui_columns_row([ "<img src=images/ratelimit.png hspace=4><b>$text{'rule_rate_limit'}</b>", $col ], \@tds);
+$col = &ui_select("time", $time, \@times);
+print &ui_columns_row([ "<img src=images/time.png hspace=4><b>$text{'rule_time'}</b>", $col ], \@tds);
+$col = &ui_select("target", $target, \@targets);
+print &ui_columns_row([ "<img src=images/target.png hspace=4><b>$text{'rule_target'}</b>", $col ], \@tds);
+$col = &ui_checkbox("log", 1, undef, $log ? 1 : 0);
+$col .= "<small><i>$text{log_help}</i></small>";
+print &ui_columns_row([ "<img src=images/grey-eye.png hspace=4><b>$text{'rule_log'}</b>", $col ], \@tds);
+$col = &ui_textbox("description", $description, 60, 0, 60);
+print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+$col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
+print &ui_columns_row([ "<img src=images/active.png hspace=4><b>$text{'rule_active'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
-	print '<td><input type="submit" name="new" value="'.$text{button_create}.'"></td>';
+	print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
-	print '<td><input type="submit" name="save" value="'.$text{button_save}.'"></td>';
-	print '<td align="right"><input type="submit" name="delete" value="'.$text{button_delete}.'"></td>';
+	print '<td>'.&ui_submit( $text{'button_save'}, "save").'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
-&footer("list_rules.cgi?idx=$idx",'Rules list');
-
-
+&ui_print_footer("list_rules.cgi?idx=$idx",'Rules list');

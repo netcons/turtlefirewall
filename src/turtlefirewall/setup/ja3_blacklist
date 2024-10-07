@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+#
+# Enable Auto Update with :
+# ln -sf /usr/lib/turtlefirewall/ja3_blacklist /etc/cron.daily/ja3_blacklist
+#
+
+echo -e "\nTurtle Firewall 2.3 - JA3 Blacklist";
+echo -e "Copyright (c) 2001-2024 Andrea Frigido\n";
+
+fw_file="/etc/turtlefirewall/fw.xml"
+
+blacklist_file="/etc/turtlefirewall/ja3_blacklist.dat"
+never_blacklist_file="/etc/turtlefirewall/never_ja3_blacklist.dat"
+
+item_limit="32768"
+
+Help () {
+ echo "Usage :  ja3_blacklist [OPTION]"
+ echo " "
+ echo "  -I, --initialise"
+ echo "     initialise blacklist firewall item"
+ echo " "
+ echo "  -f, --flush"
+ echo "     flush blacklist firewall item"
+ echo " "
+ echo "  -d, --download"
+ echo "     download blacklist file"
+ echo " "
+ echo "  -i, --import"
+ echo "     import blacklist file into firewall item"
+ echo " "
+ echo "  -h, --help"
+ echo "     this menu"
+ echo " "
+ echo "  -x, --exclude-download"
+ echo "     do intialise, flush and import"
+ echo " "
+ exit 0
+}
+
+Verify () {
+if [ ! -d /proc/net/xt_ndpi ]
+ then
+  echo "xt_ndpi kernel module not loaded"
+  echo
+  exit 1
+fi
+}
+
+Initialise () {
+echo -e "Initialise : \c"
+cat /proc/net/xt_ndpi/proto | grep -w ja3_blacklist > /dev/null 2>&1
+if [ $? = 0 ]
+ then
+  echo -e "SKIP"
+ else
+  echo "add_custom ja3_blacklist" > /proc/net/xt_ndpi/proto
+  if [ $? = 0 ]
+   then
+    echo -e "OK"
+  else
+    echo -e "FAIL"
+  fi
+fi
+}
+
+Flush () {
+echo -e "Flush : \c"
+echo "-ja3_blacklist:*" > /proc/net/xt_ndpi/host_proto
+if [ $? = 0 ]
+ then
+  echo -e "OK"
+else
+  echo -e "FAIL"
+fi
+}
+
+Download () {
+echo -e "Download : \c"
+systemctl is-enabled turtlefirewall > /dev/null 2>&1
+if [ $? = 0 ]
+ then
+  > $blacklist_file
+  wget -q -O - https://sslbl.abuse.ch/blacklist/ja3_fingerprints.csv \
+   | dos2unix \
+   | awk -F "," '(!/^#/ && $1~/^[a-z0-9]{32}$/){print $1}' \
+   >> $blacklist_file
+  if [ $? = 0 ]
+   then
+    echo -e "OK"
+  else
+    echo -e "FAIL"
+  fi
+  sed -i ${item_limit}q $blacklist_file
+  sort -u $blacklist_file -o $blacklist_file
+  chmod 600 $blacklist_file
+ else
+  echo -e "turtlefirewall not enabled"
+  echo
+  exit 1
+fi
+}
+
+Import () {
+echo -e "Import : \c"
+if [ -s $blacklist_file ]
+ then
+
+  # Ensure exclude
+  if [ -s $never_blacklist_file ]
+   then
+    while read blacklist_exclude
+     do
+      sed -i "/^$blacklist_exclude$/d" $blacklist_file
+    done < $never_blacklist_file
+  fi
+
+  sed "s/^/ja3_blacklist:RISK_JA3_/" $blacklist_file > /proc/net/xt_ndpi/host_proto
+  count=`wc -l < $blacklist_file`
+  if [ $? = 0 ]
+   then
+    echo -e "$count"
+  else
+    echo -e "FAIL"
+  fi
+ else
+  echo -e "$blacklist_file empty"
+fi
+}
+
+case $1 in
+ -I|--initialise) Verify;Initialise;;
+ -f|--flush) Verify;Flush;;
+ -d|--download) Download;;
+ -i|--import) Verify;Import;;
+ -h|--help) Help;;
+ -x|--exclude-download) Verify;Initialise;Flush;Import;;
+ *) Verify;Initialise;Flush;Download;Import;;
+esac
+
+echo

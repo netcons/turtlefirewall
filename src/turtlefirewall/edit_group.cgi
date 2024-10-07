@@ -8,89 +8,55 @@
 # License
 #======================================================================
 
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 $new = $in{'new'};
 $group = $in{'group'};
 $newgroup = $in{'newgroup'};
 
+my $heading = '';
 if( $new ) {
-	&header( $text{'edit_group_title_create'}, '' );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_group_title_create'}";
 } else {
-	&header( $text{'edit_group_title_edit'}, '' );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_group_title_edit'}";
 }
-
-@aItems = $fw->GetItemsAllowToGroup( $group );
+&ui_print_header( $heading, $text{'title'}, "" );
 
 my %g = $fw->GetGroup($group);
-my @groupItems = @{$g{ITEMS}};
-my $description = $g{DESCRIPTION};
+my @selected_items = @{$g{ITEMS}};
+my $description = $g{'DESCRIPTION'};
 
-%aSelectedItems = ();
-foreach my $k (@groupItems) {
-	$aSelectedItems{$k} = 1;
-}
+my @items = $fw->GetItemsAllowToGroup($group);
 
-print "<br><br>
-	<form action=\"save_group.cgi\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{'edit_group_title_create'} : $text{'edit_group_title_edit'})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\"><tr>
-			<td valign=\"top\">
-				<b>".$text{'name'}."</b></td>
-			<td valign=\"top\">";
+print &ui_subheading($heading);
+print &ui_form_start("save_group.cgi", "post");
+my @tds = ( "width=20% style=vertical-align:top", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( $new ) {
-	print "		<input type=\"text\" name=\"group\">";
+	$col = &ui_textbox("group");
 } else {
-	print '		<input type="text" name="newgroup" value="'.$group.'">';
-	print '		<input type="hidden" name="group" value="'.$group.'">';
+	$col = &ui_textbox("newgroup", $in{'group'});
+	$col .= &ui_hidden("group", $in{'group'});
 }
-print			'</td></tr>
-			<tr>
-				<td valign="top"><b>'.$text{'groupitems'}.'</b></td>
-				<td valign="top">
-					<table width="100%">';
+print &ui_columns_row([ "<img src=images/group.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+$col = &ui_select("items", \@selected_items, \@items, 5, 1);
+print &ui_columns_row([ "<img src=images/item.png hspace=4><b>$text{'groupitems'}</b>", $col ], \@tds);
+$col = &ui_textbox("description", $description, 60, 0, 60);
+print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-my $col = 0;
-foreach my $i (@aItems) {
-	if( $col == 0 ) { print "<tr>"; }
-	print "<td width=\"25%\"><nobr><input type=\"checkbox\" name=\"item_$i\" value=\"1\" ";
-	print ($aSelectedItems{$i} ? ' checked' : '');
-	print "> $i</nobr></td>";
-	if( ++$col == 4 ) {
-		$col = 0;
-		print "</tr>";
-	}
-}
-if( $col < 3 ) { print "</tr>"; }
-
-print					'</table>
-				</td>
-			</tr>';
-
-print 			'<tr><td valign="top"><b>'.$text{'description'}.'</b></td>';
-print			'<td valign="top"><input type="text" name="description" size="60" value="'.$description.'"></td>';
-print			'</tr>';
-
-print			'</table>
-			</td>
-		</tr>
-	</table>';
-
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
-	print '<td><input type="submit" name="new" value="'.$text{'button_create'}.'"></td>';
+        print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
-	print '<td><input type="submit" name="save" value="'.$text{'button_save'}.'"></td>';
-	print '<td align="right"><input type="submit" name="delete" value="'.$text{'button_delete'}.'"></td>';
+        print '<td>'.&ui_submit( $text{'button_save'}, "save").'</td>';
+        print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
+
+print &ui_form_end();
 
 print "<br><br>";
-&footer('list_items.cgi','items list');
-
+&ui_print_footer('list_items.cgi','items list');

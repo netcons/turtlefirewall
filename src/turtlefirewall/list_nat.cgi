@@ -8,33 +8,50 @@
 # License
 #======================================================================
 
+do 'turtlefirewall-lib.pl';
+&ReadParse();
 
-do 'lib.pl';
+&ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'list_nat_title'}", $text{'title'}, "" );
 
-&header( $text{list_nat_title}, '' );
+$form = 0;
+&showNat();
 
-showNat();
-showMasquerade();
-showRedirect();
-
+$form++;
 print "<br><br>";
-&footer('','turtle firewall index');
+&showMasquerade();
 
+$form++;
+print "<br><br>";
+&showRedirect();
+
+&ui_print_footer('index.cgi',$text{'index'});
 
 #============================================================================
 
 sub showNat {
-	print "<br><big><b>$text{nat}</b></big>
-		<table border width=\"100%\">
-			<tr $tb>
-				<th width=\"5%\">#</th>
-				<th width=\"30%\">$text{virtual_host}</th>
-				<th width=\"30%\">$text{real_host}</th>
-				<th width=\"20%\">$text{nat_service}</th>
-				<th width=\"10%\">$text{nat_port}</th>
-				<th width=\"5%\">$text{nat_active}</th>
-				<th>&nbsp;</th>
-			</tr>";
+	print &ui_subheading("<img src=images/grey-nat.png hspace=4>",$text{'nat'});
+	print &ui_form_start("save_nat.cgi", "post");
+	@links = ( &select_all_link("d", $form),
+       		   &select_invert_link("d", $form),
+		   "<a href=\"edit_nat.cgi?new=1\">$text{'list_nat_create_nat'}</a>" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "width=1% style=text-align:center;vertical-align:top",
+		 "width=25% style=vertical-align:top;white-space:normal",
+		 "width=25% style=vertical-align:top;white-space:normal",
+		 "style=vertical-align:top;white-space:normal",
+		 "width=1% style=vertical-align:top;text-align:center",
+		 "width=1% style=vertical-align:top;white-space:normal",
+		 "width=1% style=vertical-align:top" );
+        print &ui_columns_start([
+                          "",
+                          "<b>ID</b>",
+                          "<b>$text{'virtual_host'}</b>",
+                          "<b>$text{'real_host'}</b>",
+                          "<b>$text{'nat_service'}</b>",
+                          "<b>$text{'nat'}</b>",
+                          "<b>$text{'nat_toport'}</b>",
+		 	  "<b>$text{'nat_move'}</b>" ], 100, 0, \@tds);
+
 	$nNat = $fw->GetNatsCount();
 
 	if( $in{table} eq 'nat' ) {
@@ -54,61 +71,97 @@ sub showNat {
 
 	for( my $i=1; $i<=$nNat; $i++ ) {
 		my %attr = $fw->GetNat( $i );
-		my $href = "\"edit_nat.cgi?idx=$i\"";
-		print "<tr $cb>";
-		print "<td align=\"center\"><a href=$href>$i</a></td>";
-		print "<td><a href=$href>".$attr{'VIRTUAL'};
+		local @cols;
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
+		my $href = &ui_link("edit_nat.cgi?idx=$i","${sb}${i}${se}");
+		push(@cols, $href );
 		my %zone = $fw->GetZone($attr{'VIRTUAL'});
 		if( $zone{IF} ne '' ) {
-			print ' ('.$zone{IF}.')';
-		}
-		print "</a></td>";
-		print "<td><a href=$href>".$attr{'REAL'}."</a></td>";
-		$attr{'SERVICE'} =~ s/,/, /g;
-		print "<td align=\"center\"><a href=$href>".($attr{'SERVICE'} ne '' ? $attr{'SERVICE'} : '&nbsp;')."</a></td>";
-		print "<td align=\"center\"><a href=$href>".($attr{'PORT'} ne '' ? $attr{'PORT'} : '&nbsp;')."</a></td>";
-		print "<td align=\"center\"><a href=$href>";
-		if( $attr{'ACTIVE'} eq 'NO' ) {
-			print '<font color="red">'.$text{NO}.'</font>';
+			my $zimage = '<img src=images/zone.png hspace=4>';
+			push(@cols, "${zimage}${sb}$attr{'VIRTUAL'} ($zone{'IF'})${se}" );
 		} else {
-			print $text{YES};
+			my $himage = '<img src=images/host.png hspace=4>';
+			push(@cols, "${himage}${sb}$attr{'VIRTUAL'}${se}" );
 		}
-		print "</a></td>";
+		my $himage = '<img src=images/host.png hspace=4>';
+		push(@cols, "${himage}${sb}$attr{'REAL'}${se}" );
+		my $servicelist = '';
+		my $simage = '<img src=images/service.png hspace=4>';
+		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
+			if( $attr{'PORT'} ne '' ) {
+				$servicelist .= "${simage}$attr{'SERVICE'}/$attr{'PORT'}";
+			} else {
+				$servicelist .= "${simage}$attr{'SERVICE'}/all";
+			}
+		} else {
+			my @services = split(/,/, $attr{'SERVICE'});
+			foreach my $s (@services) {
+				$servicelist .= "${simage}${s}<br>";
+			}
+		}
+		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
+		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
+		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
+		push(@cols, "${nimage}${sb}${cb}$text{YES}${ce}${se}" );
+		my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';
+		push(@cols, "${timage}${sb}$attr{'TOPORT'}${se}" );
+		local $mover;
+		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 
-		print '<td width="1%" valign="top">
-			<table cellspacing="0" cellpadding="0"><tr>';
-				if( $i < $nNat ) {
-					print qq~<td width="50%"><a href="list_nat.cgi?table=nat&idx=$i&down=1"><img src="images/down.gif" border="0" hspace="1" vspace="0" alt="down"></a></td>~;
-				} else {
-					print '<td width="50%"><img src="images/gap.gif" border="0" hspace="1" vspace="0" alt="&nbsp;&nbsp;&nbsp;&nbsp;"></td>';
-				}
-				if( $i > 1 ) {
-					print qq~<td width="50%"><a href="list_nat.cgi?table=nat&idx=$i&up=1"><img src="images/up.gif" border="0" hspace="1" vspace="0" alt="up"></a></td>~;
-				} else {
-					print '<td width="50%"><img src="images/gap.gif" border="0" hspace="1" vspace="0" alt="&nbsp;&nbsp;"></td>';
-				}
-		print ' </tr></table>
-			</td>';
-
-		print "</tr>";
+		if( $i < $nNat ) {
+			$mover .= "<td width=50%><a href='list_nat.cgi?table=nat&idx=$i&down=1'>
+				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='down'></a>
+				   </td>";
+		} else {
+			$mover .= "<td width=50%>
+				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'>
+				   </td>";
+		}
+		if( $i > 1 ) {
+			$mover .= "<td width=50%><a href='list_nat.cgi?table=nat&idx=$i&up=1'>
+				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='up'></a>
+				   </td>";
+		} else {
+			$mover .= "<td width=50%>
+				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
+				   </td>";
+		}
+		$mover .= "</tr></table>";
+		push(@cols, $mover);
+		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
-	print "</table>\n";
-	print '<a href="edit_nat.cgi?new=1">'.$text{list_nat_create_nat}.'</a><br>';
+	print &ui_columns_end();
+	print "<table width=100%><tr>";
+	print '<td>'.&ui_links_row(\@links).'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print "</tr></table>";
+	print &ui_form_end();
 }
 
 sub showMasquerade {
-	print "<br><big><b>$text{masquerade}</b></big>
-		<table border width=\"100%\">
-			<tr $tb>
-				<th width=\"5%\">#</th>
-				<th width=\"30%\">$text{masq_src}</th>
-				<th width=\"30%\">$text{masq_dst}</th>
-				<th width=\"20%\">$text{masq_service}</th>
-				<th width=\"5%\">$text{masq_port}</th>
-				<th width=\"5%\">$text{masq_masquerade}</th>
-				<th width=\"5%\">$text{masq_active}</th>
-				<th width=\"5%\">&nbsp;</th>
-			</tr>";
+	print &ui_subheading("<img src=images/grey-nat.png hspace=4>",$text{'masquerade'});
+	print &ui_form_start("save_masq.cgi", "post");
+	@links = ( &select_all_link("d", $form),
+       		   &select_invert_link("d", $form),
+		   "<a href=\"edit_masq.cgi?new=1\">$text{'list_nat_create_masq'}</a>" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "width=1% style=text-align:center;vertical-align:top",
+		 "width=25% style=vertical-align:top;white-space:normal",
+		 "width=25% style=vertical-align:top;white-space:normal",
+		 "style=vertical-align:top;white-space:normal",
+		 "width=1% style=vertical-align:top;text-align:center",
+		 "width=1% style=vertical-align:top" );
+        print &ui_columns_start([
+                          "",
+                          "<b>ID</b>",
+                          "<b>$text{'masq_src'}</b>",
+                          "<b>$text{'masq_dst'}</b>",
+                          "<b>$text{'masq_service'}</b>",
+                          "<b>$text{'masq_masquerade'}</b>",
+		 	  "<b>$text{'masq_move'}</b>" ], 100, 0, \@tds);
+
 	my $nMasq = $fw->GetMasqueradesCount();
 	
 	if( $in{table} eq 'masquerade' ) {
@@ -128,65 +181,104 @@ sub showMasquerade {
 	
 	for( my $i=1; $i<=$nMasq; $i++ ) {
 		my %attr = $fw->GetMasquerade( $i );
-		my $href = "\"edit_masq.cgi?idx=$i\"";
-		print "<tr $cb>";
-		print "<td align=\"center\"><a href=$href>$i</a></td>";
-		
-		print "<td align=\"left\"><a href=$href>".($attr{'SRC'} ne '' ? $attr{'SRC'} : '*')."</a></td>";
-		print "<td align=\"left\"><a href=$href>".($attr{'DST'} ne '' ? $attr{'DST'} : '&nbsp;')."</a></td>";		
-		$attr{'SERVICE'} =~ s/,/, /g;
-		print "<td align=\"center\"><a href=$href>".($attr{'SERVICE'} ne '' ? $attr{'SERVICE'} : '&nbsp;')."</a></td>";
-		print "<td align=\"center\"><a href=$href>".($attr{'PORT'} ne '' ? $attr{'PORT'} : '&nbsp;')."</a></td>";		
-		print "<td align=\"center\"><a href=$href>";
+		local @cols;
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
+		my $href = &ui_link("edit_masq.cgi?idx=$i","${sb}${i}${se}");
+		push(@cols, $href );
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'SRC'});
+		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
+		push(@cols, "${zimage}${sb}".($attr{'SRC'} ne '' ? $attr{'SRC'} : '*')."${se}" );
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'DST'});
+                if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
+		push(@cols, "${zimage}${sb}".($attr{'DST'} ne '' ? $attr{'DST'} : '&nbsp;')."${se}" );
+		my $servicelist = '';
+		my $simage = '<img src=images/service.png hspace=4>';
+		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
+			if( $attr{'PORT'} ne '' ) {
+				$servicelist .= "${simage}$attr{'SERVICE'}/$attr{'PORT'}";
+			} else {
+				$servicelist .= "${simage}$attr{'SERVICE'}/all";
+			}
+		} else {
+			my @services = split(/,/, $attr{'SERVICE'});
+			foreach my $s (@services) {
+				$servicelist .= "${simage}${s}<br>";
+			}
+		}
+		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
 		if( $attr{'MASQUERADE'} eq 'NO' ) {
-			print '<font color="red">'.$text{NO}.'</font>';
+			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
+			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
+			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
 		} else {
-			print $text{YES};
+			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
+			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
+			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
 		}
-		print "</a></td>";
-		print "<td align=\"center\"><a href=$href>";
-		if( $attr{'ACTIVE'} eq 'NO' ) {
-			print '<font color="red">'.$text{NO}.'</font>';
+		local $mover;
+		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
+		if( $i < $nMasq ) {
+			$mover .= "<td width=50%><a href='list_nat.cgi?table=masquerade&idx=$i&down=1'>
+				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='down'></a>
+				   </td>";
 		} else {
-			print $text{YES};
+			$mover .= "<td width=50%>
+				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'>
+				   </td>";
 		}
-		print "</a></td>";
-		
-		print '<td width="1%" valign="top">
-			<table cellspacing="0" cellpadding="0"><tr>';
-				if( $i < $nMasq ) {
-					print qq~<td width="50%"><a href="list_nat.cgi?table=masquerade&idx=$i&down=1"><img src="images/down.gif" border="0" hspace="1" vspace="0" alt="down"></a></td>~;
-				} else {
-					print '<td width="50%"><img src="images/gap.gif" border="0" hspace="1" vspace="0" alt="&nbsp;&nbsp;&nbsp;&nbsp;"></td>';
-				}
-				if( $i > 1 ) {
-					print qq~<td width="50%"><a href="list_nat.cgi?table=masquerade&idx=$i&up=1"><img src="images/up.gif" border="0" hspace="1" vspace="0" alt="up"></a></td>~;
-				} else {
-					print '<td width="50%"><img src="images/gap.gif" border="0" hspace="1" vspace="0" alt="&nbsp;&nbsp;"></td>';
-				}
-		print ' </tr></table>
-			</td>';		
-		
-		print "</tr>";
+		if( $i > 1 ) {
+			$mover .= "<td width=50%><a href='list_nat.cgi?table=masquerade&idx=$i&up=1'>
+				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='up'></a>
+				   </td>";
+		} else {
+			$mover .= "<td width=50%>
+				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
+				   </td>";
+		}
+		$mover .= "</tr></table>";
+		push(@cols, $mover);
+		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
-	print "</table>\n";
-	print '<a href="edit_masq.cgi?new=1">'.$text{list_nat_create_masq}.'</a><br>';
+	print &ui_columns_end();
+	print "<table width=100%><tr>";
+	print '<td>'.&ui_links_row(\@links).'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print "</tr></table>";
+	print &ui_form_end();
 }
 
 sub showRedirect {
-	print "<br><big><b>$text{redirect}</b></big>
-		<table border width=\"100%\">
-			<tr $tb>
-				<th width=\"5%\">#</th>
-				<th width=\"30%\">$text{redirect_src}</th>
-				<th width=\"30%\">$text{redirect_dst}</th>
-				<th width=\"10%\">$text{redirect_service}</th>
-				<th width=\"5%\">$text{redirect_port}</th>
-				<th width=\"5%\">$text{redirect_redirect}</th>
-				<th width=\"10%\">$text{redirect_toport}</th>
-				<th width=\"5%\">$text{redirect_active}</th>
-				<th>&nbsp;</th>
-			</tr>";
+	print &ui_subheading("<img src=images/grey-nat.png hspace=4>",$text{'redirect_redirect'});
+	print &ui_form_start("save_redirect.cgi", "post");
+	@links = ( &select_all_link("d", $form),
+       		   &select_invert_link("d", $form),
+		   "<a href=\"edit_redirect.cgi?new=1\">$text{'list_nat_create_redirect'}</a>" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "width=1% style=text-align:center;vertical-align:top",
+		 "width=25% style=vertical-align:top;white-space:normal",
+		 "width=25% style=vertical-align:top;white-space:normal",
+		 "style=vertical-align:top;white-space:normal",
+		 "width=1% style=vertical-align:top;text-align:center",
+		 "width=1% style=vertical-align:top;white-space:normal",
+		 "width=1% style=vertical-align:top" );
+        print &ui_columns_start([
+                          "",
+                          "<b>ID</b>",
+                          "<b>$text{'redirect_src'}</b>",
+                          "<b>$text{'redirect_dst'}</b>",
+                          "<b>$text{'redirect_service'}</b>",
+                          "<b>$text{'redirect_redirect'}</b>",
+                          "<b>$text{'redirect_toport'}</b>",
+		 	  "<b>$text{'redirect_move'}</b>" ], 100, 0, \@tds);
 
 	my $nRedirect = $fw->GetRedirectCount();
 	if( $in{table} eq 'redirect' ) {
@@ -202,51 +294,80 @@ sub showRedirect {
 			$fw->AddRedirectAttr($idx, %appo);
 		}
 		$fw->SaveFirewall();
-		#redirect( 'list_nat.cgi' );
 	}
 
 	for( my $i=1; $i<=$nRedirect; $i++ ) {
 		my %attr = $fw->GetRedirect( $i );
-		my $href = "\"edit_redirect.cgi?idx=$i\"";
-		print "<tr $cb>";
-		print "<td align=\"center\"><a href=$href>$i</a></td>";
-		print "<td><a href=$href>".$attr{'SRC'}."</a></td>";
-		print "<td><a href=$href>".$attr{'DST'}."</a></td>";
-		print "<td align=\"center\"><a href=$href>".$attr{'SERVICE'}."</a></td>";
-		print "<td align=\"center\"><a href=$href>".$attr{'PORT'}."</a></td>";
-		print "<td align=\"center\"><a href=$href>";
+		local @cols;
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
+		my $href = &ui_link("edit_redirect.cgi?idx=$i","${sb}${i}${se}");
+		push(@cols, $href );
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'SRC'});
+                if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
+		push(@cols, "${zimage}${sb}$attr{'SRC'}${se}" );
+		my $zimage = '<img src=images/zone.png hspace=4>';
+		my $type = $fw->GetItemType($attr{'DST'});
+                if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
+		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
+		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
+		push(@cols, "${zimage}${sb}$attr{'DST'}${se}" );
+		my $servicelist = '';
+		$servicelist .= $attr{'SERVICE'};
+		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
+			if( $attr{'PORT'} ne '' ) {
+				$servicelist .= "/$attr{'PORT'}";
+			} else {
+				$servicelist .= "/all";
+			}
+		}
+		my $simage = '<img src=images/service.png hspace=4>';
+		push(@cols, "${simage}${sb}${servicelist}${se}");
 		if( $attr{'REDIRECT'} eq 'NO' ) {
-			print '<font color="red">'.$text{NO}.'</font>';
+			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
+			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
+			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
+			push(@cols, "" );
 		} else {
-			print $text{YES};
+			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
+			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
+			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
+			my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';
+			push(@cols, "${timage}${sb}$attr{'TOPORT'}${se}" );
 		}
-		print "</a></td>";
-		print "<td align=\"center\"><a href=$href>".$attr{'TOPORT'}."</a></td>";
-		print "<td align=\"center\"><a href=$href>";
-		if( $attr{'ACTIVE'} eq 'NO' ) {
-			print '<font color="red">'.$text{NO}.'</font>';
+		local $mover;
+		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
+		if( $i < $nRedirect ) {
+			$mover .= "<td width=50%><a href='list_nat.cgi?table=redirect&idx=$i&down=1'>
+				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='down'></a>
+				   </td>";
 		} else {
-			print $text{YES};
+			$mover .= "<td width=50%>
+				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'>
+				   </td>";
 		}
-		print "</a></td>";
-
-		print '<td width="1%" valign="top">
-			<table cellspacing="0" cellpadding="0"><tr>';
-				if( $i < $nRedirect ) {
-					print qq~<td width="50%"><a href="list_nat.cgi?table=redirect&idx=$i&down=1"><img src="images/down.gif" border="0" hspace="1" vspace="0" alt="down"></a></td>~;
-				} else {
-					print '<td width="50%"><img src="images/gap.gif" border="0" hspace="1" vspace="0" alt="&nbsp;&nbsp;&nbsp;&nbsp;"></td>';
-				}
-				if( $i > 1 ) {
-					print qq~<td width="50%"><a href="list_nat.cgi?table=redirect&idx=$i&up=1"><img src="images/up.gif" border="0" hspace="1" vspace="0" alt="up"></a></td>~;
-				} else {
-					print '<td width="50%"><img src="images/gap.gif" border="0" hspace="1" vspace="0" alt="&nbsp;&nbsp;"></td>';
-				}
-		print ' </tr></table>
-			</td>';
-
-		print "</tr>";
+		if( $i > 1 ) {
+			$mover .= "<td width=50%><a href='list_nat.cgi?table=redirect&idx=$i&up=1'>
+				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='up'></a>
+				   </td>";
+		} else {
+			$mover .= "<td width=50%>
+				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
+				   </td>";
+		}
+		$mover .= "</tr></table>";
+		push(@cols, $mover);
+		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
-	print "</table>\n";
-	print '<a href="edit_redirect.cgi?new=1">'.$text{list_nat_create_redirect}.'</a><br>';
+	print &ui_columns_end();
+	print "<table width=100%><tr>";
+	print '<td>'.&ui_links_row(\@links).'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print "</tr></table>";
+	print &ui_form_end();
 }

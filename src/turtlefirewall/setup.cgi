@@ -8,12 +8,11 @@
 # License
 #======================================================================
 
-
-do '../web-lib.pl';
+use WebminCore;
 &init_config();
-ReadParse();
+&ReadParse();
 
-&header( $text{'title'}, '', undef, 1 );
+&ui_print_header( undef, $text{'title'}, "" );
 
 # do you need to install startup scripts?
 if( -f "./setup/turtlefirewall" ) {
@@ -35,4 +34,4 @@ if( -f "./setup/turtlefirewall" ) {
 
 print "<br><br>\n";
 
-&footer('/',$text{'index'});
+&ui_print_footer('/',$text{'index'});

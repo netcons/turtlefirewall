@@ -8,8 +8,8 @@
 # License
 #======================================================================
 
-
-do 'lib.pl';
+do 'turtlefirewall-lib.pl';
+&ReadParse();
 
 if( $in{'zone'} eq 'FIREWALL' ) {
 	redirect('list_items.cgi');
@@ -17,59 +17,47 @@ if( $in{'zone'} eq 'FIREWALL' ) {
 
 $new = $in{'new'};
 
+my $heading = '';
 if( $new ) {
-	&header( $text{'edit_zone_title_create'}, '' );
+	$heading = "<img src=images/create.png hspace=4>$text{'edit_zone_title_create'}";
 } else {
-	&header( $text{'edit_zone_title_edit'}, '' );
+	$heading = "<img src=images/edit.png hspace=4>$text{'edit_zone_title_edit'}";
 }
+&ui_print_header( $heading, $text{'title'}, "" );
 
-%z = $fw->GetZone($in{'zone'});
-$if = $z{'IF'};
-$description = $z{'DESCRIPTION'};
+my %z = $fw->GetZone($in{'zone'});
+my $if = $z{'IF'};
+my $description = $z{'DESCRIPTION'};
 
-print "<br><br>
-	<form action=\"save_zone.cgi\">
-	<table border width=\"100%\">
-		<tr $tb>
-			<th>".($new ? $text{'edit_zone_title_create'} : $text{'edit_zone_title_edit'})."</th>
-		</tr>
-		<tr $cb>
-			<td>
-			<table width=\"100%\"><tr>
-			<td>
-				<b>".$text{'name'}."</b></td>
-			<td>";
+print &ui_subheading($heading);
+print &ui_form_start("save_zone.cgi", "post");
+my @tds = ( "width=20%", "width=80%" );
+print &ui_columns_start(undef, 100, 0, \@tds);
+my $col = '';
 if( $new ) {
-	print "		<input type=\"text\" name=\"zone\">";
+	$col = &ui_textbox("zone", undef, 13, 0, 13);
 } else {
-	#print '		<tt>'.$in{'zone'}.'</tt><input type="hidden" name="zone" value="'.$in{'zone'}.'">';
-	print '		<input type="text" name="newzone" value="'.$in{'zone'}.'">';
-	print '		<input type="hidden" name="zone" value="'.$in{'zone'}.'">';
+	$col = &ui_textbox("newzone", $in{'zone'}, 13, 0, 13);
+	$col .= &ui_hidden("zone", $in{'zone'});
 }
-print			'</td></tr>
-			<tr>
-				<td><b>'.$text{'interface'}.'</b></td>
-				<td><input type="text" name="if" value="'.$if.'"></td>
-			</tr>
-			<tr>
-				<td><b>'.$text{'description'}.'</b></td>
-				<td><input type="text" name="description" size="60" value="'.$description.'"></td>
-			</tr></table>
-			</td>
-		</tr>
-	</table>';
+print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+$col = &ui_textbox("if", $if);
+$col .= "<small><i>$text{zone_help}</i></small>";
+print &ui_columns_row([ "<img src=images/interface.png hspace=4><b>$text{'interface'}</b>", $col ], \@tds);
+$col = &ui_textbox("description", $description, 60, 0, 60);
+print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_end();
 
-print "<table width=\"100%\"><tr>";
+print "<table width=100%><tr>";
 if( $new ) {
-	print '<td><input type="submit" name="new" value="'.$text{button_create}.'"></td>';
+        print '<td>'.&ui_submit( $text{'button_create'}, "new").'</td>';
 } else {
-	print '<td><input type="submit" name="save" value="'.$text{button_save}.'"></td>';
-	print '<td align="right"><input type="submit" name="delete" value="'.$text{button_delete}.'"></td>';
+        print '<td>'.&ui_submit( $text{'button_save'}, "save").'</td>';
+        print '<td style=text-align:right>'.&ui_submit( $text{'button_delete'}, "delete").'</td>';
 }
 print "</tr></table>";
-print "</form>";
 
+print &ui_form_end();
 
 print "<br><br>";
-&footer('list_items.cgi','items list');
-
+&ui_print_footer('list_items.cgi','items list');
