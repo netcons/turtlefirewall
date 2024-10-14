@@ -57,5 +57,6 @@
 	<ndpirisk id="53" description="Client Contacted A Malware Host"> </ndpirisk>
 	<ndpirisk id="54" description="Binary File/Data Transfer (Attempt)"> </ndpirisk>
 	<ndpirisk id="55" description="Probing Attempt"> </ndpirisk>
+	<ndpirisk id="56" description="Obfuscated Traffic"> </ndpirisk>
 
 </ndpirisks>
