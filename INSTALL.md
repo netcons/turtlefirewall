@@ -61,7 +61,7 @@ dnf -y install kernel-devel kernel-headers
 dnf -y install iptables-devel libpcap-devel json-c-devel libgcrypt-devel perl-File-Path
 dnf -y install autoconf automake libtool
 dnf -y install dkms
-dnf enable dkms --now
+systemctl enable dkms --now
 ```
 
 Debian.
