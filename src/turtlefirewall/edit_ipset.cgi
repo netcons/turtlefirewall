@@ -54,7 +54,6 @@ if( $new ) {
 }
 print &ui_columns_row([ "<img src=images/item.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
 $col = &ui_select("ip", $ip, \@items_ipsetlist);
-$col .= "<small><i>$text{ipset_help}</i></small>";
 print &ui_columns_row([ "<img src=images/address.png hspace=4><b>$text{'location'}</b>", $col ], \@tds);
 $col = &ui_select("zone", $zone, \@zones);
 print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'zone'}</b>", $col ], \@tds);

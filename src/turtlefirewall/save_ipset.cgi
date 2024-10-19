@@ -17,7 +17,7 @@ my $ip = $in{'ip'};
 my $zone = $in{'zone'};
 my $description = $in{'description'};
 
-if( ! $fw->checkName($newipset) ) { &error( $text{save_ipset_error7} ); }
+if( ! $fw->checkName($newipset) ) { &error( $text{save_ipset_error8} ); }
 
 if( $in{'delete'} ) {
 	# delete ipset
@@ -47,10 +47,11 @@ if( $in{'delete'} ) {
 	if ( $ipset eq '' ) { &error( $text{save_ipset_error3} ); }
 	if ( ! $fw->GetZone($zone) ) { &error( $text{save_ipset_error4} ); }
 	if ( $ip eq 'ip_blacklist' ) { &error( $text{save_ipset_error5} ); }
+	if ( $ip eq '' ) { &error( $text{save_ipset_error6} ); }
 	$fw->AddIPSet( $ipset, $ip, $zone, $description );
 	if( !$in{'new'} && $newipset ne $ipset ) {
 		if( !$fw->RenameItem( $ipset, $newipset ) ) {
-			&error( &text('save_ipset_error6', $ipset, $newipset) );
+			&error( &text('save_ipset_error7', $ipset, $newipset) );
 		}
 	}
 }
