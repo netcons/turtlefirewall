@@ -69,7 +69,7 @@
 <rule src="grp-open" log="YES" description="Accept grp-open to Internet" target="ACCEPT" dst="internet" service="all"/>
 <rule log="YES" category="adult-content" description="Deny adult content" target="DROP" dst="internet" service="all" src="lan"/>
 <rule hostnameset="banned" target="DROP" dst="internet" time="lunch" service="all" log="YES" description="Deny banned during lunch" src="lan" ndpi="all"/>
-<rule description="Accept Lan to Internet" log="YES" service="ftp,http,https,icmp_all,imap,imaps,ntp,pop3,pop3s,smtp587,smtps" dst="internet" target="ACCEPT" src="lan"/>
+<rule description="Accept Lan to Internet" log="YES" service="ftp,http,https,icmp_all,imap,imaps,ntp,pop3,pop3s,smtps" dst="internet" target="ACCEPT" src="lan"/>
 <rule description="Accept inbound NAT for net-supprot" target="ACCEPT" dst="host-server" service="rdp" src="net-support"/>
 
 </firewall>

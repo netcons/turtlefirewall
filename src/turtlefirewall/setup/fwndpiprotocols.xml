@@ -77,6 +77,7 @@
 	<ndpiprotocol name="dhcp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="dhcpv6" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="diameter" category="infrastructure"> </ndpiprotocol>
+	<ndpiprotocol name="dingtalk" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="directv" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="discord" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="disneyplus" category="video-audio"> </ndpiprotocol>
@@ -328,6 +329,7 @@
 	<ndpiprotocol name="socks" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="softether" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="someip" category="infrastructure"> </ndpiprotocol>
+	<ndpiprotocol name="sonos" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="soundcloud" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="source_engine" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="spotify" category="video-audio"> </ndpiprotocol>

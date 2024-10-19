@@ -27,7 +27,7 @@ apt-get install webmin --install-recommends
 Download source.
 ```
 cd /tmp
-wget https://github.com/netcons/turtlefirewall/archive/master.zip -O turtlefirewall-master.zip
+wget https://github.com/frisoft/turtlefirewall/archive/master.zip -O turtlefirewall-master.zip
 unzip turtlefirewall-master.zip
 cd turtlefirewall-master
 ```
@@ -39,13 +39,13 @@ Build source.
 
 Install RHEL.
 ```
-dnf -y install perl-XML-Parser perl-Net-CIDR-Lite perl-Text-CSV_XS iptables-nft ipset conntrack-tools rsyslog dos2unix gawk
+dnf -y install perl-XML-Parser perl-Net-CIDR-Lite perl-Text-CSV_XS iptables-nft ipset conntrack-tools rsyslog dos2unix gawk crontabs
 /usr/libexec/webmin/install-module.pl /tmp/turtlefirewall-master/build/turtlefirewall-*.wbm.gz
 ```
 
 Install Debian.
 ```
-apt-get -y install libxml-parser-perl libnet-cidr-lite-perl libtext-csv-xs-perl iptables ipset conntrack rsyslog dos2unix gawk
+apt-get -y install libxml-parser-perl libnet-cidr-lite-perl libtext-csv-xs-perl iptables ipset conntrack rsyslog dos2unix gawk cron-daemon-common
 /usr/share/webmin/install-module.pl /tmp/turtlefirewall-master/build/turtlefirewall-*.wbm.gz
 ```
 
@@ -61,7 +61,7 @@ dnf -y install kernel-devel kernel-headers
 dnf -y install iptables-devel libpcap-devel json-c-devel libgcrypt-devel perl-File-Path
 dnf -y install autoconf automake libtool
 dnf -y install dkms
-dnf enable dkms --now
+systemctl enable dkms --now
 ```
 
 Debian.
