@@ -41,7 +41,7 @@ if( $new ) {
 	$col .= &ui_hidden("group", $in{'group'});
 }
 print &ui_columns_row([ "<img src=images/group.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
-$col = &ui_select("items", \@selected_items, \@items, 5, 1);
+$col = &ui_select("items", \@selected_items, \@items, 8, 1);
 print &ui_columns_row([ "<img src=images/item.png hspace=4><b>$text{'groupitems'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);
 print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);

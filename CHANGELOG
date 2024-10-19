@@ -243,5 +243,6 @@ CHANGELOG
            - Services : Removed depreciated smtps TCP port 465 service.
            - Services : Added DNS over TLS TCP port 853 service.
            - Feature : nDPI 4.9.11 support.
+           - Feature : Add ipset support.
            - Todo : Translate new features 
            - Todo : Fix backup.cgi restore upload.

@@ -41,6 +41,7 @@ push @items_dst, $fw->GetGeoipList();
 push @items_dst, $fw->GetNetList();
 push @items_dst, $fw->GetHostList();
 push @items_dst, $fw->GetGroupList();
+push @items_dst, $fw->GetIPSetList();
 @items_dst = sort(@items_dst);
 
 my @services = ('tcp','udp');

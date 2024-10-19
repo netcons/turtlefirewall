@@ -14,6 +14,7 @@ Turtle Firewall is an Open Source project written using the perl language and re
 - Risk Detection.
 - Rate Limiting.
 - Blacklists.
+- IP Sets.
 - NAT Map to Port.
 - Logging per rule.
 - Flow Info logging.

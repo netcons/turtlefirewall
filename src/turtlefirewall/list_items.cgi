@@ -53,6 +53,10 @@ $form++;
 print "<br><br>";
 &showRateLimit();
 
+$form++;
+print "<br><br>";
+&showIPSet();
+
 &ui_print_footer('index.cgi',$text{'index'});
 
 #============================================================================
@@ -411,6 +415,45 @@ sub showRateLimit {
 		push(@cols, "<img src=images/ratelimit.png hspace=4>$href" );
         	push(@cols, "<img src=images/rate.png hspace=4>$ratelimit{'RATE'} <i>Mbps</i>" );
 	        push(@cols, "".($ratelimit{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$ratelimit{'DESCRIPTION'}" : '&nbsp;')."" );
+		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
+	}
+	print &ui_columns_end();
+	print "<table width=100%><tr>";
+	print '<td>'.&ui_links_row(\@links).'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print "</tr></table>";
+	print &ui_form_end();
+}
+sub showIPSet {
+	print &ui_subheading("<img src=images/item.png hspace=4>",$text{'ipset'});
+	print &ui_form_start("save_ipset.cgi", "post");
+	@links = ( &select_all_link("d", $form),
+       		   &select_invert_link("d", $form),
+		   "<a href=\"edit_ipset.cgi?new=1\">$text{'list_items_create_ipset'}</a>" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
+        print &ui_columns_start([
+			  "",
+                          "<b>$text{'name'}</b>",
+                          "<b>$text{'location'}</b>",
+                          "<b>$text{'zone'}</b>",
+	       		  "<b>$text{'items'}</b>",
+                          "<b>$text{'description'}</b>" ], 100, 0, \@tds);
+	for my $k ($fw->GetIPSetList()) {
+		my %ipset = $fw->GetIPSet($k);
+		my $confdir = &confdir();
+		my $listcount = qx{wc -l < $confdir/$ipset{'IP'}.ipset 2>/dev/null};
+		if( $listcount eq '' ) { $listcount = '0'; }
+		local @cols;
+		my $href = &ui_link("edit_ipset.cgi?ipset=$k",$k);
+		push(@cols, "<img src=images/item.png hspace=4>$href" );
+		push(@cols, "<img src=images/address.png hspace=4>$ipset{'IP'} - $confdir/$ipset{'IP'}.ipset" );
+	        push(@cols, "<img src=images/zone.png hspace=4>$ipset{'ZONE'}" );
+		push(@cols, $listcount);
+		push(@cols, "".($ipset{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$ipset{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
 	print &ui_columns_end();

@@ -104,6 +104,7 @@ sub showRule {
 				elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 				elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 				elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
+				elsif( $type eq 'IPSET' ) { $zimage = '<img src=images/item.png hspace=4>'; }
 			}
 			$srclist .= "${zimage}${s}<br>";
 		}
@@ -120,6 +121,7 @@ sub showRule {
 				elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 				elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 				elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
+				elsif( $type eq 'IPSET' ) { $zimage = '<img src=images/item.png hspace=4>'; }
 			}
 			$dstlist .= "${zimage}${d}<br>";
 		}

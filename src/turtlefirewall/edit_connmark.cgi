@@ -53,6 +53,7 @@ push @items, $fw->GetGeoipList();
 push @items, $fw->GetNetList();
 push @items, $fw->GetHostList();
 push @items, $fw->GetGroupList();
+push @items, $fw->GetIPSetList();
 @items = sort(@items);
 
 if( $hostnameset eq '' ) { $hostnameset = 'any'; }

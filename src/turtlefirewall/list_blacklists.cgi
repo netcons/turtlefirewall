@@ -35,7 +35,7 @@ sub showBlackLists {
 		push(@cols, "<img src=images/address.png hspace=4>$blacklists{$b}{LOCATION}");
 		my $blacklistcount = qx{wc -l < $blacklists{$b}{LOCATION} 2>/dev/null};
 		if( $blacklistcount eq '' ) { $blacklistcount = '0'; }
-		push(@cols, "$blacklistcount");
+		push(@cols, $blacklistcount);
 		my $autoupdate = 'NO';
 		if( -e $blacklists{$b}{CRON} ) { $autoupdate = 'YES'; }
 		my $aimage = $autoupdate eq 'YES' ? '<img src=images/yes.png hspace=4>' : '<img src=images/no.png hspace=4>';

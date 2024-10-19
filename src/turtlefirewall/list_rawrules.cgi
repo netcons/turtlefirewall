@@ -83,12 +83,14 @@ sub showConntrackPreroute {
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
 		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
+		elsif( $type eq 'IPSET' ) { $zimage = '<img src=images/item.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}${bb}$attr{'SRC'}${be}${se}" );
 		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $type = $fw->GetItemType($attr{'DST'});
 		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
 		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
 		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
+		elsif( $type eq 'IPSET' ) { $zimage = '<img src=images/item.png hspace=4>'; }
 		push(@cols, "${zimage}${sb}${bb}$attr{'DST'}${be}${se}" );
 		$attr{'SERVICE'} =~ s/,/, /g;
 		my $servicelist = '';
