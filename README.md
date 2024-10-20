@@ -42,5 +42,5 @@ xt_ratelimit. ( https://github.com/aabc/ipt-ratelimit ) <br>
 
 Big thanks to our contributors!
 
-- [netcons](https://github.com/netcons)
+- John Cameron ([netcons](https://github.com/netcons))
 
