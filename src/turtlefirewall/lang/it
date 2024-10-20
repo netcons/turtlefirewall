@@ -28,6 +28,7 @@ risks=Risks
 ratelimit=Rate Limit
 rate=Rate
 ipset=IP Set
+type=Type
 time=Time
 timeitems=Weekdays
 name=Nome
