@@ -36,3 +36,10 @@ xt_time. <br>
 xt_ndpi, ( https://github.com/vel21ripn/nDPI ) <br>
 xt_geoip, ( https://codeberg.org/jengelh/xtables-addons ) <br>
 xt_ratelimit. ( https://github.com/aabc/ipt-ratelimit ) <br>
+
+## Contributors
+
+Big thanks to our contributors!
+
+- John Cameron ([netcons](https://github.com/netcons))
+
