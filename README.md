@@ -42,4 +42,13 @@ xt_ratelimit. ( https://github.com/aabc/ipt-ratelimit ) <br>
 Big thanks to our contributors!
 
 - John Cameron ([netcons](https://github.com/netcons))
-
+- Giampaolo Tomassoni
+- Mark Francis
+- Alain Terriault
+- Jimmy Collins
+- Joe MacDonald
+- Chris Carter
+- Patrik
+- Fredrik Tuomas
+- Karl Lovink
+- Frank Förster
