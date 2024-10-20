@@ -14,6 +14,7 @@ do 'turtlefirewall-lib.pl';
 my $ipset = $in{'ipset'};
 my $newipset = $in{'newipset'};
 my $ip = $in{'ip'};
+my $type = $in{'type'};
 my $zone = $in{'zone'};
 my $description = $in{'description'};
 
@@ -48,7 +49,7 @@ if( $in{'delete'} ) {
 	if ( ! $fw->GetZone($zone) ) { &error( $text{save_ipset_error4} ); }
 	if ( $ip eq 'ip_blacklist' ) { &error( $text{save_ipset_error5} ); }
 	if ( $ip eq '' ) { &error( $text{save_ipset_error6} ); }
-	$fw->AddIPSet( $ipset, $ip, $zone, $description );
+	$fw->AddIPSet( $ipset, $ip, $type, $zone, $description );
 	if( !$in{'new'} && $newipset ne $ipset ) {
 		if( !$fw->RenameItem( $ipset, $newipset ) ) {
 			&error( &text('save_ipset_error7', $ipset, $newipset) );

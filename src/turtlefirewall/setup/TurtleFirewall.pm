@@ -326,13 +326,12 @@ sub AddGroup {
 	my $description = shift;
 	my @items = @_;
 	if( !$this->{fw}{GROUP}{$group} ) {
-		# Se non e' gia' stato inserito lo aggiungo alla lista ordinata di keys
+		# If it has not already been inserted, I add it to the ordered list of keys
 		push @{ $this->{fwKeys}{GROUP} }, $group;
 	}
 	%{ $this->{fw}{GROUP}{$group} } = ( 'DESCRIPTION'=>$description );
 	@{ $this->{fw}{GROUP}{$group}{ITEMS} } = @items;
 	$this->{fwItems}{$group} = 'GROUP';
-	return 1;
 }
 
 # AddTimeGroup( $timegroup, $description, @items )
@@ -342,13 +341,12 @@ sub AddTimeGroup {
 	my $description = shift;
 	my @items = @_;
 	if( !$this->{fw}{TIMEGROUP}{$timegroup} ) {
-		# Se non e' gia' stato inserito lo aggiungo alla lista ordinata di keys
+		# If it has not already been inserted, I add it to the ordered list of keys
 		push @{ $this->{fwKeys}{TIMEGROUP} }, $timegroup;
 	}
 	%{ $this->{fw}{TIMEGROUP}{$timegroup} } = ( 'DESCRIPTION'=>$description );
 	@{ $this->{fw}{TIMEGROUP}{$timegroup}{ITEMS} } = @items;
 	$this->{fwItems}{$timegroup} = 'TIMEGROUP';
-	return 1;
 }
 
 # AddHostNameSet( $name, $hostnames, $description )
@@ -372,12 +370,11 @@ sub AddRateLimit {
 	$this->{fwItems}{$name} = 'RATELIMIT';
 }
 
-# AddIPSet( $name, $ip, $zone, $description )
+# AddIPSet( $name, $ip, $type, $zone, $description )
 sub AddIPSet {
-	my ($this, $name, $ip, $zone, $description) = @_;
-	%{ $this->{fw}{IPSET}{$name} } = ('NAME'=>$name, 'IP'=>$ip, 'ZONE'=>$zone, 'DESCRIPTION'=>$description );
+	my ($this, $name, $ip, $type, $zone, $description) = @_;
+	%{ $this->{fw}{IPSET}{$name} } = ('NAME'=>$name, 'IP'=>$ip, 'TYPE'=>$type, 'ZONE'=>$zone, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'IPSET';
-	return 1;
 }
 
 # AddHost( $name, $ip, $mac, $zone, $description )
@@ -399,7 +396,6 @@ sub AddGeoip {
 	my ($this, $name, $ip, $zone, $description) = @_;
 	%{ $this->{fw}{GEOIP}{$name} } = ('NAME'=>$name, 'IP'=>$ip, 'ZONE'=>$zone, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'GEOIP';
-	return 1;
 }
 
 # AddNet( $name, $ip, $netmask, $zone, $description )
@@ -407,7 +403,6 @@ sub AddNet {
 	my ($this, $name, $ip, $netmask, $zone, $description) = @_;
 	%{ $this->{fw}{NET}{$name} } = ('NAME'=>$name, 'IP'=>$ip, 'NETMASK'=>$netmask,'ZONE'=>$zone, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'NET';
-	return 1;
 }
 
 # AddZone( $name, $if, $description  )
@@ -415,7 +410,6 @@ sub AddZone {
 	my ($this, $name, $if, $description) = @_;
 	%{ $this->{fw}{ZONE}{$name} } = ('NAME'=>$name, 'IF'=>$if, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'ZONE';
-	return 1;
 }
 
 # AddMasquerade( $idx, $zone, $active ) if $idx==0 then add new Masquerade
@@ -1744,11 +1738,7 @@ sub startFirewall {
 		my %ipset = $this->GetIPSet($s);
 		for( my $i=0; $i<=$#{$this->{fw}{RULE}}; $i++ ) {
 		       	if( $this->{fw}{RULE}[$i]{SRC} eq $s || $this->{fw}{RULE}[$i]{DST} eq $s && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
-				if( ! -e "/etc/turtlefirewall/$ipset{'IP'}.ipset" ) {
-					open( FILE, ">", "/etc/turtlefirewall/$ipset{'IP'}.ipset" );
-					close( FILE );
-				}
-				$this->command( "ipset create $ipset{'IP'} hash:net", "/dev/null 2>&1" );
+				$this->command( "ipset create $ipset{'IP'} $ipset{'TYPE'}", "/dev/null 2>&1" );
                         	last;
 		       	}
 	       	}
@@ -1788,23 +1778,6 @@ sub startFirewall {
 				print "run ratelimit-restore $r($ratelimit{'RATE'} Mbps)\n";
 				$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/go-$r" );
 				$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/back-$r" );
-                        	last;
-		       	}
-	       	}
-	}
-
-	# Import IPsets
-	for my $s ($this->GetIPSetList()) {
-		my %ipset = $this->GetIPSet($s);
-		for( my $i=0; $i<=$#{$this->{fw}{RULE}}; $i++ ) {
-		       	if( $this->{fw}{RULE}[$i]{SRC} eq $s || $this->{fw}{RULE}[$i]{DST} eq $s && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
-				print "run ipset-restore $s($ipset{'IP'})\n";
-				$this->command( "ipset flush $ipset{'IP'}", "/dev/null 2>&1" );
-				my @items = ();
-				open( FILE, "<", "/etc/turtlefirewall/$ipset{'IP'}.ipset" );
-				while( <FILE> ) { if( $_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\b([0-9]|[12][0-9]|3[0-2])\b)/ ) { push(@items, $1); } }
-				close( FILE );
-				for my $n (@items) { $this->command( "ipset add $ipset{'IP'} $n", "/dev/null 2>&1" ); }
                         	last;
 		       	}
 	       	}

@@ -10,7 +10,6 @@
 
 do 'turtlefirewall-lib.pl';
 &ReadParse();
-use File::Basename;
 
 $new = $in{'new'};
 
@@ -24,20 +23,13 @@ if( $new ) {
 
 my $ipset = $in{'ipset'};
 my $newipset = $in{'newipset'};
-my %n = $fw->GetIPSet($ipset);
-my $ip = $n{'IP'};
-my $zone = $n{'ZONE'};
-my $description = $n{'DESCRIPTION'};
+my %i = $fw->GetIPSet($ipset);
+my $ip = $i{'IP'};
+my $type = $i{'TYPE'};
+my $zone = $i{'ZONE'};
+my $description = $i{'DESCRIPTION'};
 
-my $confdir = &confdir();
-
-my @items_ipsetlist = ();
-my @ipsetlists = glob("$confdir/*.ipset");
-for my $k (@ipsetlists) {
-	my $ip = basename($k, ".ipset");
-	my @opts = ( "$ip", "$ip - $k" );
-	push(@items_ipsetlist, \@opts);
-}
+my @types = ('hash:ip','hash:net','hash:mac');
 
 my @zones = grep(!/FIREWALL/, $fw->GetZoneList());
 
@@ -53,8 +45,10 @@ if( $new ) {
 	$col .= &ui_hidden("ipset", $in{'ipset'});
 }
 print &ui_columns_row([ "<img src=images/item.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
-$col = &ui_select("ip", $ip, \@items_ipsetlist);
-print &ui_columns_row([ "<img src=images/address.png hspace=4><b>$text{'location'}</b>", $col ], \@tds);
+$col = &ui_textbox("ip", $ip, 20, 0, 20);
+print &ui_columns_row([ "<img src=images/address.png hspace=4><b>$text{'ipset'}</b>", $col ], \@tds);
+$col = &ui_select("type", $type, \@types);
+print &ui_columns_row([ "<img src=images/address.png hspace=4><b>$text{'type'}</b>", $col ], \@tds);
 $col = &ui_select("zone", $zone, \@zones);
 print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'zone'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);

@@ -434,25 +434,23 @@ sub showIPSet {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
+		 "style=vertical-align:top",
 		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
-                          "<b>$text{'location'}</b>",
+                          "<b>$text{'ipset'}</b>",
+                          "<b>$text{'type'}</b>",
                           "<b>$text{'zone'}</b>",
-	       		  "<b>$text{'items'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
 	for my $k ($fw->GetIPSetList()) {
 		my %ipset = $fw->GetIPSet($k);
-		my $confdir = &confdir();
-		my $listcount = qx{wc -l < $confdir/$ipset{'IP'}.ipset 2>/dev/null};
-		if( $listcount eq '' ) { $listcount = '0'; }
 		local @cols;
 		my $href = &ui_link("edit_ipset.cgi?ipset=$k",$k);
 		push(@cols, "<img src=images/item.png hspace=4>$href" );
-		push(@cols, "<img src=images/address.png hspace=4>$ipset{'IP'} - $confdir/$ipset{'IP'}.ipset" );
+		push(@cols, "<img src=images/address.png hspace=4>$ipset{'IP'}" );
+		push(@cols, "<img src=images/address.png hspace=4>$ipset{'TYPE'}" );
 	        push(@cols, "<img src=images/zone.png hspace=4>$ipset{'ZONE'}" );
-		push(@cols, $listcount);
 		push(@cols, "".($ipset{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$ipset{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
