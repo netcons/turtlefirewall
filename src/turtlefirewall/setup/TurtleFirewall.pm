@@ -88,6 +88,11 @@ sub GetRateLimitList {
 	return sort( keys %{ $this->{fw}{RATELIMIT} } );
 }
 
+sub GetAddressListList {
+	my $this = shift;
+	return sort( keys %{ $this->{fw}{ADDRESSLIST} } );
+}
+
 sub GetIPSetList {
 	my $this = shift;
 	return sort( keys %{ $this->{fw}{IPSET} } );
@@ -141,6 +146,11 @@ sub GetRiskSet {
 sub GetRateLimit {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{RATELIMIT}{$name} };
+}
+
+sub GetAddressList {
+	my ($this,$name) = @_;
+	return %{ $this->{fw}{ADDRESSLIST}{$name} };
 }
 
 sub GetIPSet {
@@ -370,10 +380,17 @@ sub AddRateLimit {
 	$this->{fwItems}{$name} = 'RATELIMIT';
 }
 
-# AddIPSet( $name, $ip, $type, $zone, $description )
+# AddAddressList( $name, $location, $type, $description )
+sub AddAddressList {
+	my ($this, $name, $location, $type, $description) = @_;
+	%{ $this->{fw}{ADDRESSLIST}{$name} } = ('NAME'=>$name, 'LOCATION'=>$location, 'TYPE'=>$type, 'DESCRIPTION'=>$description );
+	$this->{fwItems}{$name} = 'ADDRESSLIST';
+}
+
+# AddIPSet( $name, $ip, $zone, $description )
 sub AddIPSet {
-	my ($this, $name, $ip, $type, $zone, $description) = @_;
-	%{ $this->{fw}{IPSET}{$name} } = ('NAME'=>$name, 'IP'=>$ip, 'TYPE'=>$type, 'ZONE'=>$zone, 'DESCRIPTION'=>$description );
+	my ($this, $name, $ip, $zone, $description) = @_;
+	%{ $this->{fw}{IPSET}{$name} } = ('NAME'=>$name, 'IP'=>$ip, 'ZONE'=>$zone, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'IPSET';
 }
 
@@ -678,6 +695,16 @@ sub DeleteItem {
 		}
 	}
 
+	# If it's an addresslist, I need to check ipset items that use this addresslist.
+	if( $type eq 'ADDRESSLIST' ) {
+		for my $k (@{$this->{fwKeys}{IPSET}}) {
+			if( $this->{fw}{IPSET}{$k}{IP} eq $name ) {
+				$found = 1;
+				last;
+			}
+		}
+	}
+
 	# Now I check if this item is included in a group
 	for my $g (@{$this->{fwKeys}{GROUP}}) {
 		for my $i (@{$this->{fw}{GROUP}{$g}{ITEMS}}) {
@@ -843,6 +870,15 @@ sub RenameItem {
 			}
 		}
 
+		# If it's an addresslist, I need to change all ipsets that use this addresslist.
+		if( $type eq 'ADDRESSLIST' ) {
+			foreach $k (@{$this->{fwKeys}{IPSET}}) {
+				if( $this->{fw}{IPSET}{$k}{IP} eq $oldname ) {
+					$this->{fw}{IPSET}{$k}{IP} = $newname;
+				}
+			}
+		}
+
 		# change itme name in groups
 		foreach my $group (@{$this->{fwKeys}{GROUP}}) {
 			for( my $i=0; $i<=$#{$this->{fw}{GROUP}{$group}{ITEMS}}; $i++ ) {
@@ -907,6 +943,13 @@ sub DeleteRateLimit {
 	my ($this, $ratelimit) = @_;
 	return $this->DeleteItem( $ratelimit );
 }
+
+# DeleteAddressList( $addresslist );
+sub DeleteAddressList {
+	my ($this, $addresslist) = @_;
+	return $this->DeleteItem( $addresslist );
+}
+
 # DeleteIPSet( $ipset );
 sub DeleteIPSet {
 	my ($this, $ipset) = @_;
@@ -1031,6 +1074,7 @@ sub LoadFirewall {
 				if( $name2 eq 'HOSTNAMESET' ) { $this->_LoadFirewallItem( 'HOSTNAMESET', @{$list[$j+1]} ); }
 				if( $name2 eq 'RISKSET' ) { $this->_LoadFirewallItem( 'RISKSET', @{$list[$j+1]} ); }
 				if( $name2 eq 'RATELIMIT' ) { $this->_LoadFirewallItem( 'RATELIMIT', @{$list[$j+1]} ); }
+				if( $name2 eq 'ADDRESSLIST' ) { $this->_LoadFirewallItem( 'ADDRESSLIST', @{$list[$j+1]} ); }
 				if( $name2 eq 'IPSET' ) { $this->_LoadFirewallItem( 'IPSET', @{$list[$j+1]} ); }
 				if( $name2 eq 'MASQUERADE' ) { $this->_LoadFirewallNat( 'MASQUERADE', @{$list[$j+1]} ); }
 				if( $name2 eq 'NAT' ) { $this->_LoadFirewallNat( 'NAT', @{$list[$j+1]} ); }
@@ -1459,6 +1503,11 @@ sub SaveFirewallAs {
 	}
 	if( %{$fw{'GEOIP'}} ) { $xml .= "\n"; }
 
+	foreach my $k (keys %{$fw{'ADDRESSLIST'}}) {
+		$xml .= $this->attr2xml( 'addresslist', %{$fw{'ADDRESSLIST'}{$k}} );
+	}
+	if( %{$fw{'ADDRESSLIST'}} ) { $xml .= "\n"; }
+
 	foreach my $k (keys %{$fw{'IPSET'}}) {
 		$xml .= $this->attr2xml( 'ipset', %{$fw{'IPSET'}{$k}} );
 	}
@@ -1738,7 +1787,8 @@ sub startFirewall {
 		my %ipset = $this->GetIPSet($s);
 		for( my $i=0; $i<=$#{$this->{fw}{RULE}}; $i++ ) {
 		       	if( $this->{fw}{RULE}[$i]{SRC} eq $s || $this->{fw}{RULE}[$i]{DST} eq $s && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
-				$this->command( "ipset create $ipset{'IP'} $ipset{'TYPE'}", "/dev/null 2>&1" );
+				my $list_type = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{TYPE};
+				$this->command( "ipset create $ipset{'IP'} $list_type", "/dev/null 2>&1" );
                         	last;
 		       	}
 	       	}
@@ -1778,6 +1828,35 @@ sub startFirewall {
 				print "run ratelimit-restore $r($ratelimit{'RATE'} Mbps)\n";
 				$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/go-$r" );
 				$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/back-$r" );
+                        	last;
+		       	}
+	       	}
+	}
+
+	# Import IPSets
+	for my $s ($this->GetIPSetList()) {
+		my %ipset = $this->GetIPSet($s);
+		for( my $i=0; $i<=$#{$this->{fw}{RULE}}; $i++ ) {
+		       	if( $this->{fw}{RULE}[$i]{SRC} eq $s || $this->{fw}{RULE}[$i]{DST} eq $s && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
+				print "run ipset-restore $s($ipset{'IP'})\n";
+				my $list_location = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{LOCATION};
+				my $list_type = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{TYPE};
+				$this->command( "ipset flush $ipset{'IP'}", "/dev/null 2>&1" );
+				my @items = ();
+				open( FILE, "<", "$list_location" );
+				while( <FILE> ) { 
+					if( $list_type eq "hash:ip" ) {
+						if( $_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/ ) { push(@items, $1); }
+					}
+					if( $list_type eq "hash:net" ) {
+						if( $_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\b([0-9]|[12][0-9]|3[0-2])\b)/ ) { push(@items, $1); }
+					}
+					if( $list_type eq "hash:mac" ) {
+						if( $_ =~ /([0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2})/ ) { push(@items, $1); }
+					}
+			       	}
+				close( FILE );
+				for my $i (@items) { $this->command( "ipset add $ipset{'IP'} $i", "/dev/null 2>&1" ); }
                         	last;
 		       	}
 	       	}

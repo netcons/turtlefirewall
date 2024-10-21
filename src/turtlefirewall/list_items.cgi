@@ -55,6 +55,10 @@ print "<br><br>";
 
 $form++;
 print "<br><br>";
+&showAddressList();
+
+$form++;
+print "<br><br>";
 &showIPSet();
 
 &ui_print_footer('index.cgi',$text{'index'});
@@ -424,6 +428,43 @@ sub showRateLimit {
 	print "</tr></table>";
 	print &ui_form_end();
 }
+sub showAddressList {
+	print &ui_subheading("<img src=images/db.png hspace=4>",$text{'addresslist'});
+	print &ui_form_start("save_addresslist.cgi", "post");
+	@links = ( &select_all_link("d", $form),
+       		   &select_invert_link("d", $form),
+		   "<a href=\"edit_addresslist.cgi?new=1\">$text{'list_items_create_addresslist'}</a>" );
+        @tds = ( "width=1% style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top",
+		 "style=vertical-align:top" );
+        print &ui_columns_start([
+			  "",
+                          "<b>$text{'name'}</b>",
+                          "<b>$text{'location'}</b>",
+			  "<b>$text{'items'}</b>",
+                          "<b>$text{'type'}</b>",
+                          "<b>$text{'description'}</b>" ], 100, 0, \@tds);
+	for my $k ($fw->GetAddressListList()) {
+		my %addresslist = $fw->GetAddressList($k);
+		local @cols;
+		my $href = &ui_link("edit_addresslist.cgi?addresslist=$k",$k);
+		push(@cols, "<img src=images/db.png hspace=4>$href" );
+		push(@cols, "<img src=images/address.png hspace=4>$addresslist{'LOCATION'}" );
+		push(@cols, qx{wc -l < $addresslist{'LOCATION'} 2>/dev/null} );
+		push(@cols, "<img src=images/option.png hspace=4>$addresslist{'TYPE'}" );
+		push(@cols, "".($addresslist{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$addresslist{'DESCRIPTION'}" : '&nbsp;')."" );
+		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
+	}
+	print &ui_columns_end();
+	print "<table width=100%><tr>";
+	print '<td>'.&ui_links_row(\@links).'</td>';
+	print '<td style=text-align:right>'.&ui_submit( $text{'delete_selected'}, "delete").'</td>';
+	print "</tr></table>";
+	print &ui_form_end();
+}
 sub showIPSet {
 	print &ui_subheading("<img src=images/item.png hspace=4>",$text{'ipset'});
 	print &ui_form_start("save_ipset.cgi", "post");
@@ -434,13 +475,11 @@ sub showIPSet {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "style=vertical-align:top",
 		 "style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
-                          "<b>$text{'ipset'}</b>",
-                          "<b>$text{'type'}</b>",
+                          "<b>$text{'addresslist'}</b>",
                           "<b>$text{'zone'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
 	for my $k ($fw->GetIPSetList()) {
@@ -448,8 +487,7 @@ sub showIPSet {
 		local @cols;
 		my $href = &ui_link("edit_ipset.cgi?ipset=$k",$k);
 		push(@cols, "<img src=images/item.png hspace=4>$href" );
-		push(@cols, "<img src=images/address.png hspace=4>$ipset{'IP'}" );
-		push(@cols, "<img src=images/address.png hspace=4>$ipset{'TYPE'}" );
+		push(@cols, "<img src=images/db.png hspace=4>$ipset{'IP'}" );
 	        push(@cols, "<img src=images/zone.png hspace=4>$ipset{'ZONE'}" );
 		push(@cols, "".($ipset{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$ipset{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
