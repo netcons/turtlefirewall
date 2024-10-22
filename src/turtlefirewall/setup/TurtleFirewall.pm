@@ -1790,7 +1790,13 @@ sub startFirewall {
 			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{SRC} ) );
 			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{DST} ) );
 		       	if( grep( /^$s$/, @item_list ) && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
+				my $addresslist_file = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{FILE};
 				my $addresslist_type = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{TYPE};
+				if( ! -e $addresslist_file ) {
+					umask 0077;
+					open( FILE, ">", "$addresslist_file" );
+					close( FILE );
+				}
 				$this->command( "ipset create $ipset{'IP'} $addresslist_type", "/dev/null 2>&1" );
                         	last;
 		       	}
