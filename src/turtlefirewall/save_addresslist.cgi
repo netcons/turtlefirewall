@@ -45,7 +45,9 @@ if( $in{'delete'} ) {
 		$whatfailed = $text{save_addresslist_error_title3};
 	}
 	if ( $addresslist eq '' ) { &error( $text{save_addresslist_error3} ); }
-	if ( $addresslist eq 'ip_blacklist' ) { &error( $text{save_addresslist_error4} ); }
+        foreach my $b (sort keys %blacklists) {
+		if ( $addresslist eq $b ) { &error( $text{save_addresslist_error4} ); }
+	}
 	if ( $file eq '' ) { &error( $text{save_addresslist_error5} ); }
 	if ( ! -f $file ) { &error( $text{save_addresslist_error6} ); }
 	$fw->AddAddressList( $addresslist, $file, $type, $description );

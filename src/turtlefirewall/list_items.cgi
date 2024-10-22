@@ -447,13 +447,26 @@ sub showAddressList {
 			  "<b>$text{'items'}</b>",
                           "<b>$text{'type'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
+        foreach my $b (sort keys %blacklists) {
+		local @cols;
+		push(@cols, "<img src=images/blacklist.png hspace=4><i>$b</i>");
+		push(@cols, "<img src=images/file.png hspace=4>$blacklists{$b}{FILE}");
+		my $blacklistcount = qx{wc -l < $blacklists{$b}{FILE} 2>/dev/null};
+		if( $blacklistcount eq '' ) { $blacklistcount = '0'; }
+		push(@cols, $blacklistcount);
+		push(@cols, "<img src=images/option.png hspace=4>$blacklists{$b}{TYPE}" );
+		push(@cols, "<img src=images/info.png hspace=4>$blacklists{$b}{DESCRIPTION}");
+		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
+        }
 	for my $k ($fw->GetAddressListList()) {
 		my %addresslist = $fw->GetAddressList($k);
 		local @cols;
 		my $href = &ui_link("edit_addresslist.cgi?addresslist=$k",$k);
 		push(@cols, "<img src=images/db.png hspace=4>$href" );
 		push(@cols, "<img src=images/file.png hspace=4>$addresslist{'FILE'}" );
-		push(@cols, qx{wc -l < $addresslist{'FILE'} 2>/dev/null} );
+		my $listcount = qx{wc -l < $addresslist{'FILE'} 2>/dev/null};
+		if( $listcount eq '' ) { $listcount = '0'; }
+		push(@cols, $listcount);
 		push(@cols, "<img src=images/option.png hspace=4>$addresslist{'TYPE'}" );
 		push(@cols, "".($addresslist{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$addresslist{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);

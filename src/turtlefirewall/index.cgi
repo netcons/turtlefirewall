@@ -19,7 +19,6 @@ my @links = ('list_items.cgi',
 	     'list_ndpiprotocols.cgi',
 	     'list_ndpirisks.cgi',
 	     'list_countrycodes.cgi',
-	     'list_blacklists.cgi',
 	     'edit_options.cgi',
 	     'backup.cgi');
 my @titles = ($text{'index_icon_firewall_items'},
@@ -27,7 +26,6 @@ my @titles = ($text{'index_icon_firewall_items'},
 	      $text{'index_icon_firewall_ndpiprotocols'},
 	      $text{'index_icon_firewall_ndpirisks'},
 	      $text{'index_icon_firewall_countrycodes'},
-	      $text{'index_icon_firewall_blacklists'},
               $text{'index_icon_edit_options'},
               $text{'index_icon_backup'});
 my @icons = ('images/items.png',
@@ -35,10 +33,9 @@ my @icons = ('images/items.png',
 	     'images/ndpiprotocols.png',
 	     'images/ndpirisks.png',
 	     'images/countrycodes.png',
-	     'images/blacklists.png',
 	     'images/options.png',
 	     'images/backup.png');
-&icons_table(\@links, \@titles, \@icons, 11);
+&icons_table(\@links, \@titles, \@icons, 10);
 print &ui_hr();
 
 my @rlinks = ('list_rules.cgi',

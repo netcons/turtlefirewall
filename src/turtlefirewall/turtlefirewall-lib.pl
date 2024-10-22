@@ -89,10 +89,10 @@ sub confdir {
 );
 
 %blacklists = ( 
-	'ip_blacklist' => { FILE => '/etc/turtlefirewall/ip_blacklist.dat', CRON => '/etc/cron.daily/ip_blacklist', DESCRIPTION => 'IP Address' },
-	'domain_blacklist' => { FILE => '/etc/turtlefirewall/domain_blacklist.dat', CRON => '/etc/cron.daily/domain_blacklist', DESCRIPTION => 'DNS Domain Name' },
-	'ja3_blacklist' => { FILE => '/etc/turtlefirewall/ja3_blacklist.dat', CRON => '/etc/cron.daily/ja3_blacklist', DESCRIPTION => 'SSL Handshake Fingerprint' },
-	'sha1_blacklist' => { FILE => '/etc/turtlefirewall/sha1_blacklist.dat', CRON => '/etc/cron.daily/sha1_blacklist', DESCRIPTION => 'SSL Certificate Fingerprint' }
+	'ip_blacklist' => { FILE => '/etc/turtlefirewall/ip_blacklist.dat', TYPE => 'hash:ip', DESCRIPTION => 'IP Address' },
+	'domain_blacklist' => { FILE => '/etc/turtlefirewall/domain_blacklist.dat', TYPE => 'ndpi:domain', DESCRIPTION => 'DNS Domain Name' },
+	'ja3_blacklist' => { FILE => '/etc/turtlefirewall/ja3_blacklist.dat', TYPE => 'ndpi:ja3', DESCRIPTION => 'SSL Handshake Fingerprint' },
+	'sha1_blacklist' => { FILE => '/etc/turtlefirewall/sha1_blacklist.dat', TYPE => 'ndpi:sha1', DESCRIPTION => 'SSL Certificate Fingerprint' }
 );
 
 sub LoadServices {
