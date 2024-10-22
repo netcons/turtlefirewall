@@ -13,7 +13,7 @@ do 'turtlefirewall-lib.pl';
 
 my $addresslist = $in{'addresslist'};
 my $newaddresslist = $in{'newaddresslist'};
-my $location = $in{'location'};
+my $file = $in{'file'};
 my $type = $in{'type'};
 my $description = $in{'description'};
 
@@ -46,9 +46,9 @@ if( $in{'delete'} ) {
 	}
 	if ( $addresslist eq '' ) { &error( $text{save_addresslist_error3} ); }
 	if ( $addresslist eq 'ip_blacklist' ) { &error( $text{save_addresslist_error4} ); }
-	if ( $location eq '' ) { &error( $text{save_addresslist_error5} ); }
-	if ( ! -f $location ) { &error( $text{save_addresslist_error6} ); }
-	$fw->AddAddressList( $addresslist, $location, $type, $description );
+	if ( $file eq '' ) { &error( $text{save_addresslist_error5} ); }
+	if ( ! -f $file ) { &error( $text{save_addresslist_error6} ); }
+	$fw->AddAddressList( $addresslist, $file, $type, $description );
 	if( !$in{'new'} && $newaddresslist ne $addresslist ) {
 		if( !$fw->RenameItem( $addresslist, $newaddresslist ) ) {
 			&error( &text('save_addresslist_error7', $addresslist, $newaddresslist) );

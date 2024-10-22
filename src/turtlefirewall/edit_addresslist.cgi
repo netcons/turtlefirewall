@@ -24,7 +24,7 @@ if( $new ) {
 my $addresslist = $in{'addresslist'};
 my $newaddresslist = $in{'newaddresslist'};
 my %a = $fw->GetAddressList($addresslist);
-my $location = $a{'LOCATION'};
+my $file = $a{'FILE'};
 my $type = $a{'TYPE'};
 my $description = $a{'DESCRIPTION'};
 
@@ -42,8 +42,8 @@ if( $new ) {
 	$col .= &ui_hidden("addresslist", $in{'addresslist'});
 }
 print &ui_columns_row([ "<img src=images/db.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
-$col = &ui_textbox("location", $location, 60, 0, 60);
-print &ui_columns_row([ "<img src=images/address.png hspace=4><b>$text{'location'}</b>", $col ], \@tds);
+$col = &ui_textbox("file", $file, 60, 0, 60);
+print &ui_columns_row([ "<img src=images/file.png hspace=4><b>$text{'file'}</b>", $col ], \@tds);
 $col = &ui_select("type", $type, \@types);
 print &ui_columns_row([ "<img src=images/option.png hspace=4><b>$text{'type'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);

@@ -443,7 +443,7 @@ sub showAddressList {
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
-                          "<b>$text{'location'}</b>",
+                          "<b>$text{'file'}</b>",
 			  "<b>$text{'items'}</b>",
                           "<b>$text{'type'}</b>",
                           "<b>$text{'description'}</b>" ], 100, 0, \@tds);
@@ -452,8 +452,8 @@ sub showAddressList {
 		local @cols;
 		my $href = &ui_link("edit_addresslist.cgi?addresslist=$k",$k);
 		push(@cols, "<img src=images/db.png hspace=4>$href" );
-		push(@cols, "<img src=images/address.png hspace=4>$addresslist{'LOCATION'}" );
-		push(@cols, qx{wc -l < $addresslist{'LOCATION'} 2>/dev/null} );
+		push(@cols, "<img src=images/file.png hspace=4>$addresslist{'FILE'}" );
+		push(@cols, qx{wc -l < $addresslist{'FILE'} 2>/dev/null} );
 		push(@cols, "<img src=images/option.png hspace=4>$addresslist{'TYPE'}" );
 		push(@cols, "".($addresslist{'DESCRIPTION'} ne '' ? "<img src=images/info.png hspace=4>$addresslist{'DESCRIPTION'}" : '&nbsp;')."" );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);

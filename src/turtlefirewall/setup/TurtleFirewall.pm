@@ -380,10 +380,10 @@ sub AddRateLimit {
 	$this->{fwItems}{$name} = 'RATELIMIT';
 }
 
-# AddAddressList( $name, $location, $type, $description )
+# AddAddressList( $name, $file, $type, $description )
 sub AddAddressList {
-	my ($this, $name, $location, $type, $description) = @_;
-	%{ $this->{fw}{ADDRESSLIST}{$name} } = ('NAME'=>$name, 'LOCATION'=>$location, 'TYPE'=>$type, 'DESCRIPTION'=>$description );
+	my ($this, $name, $file, $type, $description) = @_;
+	%{ $this->{fw}{ADDRESSLIST}{$name} } = ('NAME'=>$name, 'FILE'=>$file, 'TYPE'=>$type, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'ADDRESSLIST';
 }
 
@@ -900,11 +900,11 @@ sub RenameItem {
 		# Change item name in all rules
 		foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','CONNTRACK','NAT','MASQUERADE','REDIRECT') {
 			for( my $i=0; $i<=$#{$this->{fw}{$ruletype}}; $i++ ) {
-				foreach $field ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
-					my @field_list = split( /,/, $this->{fw}{$ruletype}[$i]{$field} );
-					if( grep( /^$oldname$/, @field_list ) ) {
-						s/^$oldname$/$newname/ for @field_list;
-						$this->{fw}{$ruletype}[$i]{$field} = join(",", @field_list);
+				foreach $item ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
+					my @item_list = split( /,/, $this->{fw}{$ruletype}[$i]{$item} );
+					if( grep( /^$oldname$/, @item_list ) ) {
+						s/^$oldname$/$newname/ for @item_list;
+						$this->{fw}{$ruletype}[$i]{$item} = join(",", @item_list);
 					}
 				}
 			}
@@ -1786,9 +1786,12 @@ sub startFirewall {
 	for my $s ($this->GetIPSetList()) {
 		my %ipset = $this->GetIPSet($s);
 		for( my $i=0; $i<=$#{$this->{fw}{RULE}}; $i++ ) {
-		       	if( $this->{fw}{RULE}[$i]{SRC} eq $s || $this->{fw}{RULE}[$i]{DST} eq $s && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
-				my $list_type = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{TYPE};
-				$this->command( "ipset create $ipset{'IP'} $list_type", "/dev/null 2>&1" );
+			my @item_list = ();
+			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{SRC} ) );
+			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{DST} ) );
+		       	if( grep( /^$s$/, @item_list ) && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
+				my $addresslist_type = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{TYPE};
+				$this->command( "ipset create $ipset{'IP'} $addresslist_type", "/dev/null 2>&1" );
                         	last;
 		       	}
 	       	}
@@ -1837,21 +1840,24 @@ sub startFirewall {
 	for my $s ($this->GetIPSetList()) {
 		my %ipset = $this->GetIPSet($s);
 		for( my $i=0; $i<=$#{$this->{fw}{RULE}}; $i++ ) {
-		       	if( $this->{fw}{RULE}[$i]{SRC} eq $s || $this->{fw}{RULE}[$i]{DST} eq $s && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
+			my @item_list = ();
+			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{SRC} ) );
+			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{DST} ) );
+		       	if( grep( /^$s$/, @item_list ) && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
 				print "run ipset-restore $s($ipset{'IP'})\n";
-				my $list_location = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{LOCATION};
-				my $list_type = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{TYPE};
+				my $addresslist_file = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{FILE};
+				my $addresslist_type = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{TYPE};
 				$this->command( "ipset flush $ipset{'IP'}", "/dev/null 2>&1" );
 				my @items = ();
-				open( FILE, "<", "$list_location" );
+				open( FILE, "<", "$addresslist_file" );
 				while( <FILE> ) { 
-					if( $list_type eq "hash:ip" ) {
+					if( $addresslist_type eq "hash:ip" ) {
 						if( $_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/ ) { push(@items, $1); }
 					}
-					if( $list_type eq "hash:net" ) {
+					if( $addresslist_type eq "hash:net" ) {
 						if( $_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\b([0-9]|[12][0-9]|3[0-2])\b)/ ) { push(@items, $1); }
 					}
-					if( $list_type eq "hash:mac" ) {
+					if( $addresslist_type eq "hash:mac" ) {
 						if( $_ =~ /([0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2})/ ) { push(@items, $1); }
 					}
 			       	}

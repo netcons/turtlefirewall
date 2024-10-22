@@ -24,7 +24,7 @@ sub showBlackLists {
 	@tds = ( "width=20%", "width=20%", "width=20%", "width=1% style=text-align:center", "width=1% style=text-align:center" );
 	print &ui_columns_start([ "<b>$text{'name'}</b>",
 		       		  "<b>$text{'description'}</b>",
-		       		  "<b>$text{'location'}</b>",
+		       		  "<b>$text{'file'}</b>",
 		       		  "<b>$text{'items'}</b>",
 		       		  "<b>$text{'autoupdate'}</b>" ], 100, 0, \@tds);
         my @items = ();
@@ -32,8 +32,8 @@ sub showBlackLists {
 		local @cols;
 		push(@cols, "<img src=images/blacklist.png hspace=4>$b");
 		push(@cols, "<img src=images/info.png hspace=4>$blacklists{$b}{DESCRIPTION}");
-		push(@cols, "<img src=images/address.png hspace=4>$blacklists{$b}{LOCATION}");
-		my $blacklistcount = qx{wc -l < $blacklists{$b}{LOCATION} 2>/dev/null};
+		push(@cols, "<img src=images/file.png hspace=4>$blacklists{$b}{FILE}");
+		my $blacklistcount = qx{wc -l < $blacklists{$b}{FILE} 2>/dev/null};
 		if( $blacklistcount eq '' ) { $blacklistcount = '0'; }
 		push(@cols, $blacklistcount);
 		my $autoupdate = 'NO';
