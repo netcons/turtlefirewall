@@ -3199,27 +3199,27 @@ sub _applyService {
 			if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
 				$cmd .= "-m mac --mac-source $src_mac "; }
 			if( $src ne '' ) {
-				if( $dst_type eq 'GEOIP' ) { $cmd .= "-m geoip --destination-country $dst "; }
-				if( $dst_type eq 'IPSET' ) { $cmd .= "-m set --match-set $dst dst "; }
-				if( $src ne '0.0.0.0/0' && $src_type !~ /GEOIP|IPSET/ ) { $cmd .= "-s $src "; }
-			}
-			if( $dst ne '' ) {
 				if( $src_type eq 'GEOIP' ) { $cmd .= "-m geoip --source-country $src "; }
 				if( $src_type eq 'IPSET' ) { $cmd .= "-m set --match-set $src src "; }
-				if( $dst ne '0.0.0.0/0' && $dst_type !~ /GEOIP|IPSET/ ) { $cmd .= "-d $dst "; }
+				if( $src_type =~ /HOST|NET/ ) { $cmd .= "-s $src "; }
+			}
+			if( $dst ne '' ) {
+				if( $dst_type eq 'GEOIP' ) { $cmd .= "-m geoip --destination-country $dst "; }
+				if( $dst_type eq 'IPSET' ) { $cmd .= "-m set --match-set $dst dst "; }
+				if( $dst_type =~ /HOST|NET/ ) { $cmd .= "-d $dst "; }
 			}
 		} else {
 			$cmd = "-A $backChain ";
 			if( $ratelimit ne '' ) { $cmd .= "-m ratelimit --ratelimit-set back-$ratelimit --ratelimit-mode dst "; }
 			if( $dst ne '' ) {
-				if( $src_type eq 'GEOIP' ) { $cmd .= "-m geoip --destination-country $src "; }
-				if( $src_type eq 'IPSET' ) { $cmd .= "-m set --match-set $src dst "; }
-				if( $dst ne '0.0.0.0/0' && $dst_type !~ /GEOIP|IPSET/ ) { $cmd .= "-s $dst "; }
-			}
-			if( $src ne '' ) {
 				if( $dst_type eq 'GEOIP' ) { $cmd .= "-m geoip --source-country $dst "; }
 				if( $dst_type eq 'IPSET' ) { $cmd .= "-m set --match-set $dst src "; }
-				if( $src ne '0.0.0.0/0' && $src_type !~ /GEOIP|IPSET/ ) { $cmd .= "-d $src "; }
+				if( $dst_type =~ /HOST|NET/ ) { $cmd .= "-s $dst "; }
+			}
+			if( $src ne '' ) {
+				if( $src_type eq 'GEOIP' ) { $cmd .= "-m geoip --destination-country $src "; }
+				if( $src_type eq 'IPSET' ) { $cmd .= "-m set --match-set $src dst "; }
+				if( $src_type =~ /HOST|NET/ ) { $cmd .= "-d $src "; }
 			}
 		}
 
