@@ -43,7 +43,7 @@ if( $new ) {
 	$col .= &ui_hidden("net", $in{'net'});
 }
 print &ui_columns_row([ "<img src=images/net.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
-$col = &ui_textbox("ip", $ip);
+$col = &ui_textbox("ip", $ip, 15, 0, 15);
 print &ui_columns_row([ "<img src=images/address.png hspace=4><b>$text{'netaddress'}</b>", $col ], \@tds);
 $col = &ui_textbox("netmask", $netmask, 15, 0, 15);
 print &ui_columns_row([ "<img src=images/mask.png hspace=4><b>$text{'netmask'}</b>", $col ], \@tds);
