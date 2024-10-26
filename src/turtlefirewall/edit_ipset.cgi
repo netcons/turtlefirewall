@@ -45,7 +45,7 @@ if( $new ) {
 }
 print &ui_columns_row([ "<img src=images/item.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
 $col = &ui_select("ip", $ip, \@ips);
-print &ui_columns_row([ "<img src=images/db.png hspace=4><b>$text{'addresslist'}</b>", $col ], \@tds);
+print &ui_columns_row([ "<img src=images/address.png hspace=4><b>$text{'addresslist'}</b>", $col ], \@tds);
 $col = &ui_select("zone", $zone, \@zones);
 print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'zone'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);

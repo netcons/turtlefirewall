@@ -41,7 +41,7 @@ if( $new ) {
 	$col = &ui_textbox("newaddresslist", $in{'addresslist'});
 	$col .= &ui_hidden("addresslist", $in{'addresslist'});
 }
-print &ui_columns_row([ "<img src=images/db.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+print &ui_columns_row([ "<img src=images/address.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
 $col = &ui_textbox("file", $file, 60, 0, 60);
 print &ui_columns_row([ "<img src=images/file.png hspace=4><b>$text{'file'}</b>", $col ], \@tds);
 $col = &ui_select("type", $type, \@types);
