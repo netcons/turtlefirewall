@@ -19,6 +19,10 @@ my $description = $in{'description'};
 
 if( ! $fw->checkName($newipset) ) { &error( $text{save_ipset_error8} ); }
 
+foreach my $b (sort keys %blacklists) {
+	if( $ipset eq $b || $newipset eq $b ) { &error( $text{save_ipset_error6} ); }
+}
+
 if( $in{'delete'} ) {
 	# delete ipset
         if( $in{'d'} ) {
@@ -44,12 +48,9 @@ if( $in{'delete'} ) {
 	} else {
 		$whatfailed = $text{save_ipset_error_title3};
 	}
-	if ( $ipset eq '' ) { &error( $text{save_ipset_error3} ); }
-	if ( ! $fw->GetZone($zone) ) { &error( $text{save_ipset_error4} ); }
-	if ( $ip eq '' ) { &error( $text{save_ipset_error5} ); }
-        foreach my $b (sort keys %blacklists) {
-		if ( $ipset eq $b ) { &error( $text{save_ipset_error6} ); }
-	}
+	if( $ipset eq '' ) { &error( $text{save_ipset_error3} ); }
+	if( ! $fw->GetZone($zone) ) { &error( $text{save_ipset_error4} ); }
+	if( $ip eq '' ) { &error( $text{save_ipset_error5} ); }
 	$fw->AddIPSet( $ipset, $ip, $zone, $description );
 	if( !$in{'new'} && $newipset ne $ipset ) {
 		if( !$fw->RenameItem( $ipset, $newipset ) ) {

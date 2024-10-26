@@ -19,6 +19,10 @@ my $description = $in{'description'};
 
 if( ! $fw->checkName($newaddresslist) ) { &error( $text{save_addresslist_error8} ); }
 
+foreach my $b (sort keys %blacklists) {
+	if( $addresslist eq $b || $newaddresslist eq $b ) { &error( $text{save_addresslist_error4} ); }
+}
+
 if( $in{'delete'} ) {
 	# delete addresslist
         if( $in{'d'} ) {
@@ -44,12 +48,9 @@ if( $in{'delete'} ) {
 	} else {
 		$whatfailed = $text{save_addresslist_error_title3};
 	}
-	if ( $addresslist eq '' ) { &error( $text{save_addresslist_error3} ); }
-        foreach my $b (sort keys %blacklists) {
-		if ( $addresslist eq $b ) { &error( $text{save_addresslist_error4} ); }
-	}
-	if ( $file eq '' ) { &error( $text{save_addresslist_error5} ); }
-	if ( ! -f $file ) { &error( $text{save_addresslist_error6} ); }
+	if( $addresslist eq '' ) { &error( $text{save_addresslist_error3} ); }
+	if( $file eq '' ) { &error( $text{save_addresslist_error5} ); }
+	if( ! -f $file ) { &error( $text{save_addresslist_error6} ); }
 	$fw->AddAddressList( $addresslist, $file, $type, $description );
 	if( !$in{'new'} && $newaddresslist ne $addresslist ) {
 		if( !$fw->RenameItem( $addresslist, $newaddresslist ) ) {
