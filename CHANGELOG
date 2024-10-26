@@ -244,5 +244,6 @@ CHANGELOG
            - Services : Added DNS over TLS TCP port 853 service.
            - Feature : nDPI 4.9.11 support.
            - Feature : Add ipset support.
+           - Feature : Add prefix support for net items.
            - Todo : Translate new features 
            - Todo : Fix backup.cgi restore upload.

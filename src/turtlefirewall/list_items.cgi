@@ -13,15 +13,19 @@ do 'turtlefirewall-lib.pl';
 &ui_print_header( "<img src=images/shield.png hspace=4>$text{'list_items_title'}", $text{'title'}, "" );
 
 $form = 0;
+&showAddressList();
+
+$form++;
+print "<br><br>";
 &showZone();
 
 $form++;
 print "<br><br>";
-&showNet();
+&showHost();
 
 $form++;
 print "<br><br>";
-&showHost();
+&showNet();
 
 $form++;
 print "<br><br>";
@@ -30,15 +34,11 @@ print "<br><br>";
 
 $form++;
 print "<br><br>";
+&showIPSet();
+
+$form++;
+print "<br><br>";
 &showGroup();
-
-$form++;
-print "<br><br>";
-&showTime();
-
-$form++;
-print "<br><br>";
-&showTimeGroup();
 
 $form++;
 print "<br><br>";
@@ -55,11 +55,11 @@ print "<br><br>";
 
 $form++;
 print "<br><br>";
-&showAddressList();
+&showTime();
 
 $form++;
 print "<br><br>";
-&showIPSet();
+&showTimeGroup();
 
 &ui_print_footer('index.cgi',$text{'index'});
 

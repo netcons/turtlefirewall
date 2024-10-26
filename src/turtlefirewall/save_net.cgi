@@ -48,7 +48,10 @@ if( $in{'delete'} ) {
 	if ( $net eq '' ) { &error( $text{save_net_error3} ); }
 	if ( ! $fw->GetZone($zone) ) { &error( $text{save_net_error4} ); }
 	if ( $ip !~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ ) { &error( $text{save_net_error5} ); }
-	if ( $netmask !~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ ) { &error( $text{save_net_error6} ); }
+	if ( $netmask !~ /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ ) {
+		$netmask = $netmask + 0;
+		if( $netmask < 1 || $netmask > 32 ) { &error( $text{save_net_error6} ); }
+       	}
 	$fw->AddNet( $net, $ip, $netmask, $zone, $description );
 	if( !$in{'new'} && $newnet ne $net ) {
 		if( !$fw->RenameItem( $net, $newnet ) ) {
