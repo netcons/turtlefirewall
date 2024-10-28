@@ -18,6 +18,8 @@ my $description = $in{'description'};
 
 $hostnamesetlist =~ s/^\s+|\s+$//g;
 
+if ( $hostnameset eq 'any' || $newhostnameset eq 'any' ) { &error( $text{save_hostnameset_error8} ); }
+
 if( ! $fw->checkName($newhostnameset) ) { &error( $text{save_hostnameset_error6} ); }
 
 if( $in{'delete'} ) {
@@ -46,7 +48,6 @@ if( $in{'delete'} ) {
 		$whatfailed = $text{save_hostnameset_error_title3};
 	}
 	if ( $hostnameset eq '' ) { &error( $text{save_hostnameset_error3} ); }
-	if ( $hostnameset eq 'any' ) { &error( $text{save_hostnameset_error8} ); }
 	if ( $hostnamesetlist eq '' ) { 
 		&error( $text{save_hostnameset_error4} );
 	} else {
