@@ -40,6 +40,8 @@ push @items_src, grep(!/FIREWALL/, $fw->GetZoneList());
 push @items_src, $fw->GetNetList();
 push @items_src, $fw->GetHostList();
 push @items_src, $fw->GetGroupList();
+push @items_src, $fw->GetGeoipList();
+push @items_src, $fw->GetIPSetList();
 @items_src = sort(@items_src);
 
 my @items_dst = ();
@@ -47,6 +49,8 @@ push @items_dst, grep(!/FIREWALL/, $fw->GetZoneList());
 push @items_dst, $fw->GetNetList();
 push @items_dst, $fw->GetHostList();
 push @items_dst, $fw->GetGroupList();
+push @items_dst, $fw->GetGeoipList();
+push @items_dst, $fw->GetIPSetList();
 @items_dst = sort(@items_dst);
 
 print &ui_subheading($heading);

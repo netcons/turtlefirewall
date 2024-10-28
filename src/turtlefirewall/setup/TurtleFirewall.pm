@@ -2567,10 +2567,10 @@ sub applyMasquerade {
 		$service = 'all';
 	}
 
-	my ($src_zone, $src_peer, undef, $src_mac) = $this->expand_item( $src );
+	my ($src_zone, $src_peer, $src_type, $src_mac) = $this->expand_item( $src );
 	my %src_zone_attr = $this->GetZone( $src_zone );
 	$src_if = $src_zone_attr{IF};
-	my ($dst_zone, $dst_peer, undef, undef) = $this->expand_item( $dst );
+	my ($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
 	my %dst_zone_attr = $this->GetZone( $dst_zone );
 	$dst_if = $dst_zone_attr{IF};
 	
@@ -2580,7 +2580,7 @@ sub applyMasquerade {
 	if( $src_mac ne '' ) { print "(mac:$src_mac)"; }
 	print " --> $dst IF $dst_if\n";
 	
-	$rules .= $this->applyServiceMasquerade( \%services, $service, $src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $is_masquerade);
+	$rules .= $this->applyServiceMasquerade( \%services, $service, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $is_masquerade);
 	return $rules;
 }
 
@@ -2592,7 +2592,7 @@ sub applyServiceMasquerade {
 
 sub _applyServiceMasquerade {
 	my $this = shift;
-	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $is_masquerade) = @_;
+	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $is_masquerade) = @_;
 	
 	my %service = %{$ref_services->{$serviceName}};
 
@@ -2612,7 +2612,7 @@ sub _applyServiceMasquerade {
 		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyServiceMasquerade
 			$rules .= $this->_applyServiceMasquerade( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $is_masquerade );
+				$src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $is_masquerade );
 			next;
 		}
 
@@ -2641,12 +2641,20 @@ sub _applyServiceMasquerade {
 		if( $direction eq 'go' && ($jump eq '' || $jump eq 'ACCEPT') ) { 
 			$cmd = "-A MASQ ";
 			if( $src_if ne '' ) { $cmd .= "-i $src_if "; }
-			if( $src_peer ne '0.0.0.0/0' && $src_peer ne '' ) { $cmd .= "-s $src_peer "; }
+			if( $src_peer ne '' ) {
+				if( $src_type eq 'GEOIP' ) { $cmd .= "-m geoip --source-country $src_peer "; }
+				if( $src_type eq 'IPSET' ) { $cmd .= "-m set --match-set $src_peer src "; }
+				if( $src_type =~ /HOST|NET/ ) { $cmd .= "-s $src_peer "; }
+			}
 			if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
 				$cmd .= "-m mac --mac-source $src_mac ";
 			}
 			if( $dst_if ne '' ) { $cmd .= "-o $dst_if "; }
-			if( $dst_peer ne '0.0.0.0/0' && $dst_peer ne '' ) { $cmd .= "-d $dst_peer "; }
+			if( $dst_peer ne '' ) {
+				if( $dst_type eq 'GEOIP' ) { $cmd .= "-m geoip --destination-country $dst_peer "; }
+				if( $dst_type eq 'IPSET' ) { $cmd .= "-m set --match-set $dst_peer dst "; }
+				if( $dst_type =~ /HOST|NET/ ) { $cmd .= "-d $dst_peer "; }
+			}
 			if( $p ne '' ) { $cmd .= "-p $p "; }
 			if( $sport ne '' ) { $cmd .= "--sport $sport "; }
 			if( $dport ne '' ) { $cmd .= "--dport $dport "; }
@@ -2718,7 +2726,7 @@ sub applyRedirect {
 	my $port = $redirect{PORT};
 	my $toport = $redirect{TOPORT};
 
-	my ($src_zone, $src_peer, undef, $src_mac) = $this->expand_item( $src );
+	my ($src_zone, $src_peer, $src_type, $src_mac) = $this->expand_item( $src );
 	my %src_zone_attr = $this->GetZone( $src_zone );
 	my $src_if = $src_zone_attr{IF};
 
@@ -2730,7 +2738,7 @@ sub applyRedirect {
 		$dst_peer = '0.0.0.0/0';
 		$dst_if = '';
 	} else {
-		($dst_zone, $dst_peer, undef, undef) = $this->expand_item( $dst );
+		($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
 		my %dst_zone_attr = $this->GetZone( $dst_zone );
 		$dst_if = $dst_zone_attr{IF};
 	}
@@ -2751,7 +2759,7 @@ sub applyRedirect {
 	print "\n";
 
 	# I create the 2 return chains
-	$rules .= $this->applyServiceRedirect( \%services, $service, $src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $toport, $is_redirect);
+	$rules .= $this->applyServiceRedirect( \%services, $service, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect);
 	
 	return $rules;
 }
@@ -2764,7 +2772,7 @@ sub applyServiceRedirect {
 
 sub _applyServiceRedirect {
 	my $this = shift;
-	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $toport, $is_redirect) = @_;
+	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect) = @_;
 
 	my $rules = '';
 	
@@ -2780,7 +2788,7 @@ sub _applyServiceRedirect {
 		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyServiceRedirect( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $toport, $is_redirect );
+				$src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect );
 			next;
 		}
 
@@ -2802,7 +2810,11 @@ sub _applyServiceRedirect {
 
 			my $cmd = "-A REDIR ";
 			if( $src_if ne '' ) { $cmd .= "-i $src_if "; }
-			if( $src_peer ne '0.0.0.0/0' && $src_peer ne '' ) { $cmd .= "-s $src_peer "; }
+			if( $src_peer ne '' ) {
+				if( $src_type eq 'GEOIP' ) { $cmd .= "-m geoip --source-country $src_peer "; }
+				if( $src_type eq 'IPSET' ) { $cmd .= "-m set --match-set $src_peer src "; }
+				if( $src_type =~ /HOST|NET/ ) { $cmd .= "-s $src_peer "; }
+			}
 
 			# Invalid Redirect, Ignore
 			#if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
@@ -2811,7 +2823,11 @@ sub _applyServiceRedirect {
 
 			# iptables prerouting chain don't accept -o option.
 			#if( $dst_if ne '' ) { $cmd .= "-o $dst_if "; }
-			if( $dst_peer ne '0.0.0.0/0' && $dst_peer ne '' ) { $cmd .= "-d $dst_peer "; }
+			if( $dst_peer ne '' ) {
+				if( $dst_type eq 'GEOIP' ) { $cmd .= "-m geoip --destination-country $dst_peer "; }
+				if( $dst_type eq 'IPSET' ) { $cmd .= "-m set --match-set $dst_peer dst "; }
+				if( $dst_type =~ /HOST|NET/ ) { $cmd .= "-d $dst_peer "; }
+			}
 
 			if( $p ne '' ) {
 				$cmd .= "-p $p ";
