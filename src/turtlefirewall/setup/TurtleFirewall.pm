@@ -914,6 +914,78 @@ sub RenameItem {
 	}
 }
 
+sub GetItemReferences {
+	my $this = shift;
+	my $item = shift;
+
+	my $type = $this->{fwItems}{$item};
+
+	my %references = ();
+
+	if( $type eq 'ZONE' ) {
+		foreach $k (@{$this->{fwKeys}{HOST}}) { 
+			if( $this->{fw}{HOST}{$k}{ZONE} eq $item ) { 
+				$references{$k} = 'HOST';
+			}
+		}
+
+		foreach $k (@{$this->{fwKeys}{NET}}) {
+			if( $this->{fw}{NET}{$k}{ZONE} eq $item ) {
+				$references{$k} = 'NET';
+			}
+		}
+
+		foreach $k (@{$this->{fwKeys}{GEOIP}}) {
+			if( $this->{fw}{GEOIP}{$k}{ZONE} eq $item ) {
+				$references{$k} = 'GEOIP';
+			}
+		}
+
+		foreach $k (@{$this->{fwKeys}{IPSET}}) {
+			if( $this->{fw}{IPSET}{$k}{ZONE} eq $item ) {
+				$references{$k} = 'IPSET';
+			}
+		}
+	}
+
+	if( $type eq 'ADDRESSLIST' ) {
+		foreach $k (@{$this->{fwKeys}{IPSET}}) {
+			if( $this->{fw}{IPSET}{$k}{IP} eq $item ) {
+				$references{$k} = 'IPSET';
+			}
+		}
+	}
+
+	foreach my $group (@{$this->{fwKeys}{GROUP}}) {
+		for( my $i=0; $i<=$#{$this->{fw}{GROUP}{$group}{ITEMS}}; $i++ ) {
+			if( $this->{fw}{GROUP}{$group}{ITEMS}[$i] eq $item ) {
+				$references{$group} = 'GROUP';
+		       }
+		}
+	}
+
+	foreach my $timegroup (@{$this->{fwKeys}{TIMEGROUP}}) {
+		for( my $i=0; $i<=$#{$this->{fw}{TIMEGROUP}{$timegroup}{ITEMS}}; $i++ ) {
+			if( $this->{fw}{TIMEGROUP}{$timegroup}{ITEMS}[$i] eq $item ) {
+				$references{$timegroup} = 'TIMEGROUP';
+		       }
+		}
+	}
+
+	foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','CONNTRACK','NAT','MASQUERADE','REDIRECT') {
+		for( my $i=0; $i<=$#{$this->{fw}{$ruletype}}; $i++ ) {
+			foreach $ruleitem ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
+				my @ruleitem_list = split( /,/, $this->{fw}{$ruletype}[$i]{$ruleitem} );
+				if( grep( /^$item$/, @ruleitem_list ) ) {
+					$references{"${ruleitem} ${i}"} = $ruletype;
+				}
+			}
+		}
+	}
+
+	return %references;
+}
+
 # DeleteGroup( $group );
 sub DeleteGroup {
 	my ($this, $group) = @_;

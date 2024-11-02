@@ -245,5 +245,6 @@ CHANGELOG
            - Feature : nDPI 4.9.11 support.
            - Feature : Add ipset support.
            - Feature : Add prefix support for net items.
+           - Feature : Add item reference lookup support.
            - Todo : Translate new features 
            - Todo : Fix backup.cgi restore upload.

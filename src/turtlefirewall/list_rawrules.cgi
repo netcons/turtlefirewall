@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "<img src=images/grey-helper.png hspace=4>$text{'list_rawrules_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{HELPER}{IMAGE}$text{'list_rawrules_title'}", $text{'title'}, "" );
 
 $form = 0;
 showConntrackPreroute();
@@ -25,7 +25,7 @@ showConntrack();
 #============================================================================
 
 sub showConntrackPreroute {
-	print &ui_subheading("<img src=images/grey-helper.png hspace=4>",$text{'conntrack_preroute'});
+	print &ui_subheading($icons{HELPER}{IMAGE},$text{'conntrack_preroute'});
 	print &ui_form_start("save_conntrackpreroute.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -77,36 +77,14 @@ sub showConntrackPreroute {
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_conntrackpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
-		my $zimage = '<img src=images/zone.png hspace=4>';
 		my $type = $fw->GetItemType($attr{'SRC'});
-		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
-		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
-		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
-		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
-		elsif( $type eq 'IPSET' ) { $zimage = '<img src=images/item.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}${bb}$attr{'SRC'}${be}${se}" );
-		my $zimage = '<img src=images/zone.png hspace=4>';
+		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'SRC'}${be}${se}" );
 		my $type = $fw->GetItemType($attr{'DST'});
-		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
-		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
-		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
-		elsif( $type eq 'IPSET' ) { $zimage = '<img src=images/item.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}${bb}$attr{'DST'}${be}${se}" );
-		$attr{'SERVICE'} =~ s/,/, /g;
-		my $servicelist = '';
-		$servicelist .= $attr{'SERVICE'};
-		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
-			if( $attr{'PORT'} ne '' ) {
-				$servicelist .= "/$attr{'PORT'}";
-			} else {
-				$servicelist .= "/all";
-			}
-		}
-		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}${servicelist}${be}${se}");
+		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'DST'}${be}${se}" );
+		push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/$attr{'PORT'}${be}${se}");
 		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
-		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';
+		my $himage = $attr{'ACTIVE'} eq 'NO' ? $icons{HELPER}{IMAGE} : $icons{HELPER_A}{IMAGE};
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
@@ -151,7 +129,7 @@ sub showConntrackPreroute {
 }
 
 sub showConntrack {
-	print &ui_subheading("<img src=images/grey-helper.png hspace=4>",$text{'conntrack'});
+	print &ui_subheading($icons{HELPER}{IMAGE},$text{'conntrack'});
 	print &ui_form_start("save_conntrack.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -203,30 +181,13 @@ sub showConntrack {
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_conntrack.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
-		my $zimage = '<img src=images/firewall.png hspace=4>';
-		push(@cols, "${zimage}${sb}${bb}$attr{'SRC'}${be}${se}" );
-		my $zimage = '<img src=images/zone.png hspace=4>';
+		push(@cols, "$icons{FIREWALL}{IMAGE}${sb}${bb}$attr{'SRC'}${be}${se}" );
 		my $type = $fw->GetItemType($attr{'DST'});
-		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
-		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
-		elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
-		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
-		$attr{'DST'} =~ s/,/, /g;
-		push(@cols, "${zimage}${sb}${bb}$attr{'DST'}${be}${se}" );
-		my $servicelist = '';
-		$servicelist .= $attr{'SERVICE'};
-		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
-			if( $attr{'PORT'} ne '' ) {
-				$servicelist .= "/$attr{'PORT'}";
-			} else {
-				$servicelist .= "/all";
-			}
-		}
-		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${bb}${servicelist}${be}${se}");
+		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'DST'}${be}${se}" );
+		push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/$attr{'PORT'}${be}${se}");
 		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
-		my $himage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-helper.png hspace=4>' : '<img src=images/helper.png hspace=4>';
+		my $himage = $attr{'ACTIVE'} eq 'NO' ? $icons{HELPER}{IMAGE} : $icons{HELPER_A}{IMAGE};
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";

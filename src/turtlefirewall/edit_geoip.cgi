@@ -15,9 +15,9 @@ $new = $in{'new'};
 
 my $heading = '';
 if( $new ) {
-	$heading = "<img src=images/create.png hspace=4>$text{'edit_geoip_title_create'}";
+	$heading = "$icons{CREATE}{IMAGE}$text{'edit_geoip_title_create'}";
 } else {
-	$heading = "<img src=images/edit.png hspace=4>$text{'edit_geoip_title_edit'}";
+	$heading = "$icons{EDIT}{IMAGE}$text{'edit_geoip_title_edit'}";
 }
 &ui_print_header( $heading, $text{'title'}, "" );
 
@@ -50,13 +50,13 @@ if( $new ) {
 	$col = &ui_textbox("newgeoip", $in{'geoip'});
 	$col .= &ui_hidden("geoip", $in{'geoip'});
 }
-print &ui_columns_row([ "<img src=images/geoip.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{GEOIP}{IMAGE}<b>$text{'name'}</b>", $col ], \@tds);
 $col = &ui_select("ip", "$ip", \@items_countrycode);
-print &ui_columns_row([ "<img src=images/countrycode.png hspace=4><b>$text{'countrycode'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{COUNTRYCODE}{IMAGE}<b>$text{'countrycode'}</b>", $col ], \@tds);
 $col = &ui_select("zone", $zone, \@zones);
-print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'zone'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'zone'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);
-print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{DESCRIPTION}{IMAGE}<b>$text{'description'}</b>", $col ], \@tds);
 print &ui_columns_end();
 
 print "<table width=100%><tr>";

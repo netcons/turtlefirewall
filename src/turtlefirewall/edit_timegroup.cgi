@@ -17,9 +17,9 @@ $newtimegroup = $in{'newtimegroup'};
 
 my $heading = '';
 if( $new ) {
-	$heading = "<img src=images/create.png hspace=4>$text{'edit_timegroup_title_create'}";
+	$heading = "$icons{CREATE}{IMAGE}$text{'edit_timegroup_title_create'}";
 } else {
-	$heading = "<img src=images/edit.png hspace=4>$text{'edit_timegroup_title_edit'}";
+	$heading = "$icons{EDIT}{IMAGE}$text{'edit_timegroup_title_edit'}";
 }
 &ui_print_header( $heading, $text{'title'}, "" );
 
@@ -40,11 +40,11 @@ if( $new ) {
 	$col = &ui_textbox("newtimegroup", $in{'timegroup'});
 	$col .= &ui_hidden("timegroup", $in{'timegroup'});
 }
-print &ui_columns_row([ "<img src=images/timegroup.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{TIMEGROUP}{IMAGE}<b>$text{'name'}</b>", $col ], \@tds);
 $col = &ui_select("items", \@selected_items, \@items, 8, 1);
-print &ui_columns_row([ "<img src=images/item.png hspace=4><b>$text{'groupitems'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ITEM}{IMAGE}<b>$text{'groupitems'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);
-print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{DESCRIPTION}{IMAGE}<b>$text{'description'}</b>", $col ], \@tds);
 print &ui_columns_end();
 
 print "<table width=100%><tr>";

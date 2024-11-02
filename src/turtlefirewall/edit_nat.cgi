@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	$heading = "<img src=images/create.png hspace=4>$text{'edit_nat_title_create'}";
+	$heading = "$icons{CREATE}{IMAGE}$text{'edit_nat_title_create'}";
 	$idx = '';
 	$virtual = '';
 	$real = '';
@@ -23,7 +23,7 @@ if( $new ) {
         $toport = '';
 	$active = 1;
 } else {
-	$heading = "<img src=images/edit.png hspace=4>$text{'edit_nat_title_edit'}";
+	$heading = "$icons{EDIT}{IMAGE}$text{'edit_nat_title_edit'}";
 	$idx = $in{'idx'};
 	%nat = $fw->GetNat($idx);
 	$virtual = $nat{'VIRTUAL'};
@@ -61,21 +61,21 @@ print &ui_columns_start(undef, 100, 0, \@tds);
 my $col = '';
 if( !$new ) {
 	$col = "<b>$idx</b>";
-	print &ui_columns_row([ "<img src=images/hash.png hspace=4><b>ID</b>", $col ], \@tds);
+	print &ui_columns_row([ "$icons{ID}{IMAGE}<b>ID</b>", $col ], \@tds);
 }
 $col = &ui_select("virtual", $virtual, \@items_virtual);
-print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'virtual_host'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'virtual_host'}</b>", $col ], \@tds);
 $col = &ui_select("real", $real, \@items_real);
-print &ui_columns_row([ "<img src=images/host.png hspace=4><b>$text{'real_host'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{HOST}{IMAGE}<b>$text{'real_host'}</b>", $col ], \@tds);
 $col = &formService($service, $port, 1);
-print &ui_columns_row([ "<img src=images/service.png hspace=4><b>$text{'rule_service'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{SERVICE}{IMAGE}<b>$text{'rule_service'}</b>", $col ], \@tds);
 my @opts = ( [ 1, "$text{YES}" ] );
 $col = &ui_radio("dummy", 1, \@opts);
 $col .= " : $text{real_port} $text{nat_port} : ";
 $col .= &ui_textbox("toport", $toport, 5, 0, 5);
-print &ui_columns_row([ "<img src=images/grey-nat.png hspace=4><b>$text{'nat'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{NAT}{IMAGE}<b>$text{'nat'}</b>", $col ], \@tds);
 $col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
-print &ui_columns_row([ "<img src=images/active.png hspace=4><b>$text{'nat_active'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ACTIVE}{IMAGE}<b>$text{'nat_active'}</b>", $col ], \@tds);
 print &ui_columns_end();
 
 print "<table width=100%><tr>";

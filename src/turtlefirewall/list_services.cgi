@@ -10,7 +10,7 @@
 
 do 'turtlefirewall-lib.pl';
 
-&ui_print_header( "<img src=images/service.png hspace=4>$text{'list_services_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SERVICE}{IMAGE}$text{'list_services_title'}", $text{'title'}, "" );
 
 &LoadServices($fw);
 &showServices();
@@ -26,7 +26,7 @@ sub showServices {
 	my @services = $fw->GetServicesList();
 	foreach my $name (@services) {
 		my %service = $fw->GetService($name);
-	        print &ui_columns_row([ "<img src=images/service.png hspace=4>$name", "<img src=images/info.png hspace=4>$service{'DESCRIPTION'}" ], \@tds);
+	        print &ui_columns_row([ "$icons{SERVICE}{IMAGE}$name", "$icons{DESCRIPTION}{IMAGE}$service{'DESCRIPTION'}" ], \@tds);
         }
         print &ui_columns_end();
 }

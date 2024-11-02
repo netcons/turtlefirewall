@@ -10,7 +10,7 @@
 
 do 'turtlefirewall-lib.pl';
 
-&ui_print_header( "<img src=images/risk.png hspace=4>$text{'list_ndpirisks_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{RISK}{IMAGE}$text{'list_ndpirisks_title'}", $text{'title'}, "" );
 
 &LoadNdpiRisks($fw);
 &showNdpiRisks();
@@ -26,7 +26,7 @@ sub showNdpiRisks {
         my @ndpirisks = $fw->GetNdpiRisksList();
 	foreach $id (sort { $a <=> $b } @ndpirisks) {
 		my %ndpirisk = $fw->GetNdpiRisk($id);
-	        print &ui_columns_row([ "<img src=images/risk.png hspace=4>$id", "<img src=images/info.png hspace=4>$ndpirisk{'DESCRIPTION'}" ], \@tds);
+	        print &ui_columns_row([ "$icons{RISK}{IMAGE}$id", "$icons{DESCRIPTION}{IMAGE}$ndpirisk{'DESCRIPTION'}" ], \@tds);
         }
 	print &ui_columns_end();
 }

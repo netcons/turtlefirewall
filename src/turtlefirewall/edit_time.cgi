@@ -17,9 +17,9 @@ $newtime = $in{'newtime'};
 
 my $heading = '';
 if( $new ) {
-	$heading = "<img src=images/create.png hspace=4>$text{'edit_time_title_create'}";
+	$heading = "$icons{CREATE}{IMAGE}$text{'edit_time_title_create'}";
 } else {
-	$heading = "<img src=images/edit.png hspace=4>$text{'edit_time_title_edit'}";
+	$heading = "$icons{EDIT}{IMAGE}$text{'edit_time_title_edit'}";
 }
 &ui_print_header( $heading, $text{'title'}, "" );
 
@@ -48,7 +48,7 @@ if( $new ) {
 	$col = &ui_textbox("newtime", $in{'time'});
 	$col .= &ui_hidden("time", $in{'time'});
 }
-print &ui_columns_row([ "<img src=images/time.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{TIME}{IMAGE}<b>$text{'name'}</b>", $col ], \@tds);
 $col = "<table width=100%><tr>";
 foreach my $i (@aWeekdays) {
 	$col .= "<td><nobr>";
@@ -56,13 +56,13 @@ foreach my $i (@aWeekdays) {
 	$col .= "</nobr></td>";
 }
 $col .= "</tr></table>";
-print &ui_columns_row([ "<img src=images/item.png hspace=4><b>$text{'timeitems'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ITEM}{IMAGE}<b>$text{'timeitems'}</b>", $col ], \@tds);
 $col = &ui_textbox("timestart", $timestart, 5, 0, 5);
-print &ui_columns_row([ "<img src=images/stopwatch.png hspace=4><b>$text{'timestart'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{TIMESTART}{IMAGE}<b>$text{'timestart'}</b>", $col ], \@tds);
 $col = &ui_textbox("timestop", $timestop, 5, 0, 5);
-print &ui_columns_row([ "<img src=images/stopwatch.png hspace=4><b>$text{'timestop'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{TIMESTOP}{IMAGE}<b>$text{'timestop'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);
-print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{DESCRIPTION}{IMAGE}<b>$text{'description'}</b>", $col ], \@tds);
 print &ui_columns_end();
 
 print "<table width=100%><tr>";

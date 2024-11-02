@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	$heading = "<img src=images/create.png hspace=4>$text{'edit_conntrack_title_create'}";
+	$heading = "$icons{CREATE}{IMAGE}$text{'edit_conntrack_title_create'}";
 	$idx = '';
 	$src = 'FIREWALL';
 	$dst = '';
@@ -23,7 +23,7 @@ if( $new ) {
 	$helper = '';
 	$active = 1;
 } else {
-	$heading = "<img src=images/edit.png hspace=4>$text{'edit_conntrack_title_edit'}";
+	$heading = "$icons{EDIT}{IMAGE}$text{'edit_conntrack_title_edit'}";
 	$idx = $in{'idx'};
 	%rule = $fw->GetConntrack($idx);
 	$src = $rule{'SRC'};
@@ -56,22 +56,22 @@ print &ui_columns_start(undef, 100, 0, \@tds);
 my $col = '';
 if( !$new ) {
 	$col = "<b>$idx</b>";
-	print &ui_columns_row([ "<img src=images/hash.png hspace=4><b>ID</b>", $col ], \@tds);
+	print &ui_columns_row([ "$icons{ID}{IMAGE}<b>ID</b>", $col ], \@tds);
 }
 $col = "$src";
 $col .= &ui_hidden("src", $src);
-print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'rule_src'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'rule_src'}</b>", $col ], \@tds);
 $col = &ui_select("dst", $dst, \@items_dst);
-print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'rule_dst'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'rule_dst'}</b>", $col ], \@tds);
 $col = &ui_select("service", $service, \@services);
 $col .= "$text{rule_port} : ";
 $col .= &ui_textbox("port", $port, 11, 0, 11);
 $col .= "<small><i>$text{port_help}</i></small>";
-print &ui_columns_row([ "<img src=images/service.png hspace=4><b>$text{'rule_service'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{SERVICE}{IMAGE}<b>$text{'rule_service'}</b>", $col ], \@tds);
 $col = &ui_select("helper", $helper, \@helpers);
-print &ui_columns_row([ "<img src=images/grey-helper.png hspace=4><b>$text{'rule_helper'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{NDPISERVICE}{IMAGE}<b>$text{'rule_helper'}</b>", $col ], \@tds);
 $col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
-print &ui_columns_row([ "<img src=images/active.png hspace=4><b>$text{'rule_active'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ACTIVE}{IMAGE}<b>$text{'rule_active'}</b>", $col ], \@tds);
 print &ui_columns_end();
 
 print "<table width=100%><tr>";

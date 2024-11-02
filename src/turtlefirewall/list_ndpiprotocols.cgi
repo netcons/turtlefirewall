@@ -10,7 +10,7 @@
 
 do 'turtlefirewall-lib.pl';
 
-&ui_print_header( "<img src=images/grey-ndpi.png hspace=4>$text{'list_ndpiprotocols_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{NDPISERVICE}{IMAGE}$text{'list_ndpiprotocols_title'}", $text{'title'}, "" );
 
 &LoadNdpiProtocols($fw);
 &showNdpiProtocols();
@@ -26,7 +26,7 @@ sub showNdpiProtocols {
         my @ndpiprotocols = $fw->GetNdpiProtocolsList();
 	foreach my $name (@ndpiprotocols) {
 		my %ndpiprotocol = $fw->GetNdpiProtocol($name);
-	        print &ui_columns_row([ "<img src=images/grey-ndpi.png hspace=4>$name", "<img src=images/info.png hspace=4>$ndpiprotocol{'CATEGORY'}" ], \@tds);
+	        print &ui_columns_row([ "$icons{NDPISERVICE}{IMAGE}$name", "$icons{DESCRIPTION}{IMAGE}$ndpiprotocol{'CATEGORY'}" ], \@tds);
         }
 	print &ui_columns_end();
 }

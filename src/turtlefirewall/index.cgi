@@ -11,31 +11,31 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "<img src=images/shield.png hspace=4> v ".$fw->Version(), $text{'title'}, "", undef, 1, 1, 0,
+&ui_print_header( "$icons{SHIELD}{IMAGE} v ".$fw->Version(), $text{'title'}, "", undef, 1, 1, 0,
         &help_search_link("iptables", "man", "doc"));
 
-my @links = ('list_items.cgi',
+my @olinks = ('list_items.cgi',
 	     'list_services.cgi',
 	     'list_ndpiprotocols.cgi',
 	     'list_ndpirisks.cgi',
 	     'list_countrycodes.cgi',
 	     'edit_options.cgi',
 	     'backup.cgi');
-my @titles = ($text{'index_icon_firewall_items'},
+my @otitles = ($text{'index_icon_firewall_items'},
 	      $text{'index_icon_firewall_services'},
 	      $text{'index_icon_firewall_ndpiprotocols'},
 	      $text{'index_icon_firewall_ndpirisks'},
 	      $text{'index_icon_firewall_countrycodes'},
               $text{'index_icon_edit_options'},
               $text{'index_icon_backup'});
-my @icons = ('images/items.png',
+my @oicons = ('images/items.png',
 	     'images/services.png',
 	     'images/ndpiprotocols.png',
 	     'images/ndpirisks.png',
 	     'images/countrycodes.png',
 	     'images/options.png',
 	     'images/backup.png');
-&icons_table(\@links, \@titles, \@icons, 10);
+&icons_table(\@olinks, \@otitles, \@oicons, 10);
 print &ui_hr();
 
 my @rlinks = ('list_rules.cgi',

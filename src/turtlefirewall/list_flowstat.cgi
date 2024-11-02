@@ -13,7 +13,7 @@ do 'turtlefirewall-lib.pl';
 use Tie::File;
 use Time::Piece;
 
-&ui_print_header( "<img src=images/graph.png hspace=4>$text{'report_flowstat_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{FLOWSTAT}{IMAGE}$text{'report_flowstat_title'}", $text{'title'}, "" );
 
 my $log = $in{'log'};
 my $type = $in{'type'};

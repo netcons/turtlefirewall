@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "<img src=images/filter.png hspace=4>$text{'list_rules_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{RULE}{IMAGE}$text{'list_rules_title'}", $text{'title'}, "" );
 
 &showRule();
 
@@ -93,58 +93,39 @@ sub showRule {
 		my $href = &ui_link("edit_rule.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $srclist = '';
+		my $type = '';
 		my @srcs = split(/,/, $attr{'SRC'});
 		foreach my $s (@srcs) {
-			my $zimage = '<img src=images/zone.png hspace=4>';
-			if( $s eq 'FIREWALL' ) {
-			       	$zimage = '<img src=images/firewall.png hspace=4>';
-			} else {
-				my $type = $fw->GetItemType($s);
-				if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
-				elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
-				elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
-				elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
-				elsif( $type eq 'IPSET' ) { $zimage = '<img src=images/item.png hspace=4>'; }
-			}
-			$srclist .= "${zimage}${s}<br>";
+			if( $s eq 'FIREWALL' ) { $type = $s; } else { $type = $fw->GetItemType($s); }
+			$srclist .= "$icons{$type}{IMAGE}$s<br>";
 		}
 		push(@cols, "${sb}${bb}${srclist}${be}${se}" );
 		my $dstlist = '';
+		my $type = '';
 		my @dsts = split(/,/, $attr{'DST'});
 		foreach my $d (@dsts) {
-			my $zimage = '<img src=images/zone.png hspace=4>';
-			if( $d eq 'FIREWALL' ) {
-			       	$zimage = '<img src=images/firewall.png hspace=4>';
-			} else {
-				my $type = $fw->GetItemType($d);
-				if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
-				elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
-				elsif( $type eq 'GEOIP' ) { $zimage = '<img src=images/geoip.png hspace=4>'; }
-				elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
-				elsif( $type eq 'IPSET' ) { $zimage = '<img src=images/item.png hspace=4>'; }
-			}
-			$dstlist .= "${zimage}${d}<br>";
+			if( $d eq 'FIREWALL' ) { $type = $d; } else { $type = $fw->GetItemType($d); }
+			$dstlist .= "$icons{$type}{IMAGE}$d<br>";
 		}
 		push(@cols, "${sb}${bb}${dstlist}${be}${se}" );
 		my $servicelist = '';
-		my $simage = '<img src=images/service.png hspace=4>';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$servicelist .= "${simage}$attr{'SERVICE'}/$attr{'PORT'}";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$attr{'SERVICE'}/$attr{'PORT'}";
 			} else {
-				$servicelist .= "${simage}$attr{'SERVICE'}/all";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$attr{'SERVICE'}/all";
 			}
 		} else {
 			my @services = split(/,/, $attr{'SERVICE'});
 			foreach my $s (@services) {
-				$servicelist .= "${simage}${s}<br>";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$s<br>";
 			}
 		}
 		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
 		my $ndpilist = '';
 		my $cb = $sb eq '' ? '<span style=color:orange>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
-		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-ndpi.png hspace=4>' : '<img src=images/ndpi.png hspace=4>';
+		my $nimage = $attr{'ACTIVE'} eq 'NO' ? $icons{NDPISERVICE}{IMAGE} : $icons{NDPISERVICE_A}{IMAGE};
 		if( $attr{'CATEGORY'} ne '' ) { 
 			$ndpilist .= "${nimage}${cb}category: $attr{'CATEGORY'}${ce}"; 
 		} elsif( $attr{'NDPI'} ne  '' ) {
@@ -154,41 +135,41 @@ sub showRule {
 			}
 		}
 		push(@cols, "${sb}${bb}${ndpilist}${be}${se}");
-		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : '<img src=images/hostnameset.png hspace=4>';
+		my $himage = $attr{'HOSTNAMESET'} eq '' ? '' : $icons{HOSTNAMESET}{IMAGE};
 		push(@cols, "${himage}${sb}${bb}$attr{'HOSTNAMESET'}${be}${se}" );
-		my $rimage = $attr{'RISKSET'} eq '' ? '' : '<img src=images/riskset.png hspace=4>';
+		my $rimage = $attr{'RISKSET'} eq '' ? '' : $icons{RISKSET}{IMAGE};
 		push(@cols, "${rimage}${sb}${bb}$attr{'RISKSET'}${be}${se}" );
-		my $pimage = $attr{'RATELIMIT'} eq '' ? '' : '<img src=images/ratelimit.png hspace=4>';
+		my $pimage = $attr{'RATELIMIT'} eq '' ? '' : $icons{RATELIMIT}{IMAGE};
 		push(@cols, "${pimage}${sb}${bb}$attr{'RATELIMIT'}${be}${se}" );
 		my $type = $fw->GetItemType($attr{'TIME'});
-		my $cimage = $type eq 'TIMEGROUP' ? '<img src=images/timegroup.png hspace=4>' : '<img src=images/time.png hspace=4>';
+		my $cimage = $type eq 'TIMEGROUP' ? $icons{TIMEGROUP}{IMAGE} : $icons{TIME}{IMAGE};
 		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
  		if( $attr{'TARGET'} eq 'ACCEPT' ) {
 			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
-			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-yes.png hspace=4>' : '<img src=images/yes.png hspace=4>';
+			my $aimage = $attr{'ACTIVE'} eq 'NO' ? $icons{ACCEPT}{IMAGE} : $icons{ACCEPT_A}{IMAGE};
 			push(@cols, "${aimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
 		} elsif( $attr{'TARGET'} eq 'DROP' ) {
 			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
-			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-no.png hspace=4>' : '<img src=images/no.png hspace=4>';
+			my $dimage = $attr{'ACTIVE'} eq 'NO' ? $icons{DROP}{IMAGE} : $icons{DROP_A}{IMAGE};
 			push(@cols, "${dimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
 		} elsif( $attr{'TARGET'} eq 'REJECT' ) {
 			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
-			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-reject.png hspace=4>' : '<img src=images/reject.png hspace=4>';
+			my $dimage = $attr{'ACTIVE'} eq 'NO' ? $icons{REJECT}{IMAGE} : $icons{REJECT_A}{IMAGE};
 			push(@cols, "${dimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
 		}
                 if( $attr{'LOG'} eq 'YES' ) {
 			my $cb = $sb eq '' ? '<span style=color:steelblue>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
-			my $limage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-eye.png hspace=4>' : '<img src=images/eye.png hspace=4>';
+			my $limage = $attr{'ACTIVE'} eq 'NO' ? $icons{LOG}{IMAGE} : $icons{LOG_A}{IMAGE};
 			push(@cols, "${limage}${sb}${bb}${cb}".($attr{'TARGET'} eq 'ACCEPT' ? 'FLO' : 'ACT')."${ce}${be}${se}" );
                 } else {
 			push(@cols, '&nbsp;' );
 		}
-		my $iimage = $attr{'DESCRIPTION'} eq '' ? '' : '<img src=images/info.png hspace=4>';
+		my $iimage = $attr{'DESCRIPTION'} eq '' ? '' : $icons{DESCRIPTION}{IMAGE};
 		push(@cols, "${iimage}${sb}${bb}".($attr{'DESCRIPTION'} ne '' ? $attr{'DESCRIPTION'} : '&nbsp;')."${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
@@ -224,7 +205,7 @@ sub showRule {
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
-	print &ui_columns_row([undef, undef, "<img src=images/zone.png hspace=4>*", "<img src=images/zone.png hspace=4>*", "<img src=images/service.png hspace=4>all", "", "", "", "", "", "<img src='images/no.png' hspace='4'><span style=color:red>DROP</span>", "<img src='images/eye.png' hspace='4'><span style=color:steelblue>ACT</span>", "<img src=images/info.png hspace=4>Implicit Deny", undef], \@tds);
+	print &ui_columns_row([undef, undef, "$icons{ZONE}{IMAGE}*", "$icons{ZONE}{IMAGE}*", "$icons{SERVICE}{IMAGE}all", "", "", "", "", "", "$icons{DROP_A}{IMAGE}<span style=color:red>DROP</span>", "$icons{LOG_A}{IMAGE}<span style=color:steelblue>ACT</span>", "$icons{DESCRIPTION}{IMAGE}Implicit Deny", undef], \@tds);
 	print &ui_columns_end();
 	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';
