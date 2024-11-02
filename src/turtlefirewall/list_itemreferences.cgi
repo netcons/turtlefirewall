@@ -33,19 +33,19 @@ sub showItemReferences {
 		my $href = '';
 		my $reftype = $itemreferences{$k};
 		my $reftypelc = lc($reftype);
+		my $prefix = $reftype eq 'RULE' ? 'filter' : $reftypelc;
 		my @ks = split( / /, $k );
 		my $refname = $ks[0];
 		my $idx = $ks[1];
 		# Item in Rule
 		if( $idx ne '' ) {
-			if( $reftypelc eq 'rule' ) { $reftypelc = 'filter' }
 			my $refnamelc = lc($refname);
-			$href = &ui_link("edit_$reftypelc.cgi?idx=$idx","$reftypelc rule id $idx $refnamelc");
+			$href = &ui_link("edit_$reftypelc.cgi?idx=$idx","$prefix rule id $idx $refnamelc");
 		} else {
 		# Item in Item
-			$href = &ui_link("edit_$reftypelc.cgi?$reftypelc=$refname","$reftypelc item $refname");
+			$href = &ui_link("edit_$reftypelc.cgi?$reftypelc=$refname","$prefix item $refname");
 		}
-	        print &ui_columns_row([ "$icons{$reftype}{IMAGE} $href" ], \@tds);
+	        print &ui_columns_row([ "$icons{$reftype}{IMAGE}$href" ], \@tds);
         }
         print &ui_columns_end();
 }
