@@ -39,6 +39,7 @@ sub showItemReferences {
 		my $idx = $ks[1];
 		# Item in Rule
 		if( $idx ne '' ) {
+			$idx++;
 			my $refnamelc = lc($refname);
 			$href = &ui_link("edit_$reftypelc.cgi?idx=$idx","$prefix rule id $idx $refnamelc");
 		} else {
