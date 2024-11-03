@@ -40,7 +40,7 @@ sub showConnmarkPreroute {
 		"style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
-		"width=1% style=vertical-align:top;white-space:normal",
+		"width=5% style=vertical-align:top;white-space:normal",
 		"width=1% style=vertical-align:top" );
         print &ui_columns_start([
 			'',
@@ -85,9 +85,10 @@ sub showConnmarkPreroute {
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_connmarkpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
-		my $type = $fw->GetItemType($attr{'SRC'});
+		my $type = '';
+		$type = $fw->GetItemType($attr{'SRC'});
 		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'SRC'}${be}${se}" );
-		if( $attr{'DST'} eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($attr{'DST'}); }
+		$type = $fw->GetItemType($attr{'DST'});
 		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'DST'}${be}${se}" );
 		my $servicelist = '';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
@@ -120,9 +121,13 @@ sub showConnmarkPreroute {
 		push(@cols, "${himage}${sb}${bb}$attr{'HOSTNAMESET'}${be}${se}" );
 		my $rimage = $attr{'RISKSET'} eq '' ? '' : $icons{RISKSET}{IMAGE};
 		push(@cols, "${rimage}${sb}${bb}$attr{'RISKSET'}${be}${se}" );
-		my $type = $fw->GetItemType($attr{'TIME'});
-		my $cimage = $type eq 'TIMEGROUP' ? $icons{TIMEGROUP}{IMAGE} : $icons{TIME}{IMAGE};
-		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
+		my $cimage = '';
+		if( $attr{'TIME'} eq '' ) {
+		       	$cimage = '';
+	       	} else {
+			$type = $fw->GetItemType($attr{'TIME'});
+			$cimage = $icons{$type}{IMAGE};
+		}
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
 		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
@@ -186,7 +191,7 @@ sub showConnmark {
 		"style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
-		"width=1% style=vertical-align:top;white-space:normal",
+		"width=5% style=vertical-align:top;white-space:normal",
 		"width=1% style=vertical-align:top" );
         print &ui_columns_start([
 			'',
@@ -231,19 +236,18 @@ sub showConnmark {
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_connmark.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
-		my $srclist = '';
 		my $type = '';
+		my $srclist = '';
+		my $dstlist = '';
 		my @srcs = split(/,/, $attr{'SRC'});
 		foreach my $s (@srcs) {
-			if( $s eq 'FIREWALL' ) { $type = $s; } elsif( $s eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($s); }
+			$type = $fw->GetItemType($s);
 			$srclist .= "$icons{$type}{IMAGE}$s<br>";
 		}
 		push(@cols, "${sb}${bb}${srclist}${be}${se}" );
-		my $dstlist = '';
-		my $type = '';
 		my @dsts = split(/,/, $attr{'DST'});
 		foreach my $d (@dsts) {
-			if( $d eq 'FIREWALL' ) { $type = $d; } elsif( $d eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($d); }
+			$type = $fw->GetItemType($d);
 			$dstlist .= "$icons{$type}{IMAGE}$d<br>";
 		}
 		push(@cols, "${sb}${bb}${dstlist}${be}${se}" );
@@ -278,9 +282,13 @@ sub showConnmark {
 		push(@cols, "${himage}${sb}${bb}$attr{'HOSTNAMESET'}${be}${se}" );
 		my $rimage = $attr{'RISKSET'} eq '' ? '' : $icons{RISKSET}{IMAGE};
 		push(@cols, "${rimage}${sb}${bb}$attr{'RISKSET'}${be}${se}" );
-		my $type = $fw->GetItemType($attr{'TIME'});
-		my $cimage = $type eq 'TIMEGROUP' ? $icons{TIMEGROUP}{IMAGE} : $icons{TIME}{IMAGE};
-		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
+		my $cimage = '';
+		if( $attr{'TIME'} eq '' ) {
+		       	$cimage = '';
+	       	} else {
+			$type = $fw->GetItemType($attr{'TIME'});
+			$cimage = $icons{$type}{IMAGE};
+		}
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
 		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd

@@ -183,7 +183,7 @@ sub showMasquerade {
 		my $href = &ui_link("edit_masquerade.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
 		my $type = '';
-		if( $attr{'SRC'} eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($attr{'SRC'}); }
+		$type = $fw->GetItemType($attr{'SRC'});
 		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'SRC'}${se}" );
 		$type = $fw->GetItemType($attr{'DST'});
 		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'DST'}${se}" );
@@ -291,9 +291,10 @@ sub showRedirect {
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_redirect.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
-		my $type = $fw->GetItemType($attr{'SRC'});
+		my $type = '';
+		$type = $fw->GetItemType($attr{'SRC'});
 		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'SRC'}${se}" );
-		if( $attr{'DST'} eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($attr{'DST'}); }
+		$type = $fw->GetItemType($attr{'DST'});
 		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'DST'}${se}" );
 		my $servicelist = '';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {

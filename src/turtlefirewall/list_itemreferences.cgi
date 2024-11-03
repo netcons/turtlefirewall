@@ -26,7 +26,7 @@ sub showItemReferences {
 	my $image = $icons{$type}{IMAGE};
 
 	print &ui_subheading($image,$item);
-	@tds = ( "" );
+	@tds = ();
         print &ui_columns_start([ "<b>$text{'references'}</b>" ], 100, 0, \@tds);
 	my %itemreferences = $fw->GetItemReferences($item);
 	foreach my $k (sort keys %itemreferences) {

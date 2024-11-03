@@ -326,7 +326,10 @@ sub GetOption {
 sub GetItemType {
 	my $this = shift;
 	my $item = shift;
-	return $type = $this->{fwItems}{$item};
+
+	my $type = '';
+	if( $item eq '*' ) { $type = 'ZONE' } elsif( $item eq 'FIREWALL' ) { $type = 'FIREWALL' } else { $type = $this->{fwItems}{$item} }
+	return $type;
 }
 
 # AddGroup( $group, $description, @items )
@@ -2964,9 +2967,10 @@ sub applyRule {
 	my $ndpi = $rule{NDPI};
 	my $category = $rule{CATEGORY};
 	my $hostnameset = $rule{HOSTNAMESET};
-	my $riskset = $rule{RISKSET};
-	my $ratelimit = $rule{RATELIMIT};
 	my $hostname = $rule{HOSTNAME};
+	my $riskset = $rule{RISKSET};
+	my $risk = $rule{RISK};
+	my $ratelimit = $rule{RATELIMIT};
 	my $port = $rule{PORT};
 	my $mark = $rule{MARK};
 	my $helper = $rule{HELPER};
@@ -3464,7 +3468,6 @@ sub expand_time_item {
         my $item = shift;
 
         my %fw = %{$this->{fw}};
-        my %fwItems = %{$this->{fwItems}};
 
         my $weekdays = '';
         my $timestart = '';
@@ -3482,7 +3485,6 @@ sub expand_hostnameset_item {
         my $item = shift;
 
         my %fw = %{$this->{fw}};
-        my %fwItems = %{$this->{fwItems}};
 
         my $hostnames = '';
 	$hostnames = $fw{HOSTNAMESET}{$item}{HOSTNAMES};

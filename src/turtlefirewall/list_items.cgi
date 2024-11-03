@@ -358,7 +358,7 @@ sub showGroup {
 		my $grouplist;
 		my $type = '';
 		for my $item (@{$group{ITEMS}}) {
-			if( $item eq 'FIREWALL' ) { $type = $item; } else { $type = $fw->GetItemType($item); }
+			$type = $fw->GetItemType($item);
 			$grouplist .= "$icons{$type}{IMAGE}$item<br>";
 		}
         	push(@cols, $grouplist );

@@ -92,19 +92,18 @@ sub showRule {
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_rule.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
-		my $srclist = '';
 		my $type = '';
+		my $srclist = '';
+		my $dstlist = '';
 		my @srcs = split(/,/, $attr{'SRC'});
 		foreach my $s (@srcs) {
-			if( $s eq 'FIREWALL' ) { $type = $s; } elsif( $s eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($s); }
+			$type = $fw->GetItemType($s);
 			$srclist .= "$icons{$type}{IMAGE}$s<br>";
 		}
 		push(@cols, "${sb}${bb}${srclist}${be}${se}" );
-		my $dstlist = '';
-		my $type = '';
 		my @dsts = split(/,/, $attr{'DST'});
 		foreach my $d (@dsts) {
-			if( $d eq 'FIREWALL' ) { $type = $d; } elsif( $d eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($d); }
+			$type = $fw->GetItemType($d);
 			$dstlist .= "$icons{$type}{IMAGE}$d<br>";
 		}
 		push(@cols, "${sb}${bb}${dstlist}${be}${se}" );
@@ -141,9 +140,13 @@ sub showRule {
 		push(@cols, "${rimage}${sb}${bb}$attr{'RISKSET'}${be}${se}" );
 		my $pimage = $attr{'RATELIMIT'} eq '' ? '' : $icons{RATELIMIT}{IMAGE};
 		push(@cols, "${pimage}${sb}${bb}$attr{'RATELIMIT'}${be}${se}" );
-		my $type = $fw->GetItemType($attr{'TIME'});
-		my $cimage = $type eq 'TIMEGROUP' ? $icons{TIMEGROUP}{IMAGE} : $icons{TIME}{IMAGE};
-		if( $attr{'TIME'} eq '' ) { $cimage = ''; }
+		my $cimage = '';
+		if( $attr{'TIME'} eq '' ) {
+		       	$cimage = '';
+	       	} else {
+			$type = $fw->GetItemType($attr{'TIME'});
+			$cimage = $icons{$type}{IMAGE};
+		}
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
  		if( $attr{'TARGET'} eq 'ACCEPT' ) {
 			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
