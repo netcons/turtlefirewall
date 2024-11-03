@@ -96,7 +96,7 @@ sub showRule {
 		my $type = '';
 		my @srcs = split(/,/, $attr{'SRC'});
 		foreach my $s (@srcs) {
-			if( $s eq 'FIREWALL' ) { $type = $s; } else { $type = $fw->GetItemType($s); }
+			if( $s eq 'FIREWALL' ) { $type = $s; } elsif( $s eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($s); }
 			$srclist .= "$icons{$type}{IMAGE}$s<br>";
 		}
 		push(@cols, "${sb}${bb}${srclist}${be}${se}" );
@@ -104,7 +104,7 @@ sub showRule {
 		my $type = '';
 		my @dsts = split(/,/, $attr{'DST'});
 		foreach my $d (@dsts) {
-			if( $d eq 'FIREWALL' ) { $type = $d; } else { $type = $fw->GetItemType($d); }
+			if( $d eq 'FIREWALL' ) { $type = $d; } elsif( $d eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($d); }
 			$dstlist .= "$icons{$type}{IMAGE}$d<br>";
 		}
 		push(@cols, "${sb}${bb}${dstlist}${be}${se}" );

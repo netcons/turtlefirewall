@@ -87,7 +87,7 @@ sub showConnmarkPreroute {
 		push(@cols, $href );
 		my $type = $fw->GetItemType($attr{'SRC'});
 		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'SRC'}${be}${se}" );
-		my $type = $fw->GetItemType($attr{'DST'});
+		if( $attr{'DST'} eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($attr{'DST'}); }
 		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'DST'}${be}${se}" );
 		my $servicelist = '';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
@@ -235,7 +235,7 @@ sub showConnmark {
 		my $type = '';
 		my @srcs = split(/,/, $attr{'SRC'});
 		foreach my $s (@srcs) {
-			if( $s eq 'FIREWALL' ) { $type = $s; } else { $type = $fw->GetItemType($s); }
+			if( $s eq 'FIREWALL' ) { $type = $s; } elsif( $s eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($s); }
 			$srclist .= "$icons{$type}{IMAGE}$s<br>";
 		}
 		push(@cols, "${sb}${bb}${srclist}${be}${se}" );
@@ -243,7 +243,7 @@ sub showConnmark {
 		my $type = '';
 		my @dsts = split(/,/, $attr{'DST'});
 		foreach my $d (@dsts) {
-			if( $d eq 'FIREWALL' ) { $type = $d; } else { $type = $fw->GetItemType($d); }
+			if( $d eq 'FIREWALL' ) { $type = $d; } elsif( $d eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($d); }
 			$dstlist .= "$icons{$type}{IMAGE}$d<br>";
 		}
 		push(@cols, "${sb}${bb}${dstlist}${be}${se}" );

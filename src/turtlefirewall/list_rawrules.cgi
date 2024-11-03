@@ -77,9 +77,10 @@ sub showConntrackPreroute {
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_conntrackpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
-		my $type = $fw->GetItemType($attr{'SRC'});
+		my $type = '';
+		if( $attr{'SRC'} eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($attr{'SRC'}); }
 		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'SRC'}${be}${se}" );
-		my $type = $fw->GetItemType($attr{'DST'});
+		if( $attr{'DST'} eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($attr{'DST'}); }
 		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'DST'}${be}${se}" );
 		push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/$attr{'PORT'}${be}${se}");
 		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
@@ -182,7 +183,7 @@ sub showConntrack {
 		my $href = &ui_link("edit_conntrack.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		push(@cols, "$icons{FIREWALL}{IMAGE}${sb}${bb}$attr{'SRC'}${be}${se}" );
-		my $type = $fw->GetItemType($attr{'DST'});
+		if( $attr{'DST'} eq '*' ) { $type = 'ZONE'; } else { $type = $fw->GetItemType($attr{'DST'}); }
 		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'DST'}${be}${se}" );
 		push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/$attr{'PORT'}${be}${se}");
 		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
