@@ -42,9 +42,9 @@ sub reportFlowStat {
 	print &ui_columns_start(undef, 100, 0, \@tds);
 	my $col = '';
 	$col = &ui_select("log", $log, \@logs);
-	print &ui_columns_row([ "$icons{ITEM}{IMAGE}<b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "$icons{LOG}{IMAGE}<b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
 	$col = &ui_select("type", $type, \@types);
-	print &ui_columns_row([ "$icons{NDPISERVICE}{IMAGE}<b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "$icons{OPTION}{IMAGE}<b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);
 	$col = &ui_select("max", $max, \@maxs);
 	$col .= "<small><i>$text{flowstat_max_help}</i></small>";
 	print &ui_columns_row([ "$icons{RATELIMIT}{IMAGE}<b>$text{'edit_flowstat_max'}</b>", $col ], \@tds);
