@@ -21,26 +21,15 @@ my $max = $in{'max'};
 my $top = $in{'top'};
 my $string = $in{'string'};
 
-my $icon = '';
-if( $type eq "source" ) { $icon = $icons{SRC}{IMAGE}; }
-if( $type eq "destination" ) { $icon = $icons{DST}{IMAGE}; }
-if( $type eq 'dport' ) { $icon = $icons{SERVICE}{IMAGE}; }
-if( $type eq 'protocol' ) { $icon = $icons{NDPISERVICE}{IMAGE}; }
-if( $type eq 'hostname' ) { $icon = $icons{HOSTNAME}{IMAGE}; }
-if( $type eq 'risk' ) { $icon = $icons{RISK}{IMAGE}; }
-
 if( $type eq 'risk' ) { &LoadNdpiRisks($fw); }
 
 my $flowtotal = 0;
 my %type_list = ();
 my @flows = &getflows($log);
 
-my $index = $flowreports{$type}{INDEX};
+my @stats = &getstats($flowreports{$type}{LOGIDX},\%type_list,\@flows);
 
-my @stats = &getstats($index,\%type_list,\@flows);
-
-$type_name = "flowstat_type_${type}";
-&showstats($type_name,@stats);
+&showstats($flowreports{$type}{TXTIDX},$flowreports{$type}{ICOIDX},@stats);
 
 &ui_print_footer("edit_flowstat.cgi",'flow statistics');
 
@@ -143,7 +132,7 @@ sub getflows {
 
 sub getstats {
 	
-	my $index = shift;
+	my $logindex = shift;
 	my ($type_list,$flows) = @_;
 
 	my @stats = ();
@@ -151,7 +140,7 @@ sub getstats {
 	# Sum bytes per Type
 	foreach my $f (@{$flows}) { 
 		foreach $t (sort keys %{$type_list}) {
-			if( $f->[$index] eq $t ) { $type_list{$t} = ($type_list{$t} + $f->[8] + $f->[9]); }
+			if( $f->[$logindex] eq $t ) { $type_list{$t} = ($type_list{$t} + $f->[8] + $f->[9]); }
 		}
 	}
 
@@ -167,7 +156,8 @@ sub getstats {
 
 sub showstats {
 
-	my $type_name = shift;
+	my $txtindex = shift;
+	my $icoindex = shift;
 	my @stats = @_;
 	my $graphwidth = 300;
 
@@ -183,7 +173,7 @@ sub showstats {
 
 	@tds = ( "style=white-space:nowrap", "width=$graphwidth", "", "width=1% style=text-align:right;white-space:nowrap" );
 
-	print &ui_columns_start([ "<b>$text{$type_name}</b>", "<b>$text{'flowstat_percent'}</b>", "", "<b>$text{'flowstat_traffic'}</b>" ], 100, 0, \@tds);
+	print &ui_columns_start([ "<b>$text{$txtindex}</b>", "<b>$text{'flowstat_percent'}</b>", "", "<b>$text{'flowstat_traffic'}</b>" ], 100, 0, \@tds);
 
 	foreach my $l (@stats) {
 		local @cols;
@@ -209,7 +199,7 @@ sub showstats {
 			$item = join(",", @risk_list);
 		}
 
-		push(@cols, "$icon<i>$item</i>");
+		push(@cols, "$icons{$icoindex}{IMAGE}<i>$item</i>");
 
 		push(@cols, "${graph}${greygraph}");
 
