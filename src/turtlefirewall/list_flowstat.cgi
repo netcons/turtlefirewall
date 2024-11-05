@@ -21,6 +21,14 @@ my $max = $in{'max'};
 my $top = $in{'top'};
 my $string = $in{'string'};
 
+my $icon = '';
+if( $type eq "source" ) { $icon = $icons{SRC}{IMAGE}; }
+if( $type eq "destination" ) { $icon = $icons{DST}{IMAGE}; }
+if( $type eq 'dport' ) { $icon = $icons{SERVICE}{IMAGE}; }
+if( $type eq 'protocol' ) { $icon = $icons{NDPISERVICE}{IMAGE}; }
+if( $type eq 'hostname' ) { $icon = $icons{HOSTNAME}{IMAGE}; }
+if( $type eq 'risk' ) { $icon = $icons{RISK}{IMAGE}; }
+
 if( $type eq 'risk' ) { &LoadNdpiRisks($fw); }
 
 my $flowtotal = 0;
@@ -201,7 +209,7 @@ sub showstats {
 			$item = join(",", @risk_list);
 		}
 
-		push(@cols, "<i>$item</i>");
+		push(@cols, "$icon<i>$item</i>");
 
 		push(@cols, "${graph}${greygraph}");
 
