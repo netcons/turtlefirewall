@@ -24,9 +24,9 @@ my $string = $in{'string'};
 if( $type eq 'risk' ) { &LoadNdpiRisks($fw); }
 
 my $flowtotal = 0;
-my ($type_list, @flows) = &getflows($log);
+my ($type_list, $flows) = &getflows($log);
 
-my @stats = &getstats($flowreports{$type}{LOGIDX},$type_list,\@flows);
+my @stats = &getstats($flowreports{$type}{LOGIDX},$type_list,$flows);
 
 &showstats($flowreports{$type}{TXTIDX},$flowreports{$type}{ICOIDX},@stats);
 
@@ -127,7 +127,7 @@ sub getflows {
 			       	$connmark, $srcnat, $dstnat, $protocol, $hostname,
 			       	$ja4c, $ja3c, $tlsfp, $tlsv, $risk];
 	}
-	return (\%type_list, @flows);
+	return (\%type_list, \@flows);
 }
 
 sub getstats {
