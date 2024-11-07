@@ -235,11 +235,13 @@ CHANGELOG
            - Theme : Update edit forms to use ui standard.
            - Theme : Standardize Webmin images.
 22-08-2024 v.2.4
-           - OS : Discontinue el7 and el8 RPM packaging.
-           - OS : Move old fw.xml format fixes, from RPM spec to fixconfig.sh.
-           - OS : Restore setup.cgi for wbm install.
+           - OS : Old fw.xml format fixes in fixconfig.sh.
+           - OS : Restore setup.cgi for WBM install.
            - OS : Support for Debian 12 syslog date format.
            - OS : Standardize shebang.
+           - Bug : Fixed ApplyRule risk variable not initialised.
+           - Bug : Fixed GeoIP include for Masquerade and Redirect.
+           - Bug : Include reserved name check on item rename.
            - Services : Removed depreciated smtps TCP port 465 service.
            - Services : Added DNS over TLS TCP port 853 service.
            - Feature : nDPI 4.9.11 support.
