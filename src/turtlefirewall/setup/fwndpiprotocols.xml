@@ -233,6 +233,7 @@
 	<ndpiprotocol name="nano" category="crypto-currency"> </ndpiprotocol>
 	<ndpiprotocol name="nat-pmp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="nats" category="instant-messaging"> </ndpiprotocol>
+	<ndpiprotocol name="naver" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="nestlogsink" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="netbios" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="neteasegames" category="gaming"> </ndpiprotocol>
@@ -259,6 +260,7 @@
 	<ndpiprotocol name="oracle" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="ospf" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="outlook" category="email"> </ndpiprotocol>
+	<ndpiprotocol name="paltalk" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="pandora" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="pastebin" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="pathofexile" category="gaming"> </ndpiprotocol>
