@@ -101,18 +101,18 @@ make all install
 Download source.
 ```
 cd /usr/src
-wget https://inai.de/files/xtables-addons/xtables-addons-3.26.tar.xz -O xtables-addons-3.26.tar.xz
-tar -xvf xtables-addons-3.26.tar.xz
-rm -rf xtables-addons-3.26.tar.xz
-cd xtables-addons-3.26
+wget https://inai.de/files/xtables-addons/xtables-addons-3.27.tar.xz -O xtables-addons-3.27.tar.xz
+tar -xvf xtables-addons-3.27.tar.xz
+rm -rf xtables-addons-3.27.tar.xz
+cd xtables-addons-3.27
 ```
 
 Install module.
 ```
 cp /tmp/turtlefirewall-master/dkms/dkms-xtables-addons.conf ./dkms.conf
-dkms add -m xtables-addons -v 3.26
-dkms build -m xtables-addons -v 3.26
-dkms install -m xtables-addons -v 3.26 
+dkms add -m xtables-addons -v 3.27
+dkms build -m xtables-addons -v 3.27
+dkms install -m xtables-addons -v 3.27
 ```
 
 Install library.
