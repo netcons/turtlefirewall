@@ -12,7 +12,7 @@ do 'turtlefirewall-lib.pl';
 &ReadParse();
 use Time::Piece;
 
-&ui_print_header( "<img src=images/grey-eye.png hspace=4>$text{'flowlog_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{LOG}{IMAGE}$text{'flowlog_title'}", $text{'title'}, "" );
 
 &LoadNdpiRisks($fw);
 &showLog();

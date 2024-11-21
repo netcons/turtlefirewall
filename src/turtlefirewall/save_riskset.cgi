@@ -19,6 +19,8 @@ my $description = $in{'description'};
 
 if( ! $fw->checkName($newriskset) ) { &error( $text{save_riskset_error6} ); }
 
+if ( $riskset eq 'none' || $newriskset eq 'none' ) { &error( $text{save_riskset_error7} ); }
+
 if( $in{'delete'} ) {
 	# delete riskset
 	if( $in{'d'} ) {
@@ -45,7 +47,6 @@ if( $in{'delete'} ) {
 		$whatfailed = $text{save_riskset_error_title3};
 	}
 	if ( $riskset eq '' ) { &error( $text{save_riskset_error3} ); }
-	if ( $riskset eq 'none' ) { &error( $text{save_riskset_error7} ); }
 	if ( $risks eq '' ) { &error( $text{save_riskset_error4} ); }
 
 	$fw->AddRiskSet( $riskset, $risks, $description );

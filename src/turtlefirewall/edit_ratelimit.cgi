@@ -17,9 +17,9 @@ $newratelimit = $in{'newratelimit'};
 
 my $heading = '';
 if( $new ) {
-	$heading = "<img src=images/create.png hspace=4>$text{'edit_ratelimit_title_create'}";
+	$heading = "$icons{CREATE}{IMAGE}$text{'edit_ratelimit_title_create'}";
 } else {
-	$heading = "<img src=images/edit.png hspace=4>$text{'edit_ratelimit_title_edit'}";
+	$heading = "$icons{EDIT}{IMAGE}$text{'edit_ratelimit_title_edit'}";
 }
 &ui_print_header( $heading, $text{'title'}, "" );
 
@@ -38,12 +38,12 @@ if( $new ) {
 	$col = &ui_textbox("newratelimit", $in{'ratelimit'});
 	$col .= &ui_hidden("ratelimit", $in{'ratelimit'});
 }
-print &ui_columns_row([ "<img src=images/ratelimit.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{RATELIMIT}{IMAGE}<b>$text{'name'}</b>", $col ], \@tds);
 $col = &ui_textbox("rate", $rate, 3, 0, 3);
 $col .= "<i>Mbps</i>";
-print &ui_columns_row([ "<img src=images/rate.png hspace=4><b>$text{'rate'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{RATE}{IMAGE}<b>$text{'rate'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);
-print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{DESCRIPTION}{IMAGE}<b>$text{'description'}</b>", $col ], \@tds);
 print &ui_columns_end();
 
 print "<table width=100%><tr>";

@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	$heading = "<img src=images/create.png hspace=4>$text{'edit_connmarkpreroute_title_create'}";
+	$heading = "$icons{CREATE}{IMAGE}$text{'edit_connmarkpreroute_title_create'}";
 	$idx = '';
 	$src = '';
 	$dst = '';
@@ -28,7 +28,7 @@ if( $new ) {
 	$mark = '';
 	$active = 1;
 } else {
-	$heading = "<img src=images/edit.png hspace=4>$text{'edit_connmarkpreroute_title_edit'}";
+	$heading = "$icons{EDIT}{IMAGE}$text{'edit_connmarkpreroute_title_edit'}";
 	$idx = $in{'idx'};
 	%rule = $fw->GetConnmarkPreroute($idx);
 	$src = $rule{'SRC'};
@@ -50,12 +50,14 @@ push @items_src, grep(!/FIREWALL/, $fw->GetZoneList());
 push @items_src, $fw->GetGeoipList();
 push @items_src, $fw->GetNetList();
 push @items_src, $fw->GetHostList();
+push @items_src, $fw->GetIPSetList();
 @items_src = sort(@items_src);
 
 my @items_dst = ('*');
 push @items_dst, $fw->GetGeoipList();
 push @items_dst, $fw->GetNetList();
 push @items_dst, $fw->GetHostList();
+push @items_dst, $fw->GetIPSetList();
 @items_dst = sort(@items_dst);
 
 if( $hostnameset eq '' ) { $hostnameset = 'any'; }
@@ -79,27 +81,27 @@ print &ui_columns_start(undef, 100, 0, \@tds);
 my $col = '';
 if( !$new ) {
 	$col = "<b>$idx</b>";
-	print &ui_columns_row([ "<img src=images/hash.png hspace=4><b>ID</b>", $col ], \@tds);
+	print &ui_columns_row([ "$icons{ID}{IMAGE}<b>ID</b>", $col ], \@tds);
 }
 $col = &ui_select("src", $src, \@items_src);
-print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'rule_src'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'rule_src'}</b>", $col ], \@tds);
 $col = &ui_select("dst", $dst, \@items_dst);
 $col .= "<small><i>$text{preroute_help}</i></small>";
-print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'rule_dst'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'rule_dst'}</b>", $col ], \@tds);
 $col = &formService($service, $port, 1);
-print &ui_columns_row([ "<img src=images/service.png hspace=4><b>$text{'rule_service'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{SERVICE}{IMAGE}<b>$text{'rule_service'}</b>", $col ], \@tds);
 $col = &formNdpiProtocol($ndpi, $category, 1);
-print &ui_columns_row([ "<img src=images/grey-ndpi.png hspace=4><b>$text{'rule_ndpi'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{NDPISERVICE}{IMAGE}<b>$text{'rule_ndpi'}</b>", $col ], \@tds);
 $col = &ui_select("hostnameset", $hostnameset, \@hostnamesets);
-print &ui_columns_row([ "<img src=images/hostnameset.png hspace=4><b>$text{'rule_hostname_set'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{HOSTNAMESET}{IMAGE}<b>$text{'rule_hostname_set'}</b>", $col ], \@tds);
 $col = &ui_select("riskset", $riskset, \@risksets);
-print &ui_columns_row([ "<img src=images/riskset.png hspace=4><b>$text{'rule_risk_set'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{RISKSET}{IMAGE}<b>$text{'rule_risk_set'}</b>", $col ], \@tds);
 $col = &ui_select("time", $time, \@times);
-print &ui_columns_row([ "<img src=images/time.png hspace=4><b>$text{'rule_time'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{TIME}{IMAGE}<b>$text{'rule_time'}</b>", $col ], \@tds);
 $col = &ui_textbox("mark", $mark, 13, 0, 13);
-print &ui_columns_row([ "<img src=images/grey-mark.png hspace=4><b>$text{'rule_mark'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{MARK}{IMAGE}<b>$text{'rule_mark'}</b>", $col ], \@tds);
 $col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
-print &ui_columns_row([ "<img src=images/active.png hspace=4><b>$text{'rule_active'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ACTIVE}{IMAGE}<b>$text{'rule_active'}</b>", $col ], \@tds);
 print &ui_columns_end();
 
 print "<table width=100%><tr>";

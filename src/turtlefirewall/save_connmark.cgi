@@ -13,7 +13,9 @@ do 'turtlefirewall-lib.pl';
 
 my $idx = $in{'idx'};
 my $src = $in{'src'};
+$src =~ s/\0/,/g;
 my $dst = $in{'dst'};
+$dst =~ s/\0/,/g;
 my ($service, $port) = &formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
 if( $service eq '' ) { $service = 'all'; }
 my ($ndpi, $category) = &formNdpiProtocolParse( $in{'ndpiprotocoltype'}, $in{'ndpiprotocol2'}, $in{'category'} );

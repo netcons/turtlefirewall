@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "<img src=images/grey-nat.png hspace=4>$text{'list_nat_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{NAT}{IMAGE}$text{'list_nat_title'}", $text{'title'}, "" );
 
 $form = 0;
 &showNat();
@@ -29,7 +29,7 @@ print "<br><br>";
 #============================================================================
 
 sub showNat {
-	print &ui_subheading("<img src=images/grey-nat.png hspace=4>",$text{'nat'});
+	print &ui_subheading($icons{NAT}{IMAGE},$text{'nat'});
 	print &ui_form_start("save_nat.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -78,34 +78,30 @@ sub showNat {
 		push(@cols, $href );
 		my %zone = $fw->GetZone($attr{'VIRTUAL'});
 		if( $zone{IF} ne '' ) {
-			my $zimage = '<img src=images/zone.png hspace=4>';
-			push(@cols, "${zimage}${sb}$attr{'VIRTUAL'} ($zone{'IF'})${se}" );
+			push(@cols, "$icons{ZONE}{IMAGE}${sb}$attr{'VIRTUAL'} ($zone{'IF'})${se}" );
 		} else {
-			my $himage = '<img src=images/host.png hspace=4>';
-			push(@cols, "${himage}${sb}$attr{'VIRTUAL'}${se}" );
+			push(@cols, "$icons{HOST}{IMAGE}${sb}$attr{'VIRTUAL'}${se}" );
 		}
-		my $himage = '<img src=images/host.png hspace=4>';
-		push(@cols, "${himage}${sb}$attr{'REAL'}${se}" );
+		push(@cols, "$icons{HOST}{IMAGE}${sb}$attr{'REAL'}${se}" );
 		my $servicelist = '';
-		my $simage = '<img src=images/service.png hspace=4>';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$servicelist .= "${simage}$attr{'SERVICE'}/$attr{'PORT'}";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$attr{'SERVICE'}/$attr{'PORT'}";
 			} else {
-				$servicelist .= "${simage}$attr{'SERVICE'}/all";
+				$servicelist .= "$icons{SERVICE}{IMAGE}{'SERVICE'}/all";
 			}
 		} else {
 			my @services = split(/,/, $attr{'SERVICE'});
 			foreach my $s (@services) {
-				$servicelist .= "${simage}${s}<br>";
+				$servicelist .= "$icons{SERVICE}{IMAGE}${s}<br>";
 			}
 		}
-		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
+		push(@cols, "${sb}${servicelist}${se}");
 		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
-		my $nimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
+		my $nimage = $attr{'ACTIVE'} eq 'NO' ? $icons{NAT}{IMAGE} : $icons{NAT_A}{IMAGE};
 		push(@cols, "${nimage}${sb}${cb}$text{YES}${ce}${se}" );
-		my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';
+		my $timage = $attr{'TOPORT'} eq '' ? '' : $icons{TOPORT}{IMAGE};
 		push(@cols, "${timage}${sb}$attr{'TOPORT'}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
@@ -141,11 +137,11 @@ sub showNat {
 }
 
 sub showMasquerade {
-	print &ui_subheading("<img src=images/grey-nat.png hspace=4>",$text{'masquerade'});
-	print &ui_form_start("save_masq.cgi", "post");
+	print &ui_subheading($icons{MASQUERADE}{IMAGE},$text{'masquerade'});
+	print &ui_form_start("save_masquerade.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_masq.cgi?new=1\">$text{'list_nat_create_masq'}</a>" );
+		   "<a href=\"edit_masquerade.cgi?new=1\">$text{'list_nat_create_masq'}</a>" );
         @tds = ( "width=1% style=vertical-align:top",
 		 "width=1% style=text-align:center;vertical-align:top",
 		 "width=25% style=vertical-align:top;white-space:normal",
@@ -184,44 +180,36 @@ sub showMasquerade {
 		local @cols;
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
-		my $href = &ui_link("edit_masq.cgi?idx=$i","${sb}${i}${se}");
+		my $href = &ui_link("edit_masquerade.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
-		my $zimage = '<img src=images/zone.png hspace=4>';
-		my $type = $fw->GetItemType($attr{'SRC'});
-		if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
-		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
-		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}".($attr{'SRC'} ne '' ? $attr{'SRC'} : '*')."${se}" );
-		my $zimage = '<img src=images/zone.png hspace=4>';
-		my $type = $fw->GetItemType($attr{'DST'});
-                if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
-		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
-		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}".($attr{'DST'} ne '' ? $attr{'DST'} : '&nbsp;')."${se}" );
+		my $type = '';
+		$type = $fw->GetItemType($attr{'SRC'});
+		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'SRC'}${se}" );
+		$type = $fw->GetItemType($attr{'DST'});
+		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'DST'}${se}" );
 		my $servicelist = '';
-		my $simage = '<img src=images/service.png hspace=4>';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$servicelist .= "${simage}$attr{'SERVICE'}/$attr{'PORT'}";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$attr{'SERVICE'}/$attr{'PORT'}";
 			} else {
-				$servicelist .= "${simage}$attr{'SERVICE'}/all";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$attr{'SERVICE'}/all";
 			}
 		} else {
 			my @services = split(/,/, $attr{'SERVICE'});
 			foreach my $s (@services) {
-				$servicelist .= "${simage}${s}<br>";
+				$servicelist .= "$icons{SERVICE}{IMAGE}${s}<br>";
 			}
 		}
-		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
+		push(@cols, "${sb}${servicelist}${se}");
 		if( $attr{'MASQUERADE'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
-			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
+			my $dimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MASQUERADE}{IMAGE} : $icons{MASQUERADE_NO}{IMAGE};
 			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
 		} else {
 			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
-			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
+			my $aimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MASQUERADE}{IMAGE} : $icons{MASQUERADE_A}{IMAGE};
 			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
 		}
 		local $mover;
@@ -257,7 +245,7 @@ sub showMasquerade {
 }
 
 sub showRedirect {
-	print &ui_subheading("<img src=images/grey-nat.png hspace=4>",$text{'redirect_redirect'});
+	print &ui_subheading($icons{REDIRECT}{IMAGE},$text{'redirect_redirect'});
 	print &ui_form_start("save_redirect.cgi", "post");
 	@links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
@@ -303,41 +291,37 @@ sub showRedirect {
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_redirect.cgi?idx=$i","${sb}${i}${se}");
 		push(@cols, $href );
-		my $zimage = '<img src=images/zone.png hspace=4>';
-		my $type = $fw->GetItemType($attr{'SRC'});
-                if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
-		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
-		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}$attr{'SRC'}${se}" );
-		my $zimage = '<img src=images/zone.png hspace=4>';
-		my $type = $fw->GetItemType($attr{'DST'});
-                if( $type eq 'NET' ) { $zimage = '<img src=images/net.png hspace=4>'; }
-		elsif( $type eq 'HOST' ) { $zimage = '<img src=images/host.png hspace=4>'; }
-		elsif( $type eq 'GROUP' ) { $zimage = '<img src=images/group.png hspace=4>'; }
-		push(@cols, "${zimage}${sb}$attr{'DST'}${se}" );
+		my $type = '';
+		$type = $fw->GetItemType($attr{'SRC'});
+		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'SRC'}${se}" );
+		$type = $fw->GetItemType($attr{'DST'});
+		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'DST'}${se}" );
 		my $servicelist = '';
-		$servicelist .= $attr{'SERVICE'};
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
-				$servicelist .= "/$attr{'PORT'}";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$attr{'SERVICE'}/$attr{'PORT'}";
 			} else {
-				$servicelist .= "/all";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$attr{'SERVICE'}/all";
+			}
+		} else {
+			my @services = split(/,/, $attr{'SERVICE'});
+			foreach my $s (@services) {
+				$servicelist .= "$icons{SERVICE}{IMAGE}${s}<br>";
 			}
 		}
-		my $simage = '<img src=images/service.png hspace=4>';
-		push(@cols, "${simage}${sb}${servicelist}${se}");
+		push(@cols, "${sb}${servicelist}${se}");
 		if( $attr{'REDIRECT'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
-			my $dimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/red-nat.png hspace=4>';
+			my $dimage = $attr{'ACTIVE'} eq 'NO' ? $icons{REDIRECT}{IMAGE} : $icons{REDIRECT_NO}{IMAGE};
 			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
 			push(@cols, "" );
 		} else {
 			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
-			my $aimage = $attr{'ACTIVE'} eq 'NO' ? '<img src=images/grey-nat.png hspace=4>' : '<img src=images/nat.png hspace=4>';
+			my $aimage = $attr{'ACTIVE'} eq 'NO' ? $icons{REDIRECT}{IMAGE} : $icons{REDIRECT_A}{IMAGE};
 			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
-			my $timage = $attr{'TOPORT'} eq '' ? '' : '<img src=images/toport.png hspace=4>';
+			my $timage = $attr{'TOPORT'} eq '' ? '' : $icons{TOPORT}{IMAGE};
 			push(@cols, "${timage}${sb}$attr{'TOPORT'}${se}" );
 		}
 		local $mover;

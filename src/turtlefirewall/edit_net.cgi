@@ -15,9 +15,9 @@ $new = $in{'new'};
 
 my $heading = '';
 if( $new ) {
-	$heading = "<img src=images/create.png hspace=4>$text{'edit_net_title_create'}";
+	$heading = "$icons{CREATE}{IMAGE}$text{'edit_net_title_create'}";
 } else {
-	$heading = "<img src=images/edit.png hspace=4>$text{'edit_net_title_edit'}";
+	$heading = "$icons{EDIT}{IMAGE}$text{'edit_net_title_edit'}";
 }
 &ui_print_header( $heading, $text{'title'}, "" );
 
@@ -42,15 +42,15 @@ if( $new ) {
 	$col = &ui_textbox("newnet", $in{'net'});
 	$col .= &ui_hidden("net", $in{'net'});
 }
-print &ui_columns_row([ "<img src=images/net.png hspace=4><b>$text{'name'}</b>", $col ], \@tds);
-$col = &ui_textbox("ip", $ip);
-print &ui_columns_row([ "<img src=images/address.png hspace=4><b>$text{'netaddress'}</b>", $col ], \@tds);
-$col = &ui_textbox("netmask", $netmask);
-print &ui_columns_row([ "<img src=images/mask.png hspace=4><b>$text{'netmask'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{NET}{IMAGE}<b>$text{'name'}</b>", $col ], \@tds);
+$col = &ui_textbox("ip", $ip, 15, 0, 15);
+print &ui_columns_row([ "$icons{ADDRESS}{IMAGE}<b>$text{'netaddress'}</b>", $col ], \@tds);
+$col = &ui_textbox("netmask", $netmask, 15, 0, 15);
+print &ui_columns_row([ "$icons{NETMASK}{IMAGE}<b>$text{'netmask'}</b>", $col ], \@tds);
 $col = &ui_select("zone", $zone, \@zones);
-print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'zone'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'zone'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);
-print &ui_columns_row([ "<img src=images/info.png hspace=4><b>$text{'description'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{DESCRIPTION}{IMAGE}<b>$text{'description'}</b>", $col ], \@tds);
 print &ui_columns_end();
 
 print "<table width=100%><tr>";

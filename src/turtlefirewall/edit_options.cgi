@@ -10,7 +10,7 @@
 
 do 'turtlefirewall-lib.pl';
 
-&ui_print_header( "<img src=images/edit.png hspace=4>$text{'edit_options_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{EDIT}{IMAGE}$text{'edit_options_title'}", $text{'title'}, "" );
 
 &getOptionsList();
 
@@ -21,7 +21,7 @@ foreach $option (@optionkeys) {
 	}
 }
 
-print &ui_subheading("<img src=images/edit.png hspace=4>$text{'edit_options_title'}");
+print &ui_subheading("$icons{EDIT}{IMAGE}$text{'edit_options_title'}");
 print &ui_form_start("save_options.cgi", "post");
 my @tds = ( "width=20% style=vertical-align:top", "width=20% style=vertical-align:top", "width=60% style=vertical-align:top" );
 print &ui_columns_start(undef, 100, 0, \@tds);
@@ -58,5 +58,5 @@ sub showOption {
 	if( $type eq 'text' ) {
 		$col = &ui_textbox($var, $value);
 	}
-	print &ui_columns_row([ "<img src=images/option.png hspace=4><b>$name</b>", $col, "$desc<br>Default: <b>$default</b>" ], \@tds);
+	print &ui_columns_row([ "$icons{OPTION}{IMAGE}<b>$name</b>", $col, "$desc<br>Default: <b>$default</b>" ], \@tds);
 }

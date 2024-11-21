@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 use Tie::File;
 
-&ui_print_header( "<img src=images/create.png hspace=4>$text{'edit_flowstat_title_create'}", $text{'title'}, "" );
+&ui_print_header( "$icons{CREATE}{IMAGE}$text{'edit_flowstat_title_create'}", $text{'title'}, "" );
 
 &reportFlowStat();
 print "<br><br>";
@@ -36,22 +36,22 @@ sub reportFlowStat {
 
 	my @logs = glob("${log}*");
 
-	print &ui_subheading("<img src=images/create.png hspace=4>$text{'edit_flowstat_title_create'}");
+	print &ui_subheading("$icons{CREATE}{IMAGE}$text{'edit_flowstat_title_create'}");
 	print &ui_form_start("list_flowstat.cgi", "post");
 	my @tds = ( "width=20% style=white-space:nowrap ", "width=80%" );
 	print &ui_columns_start(undef, 100, 0, \@tds);
 	my $col = '';
 	$col = &ui_select("log", $log, \@logs);
-	print &ui_columns_row([ "<img src=images/item.png hspace=4><b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "$icons{LOG}{IMAGE}<b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
 	$col = &ui_select("type", $type, \@types);
-	print &ui_columns_row([ "<img src=images/grey-ndpi.png hspace=4><b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "$icons{OPTION}{IMAGE}<b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);
 	$col = &ui_select("max", $max, \@maxs);
 	$col .= "<small><i>$text{flowstat_max_help}</i></small>";
-	print &ui_columns_row([ "<img src=images/ratelimit.png hspace=4><b>$text{'edit_flowstat_max'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "$icons{RATELIMIT}{IMAGE}<b>$text{'edit_flowstat_max'}</b>", $col ], \@tds);
 	$col = &ui_select("top", $top, \@tops);
-	print &ui_columns_row([ "<img src=images/graph.png hspace=4><b>$text{'edit_flowstat_top'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "$icons{FLOWSTAT}{IMAGE}<b>$text{'edit_flowstat_top'}</b>", $col ], \@tds);
 	$col = &ui_textbox("string", $string, 60, 0, 60);
-	print &ui_columns_row([ "<img src=images/target.png hspace=4><b>$text{'edit_flowstat_string'}</b>", $col ], \@tds);
+	print &ui_columns_row([ "$icons{TARGET}{IMAGE}<b>$text{'edit_flowstat_string'}</b>", $col ], \@tds);
 	print &ui_columns_end();
 
 	print "<table width=100%><tr>";

@@ -11,39 +11,43 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-if( $in{'zone'} eq 'FIREWALL' ) {
-	redirect('list_items.cgi');
-}
-
 $new = $in{'new'};
 
 my $heading = '';
 if( $new ) {
-	$heading = "$icons{CREATE}{IMAGE}$text{'edit_zone_title_create'}";
+	$heading = "$icons{CREATE}{IMAGE}$text{'edit_ipset_title_create'}";
 } else {
-	$heading = "$icons{EDIT}{IMAGE}$text{'edit_zone_title_edit'}";
+	$heading = "$icons{EDIT}{IMAGE}$text{'edit_ipset_title_edit'}";
 }
 &ui_print_header( $heading, $text{'title'}, "" );
 
-my %z = $fw->GetZone($in{'zone'});
-my $if = $z{'IF'};
-my $description = $z{'DESCRIPTION'};
+my $ipset = $in{'ipset'};
+my $newipset = $in{'newipset'};
+my %i = $fw->GetIPSet($ipset);
+my $ip = $i{'IP'};
+my $zone = $i{'ZONE'};
+my $description = $i{'DESCRIPTION'};
+
+my @ips = $fw->GetAddressListList();
+
+my @zones = grep(!/FIREWALL/, $fw->GetZoneList());
 
 print &ui_subheading($heading);
-print &ui_form_start("save_zone.cgi", "post");
+print &ui_form_start("save_ipset.cgi", "post");
 my @tds = ( "width=20%", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);
 my $col = '';
 if( $new ) {
-	$col = &ui_textbox("zone", undef, 13, 0, 13);
+	$col = &ui_textbox("ipset");
 } else {
-	$col = &ui_textbox("newzone", $in{'zone'}, 13, 0, 13);
-	$col .= &ui_hidden("zone", $in{'zone'});
+	$col = &ui_textbox("newipset", $in{'ipset'});
+	$col .= &ui_hidden("ipset", $in{'ipset'});
 }
-print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'name'}</b>", $col ], \@tds);
-$col = &ui_textbox("if", $if);
-$col .= "<small><i>$text{zone_help}</i></small>";
-print &ui_columns_row([ "$icons{INTERFACE}{IMAGE}<b>$text{'interface'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{IPSET}{IMAGE}<b>$text{'name'}</b>", $col ], \@tds);
+$col = &ui_select("ip", $ip, \@ips);
+print &ui_columns_row([ "$icons{ADDRESS}{IMAGE}<b>$text{'addresslist'}</b>", $col ], \@tds);
+$col = &ui_select("zone", $zone, \@zones);
+print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'zone'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);
 print &ui_columns_row([ "$icons{DESCRIPTION}{IMAGE}<b>$text{'description'}</b>", $col ], \@tds);
 print &ui_columns_end();

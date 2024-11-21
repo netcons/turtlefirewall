@@ -13,7 +13,7 @@ do 'turtlefirewall-lib.pl';
 use Tie::File;
 use Time::Piece;
 
-&ui_print_header( "<img src=images/graph.png hspace=4>$text{'report_flowstat_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{FLOWSTAT}{IMAGE}$text{'report_flowstat_title'}", $text{'title'}, "" );
 
 my $log = $in{'log'};
 my $type = $in{'type'};
@@ -24,15 +24,11 @@ my $string = $in{'string'};
 if( $type eq 'risk' ) { &LoadNdpiRisks($fw); }
 
 my $flowtotal = 0;
-my %type_list = ();
-my @flows = &getflows($log);
+my ($type_list, $flows) = &getflows($log);
 
-my $index = $flowreports{$type}{INDEX};
+my @stats = &getstats($flowreports{$type}{LOGIDX},$type_list,$flows);
 
-my @stats = &getstats($index,\%type_list,\@flows);
-
-$type_name = "flowstat_type_${type}";
-&showstats($type_name,@stats);
+&showstats($flowreports{$type}{TXTIDX},$flowreports{$type}{ICOIDX},@stats);
 
 &ui_print_footer("edit_flowstat.cgi",'flow statistics');
 
@@ -41,6 +37,7 @@ $type_name = "flowstat_type_${type}";
 sub getflows {
 
 	my $log = shift;
+	my %type_list = ();
 
 	my @last_log_lines = ();
 
@@ -130,12 +127,12 @@ sub getflows {
 			       	$connmark, $srcnat, $dstnat, $protocol, $hostname,
 			       	$ja4c, $ja3c, $tlsfp, $tlsv, $risk];
 	}
-	return @flows;
+	return (\%type_list, \@flows);
 }
 
 sub getstats {
 	
-	my $index = shift;
+	my $logindex = shift;
 	my ($type_list,$flows) = @_;
 
 	my @stats = ();
@@ -143,7 +140,7 @@ sub getstats {
 	# Sum bytes per Type
 	foreach my $f (@{$flows}) { 
 		foreach $t (sort keys %{$type_list}) {
-			if( $f->[$index] eq $t ) { $type_list{$t} = ($type_list{$t} + $f->[8] + $f->[9]); }
+			if( $f->[$logindex] eq $t ) { $type_list{$t} = ($type_list{$t} + $f->[8] + $f->[9]); }
 		}
 	}
 
@@ -159,7 +156,8 @@ sub getstats {
 
 sub showstats {
 
-	my $type_name = shift;
+	my $txtindex = shift;
+	my $icoindex = shift;
 	my @stats = @_;
 	my $graphwidth = 300;
 
@@ -175,7 +173,7 @@ sub showstats {
 
 	@tds = ( "style=white-space:nowrap", "width=$graphwidth", "", "width=1% style=text-align:right;white-space:nowrap" );
 
-	print &ui_columns_start([ "<b>$text{$type_name}</b>", "<b>$text{'flowstat_percent'}</b>", "", "<b>$text{'flowstat_traffic'}</b>" ], 100, 0, \@tds);
+	print &ui_columns_start([ "<b>$text{$txtindex}</b>", "<b>$text{'flowstat_percent'}</b>", "", "<b>$text{'flowstat_traffic'}</b>" ], 100, 0, \@tds);
 
 	foreach my $l (@stats) {
 		local @cols;
@@ -201,7 +199,7 @@ sub showstats {
 			$item = join(",", @risk_list);
 		}
 
-		push(@cols, "<i>$item</i>");
+		push(@cols, "$icons{$icoindex}{IMAGE}<i>$item</i>");
 
 		push(@cols, "${graph}${greygraph}");
 

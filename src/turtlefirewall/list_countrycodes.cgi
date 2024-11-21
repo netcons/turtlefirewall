@@ -11,7 +11,7 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "<img src=images/countrycode.png hspace=4>$text{'list_countrycodes_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{COUNTRYCODE}{IMAGE}$text{'list_countrycodes_title'}", $text{'title'}, "" );
 
 &LoadCountryCodes($fw);
 &showCountryCodes();
@@ -27,7 +27,7 @@ sub showCountryCodes {
         my @countrycodes = $fw->GetCountryCodesList();
 	foreach my $name (@countrycodes) {
 		my %countrycode = $fw->GetCountryCode($name);
-	        print &ui_columns_row([ "<img src=images/countrycode.png hspace=4>$name", "<img src=images/info.png hspace=4>$countrycode{'DESCRIPTION'}" ], \@tds);
+	        print &ui_columns_row([ "$icons{COUNTRYCODE}{IMAGE}$name", "$icons{DESCRIPTION}{IMAGE}$countrycode{'DESCRIPTION'}" ], \@tds);
         }
 	print &ui_columns_end();
 }

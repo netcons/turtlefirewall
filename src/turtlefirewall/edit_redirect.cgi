@@ -14,7 +14,7 @@ do 'turtlefirewall-lib.pl';
 $new = $in{'new'};
 
 if( $new ) {
-	$heading = "<img src=images/create.png hspace=4>$text{'edit_redirect_title_create'}";
+	$heading = "$icons{CREATE}{IMAGE}$text{'edit_redirect_title_create'}";
 	$idx = '';
 	$src = '';
 	$dst = '';
@@ -24,7 +24,7 @@ if( $new ) {
 	$is_redirect = 1;
 	$active = 1;
 } else {
-	$heading = "<img src=images/edit.png hspace=4>$text{'edit_redirect_title_edit'}";
+	$heading = "$icons{EDIT}{IMAGE}$text{'edit_redirect_title_edit'}";
 	$idx = $in{'idx'};
 	%redirect = $fw->GetRedirect($idx);
 	$src = $redirect{'SRC'};
@@ -42,6 +42,8 @@ push @items_src, grep(!/FIREWALL/, $fw->GetZoneList());
 push @items_src, $fw->GetNetList();
 push @items_src, $fw->GetHostList();
 push @items_src, $fw->GetGroupList();
+push @items_src, $fw->GetGeoipList();
+push @items_src, $fw->GetIPSetList();
 @items_src = sort(@items_src);
 
 my @items_dst = ('*');
@@ -50,6 +52,8 @@ my @items_dst = ('*');
 push @items_dst, $fw->GetNetList();
 push @items_dst, $fw->GetHostList();
 push @items_dst, $fw->GetGroupList();
+push @items_dst, $fw->GetGeoipList();
+push @items_dst, $fw->GetIPSetList();
 @items_dst = sort(@items_dst);
 
 print &ui_subheading($heading);
@@ -60,22 +64,22 @@ print &ui_columns_start(undef, 100, 0, \@tds);
 my $col = '';
 if( !$new ) {
 	$col = "<b>$idx</b>";
-	print &ui_columns_row([ "<img src=images/hash.png hspace=4><b>ID</b>", $col ], \@tds);
+	print &ui_columns_row([ "$icons{ID}{IMAGE}<b>ID</b>", $col ], \@tds);
 }
 $col = &ui_select("src", $src, \@items_src);
-print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'redirect_src'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'redirect_src'}</b>", $col ], \@tds);
 $col = &ui_select("dst", $dst, \@items_dst);
 $col .= "<small><i>$text{preroute_help}</i></small>";
-print &ui_columns_row([ "<img src=images/zone.png hspace=4><b>$text{'redirect_dst'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'redirect_dst'}</b>", $col ], \@tds);
 $col = &formService($service, $port, 1);
-print &ui_columns_row([ "<img src=images/service.png hspace=4><b>$text{'rule_service'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{SERVICE}{IMAGE}<b>$text{'rule_service'}</b>", $col ], \@tds);
 my @opts = ( [ 0, "$text{NO}<br>" ], [ 1, "$text{YES}" ] );
 $col = &ui_radio("redirect", $is_redirect ? 1 : 0, \@opts);
 $col .= " : $text{redirect_toport} : ";
 $col .= &ui_textbox("toport", $toport, 5, 0, 5);
-print &ui_columns_row([ "<img src=images/grey-nat.png hspace=4><b>$text{'redirect_redirect'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{REDIRECT}{IMAGE}<b>$text{'redirect_redirect'}</b>", $col ], \@tds);
 $col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
-print &ui_columns_row([ "<img src=images/active.png hspace=4><b>$text{'redirect_active'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{ACTIVE}{IMAGE}<b>$text{'redirect_active'}</b>", $col ], \@tds);
 print &ui_columns_end();
 
 print "<table width=100%><tr>";

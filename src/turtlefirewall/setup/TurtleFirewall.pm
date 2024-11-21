@@ -88,6 +88,16 @@ sub GetRateLimitList {
 	return sort( keys %{ $this->{fw}{RATELIMIT} } );
 }
 
+sub GetAddressListList {
+	my $this = shift;
+	return sort( keys %{ $this->{fw}{ADDRESSLIST} } );
+}
+
+sub GetIPSetList {
+	my $this = shift;
+	return sort( keys %{ $this->{fw}{IPSET} } );
+}
+
 sub GetZone {
 	my ($this,$name) = @_;
 	return %{ $this->{fw}{ZONE}{$name} };
@@ -138,6 +148,16 @@ sub GetRateLimit {
 	return %{ $this->{fw}{RATELIMIT}{$name} };
 }
 
+sub GetAddressList {
+	my ($this,$name) = @_;
+	return %{ $this->{fw}{ADDRESSLIST}{$name} };
+}
+
+sub GetIPSet {
+	my ($this,$name) = @_;
+	return %{ $this->{fw}{IPSET}{$name} };
+}
+
 sub GetAllItemsList {
 	my $this = shift;
 	return sort( keys %{ $this->{fwItems} } );
@@ -154,6 +174,7 @@ sub GetItemsAllowToGroup {
 	push @items, @{$this->{fwKeys}{NET}};
 	push @items, @{$this->{fwKeys}{HOST}};
 	push @items, @{$this->{fwKeys}{GEOIP}};
+	push @items, @{$this->{fwKeys}{IPSET}};
 	foreach my $g ( @{$this->{fwKeys}{GROUP}} ) {
 		if( $g eq $group ) {
 			last;
@@ -304,8 +325,11 @@ sub GetOption {
 
 sub GetItemType {
 	my $this = shift;
-	my $name = shift;
-	return $type = $this->{fwItems}{$name};
+	my $item = shift;
+
+	my $type = '';
+	if( $item eq '*' ) { $type = 'ZONE' } elsif( $item eq 'FIREWALL' ) { $type = 'FIREWALL' } else { $type = $this->{fwItems}{$item} }
+	return $type;
 }
 
 # AddGroup( $group, $description, @items )
@@ -315,13 +339,12 @@ sub AddGroup {
 	my $description = shift;
 	my @items = @_;
 	if( !$this->{fw}{GROUP}{$group} ) {
-		# Se non e' gia' stato inserito lo aggiungo alla lista ordinata di keys
+		# If it has not already been inserted, I add it to the ordered list of keys
 		push @{ $this->{fwKeys}{GROUP} }, $group;
 	}
 	%{ $this->{fw}{GROUP}{$group} } = ( 'DESCRIPTION'=>$description );
 	@{ $this->{fw}{GROUP}{$group}{ITEMS} } = @items;
 	$this->{fwItems}{$group} = 'GROUP';
-	return 1;
 }
 
 # AddTimeGroup( $timegroup, $description, @items )
@@ -331,13 +354,12 @@ sub AddTimeGroup {
 	my $description = shift;
 	my @items = @_;
 	if( !$this->{fw}{TIMEGROUP}{$timegroup} ) {
-		# Se non e' gia' stato inserito lo aggiungo alla lista ordinata di keys
+		# If it has not already been inserted, I add it to the ordered list of keys
 		push @{ $this->{fwKeys}{TIMEGROUP} }, $timegroup;
 	}
 	%{ $this->{fw}{TIMEGROUP}{$timegroup} } = ( 'DESCRIPTION'=>$description );
 	@{ $this->{fw}{TIMEGROUP}{$timegroup}{ITEMS} } = @items;
 	$this->{fwItems}{$timegroup} = 'TIMEGROUP';
-	return 1;
 }
 
 # AddHostNameSet( $name, $hostnames, $description )
@@ -361,6 +383,20 @@ sub AddRateLimit {
 	$this->{fwItems}{$name} = 'RATELIMIT';
 }
 
+# AddAddressList( $name, $file, $type, $description )
+sub AddAddressList {
+	my ($this, $name, $file, $type, $description) = @_;
+	%{ $this->{fw}{ADDRESSLIST}{$name} } = ('NAME'=>$name, 'FILE'=>$file, 'TYPE'=>$type, 'DESCRIPTION'=>$description );
+	$this->{fwItems}{$name} = 'ADDRESSLIST';
+}
+
+# AddIPSet( $name, $ip, $zone, $description )
+sub AddIPSet {
+	my ($this, $name, $ip, $zone, $description) = @_;
+	%{ $this->{fw}{IPSET}{$name} } = ('NAME'=>$name, 'IP'=>$ip, 'ZONE'=>$zone, 'DESCRIPTION'=>$description );
+	$this->{fwItems}{$name} = 'IPSET';
+}
+
 # AddHost( $name, $ip, $mac, $zone, $description )
 sub AddHost {
 	my ($this, $name, $ip, $mac, $zone, $description) = @_;
@@ -380,7 +416,6 @@ sub AddGeoip {
 	my ($this, $name, $ip, $zone, $description) = @_;
 	%{ $this->{fw}{GEOIP}{$name} } = ('NAME'=>$name, 'IP'=>$ip, 'ZONE'=>$zone, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'GEOIP';
-	return 1;
 }
 
 # AddNet( $name, $ip, $netmask, $zone, $description )
@@ -388,7 +423,6 @@ sub AddNet {
 	my ($this, $name, $ip, $netmask, $zone, $description) = @_;
 	%{ $this->{fw}{NET}{$name} } = ('NAME'=>$name, 'IP'=>$ip, 'NETMASK'=>$netmask,'ZONE'=>$zone, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'NET';
-	return 1;
 }
 
 # AddZone( $name, $if, $description  )
@@ -396,7 +430,6 @@ sub AddZone {
 	my ($this, $name, $if, $description) = @_;
 	%{ $this->{fw}{ZONE}{$name} } = ('NAME'=>$name, 'IF'=>$if, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'ZONE';
-	return 1;
 }
 
 # AddMasquerade( $idx, $zone, $active ) if $idx==0 then add new Masquerade
@@ -657,6 +690,22 @@ sub DeleteItem {
 				last;
 			}
 		}
+		for my $k (@{$this->{fwKeys}{IPSET}}) {
+			if( $this->{fw}{IPSET}{$k}{ZONE} eq $name ) {
+				$found = 1;
+				last;
+			}
+		}
+	}
+
+	# If it's an addresslist, I need to check ipset items that use this addresslist.
+	if( $type eq 'ADDRESSLIST' ) {
+		for my $k (@{$this->{fwKeys}{IPSET}}) {
+			if( $this->{fw}{IPSET}{$k}{IP} eq $name ) {
+				$found = 1;
+				last;
+			}
+		}
 	}
 
 	# Now I check if this item is included in a group
@@ -817,6 +866,20 @@ sub RenameItem {
 					$this->{fw}{GEOIP}{$k}{ZONE} = $newname;
 				}
 			}
+			foreach $k (@{$this->{fwKeys}{IPSET}}) {
+				if( $this->{fw}{IPSET}{$k}{ZONE} eq $oldname ) {
+					$this->{fw}{IPSET}{$k}{ZONE} = $newname;
+				}
+			}
+		}
+
+		# If it's an addresslist, I need to change all ipsets that use this addresslist.
+		if( $type eq 'ADDRESSLIST' ) {
+			foreach $k (@{$this->{fwKeys}{IPSET}}) {
+				if( $this->{fw}{IPSET}{$k}{IP} eq $oldname ) {
+					$this->{fw}{IPSET}{$k}{IP} = $newname;
+				}
+			}
 		}
 
 		# change itme name in groups
@@ -840,11 +903,11 @@ sub RenameItem {
 		# Change item name in all rules
 		foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','CONNTRACK','NAT','MASQUERADE','REDIRECT') {
 			for( my $i=0; $i<=$#{$this->{fw}{$ruletype}}; $i++ ) {
-				foreach $field ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
-					my @field_list = split( /,/, $this->{fw}{$ruletype}[$i]{$field} );
-					if( grep( /^$oldname$/, @field_list ) ) {
-						s/^$oldname$/$newname/ for @field_list;
-						$this->{fw}{$ruletype}[$i]{$field} = join(",", @field_list);
+				foreach $item ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
+					my @item_list = split( /,/, $this->{fw}{$ruletype}[$i]{$item} );
+					if( grep( /^$oldname$/, @item_list ) ) {
+						s/^$oldname$/$newname/ for @item_list;
+						$this->{fw}{$ruletype}[$i]{$item} = join(",", @item_list);
 					}
 				}
 			}
@@ -852,6 +915,78 @@ sub RenameItem {
 
 		return 1;
 	}
+}
+
+sub GetItemReferences {
+	my $this = shift;
+	my $item = shift;
+
+	my $type = $this->{fwItems}{$item};
+
+	my %references = ();
+
+	if( $type eq 'ZONE' ) {
+		foreach $k (@{$this->{fwKeys}{HOST}}) { 
+			if( $this->{fw}{HOST}{$k}{ZONE} eq $item ) { 
+				$references{$k} = 'HOST';
+			}
+		}
+
+		foreach $k (@{$this->{fwKeys}{NET}}) {
+			if( $this->{fw}{NET}{$k}{ZONE} eq $item ) {
+				$references{$k} = 'NET';
+			}
+		}
+
+		foreach $k (@{$this->{fwKeys}{GEOIP}}) {
+			if( $this->{fw}{GEOIP}{$k}{ZONE} eq $item ) {
+				$references{$k} = 'GEOIP';
+			}
+		}
+
+		foreach $k (@{$this->{fwKeys}{IPSET}}) {
+			if( $this->{fw}{IPSET}{$k}{ZONE} eq $item ) {
+				$references{$k} = 'IPSET';
+			}
+		}
+	}
+
+	if( $type eq 'ADDRESSLIST' ) {
+		foreach $k (@{$this->{fwKeys}{IPSET}}) {
+			if( $this->{fw}{IPSET}{$k}{IP} eq $item ) {
+				$references{$k} = 'IPSET';
+			}
+		}
+	}
+
+	foreach my $group (@{$this->{fwKeys}{GROUP}}) {
+		for( my $i=0; $i<=$#{$this->{fw}{GROUP}{$group}{ITEMS}}; $i++ ) {
+			if( $this->{fw}{GROUP}{$group}{ITEMS}[$i] eq $item ) {
+				$references{$group} = 'GROUP';
+		       }
+		}
+	}
+
+	foreach my $timegroup (@{$this->{fwKeys}{TIMEGROUP}}) {
+		for( my $i=0; $i<=$#{$this->{fw}{TIMEGROUP}{$timegroup}{ITEMS}}; $i++ ) {
+			if( $this->{fw}{TIMEGROUP}{$timegroup}{ITEMS}[$i] eq $item ) {
+				$references{$timegroup} = 'TIMEGROUP';
+		       }
+		}
+	}
+
+	foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','CONNTRACK','NAT','MASQUERADE','REDIRECT') {
+		for( my $i=0; $i<=$#{$this->{fw}{$ruletype}}; $i++ ) {
+			foreach $ruleitem ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
+				my @ruleitem_list = split( /,/, $this->{fw}{$ruletype}[$i]{$ruleitem} );
+				if( grep( /^$item$/, @ruleitem_list ) ) {
+					$references{"${ruleitem} ${i}"} = $ruletype;
+				}
+			}
+		}
+	}
+
+	return %references;
 }
 
 # DeleteGroup( $group );
@@ -882,6 +1017,18 @@ sub DeleteRiskSet {
 sub DeleteRateLimit {
 	my ($this, $ratelimit) = @_;
 	return $this->DeleteItem( $ratelimit );
+}
+
+# DeleteAddressList( $addresslist );
+sub DeleteAddressList {
+	my ($this, $addresslist) = @_;
+	return $this->DeleteItem( $addresslist );
+}
+
+# DeleteIPSet( $ipset );
+sub DeleteIPSet {
+	my ($this, $ipset) = @_;
+	return $this->DeleteItem( $ipset );
 }
 
 # DeleteHost( $host );
@@ -1002,6 +1149,8 @@ sub LoadFirewall {
 				if( $name2 eq 'HOSTNAMESET' ) { $this->_LoadFirewallItem( 'HOSTNAMESET', @{$list[$j+1]} ); }
 				if( $name2 eq 'RISKSET' ) { $this->_LoadFirewallItem( 'RISKSET', @{$list[$j+1]} ); }
 				if( $name2 eq 'RATELIMIT' ) { $this->_LoadFirewallItem( 'RATELIMIT', @{$list[$j+1]} ); }
+				if( $name2 eq 'ADDRESSLIST' ) { $this->_LoadFirewallItem( 'ADDRESSLIST', @{$list[$j+1]} ); }
+				if( $name2 eq 'IPSET' ) { $this->_LoadFirewallItem( 'IPSET', @{$list[$j+1]} ); }
 				if( $name2 eq 'MASQUERADE' ) { $this->_LoadFirewallNat( 'MASQUERADE', @{$list[$j+1]} ); }
 				if( $name2 eq 'NAT' ) { $this->_LoadFirewallNat( 'NAT', @{$list[$j+1]} ); }
 				if( $name2 eq 'REDIRECT' ) { $this->_LoadFirewallNat( 'REDIRECT', @{$list[$j+1]} ); }
@@ -1423,12 +1572,22 @@ sub SaveFirewallAs {
 		$xml .= $this->attr2xml( 'host', %{$fw{'HOST'}{$k}} );
 	}
 	if( %{$fw{'HOST'}} ) { $xml .= "\n"; }
-	
+
 	foreach my $k (keys %{$fw{'GEOIP'}}) {
 		$xml .= $this->attr2xml( 'geoip', %{$fw{'GEOIP'}{$k}} );
 	}
 	if( %{$fw{'GEOIP'}} ) { $xml .= "\n"; }
-	
+
+	foreach my $k (keys %{$fw{'ADDRESSLIST'}}) {
+		$xml .= $this->attr2xml( 'addresslist', %{$fw{'ADDRESSLIST'}{$k}} );
+	}
+	if( %{$fw{'ADDRESSLIST'}} ) { $xml .= "\n"; }
+
+	foreach my $k (keys %{$fw{'IPSET'}}) {
+		$xml .= $this->attr2xml( 'ipset', %{$fw{'IPSET'}{$k}} );
+	}
+	if( %{$fw{'IPSET'}} ) { $xml .= "\n"; }
+
 	foreach my $k (@{$this->{fwKeys}{GROUP}}) {
 		$xml .= "<group name=\"$k\" description=\"".$this->_clean($fw{'GROUP'}{$k}{DESCRIPTION})."\">\n";
 		foreach my $item (@{$fw{'GROUP'}{$k}{ITEMS}}) {
@@ -1442,7 +1601,7 @@ sub SaveFirewallAs {
 		$xml .= $this->attr2xml( 'time', %{$fw{'TIME'}{$k}} );
 	}
 	if( %{$fw{'TIME'}} ) { $xml .= "\n"; }
-	
+
 	foreach my $k (@{$this->{fwKeys}{TIMEGROUP}}) {
 		$xml .= "<timegroup name=\"$k\" description=\"".$this->_clean($fw{'TIMEGROUP'}{$k}{DESCRIPTION})."\">\n";
 		foreach my $item (@{$fw{'TIMEGROUP'}{$k}{ITEMS}}) {
@@ -1451,64 +1610,64 @@ sub SaveFirewallAs {
 		$xml .= "</timegroup>\n";
 	}
 	if( @{$this->{fwKeys}{TIMEGROUP}} ) { $xml .= "\n"; }
-	
+
 	foreach my $k (keys %{$fw{'HOSTNAMESET'}}) {
 		$xml .= $this->attr2xml( 'hostnameset', %{$fw{'HOSTNAMESET'}{$k}} );
 	}
 	if( %{$fw{'HOSTNAMESET'}} ) { $xml .= "\n"; }
-	
+
 	foreach my $k (keys %{$fw{'RISKSET'}}) {
 		$xml .= $this->attr2xml( 'riskset', %{$fw{'RISKSET'}{$k}} );
 	}
 	if( %{$fw{'RISKSET'}} ) { $xml .= "\n"; }
-	
+
 	foreach my $k (keys %{$fw{'RATELIMIT'}}) {
 		$xml .= $this->attr2xml( 'ratelimit', %{$fw{'RATELIMIT'}{$k}} );
 	}
 	if( %{$fw{'RATELIMIT'}} ) { $xml .= "\n"; }
-	
+
 	my @nats = @{$fw{'NAT'}};
 	for my $i (0..$#nats) {
 		$xml .= $this->attr2xml( 'nat', %{$nats[$i]} );
 	}
 	if( @{$fw{'NAT'}} ) { $xml .= "\n"; }
-	
+
 	my @masq = @{$fw{'MASQUERADE'}};
 	for my $i (0..$#masq) {
 		$xml .= $this->attr2xml( 'masquerade', %{$masq[$i]} );
 	}
 	if( @{$fw{'MASQUERADE'}} ) { $xml .= "\n"; }
-	
+
 	my @redirectlist = @{$fw{'REDIRECT'}};
 	for my $i (0..$#redirectlist) {
 		$xml .= $this->attr2xml( 'redirect', %{$redirectlist[$i]} );
 	}
 	if( @{$fw{'REDIRECT'}} ) { $xml .= "\n"; }
-	
+
 	my @conntrackpreroutes = @{$fw{'CONNTRACKPREROUTE'}};
 	for my $i (0..$#conntrackpreroutes) {
 		$xml .= $this->attr2xml( 'conntrackpreroute', %{$conntrackpreroutes[$i]} );
 	}
 	if( @{$fw{'CONNTRACKPREROUTE'}} ) { $xml .= "\n"; }
-	
+
 	my @conntracks = @{$fw{'CONNTRACK'}};
 	for my $i (0..$#conntracks) {
 		$xml .= $this->attr2xml( 'conntrack', %{$conntracks[$i]} );
 	}
 	if( @{$fw{'CONNTRACK'}} ) { $xml .= "\n"; }
-	
+
 	my @connmarkpreroutes = @{$fw{'CONNMARKPREROUTE'}};
 	for my $i (0..$#connmarkpreroutes) {
 		$xml .= $this->attr2xml( 'connmarkpreroute', %{$connmarkpreroutes[$i]} );
 	}
 	if( @{$fw{'CONNMARKPREROUTE'}} ) { $xml .= "\n"; }
-	
+
 	my @connmarks = @{$fw{'CONNMARK'}};
 	for my $i (0..$#connmarks) {
 		$xml .= $this->attr2xml( 'connmark', %{$connmarks[$i]} );
 	}
 	if( @{$fw{'CONNMARK'}} ) { $xml .= "\n"; }
-	
+
 	my @rules = @{$fw{'RULE'}};
 	for my $i (0..$#rules) {
 		$xml .= $this->attr2xml( 'rule', %{$rules[$i]} );
@@ -1649,7 +1808,7 @@ sub startFirewall {
 		$this->command( "for f in /proc/sys/net/ipv4/conf/*/log_martians; do echo $flag > \$f; done" );
 	}
 	
-	# I want ever icmp_echo_ignore_all set to off. Turtle Firewall uses iptables
+	# I want all icmp_echo_ignore_all set to off. Turtle Firewall uses iptables
 	# rules for drop or allow icmp echo packets. Andrea Frigido 2004-07-17
 	$this->command( 'echo "1"', '/proc/sys/net/ipv4/icmp_echo_ignore_broadcasts' );
 	$this->command( 'echo "0"', '/proc/sys/net/ipv4/icmp_echo_ignore_all' );
@@ -1698,6 +1857,27 @@ sub startFirewall {
 		$this->command('/usr/lib/turtlefirewall/sha1_blacklist -I', '/dev/null');
 	}
 
+	# Ensure IPsets exist
+	for my $s ($this->GetIPSetList()) {
+		my %ipset = $this->GetIPSet($s);
+		for( my $i=0; $i<=$#{$this->{fw}{RULE}}; $i++ ) {
+			my @item_list = ();
+			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{SRC} ) );
+			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{DST} ) );
+		       	if( grep( /^$s$/, @item_list ) && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
+				my $addresslist_file = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{FILE};
+				my $addresslist_type = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{TYPE};
+				if( ! -e $addresslist_file ) {
+					umask 0077;
+					open( FILE, ">", "$addresslist_file" );
+					close( FILE );
+				}
+				$this->command( "ipset create $ipset{'IP'} $addresslist_type", "/dev/null 2>&1" );
+                        	last;
+		       	}
+	       	}
+	}
+
 	my $rules = $this->getIptablesRules();
 	
 	my $use_iptables_restore = 1;
@@ -1729,9 +1909,41 @@ sub startFirewall {
 		       	if( $this->{fw}{RULE}[$i]{RATELIMIT} eq $r && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
 				# Convert to bps
 				my $rate = $ratelimit{'RATE'} * 1024000; 
-				print "run ipt_ratelimit $r($ratelimit{'RATE'} Mbps)\n";
+				print "run ratelimit-restore $r($ratelimit{'RATE'} Mbps)\n";
 				$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/go-$r" );
 				$this->command( "echo \@\+0.0.0.0/0 $rate", "/proc/net/ipt_ratelimit/back-$r" );
+                        	last;
+		       	}
+	       	}
+	}
+
+	# Import IPSets
+	for my $s ($this->GetIPSetList()) {
+		my %ipset = $this->GetIPSet($s);
+		for( my $i=0; $i<=$#{$this->{fw}{RULE}}; $i++ ) {
+			my @item_list = ();
+			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{SRC} ) );
+			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{DST} ) );
+		       	if( grep( /^$s$/, @item_list ) && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
+				print "run ipset-restore $s($ipset{'IP'})\n";
+				my $addresslist_file = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{FILE};
+				my $addresslist_type = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{TYPE};
+				$this->command( "ipset flush $ipset{'IP'}", "/dev/null 2>&1" );
+				my @items = ();
+				open( FILE, "<", "$addresslist_file" );
+				while( <FILE> ) { 
+					if( $addresslist_type eq "hash:ip" ) {
+						if( $_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/ ) { push(@items, $1); }
+					}
+					if( $addresslist_type eq "hash:net" ) {
+						if( $_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\b([0-9]|[12][0-9]|3[0-2])\b)/ ) { push(@items, $1); }
+					}
+					if( $addresslist_type eq "hash:mac" ) {
+						if( $_ =~ /([0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2})/ ) { push(@items, $1); }
+					}
+			       	}
+				close( FILE );
+				for my $i (@items) { $this->command( "ipset add $ipset{'IP'} $i", "/dev/null 2>&1" ); }
                         	last;
 		       	}
 	       	}
@@ -1831,7 +2043,7 @@ sub getIptablesRules {
 	$rules_mangle .= "-A PREROUTING -j CONNMARK --restore-mark\n";
 	$rules_mangle .= "-A POSTROUTING -j CONNMARK --save-mark\n";
 	
-	# abilito l'accesso da/verso l'interfaccia lo.
+	# Enable access from/to the loopback interface.
 	$rules .= "-A INPUT -i lo -j ACCEPT\n";
 	$rules .= "-A OUTPUT -o lo -j ACCEPT\n";
 
@@ -2201,7 +2413,7 @@ sub applyNat {
 	my $virtual_if='';
 	my $real_ip='';
 
-	# service is a list of services?
+	# Service is a list of services?
 	if( $nmService =~ /,/ ) {
 		my @services = split( /,/, $nmService );
 		my %newnat = %nat;
@@ -2378,12 +2590,12 @@ sub applyMasquerade {
 	}
 
 	if( $dst eq '' ) {
-		print STDERR "Error: DST or ZONE attribute missing in MASQUERADE rule.";
+		print STDERR "Error: DST or ZONE attribute missing in MASQUERADE rule.\n";
 		return $rules;
 	}
 
 	#if( $fwItems{$zone} ne 'ZONE' ) {
-	#	print STDERR "Error: invalid ZONE attribute missing in MASQUERADE rule.";
+	#	print STDERR "Error: invalid ZONE attribute missing in MASQUERADE rule.\n";
 	#	return
 	#}
 
@@ -2411,11 +2623,11 @@ sub applyMasquerade {
 		return $rules;
 	}
 	
-	#I define the SERVICE
+	# Define the SERVICE
 	my $service = $masq{SERVICE};
 	my $port = $masq{PORT};
 
-	# service is a list of services?
+	# Service is a list of services?
 	if( $service =~ /,/ ) {
 		my @services = split( /,/, $service );
 		my %newmasq = %masq;
@@ -2430,10 +2642,10 @@ sub applyMasquerade {
 		$service = 'all';
 	}
 
-	my ($src_zone, $src_peer, $src_mac) = $this->expand_item( $src );
+	my ($src_zone, $src_peer, $src_type, $src_mac) = $this->expand_item( $src );
 	my %src_zone_attr = $this->GetZone( $src_zone );
 	$src_if = $src_zone_attr{IF};
-	my ($dst_zone, $dst_peer) = $this->expand_item( $dst );
+	my ($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
 	my %dst_zone_attr = $this->GetZone( $dst_zone );
 	$dst_if = $dst_zone_attr{IF};
 	
@@ -2443,7 +2655,7 @@ sub applyMasquerade {
 	if( $src_mac ne '' ) { print "(mac:$src_mac)"; }
 	print " --> $dst IF $dst_if\n";
 	
-	$rules .= $this->applyServiceMasquerade( \%services, $service, $src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $is_masquerade);
+	$rules .= $this->applyServiceMasquerade( \%services, $service, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $is_masquerade);
 	return $rules;
 }
 
@@ -2455,7 +2667,7 @@ sub applyServiceMasquerade {
 
 sub _applyServiceMasquerade {
 	my $this = shift;
-	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $is_masquerade) = @_;
+	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $is_masquerade) = @_;
 	
 	my %service = %{$ref_services->{$serviceName}};
 
@@ -2466,7 +2678,7 @@ sub _applyServiceMasquerade {
 
 	my $rules = '';
 	
-	# loop on filering rules
+	# Loop on filering rules
 	my $i;
 	for( $i = 0; $i <= $#{$service{FILTERS}}; $i++ ) {
 
@@ -2475,7 +2687,7 @@ sub _applyServiceMasquerade {
 		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyServiceMasquerade
 			$rules .= $this->_applyServiceMasquerade( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $is_masquerade );
+				$src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $is_masquerade );
 			next;
 		}
 
@@ -2492,7 +2704,7 @@ sub _applyServiceMasquerade {
 			next;
 		}
 
-		# port set by firewall rule
+		# Port set by firewall rule
 		if( $sport eq 'PORT' ) {
 			$sport = $port;
 		}
@@ -2504,12 +2716,20 @@ sub _applyServiceMasquerade {
 		if( $direction eq 'go' && ($jump eq '' || $jump eq 'ACCEPT') ) { 
 			$cmd = "-A MASQ ";
 			if( $src_if ne '' ) { $cmd .= "-i $src_if "; }
-			if( $src_peer ne '0.0.0.0/0' && $src_peer ne '' ) { $cmd .= "-s $src_peer "; }
+			if( $src_peer ne '' ) {
+				if( $src_type eq 'GEOIP' ) { $cmd .= "-m geoip --source-country $src_peer "; }
+				if( $src_type eq 'IPSET' ) { $cmd .= "-m set --match-set $src_peer src "; }
+				if( $src_type =~ /HOST|NET/ ) { $cmd .= "-s $src_peer "; }
+			}
 			if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
 				$cmd .= "-m mac --mac-source $src_mac ";
 			}
 			if( $dst_if ne '' ) { $cmd .= "-o $dst_if "; }
-			if( $dst_peer ne '0.0.0.0/0' && $dst_peer ne '' ) { $cmd .= "-d $dst_peer "; }
+			if( $dst_peer ne '' ) {
+				if( $dst_type eq 'GEOIP' ) { $cmd .= "-m geoip --destination-country $dst_peer "; }
+				if( $dst_type eq 'IPSET' ) { $cmd .= "-m set --match-set $dst_peer dst "; }
+				if( $dst_type =~ /HOST|NET/ ) { $cmd .= "-d $dst_peer "; }
+			}
 			if( $p ne '' ) { $cmd .= "-p $p "; }
 			if( $sport ne '' ) { $cmd .= "--sport $sport "; }
 			if( $dport ne '' ) { $cmd .= "--dport $dport "; }
@@ -2581,7 +2801,7 @@ sub applyRedirect {
 	my $port = $redirect{PORT};
 	my $toport = $redirect{TOPORT};
 
-	my ($src_zone, $src_peer, $src_mac) = $this->expand_item( $src );
+	my ($src_zone, $src_peer, $src_type, $src_mac) = $this->expand_item( $src );
 	my %src_zone_attr = $this->GetZone( $src_zone );
 	my $src_if = $src_zone_attr{IF};
 
@@ -2593,7 +2813,7 @@ sub applyRedirect {
 		$dst_peer = '0.0.0.0/0';
 		$dst_if = '';
 	} else {
-		($dst_zone, $dst_peer) = $this->expand_item( $dst );
+		($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
 		my %dst_zone_attr = $this->GetZone( $dst_zone );
 		$dst_if = $dst_zone_attr{IF};
 	}
@@ -2614,7 +2834,7 @@ sub applyRedirect {
 	print "\n";
 
 	# I create the 2 return chains
-	$rules .= $this->applyServiceRedirect( \%services, $service, $src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $toport, $is_redirect);
+	$rules .= $this->applyServiceRedirect( \%services, $service, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect);
 	
 	return $rules;
 }
@@ -2627,7 +2847,7 @@ sub applyServiceRedirect {
 
 sub _applyServiceRedirect {
 	my $this = shift;
-	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $toport, $is_redirect) = @_;
+	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect) = @_;
 
 	my $rules = '';
 	
@@ -2643,7 +2863,7 @@ sub _applyServiceRedirect {
 		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyServiceRedirect( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$src_if, $src_peer, $src_mac, $dst_if, $dst_peer, $port, $toport, $is_redirect );
+				$src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect );
 			next;
 		}
 
@@ -2665,7 +2885,11 @@ sub _applyServiceRedirect {
 
 			my $cmd = "-A REDIR ";
 			if( $src_if ne '' ) { $cmd .= "-i $src_if "; }
-			if( $src_peer ne '0.0.0.0/0' && $src_peer ne '' ) { $cmd .= "-s $src_peer "; }
+			if( $src_peer ne '' ) {
+				if( $src_type eq 'GEOIP' ) { $cmd .= "-m geoip --source-country $src_peer "; }
+				if( $src_type eq 'IPSET' ) { $cmd .= "-m set --match-set $src_peer src "; }
+				if( $src_type =~ /HOST|NET/ ) { $cmd .= "-s $src_peer "; }
+			}
 
 			# Invalid Redirect, Ignore
 			#if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
@@ -2674,7 +2898,11 @@ sub _applyServiceRedirect {
 
 			# iptables prerouting chain don't accept -o option.
 			#if( $dst_if ne '' ) { $cmd .= "-o $dst_if "; }
-			if( $dst_peer ne '0.0.0.0/0' && $dst_peer ne '' ) { $cmd .= "-d $dst_peer "; }
+			if( $dst_peer ne '' ) {
+				if( $dst_type eq 'GEOIP' ) { $cmd .= "-m geoip --destination-country $dst_peer "; }
+				if( $dst_type eq 'IPSET' ) { $cmd .= "-m set --match-set $dst_peer dst "; }
+				if( $dst_type =~ /HOST|NET/ ) { $cmd .= "-d $dst_peer "; }
+			}
 
 			if( $p ne '' ) {
 				$cmd .= "-p $p ";
@@ -2739,9 +2967,10 @@ sub applyRule {
 	my $ndpi = $rule{NDPI};
 	my $category = $rule{CATEGORY};
 	my $hostnameset = $rule{HOSTNAMESET};
-	my $riskset = $rule{RISKSET};
-	my $ratelimit = $rule{RATELIMIT};
 	my $hostname = $rule{HOSTNAME};
+	my $riskset = $rule{RISKSET};
+	my $risk = $rule{RISK};
+	my $ratelimit = $rule{RATELIMIT};
 	my $port = $rule{PORT};
 	my $mark = $rule{MARK};
 	my $helper = $rule{HELPER};
@@ -2911,8 +3140,8 @@ sub applyRule {
 		$risk = $riskset_list{'RISKS'};
 	}
 
-	my ($src_zone, $src_peer, $src_mac) = $this->expand_item( $src );
-	my ($dst_zone, $dst_peer) = $this->expand_item( $dst );
+	my ($src_zone, $src_peer, $src_type, $src_mac) = $this->expand_item( $src );
+	my ($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
 
 	if( $src_zone eq 'FIREWALL' && $dst_zone eq 'FIREWALL' ) {
 		# ignore chain FIREWALL-FIREWALL
@@ -2977,15 +3206,15 @@ sub applyRule {
         # Create the Rules
 	if( $mangle ) {
 		# Mangle Rule
-		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
+		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
 		   	$port, $ndpi, $category, $hostname, $risk, '', $t_days, $t_start, $t_stop, '', '', $mark, '' );
 	}  elsif( $raw ) {
 		# Raw Rule
-		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
+		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
 		       	$port, $ndpi, $category, $hostname, $risk, '', $t_days, $t_start, $t_stop, '', '', '', $helper );
 	}  else {
 		# Filter Rule
-		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_mac, $dst_peer,
+		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
 		       	$port, $ndpi, $category, $hostname, $risk, $ratelimit, $t_days, $t_start, $t_stop, $log, $target, '', '' );
 	}
 	
@@ -3001,7 +3230,7 @@ sub applyService {
 # Apply a service
 sub _applyService {
 	my $this = shift;
-	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_mac, $dst,
+	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type,
 	$port, $ndpi, $category, $hostname, $risk, $ratelimit, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper ) = @_;
 
 	my %service = %{$ref_services->{$serviceName}};
@@ -3023,7 +3252,7 @@ sub _applyService {
 		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyService( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$goChain, $backChain, $src, $src_mac, $dst, $port, $ndpi, $category, $hostname, $risk, $ratelimit,
+				$goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type, $port, $ndpi, $category, $hostname, $risk, $ratelimit,
 			       	$t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper );
 			next;
 		}
@@ -3059,41 +3288,31 @@ sub _applyService {
 		if( $direction eq 'go' ) {
 			$cmd = "-A $goChain ";
 			if( $ratelimit ne '' ) { $cmd .= "-m ratelimit --ratelimit-set go-$ratelimit --ratelimit-mode src "; }
-			if( $dst !~ /^[A-Z1-2]{2}$/ && $src !~ /^[A-Z1-2]{2}$/ ) {
-                                if( $src ne '0.0.0.0/0' && $src ne '' ) { $cmd .= "-s $src "; }
-                                if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
-                                       $cmd .= "-m mac --mac-source $src_mac "; }
-                                if( $dst ne '0.0.0.0/0' && $dst ne '' ) { $cmd .= "-d $dst "; }
-                        } else {
-                                if( $src =~ /^[A-Z1-2]{2}$/ ) {
-                                        if( $dst ne '0.0.0.0/0' ) {
-                                                $cmd .= "-m geoip --source-country $src -d $dst ";
-                                        } else { $cmd .= "-m geoip --source-country $src "; }
-                                }
-                                if( $dst =~ /^[A-Z1-2]{2}$/ ) {
-                                        if( $src ne '0.0.0.0/0' ) {
-                                                $cmd .= "-m geoip --destination-country $dst -s $src ";
-                                        } else { $cmd .= "-m geoip --destination-country $dst "; }
-                                }
-                        }
+			if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
+				$cmd .= "-m mac --mac-source $src_mac "; }
+			if( $src ne '' ) {
+				if( $src_type eq 'GEOIP' ) { $cmd .= "-m geoip --source-country $src "; }
+				if( $src_type eq 'IPSET' ) { $cmd .= "-m set --match-set $src src "; }
+				if( $src_type =~ /HOST|NET/ ) { $cmd .= "-s $src "; }
+			}
+			if( $dst ne '' ) {
+				if( $dst_type eq 'GEOIP' ) { $cmd .= "-m geoip --destination-country $dst "; }
+				if( $dst_type eq 'IPSET' ) { $cmd .= "-m set --match-set $dst dst "; }
+				if( $dst_type =~ /HOST|NET/ ) { $cmd .= "-d $dst "; }
+			}
 		} else {
 			$cmd = "-A $backChain ";
 			if( $ratelimit ne '' ) { $cmd .= "-m ratelimit --ratelimit-set back-$ratelimit --ratelimit-mode dst "; }
-			if( $src !~ /^[A-Z1-2]{2}$/ && $dst !~ /^[A-Z1-2]{2}$/ ) {
-                                if( $dst ne '0.0.0.0/0' && $dst ne '' ) { $cmd .= "-s $dst "; }
-                                if( $src ne '0.0.0.0/0' && $src ne '' ) { $cmd .= "-d $src "; }
-                        } else {
-                                if( $dst =~ /^[A-Z1-2]{2}$/ ) {
-                                       if( $src ne '0.0.0.0/0' ) {
-                                                $cmd .= "-m geoip --source-country $dst -d $src ";
-                                        }  else { $cmd .= "-m geoip --source-country $dst "; }
-                                }
-                                if( $src =~ /^[A-Z1-2]{2}$/ ) {
-                                        if( $dst ne '0.0.0.0/0' ) {
-                                                $cmd .= "-m geoip --destination-country $src -s $dst ";
-                                        } else { $cmd .= "-m geoip --destination-country $src "; }
-                                }
-                        }
+			if( $dst ne '' ) {
+				if( $dst_type eq 'GEOIP' ) { $cmd .= "-m geoip --source-country $dst "; }
+				if( $dst_type eq 'IPSET' ) { $cmd .= "-m set --match-set $dst src "; }
+				if( $dst_type =~ /HOST|NET/ ) { $cmd .= "-s $dst "; }
+			}
+			if( $src ne '' ) {
+				if( $src_type eq 'GEOIP' ) { $cmd .= "-m geoip --destination-country $src "; }
+				if( $src_type eq 'IPSET' ) { $cmd .= "-m set --match-set $src dst "; }
+				if( $src_type =~ /HOST|NET/ ) { $cmd .= "-d $src "; }
+			}
 		}
 
 		if( $p ne '' ) { $cmd .= "-p $p "; }
@@ -3142,8 +3361,10 @@ sub _applyService {
 					$logprefix = "TFW=$category";
 				} elsif( $ndpi ne '' ) {
 					$logprefix = "TFW=$ndpi";
-				} elsif( $src =~ /^[A-Z1-2]{2}$/ || $dst =~ /^[A-Z1-2]{2}$/ ) {
-					$logprefix = "TFW=GEO-".( $src =~ /^[A-Z1-2]{2}$/ ? $src : $dst );
+				} elsif( $src_type eq 'GEOIP' || $dst_type eq 'GEOIP' ) {
+					$logprefix = "TFW=GEO-".( $src_type eq 'GEOIP' ? $src : $dst );
+				} elsif( $src_type eq 'IPSET' || $dst_type eq 'IPSET' ) {
+					$logprefix = "TFW=SET-".( $src_type eq 'IPSET' ? $src : $dst );
 			    	} else {
 					$logprefix = "TFW=$goChain";
 				}
@@ -3211,31 +3432,35 @@ sub expand_item {
 	
 	my %fw = %{$this->{fw}};
 	my %fwItems = %{$this->{fwItems}};
-	my $itemType = $fwItems{$item};
+	my $type = $fwItems{$item};
 
 	my $zone = '';
 	my $ip = '';
 	my $mac = '';
 
-	if( $itemType eq 'ZONE' ) {
+	if( $type eq 'ZONE' ) {
 		$zone = $item;
 		$ip = '0.0.0.0/0';
 	}
-	if( $itemType eq 'GEOIP' ) {
+	if( $type eq 'GEOIP' ) {
 		$zone = $fw{GEOIP}{$item}{ZONE};
 		$ip = $fw{GEOIP}{$item}{IP};
 	}
-	if( $itemType eq 'NET' ) {
+	if( $type eq 'IPSET' ) {
+		$zone = $fw{IPSET}{$item}{ZONE};
+		$ip = $fw{IPSET}{$item}{IP};
+	}
+	if( $type eq 'NET' ) {
 		$zone = $fw{NET}{$item}{ZONE};
 		$ip = $fw{NET}{$item}{IP}.'/'.$fw{NET}{$item}{NETMASK};
 	}
-	if( $itemType eq 'HOST' ) {
+	if( $type eq 'HOST' ) {
 		$zone = $fw{HOST}{$item}{ZONE};
 		$ip = $fw{HOST}{$item}{IP};
 		if( $ip ne '' ) {$ip = $ip.'/32';}
 		$mac = $fw{HOST}{$item}{MAC};
 	}
-	return ($zone, $ip, $mac );
+	return ($zone, $ip, $type, $mac );
 }
 
 sub expand_time_item {
@@ -3243,8 +3468,6 @@ sub expand_time_item {
         my $item = shift;
 
         my %fw = %{$this->{fw}};
-        my %fwItems = %{$this->{fwItems}};
-        my $itemType = $fwItems{$item};
 
         my $weekdays = '';
         my $timestart = '';
@@ -3262,8 +3485,6 @@ sub expand_hostnameset_item {
         my $item = shift;
 
         my %fw = %{$this->{fw}};
-        my %fwItems = %{$this->{fwItems}};
-        my $itemType = $fwItems{$item};
 
         my $hostnames = '';
 	$hostnames = $fw{HOSTNAMESET}{$item}{HOSTNAMES};
