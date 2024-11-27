@@ -11,11 +11,15 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
+my $nMasq = $fw->GetMasqueradesCount();
+
 $new = $in{'new'};
 
 if( $new ) {
 	$heading = "$icons{CREATE}{IMAGE}$text{'edit_masq_title_create'}";
-	$idx = '';
+	$nMasq++;
+	$idx = $nMasq;
+	$newIdx = '';
 	$src = '';
 	$dst = '';
 	$service = '';
@@ -25,6 +29,7 @@ if( $new ) {
 } else {
 	$heading = "$icons{EDIT}{IMAGE}$text{'edit_masq_title_edit'}";
 	$idx = $in{'idx'};
+	$newIdx = '';
 	%masq = $fw->GetMasquerade($idx);
 	$src = $masq{'SRC'};
 	$dst = $masq{'DST'};
@@ -34,6 +39,9 @@ if( $new ) {
 	$active = $masq{'ACTIVE'} ne 'NO';
 }
 &ui_print_header( $heading, $text{'title'}, "" );
+
+my @idxs = ();
+for( my $i=1; $i<=$nMasq; $i++ ) { push @idxs, $i; }
 
 my @items_src = ('*');
 push @items_src, grep(!/FIREWALL/, $fw->GetZoneList());
@@ -59,10 +67,8 @@ print &ui_hidden("idx", $idx);
 my @tds = ( "width=20%", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);
 my $col = '';
-if( !$new ) {
-	$col = "<b>$idx</b>";
-	print &ui_columns_row([ "$icons{ID}{IMAGE}<b>ID</b>", $col ], \@tds);
-}
+$col = &ui_select("newIdx", $idx, \@idxs, 1);
+print &ui_columns_row([ "$icons{ID}{IMAGE}<b>ID</b>", $col ], \@tds);
 $col = &ui_select("src", $src, \@items_src);
 print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'masq_src'}</b>", $col ], \@tds);
 $col = &ui_select("dst", $dst, \@items_dst);

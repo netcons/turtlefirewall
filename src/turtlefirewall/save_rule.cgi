@@ -12,6 +12,7 @@ do 'turtlefirewall-lib.pl';
 &ReadParse();
 
 my $idx = $in{'idx'};
+my $newIdx = $in{'newIdx'};
 my $src = $in{'src'};
 $src =~ s/\0/,/g;
 my $dst = $in{'dst'};
@@ -87,5 +88,6 @@ if( $in{'delete'} ) {
 	$fw->AddRule( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $ratelimit, $port, $time, $target, $active, $log, $description );
 }
 
+if( $idx ne $newIdx ) { $fw->MoveRule( $idx, $newIdx ); }
 $fw->SaveFirewall();
 &redirect( 'list_rules.cgi'.($in{'delete'} ? "?idx=$idx" : '') );

@@ -454,6 +454,13 @@ sub AddMasqueradeAttr {
 	}
 }
 
+sub MoveMasquerade {
+	my ($this, $idxSrc, $idxDst) = @_;
+	my %attr = %{$this->{fw}{MASQUERADE}[$idxSrc-1]};
+	splice @{$this->{fw}{MASQUERADE}}, $idxSrc-1, 1;
+	splice @{$this->{fw}{MASQUERADE}}, $idxDst-1, 0, \%attr;
+}
+
 # AddNat( $idx, $virtual, $real, $service, $port, $toport, $active ) if $idx==0 then add new Masquerade
 sub AddNat {
 	my ($this, $idx, $virtual, $real, $service, $port, $toport, $active) = @_;
@@ -476,6 +483,13 @@ sub AddNatAttr {
 	}
 }
 
+sub MoveNat {
+	my ($this, $idxSrc, $idxDst) = @_;
+	my %attr = %{$this->{fw}{NAT}[$idxSrc-1]};
+	splice @{$this->{fw}{NAT}}, $idxSrc-1, 1;
+	splice @{$this->{fw}{NAT}}, $idxDst-1, 0, \%attr;
+}
+
 # AddRedirect( $idx, $src, $dst, $service, $port, $toport, $active );
 sub AddRedirect {
 	my ($this, $idx, $src, $dst, $service, $port, $toport, $redirect, $active ) = @_;
@@ -496,6 +510,13 @@ sub AddRedirectAttr {
 	} else {
 		%{$this->{fw}{'REDIRECT'}[$idx-1]} = %attr;
 	}
+}
+
+sub MoveRedirect {
+	my ($this, $idxSrc, $idxDst) = @_;
+	my %attr = %{$this->{fw}{REDIRECT}[$idxSrc-1]};
+	splice @{$this->{fw}{REDIRECT}}, $idxSrc-1, 1;
+	splice @{$this->{fw}{REDIRECT}}, $idxDst-1, 0, \%attr;
 }
 
 # AddRule( $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $ratelimit, $port, $time, $target, $active, $log, $description );

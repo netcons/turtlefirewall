@@ -12,6 +12,7 @@ do 'turtlefirewall-lib.pl';
 &ReadParse();
 
 my $idx = $in{'idx'};
+my $newIdx = $in{'newIdx'};
 my $src = $in{'src'};
 my $dst = $in{'dst'};
 my ($service, $port) = &formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
@@ -69,5 +70,6 @@ if( $in{'delete'} ) {
 	$fw->AddConnmarkPreroute( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active );
 }
 
+if( $idx ne $newIdx ) { $fw->MoveConnmarkPreroute( $idx, $newIdx ); }
 $fw->SaveFirewall();
 &redirect( 'list_manglerules.cgi'.($in{'delete'} ? "?idx=$idx" : '') );

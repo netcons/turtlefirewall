@@ -12,6 +12,7 @@ do 'turtlefirewall-lib.pl';
 &ReadParse();
 
 my $idx = $in{'idx'};
+my $newIdx = $in{'newIdx'};
 my $src = $in{'src'};
 my $dst = $in{'dst'};
 my ($service, $port) = &formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
@@ -57,5 +58,6 @@ if( $in{'delete'} ) {
 	$fw->AddMasquerade( $in{'new'} ? 0 : $idx, $src, $dst, $service, $port, $is_masquerade, $active );
 }
 
+if( $idx ne $newIdx ) { $fw->MoveMasquerade( $idx, $newIdx ); }
 $fw->SaveFirewall();
 &redirect( 'list_nat.cgi' );

@@ -11,11 +11,15 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
+my $nRules = $fw->GetRulesCount();
+
 $new = $in{'new'};
 
 if( $new ) {
 	$heading = "$icons{CREATE}{IMAGE}$text{'edit_rule_title_create'}";
-	$idx = '';
+	$nRules++;
+	$idx = $nRules;
+	$newIdx = '';
 	$src = '';
 	$dst = '';
 	$service = '';
@@ -33,6 +37,7 @@ if( $new ) {
 } else {
 	$heading = "$icons{EDIT}{IMAGE}$text{'edit_rule_title_edit'}";
 	$idx = $in{'idx'};
+	$newIdx = '';
 	%rule = $fw->GetRule($idx);
 	$src = $rule{'SRC'};
 	$dst = $rule{'DST'};
@@ -50,6 +55,9 @@ if( $new ) {
 	$description = $rule{'DESCRIPTION'};
 }
 &ui_print_header( $heading, $text{'title'}, "" );
+
+my @idxs = ();
+for( my $i=1; $i<=$nRules; $i++ ) { push @idxs, $i; }
 
 my @selected_src = split(/,/, $src);
 my @selected_dst = split(/,/, $dst);
@@ -87,10 +95,8 @@ print &ui_hidden("idx", $idx);
 my @tds = ( "width=20%", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);
 my $col = '';
-if( !$new ) {
-	$col = "<b>$idx</b>";
-	print &ui_columns_row([ "$icons{ID}{IMAGE}<b>ID</b>", $col ], \@tds);
-}
+$col = &ui_select("newIdx", $idx, \@idxs, 1);
+print &ui_columns_row([ "$icons{ID}{IMAGE}<b>ID</b>", $col ], \@tds);
 $col = &ui_select("src", \@selected_src, \@items, 5, 1);
 print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'rule_src'}</b>", $col ], \@tds);
 $col = &ui_select("dst", \@selected_dst, \@items, 5, 1);

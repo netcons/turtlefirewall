@@ -11,11 +11,15 @@
 do 'turtlefirewall-lib.pl';
 &ReadParse();
 
+$nNat = $fw->GetNatsCount();
+
 $new = $in{'new'};
 
 if( $new ) {
 	$heading = "$icons{CREATE}{IMAGE}$text{'edit_nat_title_create'}";
-	$idx = '';
+	$nNat++;
+	$idx = $nNat;
+	$newIdx = '';
 	$virtual = '';
 	$real = '';
 	$service = '';
@@ -25,6 +29,7 @@ if( $new ) {
 } else {
 	$heading = "$icons{EDIT}{IMAGE}$text{'edit_nat_title_edit'}";
 	$idx = $in{'idx'};
+	$newIdx = '';
 	%nat = $fw->GetNat($idx);
 	$virtual = $nat{'VIRTUAL'};
 	$real = $nat{'REAL'};
@@ -34,6 +39,9 @@ if( $new ) {
 	$active = $nat{'ACTIVE'} ne 'NO';
 }
 &ui_print_header( $heading, $text{'title'}, "" );
+
+my @idxs = ();
+for( my $i=1; $i<=$nNat; $i++ ) { push @idxs, $i; }
 
 my @items_virtual = ();
 my @virtuals = ();
@@ -59,10 +67,8 @@ print &ui_hidden("idx", $idx);
 my @tds = ( "width=20%", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);
 my $col = '';
-if( !$new ) {
-	$col = "<b>$idx</b>";
-	print &ui_columns_row([ "$icons{ID}{IMAGE}<b>ID</b>", $col ], \@tds);
-}
+$col = &ui_select("newIdx", $idx, \@idxs, 1);
+print &ui_columns_row([ "$icons{ID}{IMAGE}<b>ID</b>", $col ], \@tds);
 $col = &ui_select("virtual", $virtual, \@items_virtual);
 print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'virtual_host'}</b>", $col ], \@tds);
 $col = &ui_select("real", $real, \@items_real);

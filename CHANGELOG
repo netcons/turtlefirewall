@@ -248,5 +248,6 @@ CHANGELOG
            - Feature : Add ipset support.
            - Feature : Add prefix support for net items.
            - Feature : Add item reference lookup support.
+           - Feature : Make rule order configurable.
            - Todo : Translate new features 
            - Todo : Fix backup.cgi restore upload.

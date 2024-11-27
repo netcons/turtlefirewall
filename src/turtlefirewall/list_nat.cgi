@@ -54,19 +54,22 @@ sub showNat {
 
 	$nNat = $fw->GetNatsCount();
 
+	my $idx = $in{idx};
 	if( $in{table} eq 'nat' ) {
-		my $idx = $in{idx};
-		if( $in{down} ne '' && $idx > 0 && $idx < $nNat ) {
-			my %appo = $fw->GetNat($idx+1);
-			$fw->AddNatAttr($idx+1, $fw->GetNat($idx));
-			$fw->AddNatAttr($idx, %appo);
+		if( $in{down} > 0 || $in{up} > 0 ) {
+			my $newIdx = $idx;
+			if( $in{down} > 0 && $idx > 0 && $idx < $nNat ) {
+				$newIdx = $idx + $in{down};
+				if( $newIdx > $nNat ) { $newIdx = $nNat; }
+			}
+			if( $in{up} > 0 && $idx > 1 && $idx <= $nNat ) {
+				$newIdx = $idx - $in{up};
+				if( $newIdx < 1 ) { $newIdx = 1; }
+			}
+			$fw->MoveNat( $idx, $newIdx );
+			$fw->SaveFirewall();
+			$idx=$newIdx;
 		}
-		if( $in{up} ne '' && $idx > 1 && $idx <= $nNat ) {
-			my %appo = $fw->GetNat($idx-1);
-			$fw->AddNatAttr($idx-1, $fw->GetNat($idx));
-			$fw->AddNatAttr($idx, %appo);
-		}
-		$fw->SaveFirewall();
 	}
 
 	for( my $i=1; $i<=$nNat; $i++ ) {
@@ -160,21 +163,24 @@ sub showMasquerade {
 
 	my $nMasq = $fw->GetMasqueradesCount();
 	
+	my $idx = $in{idx};
 	if( $in{table} eq 'masquerade' ) {
-		my $idx = $in{idx};
-		if( $in{down} ne '' && $idx > 0 && $idx < $nMasq ) {
-			my %appo = $fw->GetMasquerade($idx+1);
-			$fw->AddMasqueradeAttr($idx+1, $fw->GetMasquerade($idx));
-			$fw->AddMasqueradeAttr($idx, %appo);
+		if( $in{down} > 0 || $in{up} > 0 ) {
+			my $newIdx = $idx;
+			if( $in{down} > 0 && $idx > 0 && $idx < $nMasq ) {
+				$newIdx = $idx + $in{down};
+				if( $newIdx > $nMasq ) { $newIdx = $nMasq; }
+			}
+			if( $in{up} > 0 && $idx > 1 && $idx <= $nMasq ) {
+				$newIdx = $idx - $in{up};
+				if( $newIdx < 1 ) { $newIdx = 1; }
+			}
+			$fw->MoveMasquerade( $idx, $newIdx );
+			$fw->SaveFirewall();
+			$idx=$newIdx;
 		}
-		if( $in{up} ne '' && $idx > 1 && $idx <= $nMasq ) {
-			my %appo = $fw->GetMasquerade($idx-1);
-			$fw->AddMasqueradeAttr($idx-1, $fw->GetMasquerade($idx));
-			$fw->AddMasqueradeAttr($idx, %appo);
-		}
-		$fw->SaveFirewall();
-	}	
-	
+	}
+
 	for( my $i=1; $i<=$nMasq; $i++ ) {
 		my %attr = $fw->GetMasquerade( $i );
 		local @cols;
@@ -269,19 +275,23 @@ sub showRedirect {
 		 	  "<b>$text{'redirect_move'}</b>" ], 100, 0, \@tds);
 
 	my $nRedirect = $fw->GetRedirectCount();
+
+	my $idx = $in{idx};
 	if( $in{table} eq 'redirect' ) {
-		my $idx = $in{idx};
-		if( $in{down} ne '' && $idx > 0 && $idx < $nRedirect ) {
-			my %appo = $fw->GetRedirect($idx+1);
-			$fw->AddRedirectAttr($idx+1, $fw->GetRedirect($idx));
-			$fw->AddRedirectAttr($idx, %appo);
+		if( $in{down} > 0 || $in{up} > 0 ) {
+			my $newIdx = $idx;
+			if( $in{down} > 0 && $idx > 0 && $idx < $nRedirect ) {
+				$newIdx = $idx + $in{down};
+				if( $newIdx > $nRedirect ) { $newIdx = $nRedirect; }
+			}
+			if( $in{up} > 0 && $idx > 1 && $idx <= $nRedirect ) {
+				$newIdx = $idx - $in{up};
+				if( $newIdx < 1 ) { $newIdx = 1; }
+			}
+			$fw->MoveRedirect( $idx, $newIdx );
+			$fw->SaveFirewall();
+			$idx=$newIdx;
 		}
-		if( $in{up} ne '' && $idx > 1 && $idx <= $nRedirect ) {
-			my %appo = $fw->GetRedirect($idx-1);
-			$fw->AddRedirectAttr($idx-1, $fw->GetRedirect($idx));
-			$fw->AddRedirectAttr($idx, %appo);
-		}
-		$fw->SaveFirewall();
 	}
 
 	for( my $i=1; $i<=$nRedirect; $i++ ) {

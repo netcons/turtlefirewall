@@ -135,11 +135,6 @@ sub showConnmarkPreroute {
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
-		#		if( $i < $nConnmarkPreroutes-1 ) {
-		#			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmarkpreroute&idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
-		#		} else {
-		#			$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'></td>";
-		#		}
 		if( $i < $nConnmarkPreroutes ) {
 			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmarkpreroute&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
@@ -158,11 +153,6 @@ sub showConnmarkPreroute {
 				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
 				   </td>";
 		}
-		#		if( $i > 2 ) {
-		#		$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmarkpreroute&idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
-		#	} else {
-		#		$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'></td>";
-		#	}
 		$mover .= "</tr></table>";
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
@@ -296,11 +286,6 @@ sub showConnmark {
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
-		#		if( $i < $nConnmarks-1 ) {
-		#			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmark&idx=$i&down=5'><img src='images/down5.gif' border='0' hspace='1' vspace='0' alt='V'></a></td>";
-		#		} else {
-		#			$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'></td>";
-		#		}
 		if( $i < $nConnmarks ) {
 			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmark&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
@@ -319,11 +304,6 @@ sub showConnmark {
 				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
 				   </td>";
 		}
-		#		if( $i > 2 ) {
-		#		$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmark&idx=$i&up=5'><img src='images/up5.gif' border='0' hspace='1' vspace='0' alt='A'></a></td>";
-		#	} else {
-		#		$mover .= "<td width=50%><img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'></td>";
-		#	}
 		$mover .= "</tr></table>";
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);

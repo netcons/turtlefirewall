@@ -12,6 +12,7 @@ do 'turtlefirewall-lib.pl';
 &ReadParse();
 
 my $idx = $in{'idx'};
+my $newIdx = $in{'newIdx'};
 my $virtual = $in{'virtual'};
 my $real = $in{'real'};
 my ($service, $port) = &formServiceParse( $in{'servicetype'}, $in{'service2'}, $in{'service3'}, $in{'port'} );
@@ -72,5 +73,6 @@ if( $in{'delete'} ) {
         }
 }
 
+if( $idx ne $newIdx ) { $fw->MoveNat( $idx, $newIdx ); }
 $fw->SaveFirewall();
 &redirect( 'list_nat.cgi' );
