@@ -1001,7 +1001,7 @@ sub GetItemReferences {
 			foreach $ruleitem ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
 				my @ruleitem_list = split( /,/, $this->{fw}{$ruletype}[$i]{$ruleitem} );
 				if( grep( /^$item$/, @ruleitem_list ) ) {
-					$references{"${ruleitem} ${i}"} = $ruletype;
+					$references{"$ruletype $i $ruleitem"} = $ruletype;
 				}
 			}
 		}
