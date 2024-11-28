@@ -35,7 +35,7 @@ sub showItemReferences {
 		my $reftypelc = lc($reftype);
 		my $prefix = $reftype eq 'RULE' ? 'filter' : $reftypelc;
 		my @ks = split( / /, $k );
-		my $refname = $ks[2];
+		my $refname = $ks[0];
 		my $idx = $ks[1];
 		# Item in Rule
 		if( $idx ne '' ) {
