@@ -58,6 +58,7 @@ dnf -y upgrade kernel
 reboot
 
 dnf -y install kernel-devel kernel-headers
+dnf -y install kernel-modules-extra
 dnf -y install iptables-devel libpcap-devel json-c-devel libgcrypt-devel perl-File-Path
 dnf -y install autoconf automake libtool
 dnf -y install dkms
