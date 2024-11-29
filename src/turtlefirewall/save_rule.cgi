@@ -88,6 +88,6 @@ if( $in{'delete'} ) {
 	$fw->AddRule( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $ratelimit, $port, $time, $target, $active, $log, $description );
 }
 
-if( $idx ne $newIdx ) { $fw->MoveRule( $idx, $newIdx ); }
+if( $idx ne $newIdx ) { $fw->MoveRule( $idx, $newIdx ); $idx=$newIdx; }
 $fw->SaveFirewall();
-&redirect( 'list_rules.cgi'.($in{'delete'} ? "?idx=$idx" : '') );
+&redirect( 'list_rules.cgi'.($in{'delete'} ? '' : "?idx=$idx") );

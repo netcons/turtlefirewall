@@ -95,6 +95,6 @@ if( $in{'delete'} ) {
 	$fw->AddConntrack( $in{'new'} ? 0 : $idx, $src, $dst, $service, $port, $helper, $active );
 }
 
-if( $idx ne $newIdx ) { $fw->MoveConntrack( $idx, $newIdx ); }
+if( $idx ne $newIdx ) { $fw->MoveConntrack( $idx, $newIdx ); $idx=$newIdx; }
 $fw->SaveFirewall();
-&redirect( 'list_rawrules.cgi'.($in{'delete'} ? "?idx=$idx" : '') );
+&redirect( 'list_rawrules.cgi'.($in{'delete'} ? '' : "?idx=$idx") );
