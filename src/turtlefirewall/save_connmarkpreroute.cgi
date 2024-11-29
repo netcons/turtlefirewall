@@ -72,4 +72,4 @@ if( $in{'delete'} ) {
 
 if( $idx ne $newIdx ) { $fw->MoveConnmarkPreroute( $idx, $newIdx ); $idx=$newIdx; }
 $fw->SaveFirewall();
-&redirect( 'list_manglerules.cgi'.($in{'delete'} ? '' : "?idx=$idx") );
+&redirect( 'list_manglerules.cgi'.($in{'delete'} ? '' : "?table=connmarkpreroute&idx=$idx") );

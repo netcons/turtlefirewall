@@ -75,17 +75,19 @@ sub showNat {
 	for( my $i=1; $i<=$nNat; $i++ ) {
 		my %attr = $fw->GetNat( $i );
 		local @cols;
+		my $bb = $idx == $i && $in{table} eq 'nat' ? '<b>' : '';       # BoldBegin
+		my $be = $idx == $i && $in{table} eq 'nat'? '</b>' : '';      # BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
-		my $href = &ui_link("edit_nat.cgi?idx=$i","${sb}${i}${se}");
+		my $href = &ui_link("edit_nat.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my %zone = $fw->GetZone($attr{'VIRTUAL'});
 		if( $zone{IF} ne '' ) {
-			push(@cols, "$icons{ZONE}{IMAGE}${sb}$attr{'VIRTUAL'} ($zone{'IF'})${se}" );
+			push(@cols, "$icons{ZONE}{IMAGE}${sb}${bb}$attr{'VIRTUAL'} ($zone{'IF'})${be}${se}" );
 		} else {
-			push(@cols, "$icons{HOST}{IMAGE}${sb}$attr{'VIRTUAL'}${se}" );
+			push(@cols, "$icons{HOST}{IMAGE}${sb}${bb}$attr{'VIRTUAL'}${be}${se}" );
 		}
-		push(@cols, "$icons{HOST}{IMAGE}${sb}$attr{'REAL'}${se}" );
+		push(@cols, "$icons{HOST}{IMAGE}${sb}${bb}$attr{'REAL'}${be}${se}" );
 		my $servicelist = '';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
@@ -99,13 +101,13 @@ sub showNat {
 				$servicelist .= "$icons{SERVICE}{IMAGE}${s}<br>";
 			}
 		}
-		push(@cols, "${sb}${servicelist}${se}");
+		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
 		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $nimage = $attr{'ACTIVE'} eq 'NO' ? $icons{NAT}{IMAGE} : $icons{NAT_A}{IMAGE};
-		push(@cols, "${nimage}${sb}${cb}$text{YES}${ce}${se}" );
+		push(@cols, "${nimage}${sb}${bb}${cb}$text{YES}${ce}${be}${se}" );
 		my $timage = $attr{'TOPORT'} eq '' ? '' : $icons{TOPORT}{IMAGE};
-		push(@cols, "${timage}${sb}$attr{'TOPORT'}${se}" );
+		push(@cols, "${timage}${sb}${bb}$attr{'TOPORT'}${be}${se}" );
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
 
@@ -184,15 +186,17 @@ sub showMasquerade {
 	for( my $i=1; $i<=$nMasq; $i++ ) {
 		my %attr = $fw->GetMasquerade( $i );
 		local @cols;
+		my $bb = $idx == $i && $in{table} eq 'masquerade' ? '<b>' : '';       # BoldBegin
+		my $be = $idx == $i && $in{table} eq 'masquerade' ? '</b>' : '';      # BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
-		my $href = &ui_link("edit_masquerade.cgi?idx=$i","${sb}${i}${se}");
+		my $href = &ui_link("edit_masquerade.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $type = '';
 		$type = $fw->GetItemType($attr{'SRC'});
-		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'SRC'}${se}" );
+		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'SRC'}${be}${se}" );
 		$type = $fw->GetItemType($attr{'DST'});
-		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'DST'}${se}" );
+		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'DST'}${be}${se}" );
 		my $servicelist = '';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
@@ -206,17 +210,17 @@ sub showMasquerade {
 				$servicelist .= "$icons{SERVICE}{IMAGE}${s}<br>";
 			}
 		}
-		push(@cols, "${sb}${servicelist}${se}");
+		push(@cols, "${sb}${bb}${servicelist}${se}");
 		if( $attr{'MASQUERADE'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MASQUERADE}{IMAGE} : $icons{MASQUERADE_NO}{IMAGE};
-			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
+			push(@cols, "${dimage}${sb}${bb}${cb}$text{NO}${ce}${be}${se}" );
 		} else {
 			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MASQUERADE}{IMAGE} : $icons{MASQUERADE_A}{IMAGE};
-			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
+			push(@cols, "${aimage}${sb}${bb}${cb}$text{YES}${ce}${be}${se}" );
 		}
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
@@ -297,15 +301,17 @@ sub showRedirect {
 	for( my $i=1; $i<=$nRedirect; $i++ ) {
 		my %attr = $fw->GetRedirect( $i );
 		local @cols;
+		my $bb = $idx == $i && $in{table} eq 'redirect' ? '<b>' : '';       # BoldBegin
+		my $be = $idx == $i && $in{table} eq 'redirect' ? '</b>' : '';      # BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
-		my $href = &ui_link("edit_redirect.cgi?idx=$i","${sb}${i}${se}");
+		my $href = &ui_link("edit_redirect.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
 		my $type = '';
 		$type = $fw->GetItemType($attr{'SRC'});
-		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'SRC'}${se}" );
+		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'SRC'}${be}${se}" );
 		$type = $fw->GetItemType($attr{'DST'});
-		push(@cols, "$icons{$type}{IMAGE}${sb}$attr{'DST'}${se}" );
+		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'DST'}${be}${se}" );
 		my $servicelist = '';
 		if( $attr{'SERVICE'} eq 'tcp' || $attr{'SERVICE'} eq 'udp' ) {
 			if( $attr{'PORT'} ne '' ) {
@@ -319,20 +325,20 @@ sub showRedirect {
 				$servicelist .= "$icons{SERVICE}{IMAGE}${s}<br>";
 			}
 		}
-		push(@cols, "${sb}${servicelist}${se}");
+		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
 		if( $attr{'REDIRECT'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? $icons{REDIRECT}{IMAGE} : $icons{REDIRECT_NO}{IMAGE};
-			push(@cols, "${dimage}${sb}${cb}$text{NO}${ce}${se}" );
+			push(@cols, "${dimage}${sb}${bb}${cb}$text{NO}${ce}${be}${se}" );
 			push(@cols, "" );
 		} else {
 			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? $icons{REDIRECT}{IMAGE} : $icons{REDIRECT_A}{IMAGE};
-			push(@cols, "${aimage}${sb}${cb}$text{YES}${ce}${se}" );
+			push(@cols, "${aimage}${sb}${bb}${cb}$text{YES}${ce}${be}${se}" );
 			my $timage = $attr{'TOPORT'} eq '' ? '' : $icons{TOPORT}{IMAGE};
-			push(@cols, "${timage}${sb}$attr{'TOPORT'}${se}" );
+			push(@cols, "${timage}${sb}${bb}$attr{'TOPORT'}${be}${se}" );
 		}
 		local $mover;
 		$mover .= "<table cellspacing=0 cellpadding=0><tr>";

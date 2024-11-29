@@ -67,6 +67,6 @@ if( $in{'delete'} ) {
 	$fw->AddRedirect( $in{'new'} ? 0 : $idx, $src, $dst, $service, $port, $toport, $is_redirect, $active );
 }
 
-if( $idx ne $newIdx ) { $fw->MoveRedirect( $idx, $newIdx ); }
+if( $idx ne $newIdx ) { $fw->MoveRedirect( $idx, $newIdx ); $idx=$newIdx; }
 $fw->SaveFirewall();
-&redirect( 'list_nat.cgi' );
+&redirect( 'list_nat.cgi'.($in{'delete'} ? '' : "?table=redirect&idx=$idx") );

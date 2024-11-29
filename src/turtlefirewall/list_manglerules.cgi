@@ -57,8 +57,8 @@ sub showConnmarkPreroute {
 
 	my $nConnmarkPreroutes = $fw->GetConnmarkPreroutesCount();
 
+	my $idx = $in{idx};
 	if( $in{table} eq 'connmarkpreroute' ) {
-		my $idx = $in{idx};
 		if( $in{down} > 0 || $in{up} > 0 ) {
 			my $newIdx = $idx;
 			if( $in{down} > 0 && $idx > 0 && $idx < $nConnmarkPreroutes ) {
@@ -79,8 +79,8 @@ sub showConnmarkPreroute {
 		my %attr = $fw->GetConnmarkPreroute($i);
 		local @cols;
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
-		my $bb = $idx == $i ? '<b>' : '';	# BoldBegin
-		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
+		my $bb = $idx == $i && $in{table} eq 'connmarkpreroute' ? '<b>' : '';	# BoldBegin
+		my $be = $idx == $i && $in{table} eq 'connmarkpreroute' ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_connmarkpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
@@ -198,8 +198,8 @@ sub showConnmark {
 
 	my $nConnmarks = $fw->GetConnmarksCount();
 
+	my $idx = $in{idx};
 	if( $in{table} eq 'connmark' ) {
-		my $idx = $in{idx};
 		if( $in{down} > 0 || $in{up} > 0 ) {
 			my $newIdx = $idx;
 			if( $in{down} > 0 && $idx > 0 && $idx < $nConnmarks ) {
@@ -220,8 +220,8 @@ sub showConnmark {
 		my %attr = $fw->GetConnmark($i);
 		local @cols;
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
-		my $bb = $idx == $i ? '<b>' : '';	# BoldBegin
-		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
+		my $bb = $idx == $i && $in{table} eq 'connmark' ? '<b>' : '';	# BoldBegin
+		my $be = $idx == $i && $in{table} eq 'connmark' ? '</b>' : '';	# BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_connmark.cgi?idx=$i","${sb}${bb}${i}${be}${se}");

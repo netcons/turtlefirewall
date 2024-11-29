@@ -97,4 +97,4 @@ if( $in{'delete'} ) {
 
 if( $idx ne $newIdx ) { $fw->MoveConntrackPreroute( $idx, $newIdx ); $idx=$newIdx; }
 $fw->SaveFirewall();
-&redirect( 'list_rawrules.cgi'.($in{'delete'} ? '' : "?idx=$idx") );
+&redirect( 'list_rawrules.cgi'.($in{'delete'} ? '' : "?table=conntrackpreroute&idx=$idx") );

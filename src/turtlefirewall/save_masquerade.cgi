@@ -58,6 +58,6 @@ if( $in{'delete'} ) {
 	$fw->AddMasquerade( $in{'new'} ? 0 : $idx, $src, $dst, $service, $port, $is_masquerade, $active );
 }
 
-if( $idx ne $newIdx ) { $fw->MoveMasquerade( $idx, $newIdx ); }
+if( $idx ne $newIdx ) { $fw->MoveMasquerade( $idx, $newIdx ); $idx=$newIdx; }
 $fw->SaveFirewall();
-&redirect( 'list_nat.cgi' );
+&redirect( 'list_nat.cgi'.($in{'delete'} ? '' : "?table=masquerade&idx=$idx") );

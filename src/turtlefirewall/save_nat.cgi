@@ -73,6 +73,6 @@ if( $in{'delete'} ) {
         }
 }
 
-if( $idx ne $newIdx ) { $fw->MoveNat( $idx, $newIdx ); }
+if( $idx ne $newIdx ) { $fw->MoveNat( $idx, $newIdx ); $idx=$newIdx; }
 $fw->SaveFirewall();
-&redirect( 'list_nat.cgi' );
+&redirect( 'list_nat.cgi'.($in{'delete'} ? '' : "?table=nat&idx=$idx") );
