@@ -92,4 +92,4 @@ print "</tr></table>";
 print &ui_form_end();
 
 print "<br><br>";
-&ui_print_footer("list_rawrules.cgi?idx=$idx",'Raw Rules list');
+&ui_print_footer("list_rawrules.cgi?table=conntrack&idx=$idx",'Raw Rules list');

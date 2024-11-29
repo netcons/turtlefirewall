@@ -117,4 +117,4 @@ print "</tr></table>";
 print &ui_form_end();
 
 print "<br><br>";
-&ui_print_footer("list_manglerules.cgi?idx=$idx",'Mangle Rules list');
+&ui_print_footer("list_manglerules.cgi?table=connmark&idx=$idx",'Mangle Rules list');

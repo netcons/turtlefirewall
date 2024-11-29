@@ -100,4 +100,4 @@ print "</tr></table>";
 print &ui_form_end();
 
 print "<br><br>";
-&ui_print_footer('list_nat.cgi','NAT list');
+&ui_print_footer("list_nat.cgi?table=redirect&idx=$idx",'NAT list');
