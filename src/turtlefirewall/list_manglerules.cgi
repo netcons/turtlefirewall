@@ -100,7 +100,7 @@ sub showConnmarkPreroute {
 		} else {
 			my @services = split(/,/, $attr{'SERVICE'});
 			foreach my $s (@services) {
-				$servicelist .= "$icons{SERVICE}{IMAGE}${s}<br>";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$s<br>";
 			}
 		}
 		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
@@ -251,7 +251,7 @@ sub showConnmark {
 		} else {
 			my @services = split(/,/, $attr{'SERVICE'});
 			foreach my $s (@services) {
-				$servicelist .= "$icons{SERVICE}{IMAGE}${s}<br>";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$s<br>";
 			}
 		}
 		push(@cols, "${sb}${bb}${servicelist}${be}${se}");

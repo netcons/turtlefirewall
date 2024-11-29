@@ -82,7 +82,11 @@ sub showConntrackPreroute {
 		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'SRC'}${be}${se}" );
 		$type = $fw->GetItemType($attr{'DST'});
 		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'DST'}${be}${se}" );
-		push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/$attr{'PORT'}${be}${se}");
+		if( $attr{'PORT'} ne '' ) {
+			push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/$attr{'PORT'}${be}${se}");
+		} else {
+			push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/all${be}${se}");
+		}
 		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? $icons{HELPER}{IMAGE} : $icons{HELPER_A}{IMAGE};
@@ -177,7 +181,11 @@ sub showConntrack {
 		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'SRC'}${be}${se}" );
 		$type = $fw->GetItemType($attr{'DST'});
 		push(@cols, "$icons{$type}{IMAGE}${sb}${bb}$attr{'DST'}${be}${se}" );
-		push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/$attr{'PORT'}${be}${se}");
+		if( $attr{'PORT'} ne '' ) {
+			push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/$attr{'PORT'}${be}${se}");
+		} else {
+			push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/all${be}${se}");
+		}
 		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? $icons{HELPER}{IMAGE} : $icons{HELPER_A}{IMAGE};

@@ -93,12 +93,12 @@ sub showNat {
 			if( $attr{'PORT'} ne '' ) {
 				$servicelist .= "$icons{SERVICE}{IMAGE}$attr{'SERVICE'}/$attr{'PORT'}";
 			} else {
-				$servicelist .= "$icons{SERVICE}{IMAGE}{'SERVICE'}/all";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$attr{'SERVICE'}/all";
 			}
 		} else {
 			my @services = split(/,/, $attr{'SERVICE'});
 			foreach my $s (@services) {
-				$servicelist .= "$icons{SERVICE}{IMAGE}${s}<br>";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$s<br>";
 			}
 		}
 		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
@@ -207,7 +207,7 @@ sub showMasquerade {
 		} else {
 			my @services = split(/,/, $attr{'SERVICE'});
 			foreach my $s (@services) {
-				$servicelist .= "$icons{SERVICE}{IMAGE}${s}<br>";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$s<br>";
 			}
 		}
 		push(@cols, "${sb}${bb}${servicelist}${se}");
@@ -322,7 +322,7 @@ sub showRedirect {
 		} else {
 			my @services = split(/,/, $attr{'SERVICE'});
 			foreach my $s (@services) {
-				$servicelist .= "$icons{SERVICE}{IMAGE}${s}<br>";
+				$servicelist .= "$icons{SERVICE}{IMAGE}$s<br>";
 			}
 		}
 		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
