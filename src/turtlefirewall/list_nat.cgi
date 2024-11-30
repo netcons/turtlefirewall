@@ -210,7 +210,7 @@ sub showMasquerade {
 				$servicelist .= "$icons{SERVICE}{IMAGE}$s<br>";
 			}
 		}
-		push(@cols, "${sb}${bb}${servicelist}${se}");
+		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
 		if( $attr{'MASQUERADE'} eq 'NO' ) {
 			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd

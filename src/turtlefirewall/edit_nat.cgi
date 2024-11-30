@@ -67,7 +67,7 @@ print &ui_hidden("idx", $idx);
 my @tds = ( "width=20%", "width=80%" );
 print &ui_columns_start(undef, 100, 0, \@tds);
 my $col = '';
-$col = &ui_select("newIdx", $idx, \@idxs, 1);
+$col = &ui_select("newIdx", $idx, \@idxs);
 print &ui_columns_row([ "$icons{ID}{IMAGE}<b>ID</b>", $col ], \@tds);
 $col = &ui_select("virtual", $virtual, \@items_virtual);
 print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'virtual_host'}</b>", $col ], \@tds);
