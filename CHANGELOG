@@ -246,7 +246,7 @@ CHANGELOG
            - Bug : Fixed rule tcp/udp ALL ports display.
            - Services : Removed depreciated smtps TCP port 465 service.
            - Services : Added DNS over TLS TCP port 853 service.
-           - Feature : nDPI 4.9.11 support.
+           - Feature : nDPI 4.11 support.
            - Feature : Add ipset support.
            - Feature : Add prefix support for net items.
            - Feature : Add item reference lookup support.
