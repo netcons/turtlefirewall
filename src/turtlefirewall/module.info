@@ -1,5 +1,5 @@
 os_support=*-linux
-version=2.4
+version=2.5
 longdesc=Configure a Linux firewall in a simple and fast way.
 name=turtlefirewall
 desc=Turtle Firewall

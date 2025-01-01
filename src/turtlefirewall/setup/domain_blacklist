@@ -4,8 +4,8 @@
 # ln -sf /usr/lib/turtlefirewall/domain_blacklist /etc/cron.daily/domain_blacklist
 #
 
-echo -e "\nTurtle Firewall 2.4 - Domain Blacklist";
-echo -e "Copyright (c) 2001-2024 Andrea Frigido\n";
+echo -e "\nTurtle Firewall 2.5 - Domain Blacklist";
+echo -e "Copyright (c) 2001-2025 Andrea Frigido <andrea@frisoft.it>\n";
 
 fw_file="/etc/turtlefirewall/fw.xml"
 

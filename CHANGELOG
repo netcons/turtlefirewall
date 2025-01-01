@@ -1,12 +1,14 @@
-
-  Turtle Firewall
-
-  2001/11/23 13:25:00
-
-  Copyright (c) 2001-2024 Andrea Frigido
-  You may distribute under the terms of either
-  the GNU General Public License (GPL)
-
+# Turtle Firewall
+#
+# Software for configuring a linux firewall (netfilter)
+#
+#   2001/11/23 13:25:00
+#
+#======================================================================
+# Copyright (c) 2001-2025 Andrea Frigido <andrea@frisoft.it>
+# You may distribute under the terms of either the GNU General Public
+# License
+#======================================================================
 
 CHANGELOG
 ---------
@@ -251,5 +253,8 @@ CHANGELOG
            - Feature : Add prefix support for net items.
            - Feature : Add item reference lookup support.
            - Feature : Make rule order configurable.
-           - Todo : Translate new features 
+01-01-2025 v.2.5
+           - Services : Make user defined services permanent.
+           - Services : Removed depreciated kazaa and edonkey services.
+           - Todo : Translate new features.
            - Todo : Fix backup.cgi restore upload.

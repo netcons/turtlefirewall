@@ -1,24 +1,23 @@
 #!/usr/bin/env perl
-#
-# TurtleFw: Turtle Firewall
+
+# Turtle Firewall
 #
 # Software for configuring a linux firewall (netfilter)
 #
 #   2001/11/23 13:25:00
 #
 #======================================================================
-# Copyright (c) 2001-2024 Andrea Frigido <andrea@frisoft.it>
+# Copyright (c) 2001-2025 Andrea Frigido <andrea@frisoft.it>
 # You may distribute under the terms of either the GNU General Public
 # License
 #======================================================================
-#
 
 require '/usr/lib/turtlefirewall/TurtleFirewall.pm';
 
 $firewall = new TurtleFirewall();
 
 print "\nTurtle Firewall ".$firewall->Version()."\n";
-print "Copyright (c) 2001-2024 Andrea Frigido\n\n";
+print "Copyright (c) 2001-2025 Andrea Frigido <andrea\@frisoft.it>\n\n";
 
 # parsing dei parametri
 my $outputFile;

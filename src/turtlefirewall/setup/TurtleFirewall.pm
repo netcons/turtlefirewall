@@ -1,11 +1,11 @@
-# TurtleFirewall: Turtle Firewall Library
+# Turtle Firewall : Library
 #
-# Software for configuring a Linux firewall (netfilter)
+# Software for configuring a linux firewall (netfilter)
 #
 #   2001/11/23 13:25:00
 #
 #======================================================================
-# Copyright (c) 2001-2024 Andrea Frigido
+# Copyright (c) 2001-2025 Andrea Frigido <andrea@frisoft.it>
 # You may distribute under the terms of either the GNU General Public
 # License
 #======================================================================
@@ -16,7 +16,7 @@ use XML::Parser;
 
 # Turtle Firewall Version
 sub Version {
-	return '2.4';
+	return '2.5';
 }
 
 sub new {

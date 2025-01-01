@@ -173,17 +173,28 @@ dkms install -m xtables-time -v 1.0.0
 
 ## Turtlefirewall Setup
 
-First finalise setup via Webmin, then enable service.
-
-RHEL.
+Disable default firewall RHEL.
 ```
-/etc/cron.daily/xt_geoip_update
 systemctl disable firewalld --now
-systemctl enable turtlefirewall --now
-
 ```
 
-Debian.
+Finalise setup via Webmin or command line RHEL.
+```
+cd /usr/libexec/webmin/turtlefirewall/setup
+/usr/bin/env perl setup
+cd ..
+rm -rf setup*
+```
+
+Finalise setup via Webmin or command line Debian.
+```
+cd /usr/share/webmin/turtlefirewall/setup
+/usr/bin/env perl setup
+cd ..
+rm -rf setup*
+```
+
+Download GeoIP database and enable service.
 ```
 /etc/cron.daily/xt_geoip_update
 systemctl enable turtlefirewall --now
