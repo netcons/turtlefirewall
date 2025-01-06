@@ -256,5 +256,6 @@ CHANGELOG
 01-01-2025 v.2.5
            - Services : Make user defined services permanent.
            - Services : Removed depreciated kazaa and edonkey services.
+           - Feature : nDPI 4.13 support.
            - Todo : Translate new features.
            - Todo : Fix backup.cgi restore upload.

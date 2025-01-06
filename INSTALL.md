@@ -130,18 +130,18 @@ Download source.
 cd /usr/src
 wget https://github.com/vel21ripn/nDPI/archive/master.zip -O nDPI-flow_info-4.zip
 unzip nDPI-flow_info-4.zip
-mv nDPI-flow_info-4 ndpi-netfilter-4.11.0
+mv nDPI-flow_info-4 ndpi-netfilter-4.13.0
 rm -rf nDPI-flow_info-4.zip
-cd ndpi-netfilter-4.11.0
+cd ndpi-netfilter-4.13.0
 rm -rf windows
 ```
 
 Install module.
 ```
 cp /tmp/turtlefirewall-master/dkms/dkms-ndpi-netfilter.conf ./dkms.conf
-dkms add -m ndpi-netfilter -v 4.11.0
-dkms build -m ndpi-netfilter -v 4.11.0
-dkms install -m ndpi-netfilter -v 4.11.0
+dkms add -m ndpi-netfilter -v 4.13.0
+dkms build -m ndpi-netfilter -v 4.13.0
+dkms install -m ndpi-netfilter -v 4.13.0
 ```
 
 Install library.

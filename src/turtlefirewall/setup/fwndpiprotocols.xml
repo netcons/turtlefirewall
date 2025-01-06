@@ -76,6 +76,7 @@
 	<ndpiprotocol name="dcerpc" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="dhcp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="dhcpv6" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="dicom" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="diameter" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="dingtalk" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="directv" category="video-audio"> </ndpiprotocol>
@@ -216,6 +217,7 @@
 	<ndpiprotocol name="mgcp" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="microsoft" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="microsoft365" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="mikrotik" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="mining" category="crypto-currency"> </ndpiprotocol>
 	<ndpiprotocol name="modbus" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="monero" category="crypto-currency"> </ndpiprotocol>
@@ -262,6 +264,7 @@
 	<ndpiprotocol name="outlook" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="paltalk" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="pandora" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="paramountplus" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="pastebin" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="pathofexile" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="pfcp" category="networking"> </ndpiprotocol>
@@ -311,6 +314,7 @@
 	<ndpiprotocol name="sd-rtn" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="service_location_protocol" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="sflow" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="shein" category="shopping"> </ndpiprotocol>
 	<ndpiprotocol name="showtime" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="signal" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="signalvoip" category="telephony"> </ndpiprotocol>
@@ -347,6 +351,7 @@
 	<ndpiprotocol name="syncthing" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="syslog" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="tailscale" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="taobao" category="shopping"> </ndpiprotocol>
 	<ndpiprotocol name="targus" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="targusdataspeed" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="teams" category="collaboration"> </ndpiprotocol>
@@ -355,6 +360,7 @@
 	<ndpiprotocol name="telegram" category="instant-messaging"> </ndpiprotocol>
 	<ndpiprotocol name="telegramvoip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="telnet" category="remote-access"> </ndpiprotocol>
+	<ndpiprotocol name="temu" category="shopping"> </ndpiprotocol>
 	<ndpiprotocol name="tencent" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="tencentgames" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="tencentvideo" category="video-audio"> </ndpiprotocol>
@@ -419,6 +425,7 @@
 	<ndpiprotocol name="xdmcp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="yahoo" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="yandex" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="yandexalice" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="yandexcloud" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="yandexdirect" category="advertisement"> </ndpiprotocol>
 	<ndpiprotocol name="yandexdisk" category="storage-backup"> </ndpiprotocol>
