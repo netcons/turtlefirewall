@@ -2062,10 +2062,6 @@ sub getIptablesRules {
 			":PREROUTING ACCEPT [0:0]\n".
 			":OUTPUT ACCEPT [0:0]\n";
 
-	# Copy packet mark to connection mark and vice versa
-	$rules_mangle .= "-A PREROUTING -j CONNMARK --restore-mark\n";
-	$rules_mangle .= "-A POSTROUTING -j CONNMARK --save-mark\n";
-
 	# Enable access from/to the loopback interface.
 	$rules .= "-A INPUT -i lo -j ACCEPT\n";
 	$rules .= "-A OUTPUT -o lo -j ACCEPT\n";
@@ -2291,6 +2287,12 @@ sub getIptablesRules {
 		}
 		$chains_mangle .= $chains_mangle_connmark;
 		$rules_mangle .= $rules_mangle_connmark;
+	}
+
+	# Copy packet mark to connection mark and vice versa
+	if( $rules_mangle_connmarkpreroute || $rules_mangle_connmark ) {
+		$rules_mangle .= "-A PREROUTING -j CONNMARK --restore-mark\n";
+		$rules_mangle .= "-A POSTROUTING -j CONNMARK --save-mark\n";
 	}
 
 	# Application of CONNTRACKPREROUTEs
