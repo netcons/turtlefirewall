@@ -257,5 +257,6 @@ CHANGELOG
            - Services : Make user defined services permanent.
            - Services : Removed depreciated kazaa and edonkey services.
            - Feature : nDPI 4.13 support.
+           - Feature : Add clamp_mss_to_pmtu option.
            - Todo : Translate new features.
            - Todo : Fix backup.cgi restore upload.

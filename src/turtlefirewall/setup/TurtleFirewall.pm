@@ -2007,6 +2007,8 @@ sub getIptablesRules {
 	my $chains_mangle = '';
 	my $rules_mangle = '';
 
+	my $rules_mangle_option = '';
+
 	my $chains_mangle_connmarkpreroute = '';
 	my $rules_mangle_connmarkpreroute = ''; 
 
@@ -2063,7 +2065,7 @@ sub getIptablesRules {
 	# Copy packet mark to connection mark and vice versa
 	$rules_mangle .= "-A PREROUTING -j CONNMARK --restore-mark\n";
 	$rules_mangle .= "-A POSTROUTING -j CONNMARK --save-mark\n";
-	
+
 	# Enable access from/to the loopback interface.
 	$rules .= "-A INPUT -i lo -j ACCEPT\n";
 	$rules .= "-A OUTPUT -o lo -j ACCEPT\n";
@@ -2209,6 +2211,15 @@ sub getIptablesRules {
 		$rules .= "-A INPUT -m ndpi --all --risk 29 -j SHA1_BLACKLIST\n";
 		$rules .= "-A OUTPUT -m ndpi --all --risk 29 -j SHA1_BLACKLIST\n";
 		$rules .= "-A FORWARD -m ndpi --all --risk 29 -j SHA1_BLACKLIST\n";
+		print "on\n";
+	} else {
+		print "off\n";
+	}
+
+	print "clamp_mss_to_pmtu: ";
+	if( $this->{fw}{OPTION}{clamp_mss_to_pmtu} ne 'off' ) {
+                $rules_mangle_option .= "-A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o ppp+ -j TCPMSS --clamp-mss-to-pmtu\n";
+		$rules_mangle .= $rules_mangle_option;
 		print "on\n";
 	} else {
 		print "off\n";
@@ -2407,7 +2418,7 @@ sub getIptablesRules {
 	print "DROP any other connections and LOG Action\n";
 	
 	return	($rules_raw_conntrackpreroute || $rules_raw_conntrack ? $chains_raw.$rules_raw."COMMIT\n" : "*raw\nCOMMIT\n").
-		($rules_mangle_connmarkpreroute || $rules_mangle_connmark ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").
+		($rules_mangle_connmarkpreroute || $rules_mangle_connmark || $rules_mangle_option ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").
 		$chains.$rules."COMMIT\n".$chains_nat.$rules_nat."COMMIT\n";
 }
 

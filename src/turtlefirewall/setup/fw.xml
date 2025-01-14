@@ -17,6 +17,7 @@
 <option name="drop_domain_blacklist" value="on"/>
 <option value="on" name="drop_sha1_blacklist"/>
 <option value="off" name="rp_filter"/>
+<option value="off" name="clamp_mss_to_pmtu"/>
 </options>
 
 <zone if="eth0" description="" name="lan"/>
