@@ -35,7 +35,8 @@ nf_tables, <br>
 nf_conntrack, <br>
 xt_connmark, <br>
 xt_time, <br>
-xt_set. <br>
+xt_set, <br>
+xt_tcpmss. <br>
 - Extra Netfilter kernel modules : <br>
 xt_ndpi, ( https://github.com/vel21ripn/nDPI ) <br>
 xt_geoip, ( https://codeberg.org/jengelh/xtables-addons ) <br>
