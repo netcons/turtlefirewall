@@ -2172,9 +2172,13 @@ sub getIptablesRules {
                 $rules .= "-A DOMAIN_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=DOMAIN-BLACKLIST(DRO) \"\n";
                 $rules .= "-A DOMAIN_BLACKLIST -j DROP\n";
 
-		$rules .= "-A INPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
-		$rules .= "-A OUTPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
-		$rules .= "-A FORWARD -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+		# Workaround for Risk 27 not working as expected
+		$rules .= "-A INPUT -m ndpi --proto domain_blacklist -j DOMAIN_BLACKLIST\n";
+		$rules .= "-A OUTPUT -m ndpi --proto domain_blacklist -j DOMAIN_BLACKLIST\n";
+		$rules .= "-A FORWARD -m ndpi --proto domain_blacklist -j DOMAIN_BLACKLIST\n";
+		#$rules .= "-A INPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+		#$rules .= "-A OUTPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
+		#$rules .= "-A FORWARD -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
 		print "on\n";
 	} else {
 		print "off\n";
