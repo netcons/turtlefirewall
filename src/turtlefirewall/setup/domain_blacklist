@@ -131,9 +131,7 @@ if [ -s $blacklist_file ]
     done < $never_blacklist_file
   fi
 
-  # Workaround for Risk 27 not working as expected
-  sed "s/^/domain_blacklist:|/;s/$/|/" $blacklist_file > /proc/net/xt_ndpi/host_proto
-  #sed "s/^/domain_blacklist:RISK_DOMAIN_/" $blacklist_file > /proc/net/xt_ndpi/host_proto
+  sed "s/^/domain_blacklist:RISK_DOMAIN_/" $blacklist_file > /proc/net/xt_ndpi/host_proto
   count=`wc -l < $blacklist_file`
   if [ $? = 0 ]
    then

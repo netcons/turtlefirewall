@@ -258,5 +258,6 @@ CHANGELOG
            - Services : Removed depreciated kazaa and edonkey services.
            - Feature : nDPI 4.13 support.
            - Feature : Add clamp_mss_to_pmtu option.
+           - Logging : Migrate domain blacklist to nDPI risk id 27.
            - Todo : Translate new features.
            - Todo : Fix backup.cgi restore upload.
