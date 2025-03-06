@@ -19,8 +19,8 @@
 <option value="on" name="drop_invalid_syn_fin"/>
 </options>
 
-<zone if="eth0" description="" name="lan"/>
-<zone description="" if="eth1" name="primarywan"/>
+<zone if="ens192" description="" name="lan"/>
+<zone description="" if="ppp0" name="primarywan"/>
 
 <net netmask="255.255.255.0" ip="20.160.50.0" description="" zone="primarywan" name="net-support"/>
 
@@ -63,7 +63,7 @@
 <rule description="Accept Firewall to anyware" target="ACCEPT" dst="*" service="all" src="FIREWALL"/>
 <rule src="internet" dst="FIREWALL" target="ACCEPT" service="icmp_all" description="Accept Internet to Firewall"/>
 <rule description="Accept grp-geoip to Firewall" service="openvpn" dst="FIREWALL" target="ACCEPT" src="grp-geoip"/>
-<rule dst="FIREWALL" target="ACCEPT" service="dns,http,icmp_all,imap,logio,ntop,ntp,pop3,proxy8080,shellinabox,smtp,ssh,unifi,webmin" src="lan" description="Accept Lan to Firewall"/>
+<rule dst="FIREWALL" target="ACCEPT" service="dns,http,icmp_all,imap,ntop,ntp,pop3,proxy3128,shellinabox,smtp,ssh,unifi,webmin" src="lan" description="Accept Lan to Firewall"/>
 <rule src="lan" riskset="ips" ndpi="all" target="DROP" dst="internet" service="all" log="YES" description="Deny some risks"/>
 <rule service="all" target="DROP" dst="internet" description="Limit Windows updates" src="lan" ratelimit="5Mbps" ndpi="windowsupdate"/>
 <rule src="grp-open" log="YES" description="Accept grp-open to Internet" target="ACCEPT" dst="internet" service="all"/>

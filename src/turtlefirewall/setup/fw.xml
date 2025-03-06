@@ -20,8 +20,8 @@
 <option value="off" name="clamp_mss_to_pmtu"/>
 </options>
 
-<zone if="eth0" description="" name="lan"/>
-<zone name="primarywan" description="" if="eth1"/>
+<zone if="ens192" description="" name="lan"/>
+<zone name="primarywan" description="" if="ppp0"/>
 
 <group name="internet" description="Internet">
 	<item name="primarywan"/>
@@ -37,7 +37,7 @@
 
 <rule target="ACCEPT" description="Allow Firewall to anyware" dst="*" service="all" src="FIREWALL"/>
 <rule target="ACCEPT" src="internet" dst="FIREWALL" service="icmp_all,openvpn" description="Allow Internet to Firewall"/>
-<rule service="dns,http,icmp_all,imap,ntp,pop3,proxy8080,shellinabox,smtp,ssh,unifi,webmin" src="lan" dst="FIREWALL" description="Allow Lan to Firewall" target="ACCEPT"/>
+<rule service="dns,http,icmp_all,imap,ntp,pop3,proxy3128,shellinabox,smtp,ssh,unifi,webmin" src="lan" dst="FIREWALL" description="Allow Lan to Firewall" target="ACCEPT"/>
 <rule service="ftp,http,https,icmp_all,imap,imaps,ntp,pop3,pop3s,smtps" src="lan" dst="internet" log="YES" description="Allow Lan to Internet" target="ACCEPT"/>
 
 </firewall>
