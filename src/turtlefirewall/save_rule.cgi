@@ -73,16 +73,12 @@ if( $in{'delete'} ) {
 		&error( $text{save_rule_error4} );
 	}
 
-	if( $target eq 'ACCEPT' && ($ndpi eq 'all' || $hostnameset ne '' || $riskset ne '') ) {
+	if( $target ne 'DROP' && $ratelimit ne '' ) {
 		&error( $text{save_rule_error5} );
 	}
 
-	if( $target ne 'DROP' && $ratelimit ne '' ) {
-		&error( $text{save_rule_error6} );
-	}
-
 	if( $log ne '' && $ratelimit ne '' ) {
-		&error( $text{save_rule_error7} );
+		&error( $text{save_rule_error6} );
 	}
 
 	$fw->AddRule( $in{'new'} ? 0 : $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $ratelimit, $port, $time, $target, $active, $log, $description );

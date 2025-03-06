@@ -423,9 +423,8 @@ save_rule_error1=numero porta errato (0-65535 o nessuno).
 save_rule_error2=il valore della porta &egrave; valido solo per i servizi tcp e udp.
 save_rule_error3=sorgente e destinazione non possono essere entrambi "FIREWALL".
 save_rule_error4=mark deve essere un numero decimale o esadecimale (es.: 10, 0x0A).
-save_rule_error5=All nDPI Services, Hostname and Risk, only valid for DROP or REJECT target.
-save_rule_error6=Rate only valid for DROP target.
-save_rule_error7=Log not valid for Rate Limit.
+save_rule_error5=Rate only valid for DROP target.
+save_rule_error6=Log not valid for Rate Limit.
 
 save_connmark_error_title1=Fail to delete Connmark Rule
 save_connmark_error_title2=Fail to create new Connmark Rule

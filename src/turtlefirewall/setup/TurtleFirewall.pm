@@ -3355,26 +3355,16 @@ sub _applyService {
 		if( $dport ne '' ) { $cmd .= "--dport $dport "; }
 
 		if( $ndpi ne '' ) { 
-			if( $target eq 'ACCEPT' ) {
-				if( $ndpi eq 'all' ) {
-					print "** all nDPI service ignored on target $target **\n";
-				} else {
-					my $cmddpi = $cmd;
-					$cmddpi .= "-m ndpi --inprogress $ndpi -j $target ";
-					$rules .= "$cmddpi\n";
-					$cmd .= "-m ndpi --clevel dpi --proto $ndpi ";
-                                }
-				if( $hostname ne '' ) { print "** nDPI hostname ignored on target $target **\n"; }
-				if( $risk ne '' ) { print "** nDPI risk ignored on target $target **\n"; }
+			if( $ndpi eq 'all' ) {
+				$cmd .= "-m ndpi --all ";
 			} else {
-				if( $ndpi eq 'all' ) {
-					$cmd .= "-m ndpi --all ";
-				} else {
-					$cmd .= "-m ndpi --proto $ndpi ";
-                                }
-				if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
-				if( $risk ne '' ) { $cmd .= "--risk $risk "; }
-			}
+				my $cmddpi = $cmd;
+				$cmddpi .= "-m ndpi --inprogress $ndpi -j ACCEPT ";
+				$rules .= "$cmddpi\n";
+				$cmd .= "-m ndpi --clevel dpi --proto $ndpi ";
+                               }
+			if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
+			if( $risk ne '' ) { $cmd .= "--risk $risk "; }
 	       	}
 
 		if( $state ne '' ) { $cmd .= "-m conntrack --ctstate $state "; }
