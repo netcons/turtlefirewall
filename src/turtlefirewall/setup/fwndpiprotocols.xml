@@ -74,6 +74,7 @@
 	<ndpiprotocol name="dazn" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="deezer" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="dcerpc" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="digitalocean" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="dhcp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="dhcpv6" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="dicom" category="iot-scada"> </ndpiprotocol>
@@ -195,6 +196,7 @@
 	<ndpiprotocol name="kerberos" category="authentication"> </ndpiprotocol>
 	<ndpiprotocol name="kismet" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="knxnet_ip" category="iot-scada"> </ndpiprotocol>
+	<ndpiprotocol name="lagofast" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="lastfm" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="ldap" category="authentication"> </ndpiprotocol>
 	<ndpiprotocol name="ldp" category="networking"> </ndpiprotocol>
@@ -222,6 +224,7 @@
 	<ndpiprotocol name="modbus" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="monero" category="crypto-currency"> </ndpiprotocol>
 	<ndpiprotocol name="mongodb" category="database"> </ndpiprotocol>
+	<ndpiprotocol name="mozilla" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="mpeg_ts" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="mpegdash" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="mqtt" category="infrastructure"> </ndpiprotocol>
@@ -305,6 +308,7 @@
 	<ndpiprotocol name="rtp" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rtps" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rtsp" category="video-audio"> </ndpiprotocol>
+	<ndpiprotocol name="rutube" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rx" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="s7comm" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="s7commplus" category="iot-scada"> </ndpiprotocol>
@@ -321,7 +325,6 @@
 	<ndpiprotocol name="sinaweibo" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="sip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="siriusxmradio" category="video-audio"> </ndpiprotocol>
-	<ndpiprotocol name="skype_teamscall" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="slack" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="smbv1" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="smbv23" category="storage-backup"> </ndpiprotocol>
@@ -355,6 +358,7 @@
 	<ndpiprotocol name="targus" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="targusdataspeed" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="teams" category="collaboration"> </ndpiprotocol>
+	<ndpiprotocol name="teamscall" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="teamspeak" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="teamviewer" category="remote-access"> </ndpiprotocol>
 	<ndpiprotocol name="telegram" category="instant-messaging"> </ndpiprotocol>
@@ -397,6 +401,7 @@
 	<ndpiprotocol name="viber" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="vibervoip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="vimeo" category="video-audio"> </ndpiprotocol>
+	<ndpiprotocol name="vivox" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="vk" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="vmware" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="vnc" category="remote-access"> </ndpiprotocol>

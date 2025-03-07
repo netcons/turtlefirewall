@@ -3356,13 +3356,15 @@ sub _applyService {
 
 		if( $ndpi ne '' ) { 
 			if( $ndpi eq 'all' ) {
+				# First Packet Classification
 				$cmd .= "-m ndpi --all ";
 			} else {
 				my $cmddpi = $cmd;
+				# Allow beyond First Packet Classification
 				$cmddpi .= "-m ndpi --inprogress $ndpi -j ACCEPT ";
 				$rules .= "$cmddpi\n";
 				$cmd .= "-m ndpi --clevel dpi --proto $ndpi ";
-                               }
+			}
 			if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
 			if( $risk ne '' ) { $cmd .= "--risk $risk "; }
 	       	}
