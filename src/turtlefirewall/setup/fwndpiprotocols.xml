@@ -120,6 +120,7 @@
 	<ndpiprotocol name="fuze" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="gaijinentertainment" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="gearman" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="gearup_booster" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="geforcenow" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="genshinimpact" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="git" category="other"> </ndpiprotocol>
@@ -206,11 +207,11 @@
 	<ndpiprotocol name="linkedin" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="lisp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="livestream" category="video-audio"> </ndpiprotocol>
+	<ndpiprotocol name="llm" category="artificial-intelligence"> </ndpiprotocol>
 	<ndpiprotocol name="llmnr" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="lolwildrift" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="lotusnotes" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="lustre" category="storage-backup"> </ndpiprotocol>
-	<ndpiprotocol name="maplestory" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="mastodon" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="mdns" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="megaco" category="telephony"> </ndpiprotocol>
@@ -244,6 +245,7 @@
 	<ndpiprotocol name="neteasegames" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="netflix" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="netflow" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="nexon" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="nfs" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="nintendo" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="noe" category="telephony"> </ndpiprotocol>

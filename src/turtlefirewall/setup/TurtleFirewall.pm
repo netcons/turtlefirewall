@@ -3363,7 +3363,7 @@ sub _applyService {
 				# Allow beyond First Packet Classification
 				$cmddpi .= "-m ndpi --inprogress $ndpi -j ACCEPT ";
 				$rules .= "$cmddpi\n";
-				$cmd .= "-m ndpi --clevel dpi --proto $ndpi ";
+				$cmd .= "-m ndpi --proto $ndpi ";
 			}
 			if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
 			if( $risk ne '' ) { $cmd .= "--risk $risk "; }

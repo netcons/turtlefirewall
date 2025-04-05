@@ -203,7 +203,7 @@ CHANGELOG
            - Connection Tracking : Enabled connection marking.
            - Connection Tracking : Flush conntrack table on firewall stop.
            - Connection Tracking : Added conntrack tools.
-           - Theme : New Webmin support. ( Todo : Translate new features )
+           - Theme : New Webmin support.
 09-10-2022 v.2.1
            - OS : Kernel 6 compatibility.
            - Feature : Removed pptp, sip, h323 and tftp kernel module options.
