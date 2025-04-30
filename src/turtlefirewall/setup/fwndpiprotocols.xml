@@ -42,6 +42,7 @@
 	<ndpiprotocol name="bittorrent" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="bjnp" category="printing"> </ndpiprotocol>
 	<ndpiprotocol name="dlep" category="networking"> </ndpiprotocol>
+	<ndpiprotocol name="blizzard" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="bloomberg" category="financial"> </ndpiprotocol>
 	<ndpiprotocol name="bluesky" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="cachefly" category="other"> </ndpiprotocol>
@@ -229,6 +230,7 @@
 	<ndpiprotocol name="mpeg_ts" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="mpegdash" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="mqtt" category="infrastructure"> </ndpiprotocol>
+	<ndpiprotocol name="msdo" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="mullvad" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="mumble" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="munin" category="infrastructure"> </ndpiprotocol>
@@ -301,6 +303,7 @@
 	<ndpiprotocol name="ripeatlas" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="rmcp" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="roblox" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="rockstargames" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="roughtime" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="rpc" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="rsh" category="remote-access"> </ndpiprotocol>
@@ -347,7 +350,6 @@
 	<ndpiprotocol name="srtp" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="ssdp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="ssh" category="remote-access"> </ndpiprotocol>
-	<ndpiprotocol name="starcraft" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="steam" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="steamdatagramrelay" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="stun" category="infrastructure"> </ndpiprotocol>
@@ -393,6 +395,7 @@
 	<ndpiprotocol name="tuyalp" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="twitch" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="twitter" category="social-media"> </ndpiprotocol>
+	<ndpiprotocol name="ubiquity" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="ubntac2" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="ubuntuone" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ultrasurf" category="proxy"> </ndpiprotocol>

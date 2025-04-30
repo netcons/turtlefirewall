@@ -4,7 +4,7 @@
 # ln -sf /usr/lib/turtlefirewall/ja3_blacklist /etc/cron.daily/ja3_blacklist
 #
 
-echo -e "\nTurtle Firewall 2.5 - JA3 Blacklist";
+echo -e "\nTurtle Firewall 2.6 - JA3 Blacklist";
 echo -e "Copyright (c) 2001-2025 Andrea Frigido <andrea@frisoft.it>\n";
 
 fw_file="/etc/turtlefirewall/fw.xml"

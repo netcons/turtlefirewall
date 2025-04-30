@@ -259,5 +259,7 @@ CHANGELOG
            - Feature : nDPI 4.13 support.
            - Feature : Add clamp_mss_to_pmtu option.
            - Feature : Add nDPI ACCEPT support for Hostnames.
+30-04-2025 v.2.6
+           - Feature : nDPI 4.15 support.
            - Todo : Translate new features.
            - Todo : Fix backup.cgi restore upload.
