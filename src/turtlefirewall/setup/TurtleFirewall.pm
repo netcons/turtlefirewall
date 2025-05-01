@@ -1713,14 +1713,14 @@ sub attr2xml {
 	return $appo;
 }
 
-# Translate """ to "'", "<" to "&lt;" and ">" to "&gt;" and "&" to "&amp;"
+# Translate """ to "'", "&" to "&amp;", "<" to "&lt;" and ">" to "&gt;"
 sub _clean {
 	my $this = shift;
 	my $s = shift;
 	$s =~ s/\"/\'/g;
+	$s =~ s/\&/&amp;/g;
 	$s =~ s/\</&lt;/g;
 	$s =~ s/\>/&gt;/g;
-	$s =~ s/\&/&amp;/g;
 	return $s;
 }
 
@@ -1741,7 +1741,7 @@ sub GetStatus {
 
 sub startFirewall {
 	my $this = shift;
-	
+
 	# PreLoad modules
 	print "nftables_module: on\n";
 	$this->command('modprobe nf_tables', '/dev/null');

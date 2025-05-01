@@ -261,5 +261,6 @@ CHANGELOG
            - Feature : Add nDPI ACCEPT support for Hostnames.
 30-04-2025 v.2.6
            - Feature : nDPI 4.15 support.
+           - Bug : Fixed translation of HTML character entities.
            - Todo : Translate new features.
            - Todo : Fix backup.cgi restore upload.
