@@ -1899,29 +1899,24 @@ sub startFirewall {
 	       	}
 	}
 
+	# Restore IPtables Rules
 	my $rules = $this->getIptablesRules();
 	
-	my $use_iptables_restore = 1;
-	
-	if( $use_iptables_restore ) {
-		umask 0077;
-		open FILE, ">/etc/turtlefirewall/iptables.dat";
-		print FILE $rules;
-		close FILE;
-		if( -x '/usr/sbin/iptables-nft-restore' ) {
-			print "run iptables-nft-restore\n";
-			$this->command('cat /etc/turtlefirewall/iptables.dat | /usr/sbin/iptables-nft-restore');
-		} elsif( -x '/usr/sbin/iptables-restore' ) {
-			print "run iptables-restore\n";
-			$this->command('cat /etc/turtlefirewall/iptables.dat | /usr/sbin/iptables-restore');	
-		} else {
-			print STDERR "Error: iptables-restore needed\n";
-		}
-		# doesn't unlink, for debugging
-		#unlink "/etc/turtlefirewall/iptables.dat";
-	} else {	
-		$this->iptables_restore_emu( $rules );
+	umask 0077;
+	open FILE, ">/etc/turtlefirewall/iptables.dat";
+	print FILE $rules;
+	close FILE;
+	if( -x '/usr/sbin/iptables-nft-restore' ) {
+		print "run iptables-nft-restore\n";
+		$this->command('cat /etc/turtlefirewall/iptables.dat | /usr/sbin/iptables-nft-restore');
+	} elsif( -x '/usr/sbin/iptables-restore' ) {
+		print "run iptables-restore\n";
+		$this->command('cat /etc/turtlefirewall/iptables.dat | /usr/sbin/iptables-restore');	
+	} else {
+		print STDERR "Error: iptables-restore needed\n";
 	}
+	# don't unlink, for debugging
+	unlink "/etc/turtlefirewall/iptables.dat";
 
 	# Apply Rate Limits
 	for my $r ($this->GetRateLimitList()) {
@@ -3444,6 +3439,7 @@ sub _applyService {
 			}
 		}
 
+		# Print commands, for debugging
 		#print "\n$cmd\n";
 
 		$rules .= "$cmd\n";
@@ -3526,40 +3522,6 @@ sub command {
 	my $out = defined($stdout) ? qx/{ $cmd; } 2>&1 1>$stdout/ : qx/{ $cmd; } 2>&1/;
 	if( $out ne '' ) {
 		print defined($stdout) ? "$cmd > $stdout\n$out" : "$cmd\n$out";
-	}
-}
-
-sub iptables_restore_emu {
-	my $this = shift;
-	my $rules = shift;
-
-	my $table = '';
-	my @lines = split(/\n/, $rules);
-	foreach my $line (@lines) {
-		$line =~ s/\#(.*)$//;
-		if( !$line || $line eq 'COMMIT' ) {
-			next;
-		}
-		if( $line =~ /^\*(.*?)$/ ) {
-			$table = $1 eq 'filter' ? '' : $1;
-			next;
-		}
-		my $cmd = '';
-		my $chain = '';
-		my $policy = '';
-		if( $line =~ /^\:(.*?) (.*?) (.*?)$/ ) {
-			$chain = $1;
-			$policy = $2;
-			if( $chain =~ /^(INPUT|OUTPUT|FORWARD)$/ ) {
-				next;
-			}
-			$cmd = "-N $chain". ($policy ne '-' ? " -P $policy" : ''); 
-		} else {
-			$cmd = $line;
-		}
-		if( $table ) { $cmd = "-t $table $cmd"; }
-		
-		$this->command("iptables $cmd");
 	}
 }
 

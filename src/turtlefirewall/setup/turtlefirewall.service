@@ -10,7 +10,6 @@ ExecStartPost=/usr/lib/turtlefirewall/domain_blacklist -x
 ExecStartPost=/usr/lib/turtlefirewall/ja3_blacklist -x
 ExecStartPost=/usr/lib/turtlefirewall/sha1_blacklist -x
 ExecStop=/usr/sbin/turtlefirewall --stop
-ExecStopPost=/bin/rm -f /etc/turtlefirewall/iptables.dat
 Type=oneshot
 RemainAfterExit=yes
 

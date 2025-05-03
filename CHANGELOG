@@ -262,5 +262,6 @@ CHANGELOG
 30-04-2025 v.2.6
            - Feature : nDPI 4.15 support.
            - Bug : Fixed translation of HTML character entities.
+           - OS : Remove unused iptables_restore_emu.
            - Todo : Translate new features.
            - Todo : Fix backup.cgi restore upload.
