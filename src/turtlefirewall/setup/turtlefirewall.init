@@ -45,9 +45,13 @@ case "$1" in
 		stop
 		;;
 	status)
-		echo "\nNAT/MASQUERADING:"
+		echo -e "\nRAW:"
+		iptables -t raw -L -n -v
+		echo -e "\nMANGLE:"
+		iptables -t mangle -L -n -v
+		echo -e "\nNAT/MASQUERADING:"
 		iptables -t nat -L -n -v
-		echo "\nRULES:"
+		echo -e "\nRULES:"
 		iptables -L -n -v
 		/usr/sbin/turtlefirewall --status
 		;;
