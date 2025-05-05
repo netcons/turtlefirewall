@@ -17,6 +17,7 @@
 <option name="drop_invalid_all" value="off"/>
 <option name="drop_ja3_blacklist" value="off"/>
 <option value="on" name="drop_invalid_syn_fin"/>
+<option value="on" name="clamp_mss_to_pmtu"/>
 </options>
 
 <zone if="ens192" description="" name="lan"/>
