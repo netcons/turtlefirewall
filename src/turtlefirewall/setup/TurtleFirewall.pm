@@ -1157,7 +1157,7 @@ sub LoadFirewall {
 			my @list = @{$tree[$i+1]};
 			my %attr = shift @list;
 
-			# Loop over second-level tags (hosts, groups, rules ecc.)
+			# Loop over second-level tags (hosts, groups, rules etc.)
 			for( my $j=0; $j<=$#list; $j+=2 ) {
 				my $name2 = uc($list[$j]);
 				if( $name2 eq 'ZONE' ) { $this->_LoadFirewallItem( 'ZONE', @{$list[$j+1]} ); }
@@ -2546,8 +2546,8 @@ sub applyNat {
 				if( $dport ne '' ) { $cmd .= "--dport $dport "; }
 				if( $sport ne '' ) { $cmd .= "--sport $sport "; }
 			} elsif( $proto ne 'icmp' ) {
-				# Well, I'm coding this... But what purpouse is supposed
-				# to have an icmp nat? Mmmmm...
+				# Well, I'm coding this... But what is the purpose
+				# of an icmp nat? Mmmmm...
 				$cmd .= "-p $proto ";
 
 				if( $icmptype ne '' ) {
@@ -2925,7 +2925,7 @@ sub _applyServiceRedirect {
 			#	$cmd .= "-m mac --mac-source $src_mac ";
 			#}
 
-			# iptables prerouting chain don't accept -o option.
+			# iptables prerouting chain doesn't accept -o option.
 			#if( $dst_if ne '' ) { $cmd .= "-o $dst_if "; }
 			if( $dst_peer ne '' ) {
 				if( $dst_type eq 'GEOIP' ) { $cmd .= "-m geoip --destination-country $dst_peer "; }
@@ -3447,7 +3447,7 @@ sub _applyService {
 	return $rules;
 }
 
-# Given the name of the item it returns the zone, ip & netmask
+# Given the name of the item it returns the zone, ip & netmask, type and mac
 sub expand_item {
 	my $this = shift;
 	my $item = shift;
