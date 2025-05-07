@@ -27,10 +27,10 @@
 	<ndpirisk id="23" description="Susp DNS Traffic"> </ndpirisk>
 	<ndpirisk id="24" description="Missing SNI TLS Extn"> </ndpirisk>
 	<ndpirisk id="25" description="HTTP Susp Content"> </ndpirisk>
-	<ndpirisk id="26" description="Risky ASN (blacklist)"> </ndpirisk>
-	<ndpirisk id="27" description="Risky Domain Name (blacklist)"> </ndpirisk>
-	<ndpirisk id="28" description="Malicious Fingerprint (blacklist)"> </ndpirisk>
-	<ndpirisk id="29" description="Malicious SSL Cert/SHA1 Fingerprint (blacklist)"> </ndpirisk>
+	<ndpirisk id="26" description="Risky ASN"> </ndpirisk>
+	<ndpirisk id="27" description="Risky Domain Name"> </ndpirisk>
+	<ndpirisk id="28" description="Malicious Fingerprint"> </ndpirisk>
+	<ndpirisk id="29" description="Malicious SSL Cert/SHA1 Fingerprint"> </ndpirisk>
 	<ndpirisk id="30" description="Desktop/File Sharing"> </ndpirisk>
 	<ndpirisk id="31" description="Uncommon TLS ALPN"> </ndpirisk>
 	<ndpirisk id="32" description="TLS Cert Validity Too Long"> </ndpirisk>

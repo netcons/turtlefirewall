@@ -85,7 +85,7 @@ sub confdir {
        	'dport' => { LOGIDX => '7', ICOIDX => 'SERVICE', TXTIDX => 'flowstat_type_dport' },
        	'protocol' => { LOGIDX => '16', ICOIDX => 'NDPISERVICE', TXTIDX => 'flowstat_type_protocol' },
        	'hostname' => { LOGIDX => '17', ICOIDX => 'HOSTNAME', TXTIDX => 'flowstat_type_hostname' },
-       	'risk' => { LOGIDX => '22', ICOIDX => 'RISK', TXTIDX => 'flowstat_type_risk' }
+       	'risk' => { LOGIDX => '21', ICOIDX => 'RISK', TXTIDX => 'flowstat_type_risk' }
 );
 
 %blacklists = ( 

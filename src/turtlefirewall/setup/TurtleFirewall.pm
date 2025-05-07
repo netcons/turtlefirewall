@@ -1236,7 +1236,6 @@ sub _LoadFirewallNat {
 	my $this = shift;
 	my $type = shift;
 	my @list = @_;
-	#my $name = $list[$i];
 	my %attrs = upperKeys( %{shift @list} );
 	
 	###
@@ -1358,12 +1357,6 @@ sub _LoadFirewallConntrack {
 }
 
 # Internal method for add OPTIONS to firewall object
-#
-# XML:
-# <options>
-#	<option name="option_name" value="option_value"/>
-#	<option ...
-# </option>
 sub _LoadFirewallOptions {
 	my $this = shift;
 	my @list = @_;
@@ -1796,7 +1789,7 @@ sub startFirewall {
 
 	# PreLoad module for nDPI
 	print "ndpi_module: on\n";	
-	$this->command('modprobe xt_ndpi ndpi_enable_flow=1 ndpi_flow_opt=cCFVR', '/dev/null');
+	$this->command('modprobe xt_ndpi ndpi_enable_flow=1 ndpi_flow_opt=cFVR', '/dev/null');
 	
 	# Enable IP forwarding
 	$this->command('echo "1"', '/proc/sys/net/ipv4/ip_forward');
