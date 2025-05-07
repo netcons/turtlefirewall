@@ -15,12 +15,6 @@ if [ $? != 0 ]
   sed -i '/^<\/options>$/ i\<option value="on" name="drop_domain_blacklist"\/>' /etc/turtlefirewall/fw.xml
 fi
 
-grep 'name="drop_ja3_blacklist"' /etc/turtlefirewall/fw.xml > /dev/null
-if [ $? != 0 ]
- then
-  sed -i '/^<\/options>$/ i\<option value="on" name="drop_ja3_blacklist"\/>' /etc/turtlefirewall/fw.xml
-fi
-
 grep 'name="drop_sha1_blacklist"' /etc/turtlefirewall/fw.xml > /dev/null
 if [ $? != 0 ]
  then
@@ -41,3 +35,4 @@ fi
 
 sed -i '/name="ip_conntrack_max"/d' /etc/turtlefirewall/fw.xml
 sed -i '/name="drop_unclean"/d' /etc/turtlefirewall/fw.xml
+sed -i '/name="drop_ja3_blacklist"/d' /etc/turtlefirewall/fw.xml

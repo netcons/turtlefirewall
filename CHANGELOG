@@ -262,6 +262,7 @@ CHANGELOG
 30-04-2025 v.2.6
            - Feature : nDPI 4.15 support.
            - Feature : Remove JA3 logging.
+           - Feature : Remove JA3 Blacklist.
            - Bug : Fixed translation of HTML character entities.
            - OS : Remove unused iptables_restore_emu.
            - Todo : Translate new features.

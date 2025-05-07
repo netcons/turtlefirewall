@@ -41,7 +41,6 @@ case "$1" in
 		start
 		/usr/lib/turtlefirewall/ip_blacklist -x
 		/usr/lib/turtlefirewall/domain_blacklist -x
-		/usr/lib/turtlefirewall/ja3_blacklist -x
 		/usr/lib/turtlefirewall/sha1_blacklist -x
 		;;
 	stop)

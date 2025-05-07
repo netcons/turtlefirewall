@@ -1861,11 +1861,6 @@ sub startFirewall {
 		$this->command('/usr/lib/turtlefirewall/domain_blacklist -I', '/dev/null');
 	}
 
-	# Ensure dpi item present for JA3 Blacklist
-	if( $this->{fw}{OPTION}{drop_ja3_blacklist} ne 'off' ) {
-		$this->command('/usr/lib/turtlefirewall/ja3_blacklist -I', '/dev/null');
-	}
-
 	# Ensure dpi item present for SHA1 Blacklist
 	if( $this->{fw}{OPTION}{drop_sha1_blacklist} ne 'off' ) {
 		$this->command('/usr/lib/turtlefirewall/sha1_blacklist -I', '/dev/null');
@@ -2167,20 +2162,6 @@ sub getIptablesRules {
 		#$rules .= "-A INPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
 		#$rules .= "-A OUTPUT -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
 		#$rules .= "-A FORWARD -m ndpi --all --risk 27 -j DOMAIN_BLACKLIST\n";
-		print "on\n";
-	} else {
-		print "off\n";
-	}
-
-	print "drop_ja3_blacklist: ";
-	if( $this->{fw}{OPTION}{drop_ja3_blacklist} ne 'off' ) {
-		$chains .= ":JA3_BLACKLIST - [0:0]\n";
-                $rules .= "-A JA3_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=JA3-BLACKLIST(DRO) \"\n";
-                $rules .= "-A JA3_BLACKLIST -j DROP\n";
-
-		$rules .= "-A INPUT -m ndpi --all --risk 28 -j JA3_BLACKLIST\n";
-		$rules .= "-A OUTPUT -m ndpi --all --risk 28 -j JA3_BLACKLIST\n";
-		$rules .= "-A FORWARD -m ndpi --all --risk 28 -j JA3_BLACKLIST\n";
 		print "on\n";
 	} else {
 		print "off\n";

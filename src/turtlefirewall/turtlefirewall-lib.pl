@@ -91,7 +91,6 @@ sub confdir {
 %blacklists = ( 
 	'ip_blacklist' => { FILE => '/etc/turtlefirewall/ip_blacklist.dat', TYPE => 'hash:ip', DESCRIPTION => 'IP Address' },
 	'domain_blacklist' => { FILE => '/etc/turtlefirewall/domain_blacklist.dat', TYPE => 'ndpi:domain', DESCRIPTION => 'DNS Domain Name' },
-	'ja3_blacklist' => { FILE => '/etc/turtlefirewall/ja3_blacklist.dat', TYPE => 'ndpi:ja3', DESCRIPTION => 'SSL Handshake Fingerprint' },
 	'sha1_blacklist' => { FILE => '/etc/turtlefirewall/sha1_blacklist.dat', TYPE => 'ndpi:sha1', DESCRIPTION => 'SSL Certificate Fingerprint' }
 );
 
@@ -350,7 +349,7 @@ sub getOptionsList {
 	@optionkeys = ('rp_filter','log_martians',
 			'drop_invalid_state', 'drop_invalid_all', 'drop_invalid_none', 'drop_invalid_fin_notack',
 			'drop_invalid_syn_fin', 'drop_invalid_syn_rst', 'drop_invalid_fragment',
-		       	'drop_ip_blacklist', 'drop_domain_blacklist', 'drop_ja3_blacklist', 'drop_sha1_blacklist',
+		       	'drop_ip_blacklist', 'drop_domain_blacklist', 'drop_sha1_blacklist',
 			'nf_conntrack_max', 'clamp_mss_to_pmtu', 'log_limit', 'log_limit_burst' );
 	%options = ();
 	%{$options{rp_filter}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>1 );
@@ -364,7 +363,6 @@ sub getOptionsList {
 	%{$options{drop_invalid_fragment}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{drop_ip_blacklist}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{drop_domain_blacklist}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
-	%{$options{drop_ja3_blacklist}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{drop_sha1_blacklist}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{nf_conntrack_max}} = ( 'type'=>'text', 'default'=>262144, 'addunchangeopz'=>0 );
 	%{$options{clamp_mss_to_pmtu}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );

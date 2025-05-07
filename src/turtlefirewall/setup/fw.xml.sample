@@ -15,7 +15,6 @@
 <option name="drop_invalid_fragment" value="on"/>
 <option value="262144" name="nf_conntrack_max"/>
 <option name="drop_invalid_all" value="off"/>
-<option name="drop_ja3_blacklist" value="off"/>
 <option value="on" name="drop_invalid_syn_fin"/>
 <option value="on" name="clamp_mss_to_pmtu"/>
 </options>

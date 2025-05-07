@@ -12,7 +12,6 @@
 <option name="log_limit" value="60"/>
 <option name="drop_invalid_syn_fin" value="on"/>
 <option name="log_martians" value="on"/>
-<option value="off" name="drop_ja3_blacklist"/>
 <option name="drop_invalid_fin_notack" value="off"/>
 <option name="drop_domain_blacklist" value="on"/>
 <option value="on" name="drop_sha1_blacklist"/>

@@ -7,7 +7,6 @@ Requires=network.target
 ExecStart=/usr/sbin/turtlefirewall --start
 ExecStartPost=/usr/lib/turtlefirewall/ip_blacklist -x
 ExecStartPost=/usr/lib/turtlefirewall/domain_blacklist -x
-ExecStartPost=/usr/lib/turtlefirewall/ja3_blacklist -x
 ExecStartPost=/usr/lib/turtlefirewall/sha1_blacklist -x
 ExecStop=/usr/sbin/turtlefirewall --stop
 Type=oneshot

@@ -119,12 +119,10 @@ if( -f '/etc/slackware-version' ) {
 # Auto update Blacklists
 system( "cp -v -f ip_blacklist $path_lib" );
 system( "cp -v -f domain_blacklist $path_lib" );
-system( "cp -v -f ja3_blacklist $path_lib" );
 system( "cp -v -f sha1_blacklist $path_lib" );
 system( "chmod 700 $path_lib/*_blacklist" );
 system( "ln -sf /usr/lib/turtlefirewall/ip_blacklist /etc/cron.daily/ip_blacklist > /dev/null 2>&1" );
 system( "ln -sf /usr/lib/turtlefirewall/domain_blacklist /etc/cron.daily/domain_blacklist > /dev/null 2>&1" );
-system( "ln -sf /usr/lib/turtlefirewall/ja3_blacklist /etc/cron.daily/ja3_blacklist > /dev/null 2>&1" );
 system( "ln -sf /usr/lib/turtlefirewall/sha1_blacklist /etc/cron.daily/sha1_blacklist > /dev/null 2>&1" );
 
 # Auto update GeoIP Database
