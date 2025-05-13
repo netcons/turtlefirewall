@@ -21,9 +21,15 @@ my $max = $in{'max'};
 my $top = $in{'top'};
 my $string = $in{'string'};
 
+my $logflowcount = qx{wc -l < $log 2>/dev/null};
+
 if( $type eq 'risk' ) { &LoadNdpiRisks($fw); }
 
 my $flowtotal = 0;
+my $flowcount = 0;
+my $firstflowtime = '';
+my $lastflowtime = '';
+
 my ($type_list, $flows) = &getflows($log);
 
 my @stats = &getstats($flowreports{$type}{LOGIDX},$type_list,$flows);
@@ -125,6 +131,10 @@ sub getflows {
 			       	$connmark, $srcnat, $dstnat, $protocol, $hostname,
 			       	$ja4c, $tlsfp, $tlsv, $risk];
 	}
+	$flowcount = @flows;
+	$firstflowtime = localtime($flows[0][0])->strftime('%b %d %X');
+	$lastflowtime = localtime($flows[$#flows][1])->strftime('%b %d %X');
+
 	return (\%type_list, \@flows);
 }
 
@@ -158,12 +168,6 @@ sub showstats {
 	my $icoindex = shift;
 	my @stats = @_;
 	my $graphwidth = 300;
-
-	my $logflowcount = qx{wc -l < $log 2>/dev/null};
-	my $flowcount = @flows;
-
-	my $firstflowtime = localtime($flows[0][0])->strftime('%b %d %X');
-	my $lastflowtime = localtime($flows[$#flows][1])->strftime('%b %d %X');
 
 	print "Using $flowcount of $logflowcount flows from $log";
 	if( $string ne '' ) { print " containing <i>".&ui_text_color($string, 'info')."</i>"; }
