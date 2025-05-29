@@ -9,6 +9,7 @@
 	<ndpiprotocol name="ads_analytic_track" category="advertisement"> </ndpiprotocol>
 	<ndpiprotocol name="adultcontent" category="adult-content"> </ndpiprotocol>
 	<ndpiprotocol name="afp" category="storage-backup"> </ndpiprotocol>
+	<ndpiprotocol name="ah" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="ajp" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="alibaba" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="alicloud" category="other"> </ndpiprotocol>
@@ -47,6 +48,7 @@
 	<ndpiprotocol name="bluesky" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="cachefly" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="cactusvpn" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="canonical" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="cassandra" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="ceph" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="capwap" category="networking"> </ndpiprotocol>
@@ -101,6 +103,7 @@
 	<ndpiprotocol name="elasticsearch" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="electronicarts" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="epicgames" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="esp" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="ethereum" category="crypto-currency"> </ndpiprotocol>
 	<ndpiprotocol name="ethernetglobaldata" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="ethernetip" category="networking"> </ndpiprotocol>
@@ -145,12 +148,12 @@
 	<ndpiprotocol name="gtp_c" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="gtp_prime" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="gtp_u" category="tunnelling"> </ndpiprotocol>
-	<ndpiprotocol name="guildwars" category="gaming"> </ndpiprotocol>
+	<ndpiprotocol name="guildwars2" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="h323" category="telephony"> </ndpiprotocol>
-	<ndpiprotocol name="halflife2" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="haproxy" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="hart-ip" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="hbo" category="video-audio"> </ndpiprotocol>
+	<ndpiprotocol name="hcl_notes" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="heroes_of_the_storm" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="hislip" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="hl7" category="other"> </ndpiprotocol>
@@ -182,6 +185,7 @@
 	<ndpiprotocol name="imo" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="instagram" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="ip_in_ip" category="tunnelling"> </ndpiprotocol>
+	<ndpiprotocol name="ip_ospf" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="ip_pim" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="ipp" category="printing"> </ndpiprotocol>
 	<ndpiprotocol name="ipsec" category="tunnelling"> </ndpiprotocol>
@@ -196,6 +200,7 @@
 	<ndpiprotocol name="kakaotalk_voice" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="kcp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="kerberos" category="authentication"> </ndpiprotocol>
+	<ndpiprotocol name="kick" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="kismet" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="knxnet_ip" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="lagofast" category="tunnelling"> </ndpiprotocol>
@@ -211,11 +216,11 @@
 	<ndpiprotocol name="llm" category="artificial-intelligence"> </ndpiprotocol>
 	<ndpiprotocol name="llmnr" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="lolwildrift" category="gaming"> </ndpiprotocol>
-	<ndpiprotocol name="lotusnotes" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="lustre" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="mastodon" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="mdns" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="megaco" category="telephony"> </ndpiprotocol>
+	<ndpiprotocol name="melsec" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="memcached" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="merakicloud" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="mgcp" category="telephony"> </ndpiprotocol>
@@ -397,12 +402,10 @@
 	<ndpiprotocol name="twitter" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="ubiquity" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="ubntac2" category="infrastructure"> </ndpiprotocol>
-	<ndpiprotocol name="ubuntuone" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="ultrasurf" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="umas" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="usenet" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="uftp" category="storage-backup"> </ndpiprotocol>
-	<ndpiprotocol name="vhua" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="viber" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="vibervoip" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="vimeo" category="video-audio"> </ndpiprotocol>
@@ -413,7 +416,6 @@
 	<ndpiprotocol name="vrrp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="vudu" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="vxlan" category="tunnelling"> </ndpiprotocol>
-	<ndpiprotocol name="warcraft3" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="waze" category="navigation"> </ndpiprotocol>
 	<ndpiprotocol name="webex" category="collaboration"> </ndpiprotocol>
 	<ndpiprotocol name="webdav" category="collaboration"> </ndpiprotocol>
@@ -427,7 +429,6 @@
 	<ndpiprotocol name="windowsupdate" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="windscribe" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="wireguard" category="tunnelling"> </ndpiprotocol>
-	<ndpiprotocol name="worldofkungfu" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="worldofwarcraft" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="wsd" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="xiaomi" category="other"> </ndpiprotocol>
