@@ -21,7 +21,6 @@ sub Version {
 
 sub new {
 	my $this ={};
-	#$this->{NOME} = undef;
 	$this->{fw} = ();
 	$this->{fwItems} = ();
 	$this->{fwKeys} = ();
@@ -242,7 +241,6 @@ sub GetMasqueradesCount {
 }
 
 sub GetMasquerade {
-	# param n = id of masquerade rule (1 .. MasqueradeCount)
 	my ($this,$n) = @_;
 	return %{ $this->{fw}{MASQUERADE}[$n-1] };
 }
@@ -1728,8 +1726,6 @@ sub checkName {
 sub GetStatus {
 	my $iptables = qx{iptables -L -n};
 	return $iptables =~ /Chain BACK/g;
-	#my $nftables = qx{nft list table ip filter 2>&1};
-	#return $nftables =~ /chain BACK/g
 }
 
 sub startFirewall {
@@ -1903,7 +1899,7 @@ sub startFirewall {
 	} else {
 		print STDERR "Error: iptables-restore needed\n";
 	}
-	# don't unlink, for debugging
+	# Don't unlink, for debugging
 	unlink "/etc/turtlefirewall/iptables.dat";
 
 	# Apply Rate Limits
@@ -1970,11 +1966,10 @@ sub stopFirewall {
 		"iptables -P INPUT ACCEPT; ".
 		"iptables -P OUTPUT ACCEPT; ".
 		"iptables -P FORWARD ACCEPT" );
-	#$this->command( 'nft flush ruleset' );
 	
-	# enable ping
+	# Enable ping
 	$this->command( 'echo "0"', '/proc/sys/net/ipv4/icmp_echo_ignore_all' );
-	# flush conntrack table
+	# Flush conntrack table
 	$this->command( 'conntrack -F', '/dev/null 2>&1' );
 }
 
@@ -2477,7 +2472,7 @@ sub applyNat {
 		# Service-wide nat. This was introduced with v0.98.
 		# On the 'go' way of the specified service we do a DNAT from $virtual_ip:$dport
 		# to $real_ip:$dport, while on the 'back' way we do a SNAT from $real_ip:$sport
-		# to $virtual_ip:$sport. $state conditions and $jump tags are added to the iptable
+		# to $virtual_ip:$sport. $state conditions and $jump tags are added to the iptables
 		# entries as well.
 		
 		print "NAT virtual($virtual),port($nmService".
@@ -2556,7 +2551,7 @@ sub applyNat {
 			# Finally, executes the command
 			$rules .= "$cmd\n";
 
-			# If is possible, now I apply the same rule to firewall itself
+			# If it is possible, now I apply the same rule to firewall itself
 			if( $cmd =~ /PREROUTING/ && $cmd !~ / -i / ) {
 				$cmd =~ s/PREROUTING/OUTPUT/;
 				$rules .= "$cmd\n";
@@ -2745,7 +2740,9 @@ sub _applyServiceMasquerade {
 				$cmd .= "-j RETURN";
 			}
 			
+			# Print commands, for debugging
 			#print "$cmd\n";
+			
 			$rules .= "$cmd\n";
 		}
 	}
@@ -3325,7 +3322,7 @@ sub _applyService {
 
 		if( $ndpi ne '' ) { 
 			if( $ndpi eq 'all' ) {
-				# First Packet Classification
+				# First Packet Classification only
 				$cmd .= "-m ndpi --all ";
 			} else {
 				my $cmddpi = $cmd;
