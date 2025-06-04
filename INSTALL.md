@@ -105,9 +105,9 @@ make all install
 
 Download source.
 ```
-VERSION="3.27"
+VERSION="3.28"
 cd /usr/src
-wget https://inai.de/files/xtables-addons/xtables-addons-${VERSION}.tar.xz -O xtables-addons-${VERSION}.tar.xz
+wget https://codeberg.org/jengelh/xtables-addons/releases/download/v${VERSION}/xtables-addons-${VERSION}.tar.xz
 tar -xvf xtables-addons-${VERSION}.tar.xz
 rm -rf xtables-addons-${VERSION}.tar.xz
 cd xtables-addons-$VERSION
