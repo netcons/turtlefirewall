@@ -1785,7 +1785,7 @@ sub startFirewall {
 
 	# PreLoad module for nDPI
 	print "ndpi_module: on\n";	
-	$this->command('modprobe xt_ndpi ndpi_enable_flow=1 ndpi_flow_opt=cFVR', '/dev/null');
+	$this->command('modprobe xt_ndpi ndpi_enable_flow=1 ndpi_flow_opt=cFR', '/dev/null');
 	
 	# Enable IP forwarding
 	$this->command('echo "1"', '/proc/sys/net/ipv4/ip_forward');

@@ -263,6 +263,7 @@ CHANGELOG
            - Feature : nDPI 4.15 support.
            - Feature : Remove JA3 logging.
            - Feature : Remove JA3 Blacklist.
+           - Feature : Remove TLS Version logging, already included in JA4.
            - Bug : Fixed translation of HTML character entities.
            - Bug : Fixed Flow Statistics.
            - OS : Remove unused iptables_restore_emu.

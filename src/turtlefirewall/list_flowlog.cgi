@@ -47,7 +47,6 @@ sub showLog {
 	#my %host_list = ('*'=>'x');
 	#my %ja4c_list = ('*'=>'x');
 	#my %tlsfp_list = ('*'=>'x');
-	#my %tlsv_list = ('*'=>'x');
 	#my %risk_list = ('*'=>'x');
 
 	open( LOG, "<", $FlowLogFile );
@@ -74,7 +73,6 @@ sub showLog {
 			my $host = '';
 			my $ja4c = '';
 			my $tlsfp = '';
-			my $tlsv = '';
 			my $risk = '';
 
 			if( $l =~ /^(.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) / ) {
@@ -100,7 +98,6 @@ sub showLog {
 			if( $l =~ /H=(.*?)( |$)/ ) { $host = $1; }
 			if( $l =~ /c=(.*?)( |$)/ ) { $ja4c = $1; }
 			if( $l =~ /F=(.*?)( |$)/ ) { $tlsfp = $1; }
-			if( $l =~ /V=(.*?)( |$)/ ) { $tlsv = $1; }
 			if( $l =~ /R=(.*?)( |$)/ ) { $risk = $1; }
 
 			#if( $l3proto ne '' ) {$l3proto_list{$l3proto} = 'x';}
@@ -121,7 +118,6 @@ sub showLog {
 			#if( $host ne '') {$host_list{$host} = 'x';}
 			#if( $ja4c ne '') {$ja4c_list{$ja4c} = 'x';}
 			#if( $tlsfp ne '') {$tlsfp_list{$tlsfp} = 'x';}
-			#if( $tlsv ne '') {$tlsv_list{$tlsv} = 'x';}
 			#if( $risk ne '') {$risk_list{$risk} = 'x';}
 
 			if( ($in{l3proto} eq '' || $in{l3proto} eq '*' || $in{l3proto} eq $l3proto) &&
@@ -142,7 +138,6 @@ sub showLog {
 			    ($in{host} eq '' || $in{host} eq '*' || $in{host} eq $host) &&
 			    ($in{ja4c} eq '' || $in{ja4c} eq '*' || $in{ja4c} eq $ja4c) &&
 			    ($in{tlsfp} eq '' || $in{tlsfp} eq '*' || $in{tlsfp} eq $tlsfp) &&
-			    ($in{tlsv} eq '' || $in{tlsv} eq '*' || $in{tlsv} eq $tlsv) &&
 			    ($in{risk} eq '' || $in{risk} eq '*' || $in{risk} eq $risk) ) {
 				$count++;
 
@@ -150,7 +145,7 @@ sub showLog {
 					push @buffer, [$stime, $etime, $l3proto, $l4proto, $src, $sport, $dst, $dport,
 					      		$ubytes, $dbytes, $upackets, $dpackets, $ifindex,
 						       	$connmark, $srcnat, $dstnat, $proto, $host,
-						       	$ja4c, $tlsfp, $tlsv, $risk];
+						       	$ja4c, $tlsfp, $risk];
 				}
 			}
 	}
@@ -162,7 +157,7 @@ sub showLog {
 			'&upackets='.$in{upackets}.'&dpackets='.$in{dpackets}.'&ifindex='.$in{ifindex}.
 			'&connmark='.$in{connmark}.'&srcnat='.$in{srcnat}.'&dstnat='.$in{dstnat}.
 			'&proto='.$in{proto}.'&host='.$in{host}.'&ja4c='.$in{ja4c}.
-			'&tlsfp='.$in{tlsfp}.'&tlsv='.$in{tlsv}.'&risk='.$in{risk};
+			'&tlsfp='.$in{tlsfp}.'&risk='.$in{risk};
 	my $pageindex = '';
 	if( $pag > 1 ) {
 		$pageindex .= "&nbsp;<a href=\"list_flowlog.cgi?pag=1&$urlparam\">&lt;&lt;</a>&nbsp;";
@@ -272,10 +267,6 @@ sub showLog {
 	$htlsfp .= "<b>tlsFINGERPRINT<br></b>";
 	push(@head, $htlsfp );
 
-	local $htlsv;
-	$htlsv .= "<b>tlsVERSION<br></b>";
-	push(@head, $htlsv );
-
 	local $hrisk;
 	$hrisk .= "<b>RISK<br></b>";
 	push(@head, $hrisk );
@@ -302,14 +293,13 @@ sub showLog {
 		 "style=white-space:nowrap",
 		 "style=white-space:nowrap",
 		 "style=white-space:nowrap",
-		 "style=text-align:center",
 		 "style=white-space:nowrap" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
 	foreach my $l (@buffer) {
 		local @cols;
 		my ($stime, $etime, $l3proto, $l4proto, $src, $sport, $dst, $dport, $ubytes, $dbytes, $upackets, $dpackets, $ifindex,
-		    $connmark, $srcnat, $dstnat, $proto, $host, $ja4c, $tlsfp, $tlsv, $risk) = @$l;
+		    $connmark, $srcnat, $dstnat, $proto, $host, $ja4c, $tlsfp, $risk) = @$l;
 	    	&showTD(localtime($stime)->strftime('%b %d %X'));
 	    	&showTD(localtime($etime)->strftime('%b %d %X'));
 		&showTD(&l3protoname($l3proto));
@@ -335,7 +325,6 @@ sub showLog {
 		&showTD($dstnat);
 		&showTD($ja4c);
 		&showTD($tlsfp);
-		&showTD($tlsv);
 		&showTD(&getrisknames($risk));
 	        print &ui_columns_row(\@cols, \@tds);
 	}

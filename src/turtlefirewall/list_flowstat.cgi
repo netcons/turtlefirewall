@@ -88,7 +88,6 @@ sub getflows {
 		my $hostname = '';
 		my $ja4c = '';
 		my $tlsfp = '';
-		my $tlsv = '';
 		my $risk = '';
 
 		if( $l =~ /^(.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) / ) {
@@ -114,7 +113,6 @@ sub getflows {
 		if( $l =~ /H=(.*?)( |$)/ ) { $hostname = $1; }
 		if( $l =~ /c=(.*?)( |$)/ ) { $ja4c = $1; }
 		if( $l =~ /F=(.*?)( |$)/ ) { $tlsfp = $1; }
-		if( $l =~ /V=(.*?)( |$)/ ) { $tlsv = $1; }
 		if( $l =~ /R=(.*?)( |$)/ ) { $risk = $1; }
 
 		if( $type eq 'source' && $source ne '' ) {$type_list{$source} = '0';}
@@ -129,7 +127,7 @@ sub getflows {
 		push @flows, [$stime, $etime, $l3proto, $l4proto, $source, $sport, $destination, $dport,
 		      		$ubytes, $dbytes, $upackets, $dpackets, $ifindex,
 			       	$connmark, $srcnat, $dstnat, $protocol, $hostname,
-			       	$ja4c, $tlsfp, $tlsv, $risk];
+			       	$ja4c, $tlsfp, $risk];
 	}
 	$flowcount = @flows;
 	$firstflowtime = localtime($flows[0][0])->strftime('%b %d %X');
