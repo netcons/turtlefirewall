@@ -267,5 +267,6 @@ CHANGELOG
            - Bug : Fixed translation of HTML character entities.
            - Bug : Fixed Flow Statistics.
            - OS : Remove unused iptables_restore_emu.
+           - OS : Remove deprecated dkms feature: CLEAN
            - Todo : Translate new features.
            - Todo : Fix backup.cgi restore upload.
