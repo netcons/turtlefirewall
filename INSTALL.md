@@ -79,10 +79,10 @@ apt-get -y install dkms
 
 Download source.
 ```
+VERSION="0.3.3"
 cd /usr/src
 wget https://github.com/aabc/ipt-ratelimit/archive/master.zip -O ipt-ratelimit-master.zip
 unzip ipt-ratelimit-master.zip
-VERSION=`./ipt-ratelimit-master/version.sh`
 mv ipt-ratelimit-master ipt-ratelimit-$VERSION
 rm -rf ipt-ratelimit-master.zip
 cd ipt-ratelimit-$VERSION
@@ -111,8 +111,6 @@ wget https://codeberg.org/jengelh/xtables-addons/releases/download/v${VERSION}/x
 tar -xvf xtables-addons-${VERSION}.tar.xz
 rm -rf xtables-addons-${VERSION}.tar.xz
 cd xtables-addons-$VERSION
-cp /tmp/turtlefirewall-master/dkms/version-xtables-addons.sh ./version.sh
-chmod +x version.sh
 ```
 
 Install module.
@@ -134,12 +132,10 @@ make install
 
 Download source.
 ```
+VERSION="4.15.0"
 cd /usr/src
 wget https://github.com/vel21ripn/nDPI/archive/master.zip -O nDPI-flow_info-4.zip
 unzip nDPI-flow_info-4.zip
-cp /tmp/turtlefirewall-master/dkms/version-ndpi-netfilter.sh ./nDPI-flow_info-4/version.sh
-chmod +x ./nDPI-flow_info-4/version.sh
-VERSION=`./nDPI-flow_info-4/version.sh`
 mv nDPI-flow_info-4 ndpi-netfilter-$VERSION
 rm -rf nDPI-flow_info-4.zip
 cd ndpi-netfilter-$VERSION
@@ -166,12 +162,9 @@ make install
 
 Download source.
 ```
+VERSION="1.0.0"
 cd /usr/src
-mkdir xtables-time
-cp /tmp/turtlefirewall-master/dkms/version-xtables-time.sh ./xtables-time/version.sh
-chmod +x ./xtables-time/version.sh
-VERSION=`./xtables-time/version.sh`
-mv xtables-time xtables-time-$VERSION
+mkdir xtables-time-$VERSION
 cd xtables-time-$VERSION
 wget https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/net/netfilter/xt_time.c -O ./xt_time.c
 cp /tmp/turtlefirewall-master/dkms/Makefile.xt_time ./Makefile
