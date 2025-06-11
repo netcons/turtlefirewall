@@ -150,6 +150,7 @@
 	<ndpiprotocol name="gtp_u" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="guildwars2" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="h323" category="telephony"> </ndpiprotocol>
+	<ndpiprotocol name="hamachi" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="haproxy" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="hart-ip" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="hbo" category="video-audio"> </ndpiprotocol>
