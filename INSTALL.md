@@ -91,6 +91,7 @@ cd ipt-ratelimit-$VERSION
 Install module.
 ```
 cp /tmp/turtlefirewall-master/dkms/dkms-ipt-ratelimit.conf ./dkms.conf
+sed -i 's/^PACKAGE_VERSION=.*$/PACKAGE_VERSION="$VERSION"/' dkms.conf
 dkms add -m ipt-ratelimit -v $VERSION
 dkms build -m ipt-ratelimit -v $VERSION
 dkms install -m ipt-ratelimit -v $VERSION
@@ -116,6 +117,7 @@ cd xtables-addons-$VERSION
 Install module.
 ```
 cp /tmp/turtlefirewall-master/dkms/dkms-xtables-addons.conf ./dkms.conf
+sed -i 's/^PACKAGE_VERSION=.*$/PACKAGE_VERSION="$VERSION"/' dkms.conf
 dkms add -m xtables-addons -v $VERSION
 dkms build -m xtables-addons -v $VERSION
 dkms install -m xtables-addons -v $VERSION
@@ -145,6 +147,7 @@ rm -rf windows
 Install module.
 ```
 cp /tmp/turtlefirewall-master/dkms/dkms-ndpi-netfilter.conf ./dkms.conf
+sed -i 's/^PACKAGE_VERSION=.*$/PACKAGE_VERSION="$VERSION"/' dkms.conf
 dkms add -m ndpi-netfilter -v $VERSION
 dkms build -m ndpi-netfilter -v $VERSION
 dkms install -m ndpi-netfilter -v $VERSION
@@ -173,6 +176,7 @@ cp /tmp/turtlefirewall-master/dkms/Makefile.xt_time ./Makefile
 Install module.
 ```
 cp /tmp/turtlefirewall-master/dkms/dkms-xtables-time.conf ./dkms.conf
+sed -i 's/^PACKAGE_VERSION=.*$/PACKAGE_VERSION="$VERSION"/' dkms.conf
 dkms add -m xtables-time -v $VERSION
 dkms build -m xtables-time -v $VERSION
 dkms install -m xtables-time -v $VERSION
