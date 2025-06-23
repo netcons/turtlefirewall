@@ -27,7 +27,7 @@
 - Add franch webmin language file.
 - Fix bugs.
 		   
-## 23-05-2002 v.0.98 Giampaolo Tomassoni <g.tomassoni@ar-tel.it>
+## 23-05-2002 v.0.98 Giampaolo Tomassoni g.tomassoni@ar-tel.it
 - Do you need port-based natting? Here it is...
 - Fixed the I-Wanna-Reply-To-Pings-But-It-Doesn't bug: when
   the fw accepts pings on a <somewere> => FIREWALL base,
@@ -135,7 +135,7 @@
 		   
 ## 31-03-2003 v.1.24
 - Change Turtle Firewall stop process, ping will be reenabled.
-- Add AIM/ICQ and Soulseek std services (Frank Förster).
+- Add AIM/ICQ and Soulseek std services (Frank FÃ¶rster).
 - Add Oracle, VNC, VNC-http services.
 - Add rip, syslog, icecast, icp, irc (Karl Lovink).
 - Local Redirection Improved.
@@ -146,7 +146,7 @@
 - Fix bugs.
 		   
 ## 07-05-2003 v.1.26
-- Fix "de" language file (Frank Förster).
+- Fix "de" language file (Frank FÃ¶rster).
 - NAT Improved, now you can change rules order.
 - NAT rules bugfix.
 - Configuration backup download bugfix.
@@ -250,7 +250,7 @@
 ## 18-02-2024 v.2.3
 - Bug : Code cleanup.
 - Bug : Fixed --mac-source masquerade.
-- Bug : Removed depreciated HTML <tt>, <strike>, <font>, <align> and <valign> tags.
+- Bug : Removed depreciated HTML \<tt\>, \<strike\>, \<font\>, \<align\> and \<valign\> tags.
 - Bug : Limit Blacklist sizes.
 - Bug : Remove Domain Blacklist wildcard match.
 - Bug : Fixed zone name item verification.
