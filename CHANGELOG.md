@@ -1,33 +1,33 @@
-# CHANGELOG
+# ChangeLog
 
-## 05-12-2001 v.0.91
+## v.0.91 (05-12-2001)
 - Modificato il nome da fwconf in Turtle Firewall (turtlefw)
 
-## 10-01-2002 v.0.92
+## v.0.92 (10-01-2002)
 - Inserite le regole di accesso da/verso interfaccia lo
   che precedentemente impedivano l'accesso a se stesso.
 - Impostati i diritti sul file sh generato per l'esecuzione.
 - Corretta la definizione delle lan nei file di configurazione
   di esempio (samples).
 			 
-## 19-03-2002 v.0.93
+## v.0.93 (19-03-2002)
 - Aggiunto l'uso del modulo turtlefirewall.pm (/usr/lib)
 
-## 22-03-2002 v.0.94
+## v.0.94 (22-03-2002)
 - Aggiunto supporto dell'attributo ACTIVE delle rule.
 		   
-## 02-04-2002 v.0.95
+## v.0.95 (02-04-2002)
 - Aggiunto il file setup al tarball.
 		   
-## 17-04-2002 v.0.96
+## v.0.96 (17-04-2002)
 - Add webmin module languages files for English and Italian.
 - Fix Masquerade and NAT bug.
 		   
-## 17-05-2002 v.0.97
+## v.0.97 (17-05-2002)
 - Add franch webmin language file.
 - Fix bugs.
 		   
-## 23-05-2002 v.0.98 Giampaolo Tomassoni g.tomassoni@ar-tel.it
+## v.0.98 (23-05-2002) Giampaolo Tomassoni g.tomassoni@ar-tel.it
 - Do you need port-based natting? Here it is...
 - Fixed the I-Wanna-Reply-To-Pings-But-It-Doesn't bug: when
   the fw accepts pings on a <somewere> => FIREWALL base,
@@ -35,33 +35,33 @@
   kernel flag on...
 - Applied few ahestetic make-ups
 		   
-## 14-06-2002 v.0.99
+## v.0.99 (14-06-2002)
 - Fix turtlefirewall privileges bug.
 - Use iptables from PATH (iptables directory need to be in PATH env. var.)
 - PreLoad modules for ftp connections and NAT.
 - Add CVS, NNTP services.
 		   
-## 20-06-2002 v.1.00
+## v.1.00 (20-06-2002)
 - Change SystemV service start/stop order from 00/99 to 08/92.
 - Change TurtleFirewall package file name.
 - Check if XML::Parser perl module is installed.
 - Add Telnet service.
 		   
-## 26-06-2002 v.1.10
+## v.1.10 (26-06-2002)
 - Add description field for rules and items.
 - Add experimental H.323 service.
 - Fix bugs.
 		   
-## 08-07-2002 v.1.11
+## v.1.11 (08-07-2002)
 - Setup procedure into webmin module, now Turtle Firewall installation is very easy.
 - Removed chkconfig command for setup, it isn't availabe in all GNU/Linux distributions.
 - Fix bug in "Create Nat" web interface.
 - Other minor changes.
 		   
-## 09-07-2002 v.1.12
+## v.1.12 (09-07-2002)
 - Fix bug in XML::Parser module checking.
 		   
-## 03-09-2002 v.1.13
+## v.1.13 (03-09-2002)
 - Add NAT from a zone interface to a real host (etc. modem interface ip to my pc host).
 - Add Redirect module (For Transparent Proxy).
 - Fix security hole with INVALID packets filter code by Mark Francis.
@@ -69,18 +69,18 @@
 - Add firewall rules for IPsec VPN service.
 - Add firewall rules for Webmin service.
 		   
-## 10-09-2002 v.1.14
+## v.1.14 (10-09-2002)
 - The configurable options contains now the option to select the logfile (Karl Lovink)
 - The dutch language has been added (Karl Lovink).
 		   
-## 13-09-2002 v.1.15
+## v.1.15 (13-09-2002)
 - Fix "DROP INVALID unclean" bug.
 		   
-## 26-09-2002 v.1.16
+## v.1.16 (26-09-2002)
 - Change webmin category from System to Networking.
 - Fix a bug on tcp/udp Local Redirection (Soep).
 		   
-## 16-10-2002 v.1.17
+## v.1.17 (16-10-2002)
 - Fix bug with "--log-level info" iptables option.
 - Enhanced log report.
 - Enhanced interface.
@@ -88,7 +88,7 @@
   (Alain Terriault)
 - Add nfs (experimental)
 		   
-## 13-11-2002 v.1.18
+## v.1.18 (13-11-2002)
 - Add Firewall Configuration Options.
 - Now you can change firewall rules order (more readable).
 - Add fwuserdefservices.xml file for userdefined services. With this file you can write your own
@@ -99,7 +99,7 @@
   IMPORTANT: I invite all to send me your userdefined service filter definitions, so I can add them into
   the predefined services list (fwservices.xml) for all Turtle Firewall users.
 			 
-## 26-11-2002 v.1.19
+## v.1.19 (26-11-2002)
 - Fix bug in Zone deletion.
 - Fix a bug using aliased interfaces (signaled by Torsten)
 - Add German translation (Jimmy Collins)
@@ -108,7 +108,7 @@
 - Add PC-Anyware service (Chris Carter)
 - Change setup script for Slackware Linux distribution (A.Frigido, Patrik)
 		   
-## 15-01-2003 v.1.20
+## v.1.20 (15-01-2003)
 - Add optional MAC address field in host edit form.
 - Add target field (ACCEPT/DROP/REJECT) in rule edit form.
 - Fix bug in Log prefix string, it must be up to 29 chars length.
@@ -116,10 +116,10 @@
 - Use numerical notation for ports in fwservices.xml.
 - Add Active flag to NAT, Masquerade and Redirect rules.
 		   
-## 16-01-2003 v.1.21
+## v.1.21 (16-01-2003)
 - Fix a bug in Redirection.
 		   
-## 12-02-2003 v.1.22
+## v.1.22 (02-02-2003)
 - Firewall and NAT rules with multiple services.
 - Change LOG prefix from "TFW DROP" to "TFW".
 - Add --start, --stop and --status options to turtlefirewall main script.
@@ -128,12 +128,12 @@
 - Add icmp_all service for all messages (request+reply).
 - Add all icmp messages in the special service "all".
 		   
-## 18-02-2003 v.1.23
+## v.1.23 (18-02-2003)
 - Add proxy, ssh21, dhcp, snmptrap, socks and eDonkey services (Karl Lovink).
 - Fix a bug into log viewer (Fredrik Tuomas).
 - Add Configuration Backup/Restore.
 		   
-## 31-03-2003 v.1.24
+## v.1.24 (31-03-2003)
 - Change Turtle Firewall stop process, ping will be reenabled.
 - Add AIM/ICQ and Soulseek std services (Frank Förster).
 - Add Oracle, VNC, VNC-http services.
@@ -142,57 +142,57 @@
 - Now you can rename all firewall items.
 - More options.
 		   
-## 02-04-2003 v.1.25
+## v.1.25 (02-04-2003)
 - Fix bugs.
 		   
-## 07-05-2003 v.1.26
+## v.1.26 (07-05-2003)
 - Fix "de" language file (Frank Förster).
 - NAT Improved, now you can change rules order.
 - NAT rules bugfix.
 - Configuration backup download bugfix.
 		   
-## 14-05-2003 v.1.27
+## v.1.27 (14-05-2003)
 - Small Bug-fix.
 		   
-## 15-07-2004 v.1.28
+## v.1.28 (15-07-2004)
 - Add port 445 to netbios service.
 - Add jabber and jabber-s2s (server to server) services.
 - Add lpr Line Printer Protocol.
 - Add rdp - Windows Remote Desktop Protocol.
 - Fix bugs.
 		   
-## 19-11-2004 v.1.29
+## v.1.29 (19-11-2004)
 - Set icmp_echo_ignore_all flag to 0. Turtle Firewall use iptables 
   rules for drop or allow icmp echo packets. This fix a bug in tfw ping.
 - Disable tcp_ecn flag.
 - In masquerading configuration now you can specify source,destinatio,service,
   port and action (masquerade or not masquerade).
 			 
-## 21-11-2004 v.1.30
+## v.1.30 (21-11-2004)
 - Add * option in source and destination field of a firewall rule: all zones except FIREWALL.
 		   
-## 30-11-2004 v.1.31
+## v.1.31 (30-11-2004)
 - Change rules display in turtlefirewall startup. 
 - Fix bugs.
 		   
-## 17-02-2005 v.1.32
+## v.1.32 (17-02-2005)
 - Use iptables-restore command to speed up firewall start up.
 		   
-## ??-??-2005 v.1.33
+## v.1.33 (??-??-2005)
 - Add source and destination option to the NAT rules.
 - Bugfix on rules with target REJECT (from v.1.32).
 		   
-## 31-11-2005 v.1.34
+## v.1.34 (31-11-2005)
 - Add mangle mark rule attribute for QoS (iproute2).
 - Bugfix on turtlefirewall stop procedure (signaled by Ulf Seltmann).
 		   
-## 11-01-2006 v.1.36
+## v.1.36 (11-01-2006)
 - Add multisources and multidestinations in firewall rules.
 - Add service attribute in filter xml tag of services definition files.
 - Eliminate drop_unclean option, doesn't work with kernel 2.6.x
 - Bugfix.
 		   
-## 02-02-2006 v.1.37
+## v.1.37 (02-02-2006)
 - New service definitions were added:
   igmp (Internet Group Management Protocol).
   bpalogin (BPALogin).
@@ -200,10 +200,10 @@
   openvpn (OpenVPN protocolo, www.openvpn.net).
 - Bugs were fixed.
 		   
-## 20-05-2011 v.1.38
+## v.1.38 (20-05-2011)
 - Debian 6.0 compatibility (chocolateboy).
 		   
-## 23-04-2020 v.2.0
+## v.2.0 (23-04-2020)
 - OS : Systemd support, RPM package, Ensure running via cron.
 - Feature : Added Time, GeoIP and nDPI support.
 - Feature : Added Optional IP Blacklist.
@@ -228,14 +228,14 @@
 - Connection Tracking : Added conntrack tools.
 - Theme : New Webmin support.
 		   
-## 09-10-2022 v.2.1
+## v.2.1 (09-10-2022)
 - OS : Kernel 6 compatibility.
 - Feature : Removed pptp, sip, h323 and tftp kernel module options.
 - Feature : Added Preroute Raw Rules. ( Conntrack Preroute : for use with CT helpers )
 - Feature : Added Raw Rules. ( Conntrack : for use with CT helpers )
 - Connection Tracking : Migrated helpers to CT target.
 		   
-## 03-06-2023 v.2.2
+## v.2.2 (03-06-2023)
 - Bug : Code cleanup.
 - Bug : Fixed rename and delete of multi select items used in rules.
 - Bug : Fixed port or port range verification in rules.
@@ -247,7 +247,7 @@
 - Feature : Removed Blacklist Flow Reports. 
 - Feature : Improve Blacklist view.
 		   
-## 18-02-2024 v.2.3
+## v.2.3 (18-02-2024)
 - Bug : Code cleanup.
 - Bug : Fixed --mac-source masquerade.
 - Bug : Removed depreciated HTML \<tt\>, \<strike\>, \<font\>, \<align\> and \<valign\> tags.
@@ -263,7 +263,7 @@
 - Theme : Update edit forms to use ui standard.
 - Theme : Standardize Webmin images.
 		   
-## 22-08-2024 v.2.4
+## v.2.4 (22-08-2024)
 - OS : Old fw.xml format fixes in fixconfig.sh.
 - OS : Restore setup.cgi for WBM install.
 - OS : Support for Debian 12 syslog date format.
@@ -281,14 +281,14 @@
 - Feature : Add item reference lookup support.
 - Feature : Make rule order configurable.
 		   
-## 01-01-2025 v.2.5
+## v.2.5 (01-01-2025)
 - Services : Make user defined services permanent.
 - Services : Removed depreciated kazaa and edonkey services.
 - Feature : nDPI 4.13 support.
 - Feature : Add clamp_mss_to_pmtu option.
 - Feature : Add nDPI ACCEPT support for Hostnames.
 		   
-## 30-04-2025 v.2.6
+## v.2.6 (30-04-2025)
 - Feature : nDPI 4.15 support.
 - Feature : Remove JA3 logging.
 - Feature : Remove JA3 Blacklist.
