@@ -27,13 +27,13 @@
 - Add franch webmin language file.
 - Fix bugs.
 		   
-## v.0.98 (23-05-2002) Giampaolo Tomassoni g.tomassoni@ar-tel.it
-- Do you need port-based natting? Here it is...
+## v.0.98 (23-05-2002)
+- Do you need port-based natting? Here it is... (Giampaolo Tomassoni)
 - Fixed the I-Wanna-Reply-To-Pings-But-It-Doesn't bug: when
   the fw accepts pings on a <somewere> => FIREWALL base,
   don't turn the /proc/sys/net/ipv4/icmp_echo_ignore_all
-  kernel flag on...
-- Applied few ahestetic make-ups
+  kernel flag on... (Giampaolo Tomassoni)
+- Applied few ahestetic make-ups (Giampaolo Tomassoni)
 		   
 ## v.0.99 (14-06-2002)
 - Fix turtlefirewall privileges bug.
