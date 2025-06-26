@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'turtlefirewall-lib.pl';
+require './turtlefirewall-lib.pl';
 use Tie::File;
 
 &ui_print_header( "$icons{CREATE}{IMAGE}$text{'edit_flowstat_title_create'}", $text{'title'}, "" );

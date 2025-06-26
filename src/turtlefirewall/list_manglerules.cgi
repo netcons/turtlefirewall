@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'turtlefirewall-lib.pl';
+require './turtlefirewall-lib.pl';
 &ReadParse();
 
 &ui_print_header( "$icons{MARK}{IMAGE}$text{'list_manglerules_title'}", $text{'title'}, "" );

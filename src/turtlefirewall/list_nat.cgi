@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'turtlefirewall-lib.pl';
+require './turtlefirewall-lib.pl';
 &ReadParse();
 
 &ui_print_header( "$icons{NAT}{IMAGE}$text{'list_nat_title'}", $text{'title'}, "" );

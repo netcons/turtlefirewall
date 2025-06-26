@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'turtlefirewall-lib.pl';
+require './turtlefirewall-lib.pl';
 &ReadParse();
 
 my $riskset = $in{'riskset'};

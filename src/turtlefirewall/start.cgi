@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'turtlefirewall-lib.pl';
+require './turtlefirewall-lib.pl';
 
 @output = ();
 foreach my $l (qx{/usr/sbin/turtlefirewall --start 2>&1}) {
@@ -17,7 +17,7 @@ foreach my $l (qx{/usr/sbin/turtlefirewall --start 2>&1}) {
 
 &ui_print_header( undef, $text{'title'}, "" );
 
-print "<table border width=100%>
+print "<table border=0 width=100%>
        <tr $cb><td>";
 print "<pre>\n";
 print @output;

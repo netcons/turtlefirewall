@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'turtlefirewall-lib.pl';
+require './turtlefirewall-lib.pl';
 
 &ui_print_header( "$icons{RISK}{IMAGE}$text{'list_ndpirisks_title'}", $text{'title'}, "" );
 

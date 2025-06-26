@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'turtlefirewall-lib.pl';
+require './turtlefirewall-lib.pl';
 
 &ui_print_header( "$icons{EDIT}{IMAGE}$text{'edit_options_title'}", $text{'title'}, "" );
 

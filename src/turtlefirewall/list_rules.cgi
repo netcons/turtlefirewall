@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'turtlefirewall-lib.pl';
+require './turtlefirewall-lib.pl';
 &ReadParse();
 
 &ui_print_header( "$icons{RULE}{IMAGE}$text{'list_rules_title'}", $text{'title'}, "" );

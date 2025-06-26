@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'turtlefirewall-lib.pl';
+require './turtlefirewall-lib.pl';
 
 &ui_print_header( "$icons{SERVICE}{IMAGE}$text{'list_services_title'}", $text{'title'}, "" );
 

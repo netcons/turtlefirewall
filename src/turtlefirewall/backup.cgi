@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'turtlefirewall-lib.pl';
+require './turtlefirewall-lib.pl';
 &ReadParse();
 
 if( $in{download} ) {
@@ -24,7 +24,7 @@ if( $in{upload} ) {
 	# FIXME
 } else {
 	print qq~<br/>
-	<table border width="100%">
+	<table border="0" width="100%">
 	<tr $tb>
 		<th>$text{'backup_backuptitle'}</th>
 	</tr>
@@ -39,7 +39,7 @@ if( $in{upload} ) {
 	</tr>
 	</table>
 
-	<table border width="100%">
+	<table border="0" width="100%">
 	<tr $tb>
 		<th>$text{'backup_restoretitle'}</th>
 	</tr>
@@ -94,7 +94,7 @@ sub restore_upload {
 	syswrite(TARGZ, $backup, length($backup));
 	close TARGZ;
 
-	print qq~<table border width="100%">
+	print qq~<table border="0" width="100%">
 		<tr $tb>
 			<th>$text{'backup_restoretitle'}</th>
 		</tr>

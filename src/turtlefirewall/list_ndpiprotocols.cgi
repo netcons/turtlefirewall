@@ -8,7 +8,7 @@
 # License
 #======================================================================
 
-do 'turtlefirewall-lib.pl';
+require './turtlefirewall-lib.pl';
 
 &ui_print_header( "$icons{NDPISERVICE}{IMAGE}$text{'list_ndpiprotocols_title'}", $text{'title'}, "" );
 
