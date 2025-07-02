@@ -38,9 +38,8 @@ sub showLog {
 	my %dpt_list = ('*' => undef);
 
 	open( LOG, "<", $SysLogFile );
-	while( <LOG> ) {
-		if( $_ =~ /TFW=/ ) {
-			my $l = $_;
+	while (my $l = <LOG>) {
+		if( $l =~ /TFW=/ ) {
 
 			my $time = '';
 			my $action = '';

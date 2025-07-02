@@ -50,8 +50,7 @@ sub showLog {
 	#my %risk_list = ('*'=>'x');
 
 	open( LOG, "<", $FlowLogFile );
-	while( <LOG> ) {
-			my $l = $_;
+	while (my $l = <LOG>) {
 
 			my $stime = '';
 			my $etime = '';
