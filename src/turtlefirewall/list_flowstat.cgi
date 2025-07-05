@@ -13,162 +13,125 @@ require './turtlefirewall-lib.pl';
 use Tie::File;
 use Time::Piece;
 
-&ui_print_header( "$icons{FLOWSTAT}{IMAGE}$text{'report_flowstat_title'}", $text{'title'}, "" );
-
 my $log = $in{'log'};
 my $type = $in{'type'};
-my $max = $in{'max'};
 my $top = $in{'top'};
-my $string = $in{'string'};
-
-my $logflowcount = qx{wc -l < $log 2>/dev/null};
+my $is_target = $in{'is_target'};
+my $target_type = $in{'target_type'};
+my $target = $in{'target'};
+if( $is_target ) {
+	if( $target_type eq $type ) { &error( $text{list_flowstat_error1} ); }
+	if( $target eq '' ) { &error( $text{list_flowstat_error2} ); }
+}
+&ui_print_header( "$icons{FLOWSTAT}{IMAGE}$text{'report_flowstat_title'}", $text{'title'}, "" );
 
 if( $type eq 'risk' ) { &LoadNdpiRisks($fw); }
 
+my $logflowtotal = 0;
 my $flowtotal = 0;
+my $logflowcount = 0;
 my $flowcount = 0;
+
 my $firstflowtime = '';
 my $lastflowtime = '';
 
-my ($type_list, $flows) = &getflows($log);
+my $query = '';
 
-my @stats = &getstats($flowreports{$type}{LOGIDX},$type_list,$flows);
+$query = "select count(*) from $log";
+$logflowcount = qx{q -Hp "$query" 2>/dev/null};
+$logflowcount =~ s/\n//;
 
-&showstats($flowreports{$type}{TXTIDX},$flowreports{$type}{ICOIDX},@stats);
+$query = "select sum(ubytes+dbytes) from $log";
+$logflowtotal = qx{q -Hp "$query" 2>/dev/null};
+$logflowtotal =~ s/\n//;
+
+if( $is_target ) {
+	$query = "select sum(ubytes+dbytes) from $log where $target_type = '$target'";
+	$flowtotal = qx{q -Hp "$query" 2>/dev/null};
+	$flowtotal =~ s/\n//;
+
+	$query = "select count(*) from $log where $target_type = '$target'";
+	$flowcount = qx{q -Hp "$query" 2>/dev/null};
+	$flowcount =~ s/\n//;
+
+	$query = "select stime from $log where $target_type = '$target' order by stime asc limit 1";
+	$firstflowtime = qx{q -Hp "$query" 2>/dev/null};
+
+	$query = "select etime from $log where $target_type = '$target' order by etime desc limit 1";
+	$lastflowtime = qx{q -Hp "$query" 2>/dev/null};
+} else {
+	$flowtotal = $logflowtotal;
+	$flowcount = $logflowcount;
+
+	$query = "select stime from $log order by stime asc limit 1";
+	$firstflowtime = qx{q -Hp "$query" 2>/dev/null};
+
+	$query = "select etime from $log order by etime desc limit 1";
+	$lastflowtime = qx{q -Hp "$query" 2>/dev/null};
+}
+
+$firstflowtime =~ s/\n//;
+$firstflowtime = localtime($firstflowtime)->strftime('%b %d %X');
+
+$lastflowtime =~ s/\n//;
+$lastflowtime = localtime($lastflowtime)->strftime('%b %d %X');
+
+my @stats = &getstats($log,$type,$top,$is_target,$target_type,$target);
+my $txtindex = $flowreports{$type}{TXTIDX};
+my $icoindex = $flowreports{$type}{ICOIDX};
+
+&showstats($log,$type,$is_target,$target_type,$target,$flowcount,$flowtotal,$logflowcount,$firstflowtime,$lastflowtime,$txtindex,$icoindex,@stats);
 
 &ui_print_footer("edit_flowstat.cgi",'flow statistics');
 
 #============================================================================
 
-sub getflows {
+sub getstats {
 
 	my $log = shift;
-	my %type_list = ();
-
-	my @last_log_lines = ();
-
-	use Fcntl 'O_RDONLY';
-	tie @log_lines, 'Tie::File', $log, mode => O_RDONLY;
-		if( $max ne 'all' ) {
-			@last_log_lines = ($max >= @log_lines) ? @log_lines : @log_lines[-$max..-1];
-		} else { 
-			@last_log_lines = @log_lines;
-		}
-	untie @log_lines;
-
-	my @log_lines = ();
-
-	if( $string ne '' ) {
-		@log_lines = grep(/$string/, @last_log_lines);
-	} else {
-		@log_lines = @last_log_lines;
-	}
-	
-	my @flows = ();
-
-	foreach my $l (@log_lines) {
-
-		my $stime = '';
-		my $etime = '';
-		my $l3proto = '';
-		my $l4proto = '';
-		my $source = '';
-		my $sport = '';
-		my $destination = '';
-		my $dport = '';
-		my $ubytes = '';
-		my $dbytes = '';
-		my $upackets = '';
-		my $dpackets = '';
-		my $ifindex = '';
-		my $connmark = '';
-		my $srcnat = '';
-		my $dstnat = '';
-		my $protocol = '';
-		my $hostname = '';
-		my $ja4c = '';
-		my $tlsfp = '';
-		my $risk = '';
-
-		if( $l =~ /^(.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) (.*?) / ) {
-			$stime = $1;
-			$etime = $2;
-			$l3proto = $3;
-			$l4proto = $4;
-			$source = $5;
-			$sport = $6;
-			$destination = $7;
-			$dport = $8;
-			$ubytes = $9;
-			$dbytes = $10;
-			$upackets = $11;
-			$dpackets = $12;
-			$ifindex = $13;
-		}
-
-		if( $l =~ /CM=(.*?)( |$)/ ) { $connmark = $1; }
-		if( $l =~ /SN=(.*?)( |$)/ ) { $srcnat = $1; }
-		if( $l =~ /DN=(.*?)( |$)/ ) { $dstnat = $1; }
-		if( $l =~ /P=(.*?)( |$)/ ) { $protocol = $1; }
-		if( $l =~ /H=(.*?)( |$)/ ) { $hostname = $1; }
-		if( $l =~ /c=(.*?)( |$)/ ) { $ja4c = $1; }
-		if( $l =~ /F=(.*?)( |$)/ ) { $tlsfp = $1; }
-		if( $l =~ /R=(.*?)( |$)/ ) { $risk = $1; }
-
-		if( $type eq 'source' && $source ne '' ) {$type_list{$source} = '0';}
-		if( $type eq 'destination' && $destination ne '' ) {$type_list{$destination} = '0';}
-		if( $type eq 'dport' && $dport ne '' ) {$type_list{$dport} = '0';}
-		if( $type eq 'protocol' && $protocol ne '') {$type_list{$protocol} = '0';}
-		if( $type eq 'hostname' && $hostname ne '') {$type_list{$hostname} = '0';}
-		if( $type eq 'risk' && $risk ne '') {$type_list{$risk} = '0';}
-
-		$flowtotal = ($flowtotal + $ubytes + $dbytes);
-
-		push @flows, [$stime, $etime, $l3proto, $l4proto, $source, $sport, $destination, $dport,
-		      		$ubytes, $dbytes, $upackets, $dpackets, $ifindex,
-			       	$connmark, $srcnat, $dstnat, $protocol, $hostname,
-			       	$ja4c, $tlsfp, $risk];
-	}
-	$flowcount = @flows;
-	$firstflowtime = localtime($flows[0][0])->strftime('%b %d %X');
-	$lastflowtime = localtime($flows[$#flows][1])->strftime('%b %d %X');
-
-	return (\%type_list, \@flows);
-}
-
-sub getstats {
-	
-	my $logindex = shift;
-	my ($type_list,$flows) = @_;
+	my $type = shift;
+	my $top = shift;
+	my $is_target = shift;
+	my $target_type = shift;
+	my $target = shift;
+	my $query = '';
 
 	my @stats = ();
 
-	# Sum bytes per Type
-	foreach my $f (@{$flows}) { 
-		foreach $t (sort keys %{$type_list}) {
-			if( $f->[$logindex] eq $t ) { $type_list{$t} = ($type_list{$t} + $f->[8] + $f->[9]); }
-		}
+	if( $is_target ) {
+		$query = "select $type,sum(ubytes+dbytes) from $log where $type != '' and $target_type = '$target' group by $type order by sum(ubytes+dbytes) desc limit $top";
+	} else {
+		$query = "select $type,sum(ubytes+dbytes) from $log where $type != '' group by $type order by sum(ubytes+dbytes) desc limit $top";
 	}
 
-	# Sort Items by bytes
-	my $count = 0;
-	foreach $t (sort { $type_list{$b} <=> $type_list{$a} } keys %{$type_list}) {
-		push(@stats, [$t,$type_list{$t}]);
-		$count++;
-		last if($count == $top);
+	foreach my $l (qx{q -Hp "$query" 2>/dev/null}) {
+		$l =~ s/\n//;
+		my @t = split(/\|/, $l);
+		push(@stats, \@t);
 	}
+
 	return @stats;
 }
 
 sub showstats {
 
+	my $log = shift;
+	my $type = shift;
+	my $is_target = shift;
+	my $target_type = shift;
+	my $target = shift;
+	my $flowcount = shift;
+	my $flowtotal = shift;
+	my $logflowcount = shift;
+	my $firstflowtime = shift;
+	my $lastflowtime = shift;
 	my $txtindex = shift;
 	my $icoindex = shift;
 	my @stats = @_;
 	my $graphwidth = 300;
 
 	print "Using $flowcount of $logflowcount flows from $log";
-	if( $string ne '' ) { print " containing <i>".&ui_text_color($string, 'info')."</i>"; }
+	if( $is_target ) { print " where $target_type is equal to <i>".&ui_text_color($target, 'info')."</i>"; }
 	print " ( $firstflowtime --> $lastflowtime )";
 
 	@tds = ( "style=white-space:nowrap", "width=$graphwidth", "", "width=1% style=text-align:right;white-space:nowrap" );

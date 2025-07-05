@@ -1,6 +1,10 @@
 /var/log/flowinfo.log {
-        daily
-        missingok
-        rotate 31
-        copytruncate
+	daily
+	missingok
+	rotate 31
+	copytruncate
+	dateyesterday
+	postrotate
+		/usr/sbin/convertflowinfo.pl --log=$2 >/dev/null 2>&1 || true
+	endscript
 }

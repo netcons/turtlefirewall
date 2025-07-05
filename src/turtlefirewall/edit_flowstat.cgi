@@ -22,36 +22,38 @@ print "<br><br>";
 
 sub reportFlowStat {
 
-	my $log = $FlowLogFile;
-
 	my @types = sort keys %flowreports;
-	my @maxs = ( 'all', '100', '1000', '10000', '100000' );
-	my @tops = ( '5', '10', '15', '20' );
+	my @tops = ( '5', '10', '20', '50' );
 
-	#my $type = $types[0];
+	my $log = undef;
 	my $type = 'protocol';
-	my $max = $maxs[1];
-	my $top = $tops[0];
-	my $string = '';
+	my $top = '20';
+	my $is_target = 0;
+	my $target_type = 'source';
+	my $target = '';
 
-	my @logs = glob("${log}*");
+	my @logs = sort { $b cmp $a } glob("${FlowLogFile}-*");
 
 	print &ui_subheading("$icons{CREATE}{IMAGE}$text{'edit_flowstat_title_create'}");
 	print &ui_form_start("list_flowstat.cgi", "post");
-	my @tds = ( "width=20% style=white-space:nowrap ", "width=80%" );
+	my @tds = ( "width=20% style=white-space:nowrap", "width=80%" );
 	print &ui_columns_start(undef, 100, 0, \@tds);
 	my $col = '';
 	$col = &ui_select("log", $log, \@logs);
 	print &ui_columns_row([ "$icons{LOG}{IMAGE}<b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
 	$col = &ui_select("type", $type, \@types);
 	print &ui_columns_row([ "$icons{OPTION}{IMAGE}<b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);
-	$col = &ui_select("max", $max, \@maxs);
-	$col .= "<small><i>$text{flowstat_max_help}</i></small>";
-	print &ui_columns_row([ "$icons{RATELIMIT}{IMAGE}<b>$text{'edit_flowstat_max'}</b>", $col ], \@tds);
 	$col = &ui_select("top", $top, \@tops);
 	print &ui_columns_row([ "$icons{FLOWSTAT}{IMAGE}<b>$text{'edit_flowstat_top'}</b>", $col ], \@tds);
-	$col = &ui_textbox("string", $string, 60, 0, 60);
-	print &ui_columns_row([ "$icons{TARGET}{IMAGE}<b>$text{'edit_flowstat_string'}</b>", $col ], \@tds);
+
+	my @opts = ( [ 0, "$text{NO}<br>" ], [ 1, "$text{YES}" ] );
+	$col = &ui_radio("is_target", $is_target ? 1 : 0, \@opts);
+	$col .= "&nbsp; where &nbsp;";
+	$col .= &ui_select("target_type", $target_type, \@types);
+	$col .= "&nbsp; is equal to &nbsp;";
+	$col .= &ui_textbox("target", $target, 60, 0, 60);
+	print &ui_columns_row([ "$icons{TARGET}{IMAGE}<b>$text{'edit_flowstat_target'}</b>", $col ], \@tds);
+
 	print &ui_columns_end();
 
 	print "<table width=100%><tr>";

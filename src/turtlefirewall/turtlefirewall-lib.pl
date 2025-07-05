@@ -80,12 +80,12 @@ sub confdir {
 }
 
 %flowreports = ( 
-	'source' => { LOGIDX => '4', ICOIDX => 'SRC', TXTIDX => 'flowstat_type_source' },
-       	'destination' => { LOGIDX => '6', ICOIDX => 'DST', TXTIDX => 'flowstat_type_destination' },
-       	'dport' => { LOGIDX => '7', ICOIDX => 'SERVICE', TXTIDX => 'flowstat_type_dport' },
-       	'protocol' => { LOGIDX => '16', ICOIDX => 'NDPISERVICE', TXTIDX => 'flowstat_type_protocol' },
-       	'hostname' => { LOGIDX => '17', ICOIDX => 'HOSTNAME', TXTIDX => 'flowstat_type_hostname' },
-       	'risk' => { LOGIDX => '20', ICOIDX => 'RISK', TXTIDX => 'flowstat_type_risk' }
+	'source' => { ICOIDX => 'SRC', TXTIDX => 'flowstat_type_source' },
+       	'destination' => { ICOIDX => 'DST', TXTIDX => 'flowstat_type_destination' },
+       	'dport' => { ICOIDX => 'SERVICE', TXTIDX => 'flowstat_type_dport' },
+       	'protocol' => { ICOIDX => 'NDPISERVICE', TXTIDX => 'flowstat_type_protocol' },
+       	'hostname' => { ICOIDX => 'HOSTNAME', TXTIDX => 'flowstat_type_hostname' },
+       	'risk' => { ICOIDX => 'RISK', TXTIDX => 'flowstat_type_risk' }
 );
 
 %blacklists = ( 

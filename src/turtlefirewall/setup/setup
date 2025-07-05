@@ -41,6 +41,9 @@ system( "chmod 700 $path_config" );
 system( "cp -v -f turtlefirewall $path_bin" );
 system( "chmod 700 $path_bin/turtlefirewall" );
 
+system( "cp -v -f convertflowinfo.pl $path_bin" );
+system( "chmod 700 $path_bin/convertflowinfo.pl" );
+
 # Ensure Lib folder
 system( "mkdir -p $path_lib" );
 # delete old turtlefirewall packages
