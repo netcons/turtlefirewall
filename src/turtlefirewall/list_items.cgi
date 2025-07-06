@@ -99,7 +99,7 @@ sub showAddressList {
 		push(@cols, $href );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
         }
-	for my $k (sort $fw->GetAddressListList()) {
+	for my $k ($fw->GetAddressListList()) {
 		my %addresslist = $fw->GetAddressList($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
@@ -140,7 +140,7 @@ sub showZone {
                           "<b>$text{'interface'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
-	for my $k (sort $fw->GetZoneList()) {
+	for my $k ($fw->GetZoneList()) {
 		my %zone = $fw->GetZone($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
@@ -185,7 +185,7 @@ sub showHost {
                           "<b>$text{'zone'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
-	for my $k (sort $fw->GetHostList()) {
+	for my $k ($fw->GetHostList()) {
 		my %host = $fw->GetHost($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
@@ -228,7 +228,7 @@ sub showNet {
                           "<b>$text{'zone'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
-	for my $k (sort $fw->GetNetList()) {
+	for my $k ($fw->GetNetList()) {
 		my %net = $fw->GetNet($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
@@ -270,7 +270,7 @@ sub showGeoip {
                           "<b>$text{'zone'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
-	for my $k (sort $fw->GetGeoipList()) {
+	for my $k ($fw->GetGeoipList()) {
 		my %geoip = $fw->GetGeoip($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
@@ -311,7 +311,7 @@ sub showIPSet {
                           "<b>$text{'zone'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
-	for my $k (sort $fw->GetIPSetList()) {
+	for my $k ($fw->GetIPSetList()) {
 		my %ipset = $fw->GetIPSet($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
@@ -349,7 +349,7 @@ sub showGroup {
                           "<b>$text{'groupitems'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
-	for my $k (sort $fw->GetGroupList()) {
+	for my $k ($fw->GetGroupList()) {
 		my %group = $fw->GetGroup($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
@@ -392,7 +392,7 @@ sub showHostNameSet {
                           "<b>$text{'hostnames'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
-	for my $k (sort $fw->GetHostNameSetList()) {
+	for my $k ($fw->GetHostNameSetList()) {
 		my %hostnameset = $fw->GetHostNameSet($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
@@ -433,7 +433,7 @@ sub showRiskSet {
                           "<b>$text{'risks'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
-	for my $k (sort $fw->GetRiskSetList()) {
+	for my $k ($fw->GetRiskSetList()) {
 		my %riskset = $fw->GetRiskSet($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
@@ -475,7 +475,7 @@ sub showRateLimit {
                           "<b>$text{'rate'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
-	for my $k (sort $fw->GetRateLimitList()) {
+	for my $k ($fw->GetRateLimitList()) {
 		my %ratelimit = $fw->GetRateLimit($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
@@ -516,7 +516,7 @@ sub showTime {
                           "<b>$text{'timestop'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
-	for my $k (sort $fw->GetTimeList()) {
+	for my $k ($fw->GetTimeList()) {
 		my %time = $fw->GetTime($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
@@ -555,7 +555,7 @@ sub showTimeGroup {
                           "<b>$text{'timegroupitems'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
-	for my $k (sort $fw->GetTimeGroupList()) {
+	for my $k ($fw->GetTimeGroupList()) {
 		my %timegroup = $fw->GetTimeGroup($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	

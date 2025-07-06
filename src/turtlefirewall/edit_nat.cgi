@@ -47,7 +47,7 @@ my @items_virtual = ();
 my @virtuals = ();
 push @virtuals, grep(!/FIREWALL/, $fw->GetZoneList());
 push @virtuals, $fw->GetHostList();
-for my $k (@virtuals) {
+for my $k (sort @virtuals) {
 	my @opts = ();
 	my %zone = $fw->GetZone($k);
 	if( $zone{IF} ne '' ) {
@@ -57,11 +57,9 @@ for my $k (@virtuals) {
 	}
 	push(@items_virtual, \@opts);
 }
-sort(@items_virtual);
 
 my @items_real = ();
 push @items_real, $fw->GetHostList();
-sort(@items_real);
 
 print &ui_subheading($heading);
 print &ui_form_start("save_nat.cgi", "post");

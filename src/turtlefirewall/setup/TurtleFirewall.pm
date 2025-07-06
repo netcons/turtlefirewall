@@ -64,12 +64,12 @@ sub GetTimeList {
 
 sub GetGroupList {
 	my $this = shift;
-	return @{$this->{fwKeys}{GROUP}};
+	return sort @{$this->{fwKeys}{GROUP}};
 }
 
 sub GetTimeGroupList {
 	my $this = shift;
-	return @{$this->{fwKeys}{TIMEGROUP}};
+	return sort @{$this->{fwKeys}{TIMEGROUP}};
 }
 
 sub GetHostNameSetList {
@@ -180,7 +180,7 @@ sub GetItemsAllowToGroup {
 		}
 		push @items, $g;
 	}
-	return @items;
+	return sort @items;
 }
 
 sub GetItemsAllowToTimeGroup {
@@ -188,7 +188,7 @@ sub GetItemsAllowToTimeGroup {
 	my $timegroup = shift;
 	my @items = ();
 	push @items, @{$this->{fwKeys}{TIME}};
-	return @items;
+	return sort @items;
 }
 
 sub GetServicesList {
