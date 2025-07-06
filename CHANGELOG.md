@@ -293,12 +293,13 @@
 - Feature : Remove JA3 logging.
 - Feature : Remove JA3 Blacklist.
 - Feature : Remove TLS Version logging, already included in JA4.
-- Feature : Migrate Flow Statistics queries to q-text-as-data.
+- Feature : Migrate Flow Statistics query backend to q-text-as-data
+  and allow multiple log selection.
 - Bug : Fixed translation of HTML character entities.
-- Bug : Fixed Flow Statistics.
-- Bug : Removed default variable reference.
-- Bug : Standardize include and table syntax.
-- Bug : Fixed missing sort.
+- Bug : Fixed Flow Statistics flow time reported incorrectly.
+- Bug : Removed default variable reference in log views.
+- Bug : Standardize library include and table syntax.
+- Bug : Fixed missing sort in item selection.
 - OS : Remove unused iptables_restore_emu.
 - OS : Remove depreciated dkms feature: CLEAN
 - Todo : Translate new features.

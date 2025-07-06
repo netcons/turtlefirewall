@@ -39,7 +39,7 @@ sub reportFlowStat {
 	my @tds = ( "width=20% style=white-space:nowrap", "width=80%" );
 	print &ui_columns_start(undef, 100, 0, \@tds);
 	my $col = '';
-	$col = &ui_select("log", $log, \@logs);
+	$col = &ui_select("log", $log, \@logs, 5, 1);
 	print &ui_columns_row([ "$icons{LOG}{IMAGE}<b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
 	$col = &ui_select("type", $type, \@types);
 	print &ui_columns_row([ "$icons{OPTION}{IMAGE}<b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);
