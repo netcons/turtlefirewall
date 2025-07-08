@@ -23,23 +23,24 @@ print "<br><br>";
 sub reportFlowStat {
 
 	my @types = sort keys %flowreports;
-	my @tops = ( '5', '10', '20', '50' );
+	my @tops = ( '5', '10', '25', '50' );
 
-	my $log = undef;
+	my $log = '';
 	my $type = 'protocol';
-	my $top = '20';
+	my $top = '5';
 	my $is_target = 0;
 	my $target_type = 'source';
 	my $target = '';
 
 	my @logs = sort { $b cmp $a } glob("${FlowLogFile}-*");
+	my $selected_log = $logs[0];
 
 	print &ui_subheading("$icons{CREATE}{IMAGE}$text{'edit_flowstat_title_create'}");
 	print &ui_form_start("list_flowstat.cgi", "post");
 	my @tds = ( "width=20% style=white-space:nowrap", "width=80%" );
 	print &ui_columns_start(undef, 100, 0, \@tds);
 	my $col = '';
-	$col = &ui_select("log", $log, \@logs, 5, 1);
+	$col = &ui_select("log", $selected_log, \@logs, 5, 1);
 	print &ui_columns_row([ "$icons{LOG}{IMAGE}<b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
 	$col = &ui_select("type", $type, \@types);
 	print &ui_columns_row([ "$icons{OPTION}{IMAGE}<b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);

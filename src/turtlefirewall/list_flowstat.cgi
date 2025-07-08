@@ -14,9 +14,8 @@ use Tie::File;
 use Time::Piece;
 
 my $log = $in{'log'};
-my $logdesc = $log;
 $log =~ s/\0/ UNION ALL select * from /g;
-if( $log =~ /UNION ALL/ ) { $log = "(select * from $log)"; $logdesc = "multiple logs";}
+$log = "(select * from $log)";
 my $type = $in{'type'};
 my $top = $in{'top'};
 my $is_target = $in{'is_target'};
@@ -83,7 +82,7 @@ my @stats = &getstats($log,$type,$top,$is_target,$target_type,$target);
 my $txtindex = $flowreports{$type}{TXTIDX};
 my $icoindex = $flowreports{$type}{ICOIDX};
 
-&showstats($logdesc,$type,$is_target,$target_type,$target,$flowcount,$flowtotal,$logflowcount,$firstflowtime,$lastflowtime,$txtindex,$icoindex,@stats);
+&showstats($type,$is_target,$target_type,$target,$flowcount,$flowtotal,$logflowcount,$firstflowtime,$lastflowtime,$txtindex,$icoindex,@stats);
 
 &ui_print_footer("edit_flowstat.cgi",'flow statistics');
 
@@ -118,7 +117,6 @@ sub getstats {
 
 sub showstats {
 
-	my $logdesc = shift;
 	my $type = shift;
 	my $is_target = shift;
 	my $target_type = shift;
@@ -133,7 +131,7 @@ sub showstats {
 	my @stats = @_;
 	my $graphwidth = 300;
 
-	print "Using $flowcount of $logflowcount flows from $logdesc";
+	print "Using $flowcount of $logflowcount flows";
 	if( $is_target ) { print " where $target_type is equal to <i>".&ui_text_color($target, 'info')."</i>"; }
 	print " ( $firstflowtime --> $lastflowtime )";
 
