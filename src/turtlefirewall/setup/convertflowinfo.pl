@@ -31,6 +31,8 @@ foreach my $arg (@ARGV) {
 
 if( $log eq '' ) { print "Error: no log provided\n"; exit(1); }
 if( ! -f $log ) { print "Error: $log not found\n"; exit(1); }
+my $logtype = qx{file --brief --mime-type $log};
+if( $logtype =~ /sqlite3/ ) { print "Error: $log already converted\n"; exit(1); }
 
 &convert2psv($log);
 
