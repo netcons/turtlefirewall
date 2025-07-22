@@ -34,13 +34,13 @@ foreach my $arg (@ARGV) {
 		$fwFile = $2;
 	} elsif( $arg =~ /^(-s|--services)\=(.*)/ ) {
 		$servicesFile = $2;
-	} elsif( $arg =~ /^--userdefservices\=(.*)/ ) {
+	} elsif( $arg =~ /^(--userdefservices)\=(.*)/ ) {
 		$userdefServicesFile = $2;
-	} elsif( $arg =~ /^--countrycodes\=(.*)/ ) {
+	} elsif( $arg =~ /^(--countrycodes)\=(.*)/ ) {
 		$countrycodesFile = $2;
-	} elsif( $arg =~ /^--ndpiprotocols\=(.*)/ ) {
+	} elsif( $arg =~ /^(--ndpiprotocols)\=(.*)/ ) {
 		$ndpiprotocolsFile = $2;
-	} elsif( $arg =~ /^--ndpirisks\=(.*)/ ) {
+	} elsif( $arg =~ /^(--ndpirisks)\=(.*)/ ) {
 		$ndpirisksFile = $2;
 	} elsif( $arg eq '--start' ) {
 		# Start Firewall (optional)

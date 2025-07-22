@@ -12,6 +12,7 @@
 - Bug : Removed default variable reference in log views.
 - Bug : Standardize library include and table syntax.
 - Bug : Fixed missing sort in item selection.
+- Bug : Fixed custom config file definition.
 - OS : Remove unused iptables_restore_emu.
 - OS : Remove depreciated dkms feature: CLEAN
 - Todo : Translate new features.
