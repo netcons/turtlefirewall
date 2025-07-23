@@ -20,7 +20,6 @@ print "\nTurtle Firewall ".$firewall->Version()."\n";
 print "Copyright (c) 2001-2025 Andrea Frigido <andrea\@frisoft.it>\n\n";
 
 # parsing dei parametri
-my $outputFile;
 my $fwFile;
 my $servicesFile;
 my $userdefServicesFile;
@@ -28,9 +27,7 @@ my $countrycodesFile;
 my $ndpiprotocolsFile;
 my $ndpirisksFile;
 foreach my $arg (@ARGV) {
-	if( $arg =~ /^(-o|--output)\=(.*)/ ) {
-		$outputFile = $2;
-	} elsif( $arg =~ /^(-f|--firewall)\=(.*)/ ) {
+	if( $arg =~ /^(-f|--firewall)\=(.*)/ ) {
 		$fwFile = $2;
 	} elsif( $arg =~ /^(-s|--services)\=(.*)/ ) {
 		$servicesFile = $2;
@@ -57,9 +54,9 @@ foreach my $arg (@ARGV) {
 			print "Wrong parameters...\n";
 		}
 
-		print "Use: turtlefirewall [--start|--stop|--status] [--output=outputfile] [--firewall=firewallfile] [--services=servicesfile] [--userdefservices=userdefservicesfile] [--countrycodes=countrycodesfile] [--ndpiprotocols=ndpiprotocolsfile] [--ndpirisks=ndpirisksfile]\n";
-		print "or turtlefirewall [--start|--stop|--status] [-o=outputfile] [-f=firewallfile] [-s=servicesfile]\n";
-		print "Example: turtlefirewall --start -o=fw.sh -f=fw.xml -s=services.xml\n";
+		print "Use: turtlefirewall [--start|--stop|--status] [--firewall=firewallfile] [--services=servicesfile] [--userdefservices=userdefservicesfile] [--countrycodes=countrycodesfile] [--ndpiprotocols=ndpiprotocolsfile] [--ndpirisks=ndpirisksfile]\n";
+		print "or turtlefirewall [--start|--stop|--status] [-f=firewallfile] [-s=servicesfile]\n";
+		print "Example: turtlefirewall --start -f=fw.xml -s=services.xml\n";
 		exit(1);
 	}
 }
@@ -72,7 +69,7 @@ if( $ndpiprotocolsFile eq '' ) { $ndpiprotocolsFile = "/etc/turtlefirewall/fwndp
 if( $ndpirisksFile eq '' ) { $ndpirisksFile = "/etc/turtlefirewall/fwndpirisks.xml"; }
 
 #===================================
-# Carico le regole del firewall
+# Loading the firewall rules
 
 $firewall->LoadFirewall( $fwFile );
 $firewall->LoadServices( $servicesFile, $userdefServicesFile );
@@ -81,10 +78,9 @@ $firewall->LoadNdpiProtocols( $ndpiprotocolsFile );
 #$firewall->LoadNdpiRisks( $ndpirisksFile ); # Only required within Webmin
 
 ####
-# Nuovo 
+# NEW
 $firewall->startFirewall();
-
-# FINE :)
+# END :)
 
 sub firewallStatus {
 	#
