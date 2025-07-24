@@ -32,8 +32,9 @@ sub reportFlowStat {
 	my $target_type = 'source';
 	my $target = '';
 
-	my @logs = sort { $b cmp $a } glob("${FlowLogFile}-*");
-	my $selected_log = $logs[0];
+	my @logs = ('*');
+	push @logs, sort { $b cmp $a } glob("${FlowLogFile}-*");
+	my $selected_log = $logs[1];
 
 	print &ui_subheading("$icons{CREATE}{IMAGE}$text{'edit_flowstat_title_create'}");
 	print &ui_form_start("list_flowstat.cgi", "post");
