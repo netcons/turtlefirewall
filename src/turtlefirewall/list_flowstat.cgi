@@ -14,7 +14,7 @@ use Tie::File;
 use Time::Piece;
 
 my $log = $in{'log'};
-if( $log eq '*' ) { $log = join("\0", glob("${FlowLogFile}-*")); }
+if( $log =~ /\*/ ) { $log = join("\0", glob("${FlowLogFile}-*")); }
 $log =~ s/\0/ UNION ALL select * from /g;
 $log = "(select * from $log)";
 my $type = $in{'type'};
