@@ -8,16 +8,16 @@ Turtle Firewall is an Open Source project written using the perl language and re
 
 ## New Features
 
-- Time, GeoIP and nDPI support.
+- Time, GeoIP and nDPI Support.
 - Blacklists and Flow Risks.
-- Rate Limit support.
-- Logging per rule. ( target ACCEPT logs flow, target DROP/REJECT logs action )
-- Flow Statistics. ( Netflow nDPI classified historical data to disk )
+- Rate Limit Support.
+- Logging per Rule. ( target ACCEPT logs flow, target DROP/REJECT logs action )
+- Flow Statistics. ( via Netflow nDPI classified historical flow data to disk )
 - Connection Marking. ( for use with tc and iproute )
 - Connection Tracking. ( for use with CT helpers )
 - NAT Map to Port. ( for port redirection )
 - Address Lists and CIDR Networks.
-- Item References.
+- Item Reference Lookup and Rule Order Configuration Support.
 
 ## Requirements
 
