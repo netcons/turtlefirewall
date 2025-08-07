@@ -27,7 +27,7 @@ apt-get install webmin --install-recommends
 Download source.
 ```
 cd /tmp
-wget https://github.com/frisoft/turtlefirewall/archive/master.zip -O turtlefirewall-master.zip
+wget https://github.com/netcons/turtlefirewall/archive/master.zip -O turtlefirewall-master.zip
 unzip turtlefirewall-master.zip
 cd turtlefirewall-master
 ```
