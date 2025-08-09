@@ -31,15 +31,17 @@ foreach my $arg (@ARGV) {
 
 if( $log eq '' ) { print "Error: no log provided\n"; exit(1); }
 if( ! -f $log ) { print "Error: $log not found\n"; exit(1); }
+
 my $logtype = qx{file --brief --mime-type $log};
 if( $logtype =~ /sqlite3/ ) { print "Error: $log already converted\n"; exit(1); }
 
 &convert2psv($log);
 
-# Create sqlite
+my $qsql = "${log}.qsql";
 system("q -C readwrite -Hp 'select * from $log' > /dev/null 2>&1");
+if( ! -f $qsql ) { print "Error: $qsql not found\n"; exit(1); }
 
-system("mv -f ${log}.qsql $log");
+system("mv -f $qsql $log > /dev/null 2>&1");
 
 #============================================================================
 
@@ -93,7 +95,7 @@ sub convert2psv {
 		if( $l =~ /SN=(.*?)( |$)/ ) { $srcnat = $1; }
 		if( $l =~ /DN=(.*?)( |$)/ ) { $dstnat = $1; }
 		if( $l =~ /P=(.*?)( |$)/ ) { $protocol = $1; }
-		if( $l =~ /H=(.*?)( |$)/ ) { $hostname = $1; }
+		if( $l =~ /H=(.*?)( |$)/ && $l !~ /H=\"(.*?)\"( |$)/ ) { $hostname = $1; }
 		if( $l =~ /c=(.*?)( |$)/ ) { $ja4c = $1; }
 		if( $l =~ /F=(.*?)( |$)/ ) { $tlsfp = $1; }
 		if( $l =~ /R=(.*?)( |$)/ ) { $risk = $1; }
