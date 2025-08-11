@@ -94,7 +94,7 @@ sub showAddressList {
 		if( $blacklistcount eq '' ) { $blacklistcount = '0'; }
 		push(@cols, $blacklistcount);
 		push(@cols, "$icons{OPTION}{IMAGE}$blacklists{$b}{TYPE}" );
-		push(@cols, "$icons{DESCRIPTION}{IMAGE}$blacklists{$b}{DESCRIPTION}");
+		push(@cols, "$icons{DESCRIPTION}{IMAGE}$text{$blacklists{$b}{DESCIDX}}");
 		my $href = &ui_link("edit_options.cgi","".($fw->GetOption("drop_$b") eq 'on' ? "1" : '0')."");
 		push(@cols, $href );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);

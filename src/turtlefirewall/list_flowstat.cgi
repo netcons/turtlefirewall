@@ -80,7 +80,7 @@ $lastflowtime =~ s/\n//;
 $lastflowtime = localtime($lastflowtime)->strftime('%b %d %X');
 
 my @stats = &getstats($log,$type,$top,$is_target,$target_type,$target);
-my $txtindex = $flowreports{$type}{TXTIDX};
+my $txtindex = $flowreports{$type}{DSECIDX};
 my $icoindex = $flowreports{$type}{ICOIDX};
 
 &showstats($type,$is_target,$target_type,$target,$flowcount,$flowtotal,$logflowcount,$firstflowtime,$lastflowtime,$txtindex,$icoindex,@stats);

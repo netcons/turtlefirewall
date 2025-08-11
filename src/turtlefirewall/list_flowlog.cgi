@@ -29,25 +29,25 @@ sub showLog {
 	my $pagelen = 20;
 	my @buffer = ();
 
-	#my %l3proto_list = ('*'=>'x');
-	#my %l4proto_list = ('*'=>'x');
-	my %src_list = ('*' => undef);
-	#my %sport_list = ('*'=>'x');
-	#my %dst_list = ('*'=>'x');
-	#my %dport_list = ('*'=>'x');
-	#my %ubytes_list = ('*'=>'x');
-	#my %dbytes_list = ('*'=>'x');
-	#my %upackets_list = ('*'=>'x');
-	#my %dpackets_list = ('*'=>'x');
-	#my %ifindex_list = ('*'=>'x');
-	#my %connmark_list = ('*'=>'x');
-	#my %srcnat_list = ('*'=>'x');
-	#my %dstnat_list = ('*'=>'x');
-	#my %proto_list = ('*'=>'x');
-	#my %host_list = ('*'=>'x');
-	#my %ja4c_list = ('*'=>'x');
-	#my %tlsfp_list = ('*'=>'x');
-	#my %risk_list = ('*'=>'x');
+	#my %l3proto_list = ('*' => undef);
+	#my %l4proto_list = ('* '=> undef);
+	my %source_list = ('*' => undef);
+	#my %sport_list = ('*' => undef);
+	#my %destination_list = ('*' => undef);
+	#my %dport_list = ('*' => undef);
+	#my %ubytes_list = ('*' => undef);
+	#my %dbytes_list = ('*' => undef);
+	#my %upackets_list = ('*' => undef);
+	#my %dpackets_list = ('*' => undef);
+	#my %ifindex_list = ('*' => undef);
+	#my %connmark_list = ('*' => undef);
+	#my %srcnat_list = ('*' => undef);
+	#my %dstnat_list = ('*' => undef);
+	#my %protocol_list = ('*' => undef);
+	#my %hostname_list = ('*' => undef);
+	#my %ja4c_list = ('*' => undef);
+	#my %tlsfp_list = ('*' => undef);
+	#my %risk_list = ('*' => undef);
 
 	open( LOG, "<", $FlowLogFile );
 	while (my $l = <LOG>) {
@@ -56,9 +56,9 @@ sub showLog {
 			my $etime = '';
 			my $l3proto = '';
 			my $l4proto = '';
-			my $src = '';
+			my $source = '';
 			my $sport = '';
-			my $dst = '';
+			my $destination = '';
 			my $dport = '';
 			my $ubytes = '';
 			my $dbytes = '';
@@ -68,8 +68,8 @@ sub showLog {
 			my $connmark = '';
 			my $srcnat = '';
 			my $dstnat = '';
-			my $proto = '';
-			my $host = '';
+			my $protocol = '';
+			my $hostname = '';
 			my $ja4c = '';
 			my $tlsfp = '';
 			my $risk = '';
@@ -79,9 +79,9 @@ sub showLog {
 				$etime = $2;
 				$l3proto = $3;
 				$l4proto = $4;
-				$src = $5;
+				$source = $5;
 				$sport = $6;
-				$dst = $7;
+				$destination = $7;
 				$dport = $8;
 				$ubytes = $9;
 				$dbytes = $10;
@@ -93,37 +93,37 @@ sub showLog {
 			if( $l =~ /CM=(.*?)( |$)/ ) { $connmark = $1; }
 			if( $l =~ /SN=(.*?)( |$)/ ) { $srcnat = $1; }
 			if( $l =~ /DN=(.*?)( |$)/ ) { $dstnat = $1; }
-			if( $l =~ /P=(.*?)( |$)/ ) { $proto = $1; }
-			if( $l =~ /H=(.*?)( |$)/ && $l !~ /H=\"(.*?)\"( |$)/ ) { $host = $1; }
+			if( $l =~ /P=(.*?)( |$)/ ) { $protocol = $1; }
+			if( $l =~ /H=(.*?)( |$)/ && $l !~ /H=\"(.*?)\"( |$)/ ) { $hostname = $1; }
 			if( $l =~ /c=(.*?)( |$)/ ) { $ja4c = $1; }
 			if( $l =~ /F=(.*?)( |$)/ ) { $tlsfp = $1; }
 			if( $l =~ /R=(.*?)( |$)/ ) { $risk = $1; }
 
-			#if( $l3proto ne '' ) {$l3proto_list{$l3proto} = 'x';}
-			#if( $l4proto ne '' ) {$l4proto_list{$l4proto} = 'x';}
-			if( $src ne '' ) {$src_list{$src} = undef;}
-			#if( $sport ne '' ) {$sport_list{$sport} = 'x';}
-			#if( $dst ne '' ) {$dst_list{$dst} = 'x';}
-			#if( $dport ne '' ) {$dport_list{$dport} = 'x';}
-			#if( $ubytes ne '' ) {$ubytes_list{$ubytes} = 'x';}
-			#if( $dbytes ne '' ) {$dbytes_list{$dbytes} = 'x';}
-			#if( $upackets ne '' ) {$upackets_list{$upackets} = 'x';}
-			#if( $dpackets ne '' ) {$dpackets_list{$dpackets} = 'x';}
-			#if( $ifindex ne '' ) {$ifindex_list{$ifindex} = 'x';}
-			#if( $connmark ne '' ) {$connmark_list{$connmark} = 'x';}
-			#if( $srcnat ne '' ) {$srcnat_list{$srcnat} = 'x';}
-			#if( $dstnat ne '' ) {$dstnat_list{$dstnat} = 'x';}
-			#if( $proto ne '') {$proto_list{$proto} = 'x';}
-			#if( $host ne '') {$host_list{$host} = 'x';}
-			#if( $ja4c ne '') {$ja4c_list{$ja4c} = 'x';}
-			#if( $tlsfp ne '') {$tlsfp_list{$tlsfp} = 'x';}
-			#if( $risk ne '') {$risk_list{$risk} = 'x';}
+			#if( $l3proto ne '' ) {$l3proto_list{$l3proto} = undef;}
+			#if( $l4proto ne '' ) {$l4proto_list{$l4proto} = undef;}
+			if( $source ne '' ) {$source_list{$source} = undef;}
+			#if( $sport ne '' ) {$sport_list{$sport} = undef;}
+			#if( $destination ne '' ) {$destination_list{$destination} = undef;}
+			#if( $dport ne '' ) {$dport_list{$dport} = undef;}
+			#if( $ubytes ne '' ) {$ubytes_list{$ubytes} = undef;}
+			#if( $dbytes ne '' ) {$dbytes_list{$dbytes} = undef;}
+			#if( $upackets ne '' ) {$upackets_list{$upackets} = undef;}
+			#if( $dpackets ne '' ) {$dpackets_list{$dpackets} = undef;}
+			#if( $ifindex ne '' ) {$ifindex_list{$ifindex} = undef;}
+			#if( $connmark ne '' ) {$connmark_list{$connmark} = undef;}
+			#if( $srcnat ne '' ) {$srcnat_list{$srcnat} = undef;}
+			#if( $dstnat ne '' ) {$dstnat_list{$dstnat} = undef;}
+			#if( $protocol ne '') {$protocol_list{$protocol} = undef;}
+			#if( $hostname ne '') {$hostname_list{$hostname} = undef;}
+			#if( $ja4c ne '') {$ja4c_list{$ja4c} = undef;}
+			#if( $tlsfp ne '') {$tlsfp_list{$tlsfp} = undef;}
+			#if( $risk ne '') {$risk_list{$risk} = undef;}
 
 			if( ($in{l3proto} eq '' || $in{l3proto} eq '*' || $in{l3proto} eq $l3proto) &&
 			    ($in{l4proto} eq '' || $in{l4proto} eq '*' || $in{l4proto} eq $l4proto) &&
-			    ($in{src} eq '' || $in{src} eq '*' || $in{src} eq $src) &&
+			    ($in{source} eq '' || $in{source} eq '*' || $in{source} eq $source) &&
 			    ($in{sport} eq '' || $in{sport} eq '*' || $in{sport} eq $sport) &&
-			    ($in{dst} eq '' || $in{dst} eq '*' || $in{dst} eq $dst) &&
+			    ($in{destination} eq '' || $in{destination} eq '*' || $in{destination} eq $destination) &&
 			    ($in{dport} eq '' || $in{dport} eq '*' || $in{dport} eq $dport) &&
 			    ($in{ubytes} eq '' || $in{ubytes} eq '*' || $in{ubytes} eq $ubytes) &&
 			    ($in{dbytes} eq '' || $in{dbytes} eq '*' || $in{dbytes} eq $dbytes) &&
@@ -133,17 +133,17 @@ sub showLog {
 			    ($in{connmark} eq '' || $in{connmark} eq '*' || $in{connmark} eq $connmark) &&
 			    ($in{srcnat} eq '' || $in{srcnat} eq '*' || $in{srcnat} eq $srcnat) &&
 			    ($in{dstnat} eq '' || $in{dstnat} eq '*' || $in{dstnat} eq $dstnat) &&
-			    ($in{proto} eq '' || $in{proto} eq '*' || $in{proto} eq $proto) &&
-			    ($in{host} eq '' || $in{host} eq '*' || $in{host} eq $host) &&
+			    ($in{protocol} eq '' || $in{protocol} eq '*' || $in{protocol} eq $protocol) &&
+			    ($in{hostname} eq '' || $in{hostname} eq '*' || $in{hostname} eq $hostname) &&
 			    ($in{ja4c} eq '' || $in{ja4c} eq '*' || $in{ja4c} eq $ja4c) &&
 			    ($in{tlsfp} eq '' || $in{tlsfp} eq '*' || $in{tlsfp} eq $tlsfp) &&
 			    ($in{risk} eq '' || $in{risk} eq '*' || $in{risk} eq $risk) ) {
 				$count++;
 
 				if( $count >= ($pag-1) * $pagelen && $count < $pag * $pagelen) {
-					push @buffer, [$stime, $etime, $l3proto, $l4proto, $src, $sport, $dst, $dport,
+					push @buffer, [$stime, $etime, $l3proto, $l4proto, $source, $sport, $destination, $dport,
 					      		$ubytes, $dbytes, $upackets, $dpackets, $ifindex,
-						       	$connmark, $srcnat, $dstnat, $proto, $host,
+						       	$connmark, $srcnat, $dstnat, $protocol, $hostname,
 						       	$ja4c, $tlsfp, $risk];
 				}
 			}
@@ -152,10 +152,10 @@ sub showLog {
 
 	# Pages index
 	my $urlparam = 'stime='.$in{stime}.'&etime='.$in{etime}.'&l3proto='.$in{l3proto}.'&l4proto='.$in{l4proto}.
-			'&src='.$in{src}.'&sport='.$in{sport}.'&dst='.$in{dst}.'&dport='.$in{dport}.'&ubytes='.$in{ubytes}.'&dbytes='.$in{dbytes}.
+			'&source='.$in{source}.'&sport='.$in{sport}.'&destination='.$in{destination}.'&dport='.$in{dport}.'&ubytes='.$in{ubytes}.'&dbytes='.$in{dbytes}.
 			'&upackets='.$in{upackets}.'&dpackets='.$in{dpackets}.'&ifindex='.$in{ifindex}.
 			'&connmark='.$in{connmark}.'&srcnat='.$in{srcnat}.'&dstnat='.$in{dstnat}.
-			'&proto='.$in{proto}.'&host='.$in{host}.'&ja4c='.$in{ja4c}.
+			'&protocol='.$in{protocol}.'&hostname='.$in{hostname}.'&ja4c='.$in{ja4c}.
 			'&tlsfp='.$in{tlsfp}.'&risk='.$in{risk};
 	my $pageindex = '';
 	if( $pag > 1 ) {
@@ -192,27 +192,27 @@ sub showLog {
 	$hl4proto .= "<b>L4PROTO<br></b>";
 	push(@head, $hl4proto );
 
-	local $hproto;
-	$hproto .= "<b>ndpiPROTO<br></b>";
-	push(@head, $hproto );
+	local $hprotocol;
+	$hprotocol .= "<b>L7PROTO<br></b>";
+	push(@head, $hprotocol );
 
-	local $hhost;
-	$hhost .= "<b>HOSTNAME<br></b>";
-	push(@head, $hhost );
+	local $hhostname;
+	$hhostname .= "<b>hostNAME<br></b>";
+	push(@head, $hhostname );
 
-	local $hsrc;
-	$hsrc .= "<b>srcADDR<br><select name='src' size='1'>";
-	foreach $opz (sort keys %src_list) {$hsrc .= "<option".($in{src} eq $opz ? ' SELECTED' : '').">$opz</option>";}
-	$hsrc .= "</select></b>";
-	push(@head, $hsrc );
+	local $hsource;
+	$hsource .= "<b>srcADDR<br><select name='source' size='1'>";
+	foreach $opz (sort keys %source_list) {$hsource .= "<option".($in{source} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	$hsource .= "</select></b>";
+	push(@head, $hsource );
 
 	local $hsport;
 	$hsport .= "<b>srcPORT<br></b>";
 	push(@head, $hsport );
 
-	local $hdst;
-	$hdst .= "<b>dstADDR<br></b>";
-	push(@head, $hdst );
+	local $hdestination;
+	$hdestination .= "<b>dstADDR<br></b>";
+	push(@head, $hdestination );
 
 	local $hdport;
 	$hdport .= "<b>dstPORT<br></b>";
@@ -297,17 +297,17 @@ sub showLog {
 
 	foreach my $l (@buffer) {
 		local @cols;
-		my ($stime, $etime, $l3proto, $l4proto, $src, $sport, $dst, $dport, $ubytes, $dbytes, $upackets, $dpackets, $ifindex,
-		    $connmark, $srcnat, $dstnat, $proto, $host, $ja4c, $tlsfp, $risk) = @$l;
+		my ($stime, $etime, $l3proto, $l4proto, $source, $sport, $destination, $dport, $ubytes, $dbytes, $upackets, $dpackets, $ifindex,
+		    $connmark, $srcnat, $dstnat, $protocol, $hostname, $ja4c, $tlsfp, $risk) = @$l;
 	    	&showTD(localtime($stime)->strftime('%b %d %X'));
 	    	&showTD(localtime($etime)->strftime('%b %d %X'));
 		&showTD(&l3protoname($l3proto));
 		&showTD(&l4protoname($l4proto));
-		&showTD($proto);
-		&showTD($host);
-		&showTD($src);
+		&showTD($protocol);
+		&showTD($hostname);
+		&showTD($source);
 		&showTD($sport);
-		&showTD($dst);
+		&showTD($destination);
 		&showTD($dport);
 		&showTD(&roundbytes($ubytes + $dbytes));
 		&showTD(&roundbytes($ubytes));

@@ -22,7 +22,12 @@ print "<br><br>";
 
 sub reportFlowStat {
 
+	my @items_type = ();
 	my @types = sort keys %flowreports;
+	for my $k (@types) {
+		my @opts = ( "$k", "$text{$flowreports{$k}{NAMEIDX}}" );
+		push(@items_type, \@opts);
+	}
 	my @tops = ( '5', '10', '25', '50' );
 
 	my $log = '';
@@ -43,7 +48,7 @@ sub reportFlowStat {
 	my $col = '';
 	$col = &ui_select("log", $selected_log, \@logs, 5, 1);
 	print &ui_columns_row([ "$icons{LOG}{IMAGE}<b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
-	$col = &ui_select("type", $type, \@types);
+	$col = &ui_select("type", $type, \@items_type);
 	print &ui_columns_row([ "$icons{OPTION}{IMAGE}<b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);
 	$col = &ui_select("top", $top, \@tops);
 	print &ui_columns_row([ "$icons{FLOWSTAT}{IMAGE}<b>$text{'edit_flowstat_top'}</b>", $col ], \@tds);
@@ -51,7 +56,7 @@ sub reportFlowStat {
 	my @opts = ( [ 0, "$text{NO}<br>" ], [ 1, "$text{YES}" ] );
 	$col = &ui_radio("is_target", $is_target ? 1 : 0, \@opts);
 	$col .= "&nbsp; where &nbsp;";
-	$col .= &ui_select("target_type", $target_type, \@types);
+	$col .= &ui_select("target_type", $target_type, \@items_type);
 	$col .= "&nbsp; is equal to &nbsp;";
 	$col .= &ui_textbox("target", $target, 60, 0, 60);
 	print &ui_columns_row([ "$icons{TARGET}{IMAGE}<b>$text{'edit_flowstat_target'}</b>", $col ], \@tds);

@@ -80,18 +80,18 @@ sub confdir {
 }
 
 %flowreports = ( 
-	'source' => { ICOIDX => 'SRC', TXTIDX => 'flowstat_type_source' },
-       	'destination' => { ICOIDX => 'DST', TXTIDX => 'flowstat_type_destination' },
-       	'dport' => { ICOIDX => 'SERVICE', TXTIDX => 'flowstat_type_dport' },
-       	'protocol' => { ICOIDX => 'NDPISERVICE', TXTIDX => 'flowstat_type_protocol' },
-       	'hostname' => { ICOIDX => 'HOSTNAME', TXTIDX => 'flowstat_type_hostname' },
-       	'risk' => { ICOIDX => 'RISK', TXTIDX => 'flowstat_type_risk' }
+	'source' => { ICOIDX => 'SRC', NAMEIDX => 'flowstat_type_source_name', DSECIDX => 'flowstat_type_source_desc' },
+       	'destination' => { ICOIDX => 'DST', NAMEIDX => 'flowstat_type_destination_name', DSECIDX => 'flowstat_type_destination_desc' },
+       	'dport' => { ICOIDX => 'SERVICE', NAMEIDX => 'flowstat_type_dport_name', DSECIDX => 'flowstat_type_dport_desc' },
+       	'protocol' => { ICOIDX => 'NDPISERVICE', NAMEIDX => 'flowstat_type_protocol_name', DSECIDX => 'flowstat_type_protocol_desc' },
+       	'hostname' => { ICOIDX => 'HOSTNAME', NAMEIDX => 'flowstat_type_hostname_name', DSECIDX => 'flowstat_type_hostname_desc' },
+       	'risk' => { ICOIDX => 'RISK', NAMEIDX => 'flowstat_type_risk_name', DSECIDX => 'flowstat_type_risk_desc' }
 );
 
 %blacklists = ( 
-	'ip_blacklist' => { FILE => '/etc/turtlefirewall/ip_blacklist.dat', TYPE => 'hash:ip', DESCRIPTION => 'IP Address' },
-	'domain_blacklist' => { FILE => '/etc/turtlefirewall/domain_blacklist.dat', TYPE => 'ndpi:domain', DESCRIPTION => 'DNS Domain Name' },
-	'sha1_blacklist' => { FILE => '/etc/turtlefirewall/sha1_blacklist.dat', TYPE => 'ndpi:sha1', DESCRIPTION => 'SSL Certificate Fingerprint' }
+	'ip_blacklist' => { FILE => '/etc/turtlefirewall/ip_blacklist.dat', TYPE => 'hash:ip', DESCIDX => 'item_ip_blacklist_desc' },
+	'domain_blacklist' => { FILE => '/etc/turtlefirewall/domain_blacklist.dat', TYPE => 'ndpi:domain', DESCIDX => 'item_domain_blacklist_desc' },
+	'sha1_blacklist' => { FILE => '/etc/turtlefirewall/sha1_blacklist.dat', TYPE => 'ndpi:sha1', DESCIDX => 'item_sha1_blacklist_desc' }
 );
 
 %icons = ( 
