@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
 #
-## Makefile for the linux hfsplus filesystem routines.
-#
 # If KERNELRELEASE is defined, the make command using this Makefile has
 # been invoked by the kernel build system and so can use its language.
 # Otherwise, if KERNELRELEASE is null, a make command was issued from

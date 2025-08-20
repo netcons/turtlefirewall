@@ -1,7 +1,7 @@
 /var/log/flowinfo.log {
 	daily
 	missingok
-	rotate 32
+	rotate 31
 	copytruncate
 	dateyesterday
 	postrotate
