@@ -6,8 +6,6 @@
 	<ndpiprotocol name="accuweather" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="activision" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="adobeconnect" category="video-audio"> </ndpiprotocol>
-	<ndpiprotocol name="ads_analytic_track" category="advertisement"> </ndpiprotocol>
-	<ndpiprotocol name="adultcontent" category="adult-content"> </ndpiprotocol>
 	<ndpiprotocol name="afp" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="ah" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="ajp" category="infrastructure"> </ndpiprotocol>
@@ -42,10 +40,12 @@
 	<ndpiprotocol name="bitcoin" category="crypto-currency"> </ndpiprotocol>
 	<ndpiprotocol name="bittorrent" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="bjnp" category="printing"> </ndpiprotocol>
+	<ndpiprotocol name="blacknut" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="dlep" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="blizzard" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="bloomberg" category="financial"> </ndpiprotocol>
 	<ndpiprotocol name="bluesky" category="social-media"> </ndpiprotocol>
+	<ndpiprotocol name="boosteroid" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="cachefly" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="cactusvpn" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="canonical" category="other"> </ndpiprotocol>
@@ -95,6 +95,7 @@
 	<ndpiprotocol name="drda" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="dropbox" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="dtls" category="browsing"> </ndpiprotocol>
+	<ndpiprotocol name="easyweather" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="eaq" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="ebay" category="shopping"> </ndpiprotocol>
 	<ndpiprotocol name="edgecast" category="video-audio"> </ndpiprotocol>
@@ -130,6 +131,7 @@
 	<ndpiprotocol name="git" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="github" category="other"> </ndpiprotocol>
 	<ndpiprotocol name="gitlab" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="glbp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="gmail" category="email"> </ndpiprotocol>
 	<ndpiprotocol name="gnutella" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="google" category="other"> </ndpiprotocol>
@@ -214,7 +216,6 @@
 	<ndpiprotocol name="linkedin" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="lisp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="livestream" category="video-audio"> </ndpiprotocol>
-	<ndpiprotocol name="llm" category="artificial-intelligence"> </ndpiprotocol>
 	<ndpiprotocol name="llmnr" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="lolwildrift" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="lustre" category="storage-backup"> </ndpiprotocol>
@@ -237,6 +238,7 @@
 	<ndpiprotocol name="mpegdash" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="mqtt" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="msdo" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="mudfish" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="mullvad" category="tunnelling"> </ndpiprotocol>
 	<ndpiprotocol name="mumble" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="munin" category="infrastructure"> </ndpiprotocol>
@@ -319,6 +321,7 @@
 	<ndpiprotocol name="rtp" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rtps" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rtsp" category="video-audio"> </ndpiprotocol>
+	<ndpiprotocol name="rumble" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rutube" category="video-audio"> </ndpiprotocol>
 	<ndpiprotocol name="rx" category="infrastructure"> </ndpiprotocol>
 	<ndpiprotocol name="s7comm" category="iot-scada"> </ndpiprotocol>

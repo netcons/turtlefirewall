@@ -52,7 +52,7 @@
 	<ndpirisk id="48" description="Periodic Flow"> </ndpirisk>
 	<ndpirisk id="49" description="Minor Issues"> </ndpirisk>
 	<ndpirisk id="50" description="TCP Connection Issues"> </ndpirisk>
-<!--	<ndpirisk id="51" description="FREE51"> </ndpirisk> -->
+	<ndpirisk id="51" description="Unresolved Hostname"> </ndpirisk>
 	<ndpirisk id="52" description="ALPN/SNI Mismatch"> </ndpirisk>
 	<ndpirisk id="53" description="Client Contacted A Malware Host"> </ndpirisk>
 	<ndpirisk id="54" description="Binary File/Data Transfer (Attempt)"> </ndpirisk>
