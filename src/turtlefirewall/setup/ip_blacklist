@@ -7,9 +7,8 @@
 echo -e "\nTurtle Firewall 2.6 - IP Blacklist";
 echo -e "Copyright (c) 2001-2025 Andrea Frigido <andrea@frisoft.it>\n";
 
-fw_file="/etc/turtlefirewall/fw.xml"
-
 blacklist_file="/etc/turtlefirewall/ip_blacklist.dat"
+also_blacklist_file="/etc/turtlefirewall/also_ip_blacklist.dat"
 never_blacklist_file="/etc/turtlefirewall/never_ip_blacklist.dat"
 
 item_limit="5124000"
@@ -45,7 +44,7 @@ if [ $? = 0 ]
  then
   echo -e "OK"
  else
-  ipset create ip_blacklist hash:ip hashsize 16777216 maxelem 16777216
+  ipset create ip_blacklist hash:ip hashsize 16777216 maxelem $item_limit
   if [ $? = 0 ]
    then
     echo -e "CREATED"
@@ -117,6 +116,15 @@ Import () {
 if [ -t 1 ]; then echo -e "Import :  \c"; else echo -e "Import : \c"; fi
 if [ -s $blacklist_file ]
  then
+
+  # Ensure include
+  if [ -s $also_blacklist_file ]
+   then
+    while read blacklist_include
+     do
+      sed -i "1s/^/$blacklist_include\n/" $blacklist_file
+    done < $also_blacklist_file
+  fi
 
   # Ensure exclude
   if [ -s $never_blacklist_file ]

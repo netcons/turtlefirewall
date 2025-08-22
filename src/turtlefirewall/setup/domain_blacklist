@@ -7,9 +7,8 @@
 echo -e "\nTurtle Firewall 2.6 - Domain Blacklist";
 echo -e "Copyright (c) 2001-2025 Andrea Frigido <andrea@frisoft.it>\n";
 
-fw_file="/etc/turtlefirewall/fw.xml"
-
 blacklist_file="/etc/turtlefirewall/domain_blacklist.dat"
+also_blacklist_file="/etc/turtlefirewall/also_domain_blacklist.dat"
 never_blacklist_file="/etc/turtlefirewall/never_domain_blacklist.dat"
 
 # Some older CPU's cant load large lists
@@ -121,6 +120,15 @@ Import () {
 echo -e "Import : \c"
 if [ -s $blacklist_file ]
  then
+
+  # Ensure include
+  if [ -s $also_blacklist_file ]
+   then
+    while read blacklist_include
+     do
+      sed -i "1s/^/$blacklist_include\n/" $blacklist_file
+    done < $also_blacklist_file
+  fi
 
   # Ensure exclude
   if [ -s $never_blacklist_file ]
