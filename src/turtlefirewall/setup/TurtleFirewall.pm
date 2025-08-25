@@ -1931,15 +1931,15 @@ sub startFirewall {
 				$this->command( "ipset flush $ipset{'IP'}", "/dev/null 2>&1" );
 				my @items = ();
 				open( FILE, "<", "$addresslist_file" );
-				while( <FILE> ) { 
+				while(my $l = <FILE>) { 
 					if( $addresslist_type eq "hash:ip" ) {
-						if( $_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/ ) { push(@items, $1); }
+						if( $l =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/ ) { push(@items, $1); }
 					}
 					if( $addresslist_type eq "hash:net" ) {
-						if( $_ =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\b([0-9]|[12][0-9]|3[0-2])\b)/ ) { push(@items, $1); }
+						if( $l =~ /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\b([0-9]|[12][0-9]|3[0-2])\b)/ ) { push(@items, $1); }
 					}
 					if( $addresslist_type eq "hash:mac" ) {
-						if( $_ =~ /([0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2})/ ) { push(@items, $1); }
+						if( $l =~ /([0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2})/ ) { push(@items, $1); }
 					}
 			       	}
 				close( FILE );
