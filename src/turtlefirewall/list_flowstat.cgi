@@ -21,11 +21,15 @@ my $type = $in{'type'};
 my $top = $in{'top'};
 my $is_target = $in{'is_target'};
 my $target_type = $in{'target_type'};
+my $target_op = $in{'target_op'};
 my $target = $in{'target'};
+
+if( $target_op eq 'like' ) { $target = "%$target%"; }
+
 if( $is_target ) {
-	if( $target_type eq $type ) { &error( $text{list_flowstat_error1} ); }
-	if( $target eq '' ) { &error( $text{list_flowstat_error2} ); }
+	if( $target eq '' ) { &error( $text{list_flowstat_error1} ); }
 }
+
 &ui_print_header( "$icons{FLOWSTAT}{IMAGE}$text{'report_flowstat_title'}", $text{'title'}, "" );
 
 if( $type eq 'risk' ) { &LoadNdpiRisks($fw); }
@@ -49,18 +53,18 @@ $logflowtotal = qx{q -Hp "$query" 2>/dev/null};
 $logflowtotal =~ s/\n//;
 
 if( $is_target ) {
-	$query = "select sum(ubytes+dbytes) from $log where $target_type = '$target'";
+	$query = "select sum(ubytes+dbytes) from $log where $target_type $target_op '$target'";
 	$flowtotal = qx{q -Hp "$query" 2>/dev/null};
 	$flowtotal =~ s/\n//;
 
-	$query = "select count(*) from $log where $target_type = '$target'";
+	$query = "select count(*) from $log where $target_type $target_op '$target'";
 	$flowcount = qx{q -Hp "$query" 2>/dev/null};
 	$flowcount =~ s/\n//;
 
-	$query = "select stime from $log where $target_type = '$target' order by stime asc limit 1";
+	$query = "select stime from $log where $target_type $target_op '$target' order by stime asc limit 1";
 	$firstflowtime = qx{q -Hp "$query" 2>/dev/null};
 
-	$query = "select etime from $log where $target_type = '$target' order by etime desc limit 1";
+	$query = "select etime from $log where $target_type $target_op '$target' order by etime desc limit 1";
 	$lastflowtime = qx{q -Hp "$query" 2>/dev/null};
 } else {
 	$flowtotal = $logflowtotal;
@@ -79,11 +83,11 @@ $firstflowtime = localtime($firstflowtime)->strftime('%b %d %X');
 $lastflowtime =~ s/\n//;
 $lastflowtime = localtime($lastflowtime)->strftime('%b %d %X');
 
-my @stats = &getstats($log,$type,$top,$is_target,$target_type,$target);
-my $txtindex = $flowreports{$type}{DSECIDX};
+my @stats = &getstats($log,$type,$top,$is_target,$target_type,$target_op,$target);
+my $txtindex = $flowreports{$type}{DESCIDX};
 my $icoindex = $flowreports{$type}{ICOIDX};
 
-&showstats($type,$is_target,$target_type,$target,$flowcount,$flowtotal,$logflowcount,$firstflowtime,$lastflowtime,$txtindex,$icoindex,@stats);
+&showstats($type,$is_target,$target_type,$target_op,$in{'target'},$flowcount,$flowtotal,$logflowcount,$firstflowtime,$lastflowtime,$txtindex,$icoindex,@stats);
 
 &ui_print_footer("edit_flowstat.cgi",'flow statistics');
 
@@ -96,13 +100,14 @@ sub getstats {
 	my $top = shift;
 	my $is_target = shift;
 	my $target_type = shift;
+	my $target_op = shift;
 	my $target = shift;
 	my $query = '';
 
 	my @stats = ();
 
 	if( $is_target ) {
-		$query = "select $type,sum(ubytes+dbytes) from $log where $type != '' and $target_type = '$target' group by $type order by sum(ubytes+dbytes) desc limit $top";
+		$query = "select $type,sum(ubytes+dbytes) from $log where $type != '' and $target_type $target_op '$target' group by $type order by sum(ubytes+dbytes) desc limit $top";
 	} else {
 		$query = "select $type,sum(ubytes+dbytes) from $log where $type != '' group by $type order by sum(ubytes+dbytes) desc limit $top";
 	}
@@ -121,6 +126,7 @@ sub showstats {
 	my $type = shift;
 	my $is_target = shift;
 	my $target_type = shift;
+	my $target_op = shift;
 	my $target = shift;
 	my $flowcount = shift;
 	my $flowtotal = shift;
@@ -133,7 +139,7 @@ sub showstats {
 	my $graphwidth = 300;
 
 	print "Using $flowcount of $logflowcount flows";
-	if( $is_target ) { print " where $text{$flowreports{$target_type}{NAMEIDX}} is equal to <i>".&ui_text_color($target, 'info')."</i>"; }
+	if( $is_target ) { print " where $text{$flowreports{$target_type}{NAMEIDX}} $sqloperators{$target_op}{DESC} <i>".&ui_text_color($target, 'info')."</i>"; }
 	print " ( $firstflowtime --> $lastflowtime )";
 
 	@tds = ( "style=white-space:nowrap", "width=$graphwidth", "", "width=1% style=text-align:right;white-space:nowrap" );

@@ -28,6 +28,14 @@ sub reportFlowStat {
 		my @opts = ( "$k", "$text{$flowreports{$k}{NAMEIDX}}" );
 		push(@items_type, \@opts);
 	}
+
+	my @items_target_op = ();
+	my @target_ops = sort keys %sqloperators;
+	for my $k (@target_ops) {
+		my @opts = ( "$k", "$sqloperators{$k}{DESC}" );
+		push(@items_target_op, \@opts);
+	}
+
 	my @tops = ( '5', '10', '25', '50' );
 
 	my $log = '';
@@ -35,6 +43,7 @@ sub reportFlowStat {
 	my $top = '5';
 	my $is_target = 0;
 	my $target_type = 'source';
+	my $target_op = '=';
 	my $target = '';
 
 	my @logs = ('*');
@@ -57,7 +66,9 @@ sub reportFlowStat {
 	$col = &ui_radio("is_target", $is_target ? 1 : 0, \@opts);
 	$col .= "&nbsp; where &nbsp;";
 	$col .= &ui_select("target_type", $target_type, \@items_type);
-	$col .= "&nbsp; is equal to &nbsp;";
+	$col .= "&nbsp;";
+	$col .= &ui_select("target_op", $target_op, \@items_target_op);
+	$col .= "&nbsp;";
 	$col .= &ui_textbox("target", $target, 60, 0, 60);
 	print &ui_columns_row([ "$icons{TARGET}{IMAGE}<b>$text{'edit_flowstat_target'}</b>", $col ], \@tds);
 

@@ -80,12 +80,17 @@ sub confdir {
 }
 
 %flowreports = ( 
-	'source' => { ICOIDX => 'SRC', NAMEIDX => 'flowstat_type_source_name', DSECIDX => 'flowstat_type_source_desc' },
-       	'destination' => { ICOIDX => 'DST', NAMEIDX => 'flowstat_type_destination_name', DSECIDX => 'flowstat_type_destination_desc' },
-       	'dport' => { ICOIDX => 'SERVICE', NAMEIDX => 'flowstat_type_dport_name', DSECIDX => 'flowstat_type_dport_desc' },
-       	'protocol' => { ICOIDX => 'NDPISERVICE', NAMEIDX => 'flowstat_type_protocol_name', DSECIDX => 'flowstat_type_protocol_desc' },
-       	'hostname' => { ICOIDX => 'HOSTNAME', NAMEIDX => 'flowstat_type_hostname_name', DSECIDX => 'flowstat_type_hostname_desc' },
-       	'risk' => { ICOIDX => 'RISK', NAMEIDX => 'flowstat_type_risk_name', DSECIDX => 'flowstat_type_risk_desc' }
+	'source' => { ICOIDX => 'SRC', NAMEIDX => 'flowstat_type_source_name', DESCIDX => 'flowstat_type_source_desc' },
+       	'destination' => { ICOIDX => 'DST', NAMEIDX => 'flowstat_type_destination_name', DESCIDX => 'flowstat_type_destination_desc' },
+       	'dport' => { ICOIDX => 'SERVICE', NAMEIDX => 'flowstat_type_dport_name', DESCIDX => 'flowstat_type_dport_desc' },
+       	'protocol' => { ICOIDX => 'NDPISERVICE', NAMEIDX => 'flowstat_type_protocol_name', DESCIDX => 'flowstat_type_protocol_desc' },
+       	'hostname' => { ICOIDX => 'HOSTNAME', NAMEIDX => 'flowstat_type_hostname_name', DESCIDX => 'flowstat_type_hostname_desc' },
+       	'risk' => { ICOIDX => 'RISK', NAMEIDX => 'flowstat_type_risk_name', DESCIDX => 'flowstat_type_risk_desc' }
+);
+
+%sqloperators = ( 
+	'=' => { DESC => 'is equal to' },
+       	'like' => { DESC => 'contains' }
 );
 
 %blacklists = ( 

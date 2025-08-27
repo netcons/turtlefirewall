@@ -456,5 +456,4 @@ save_conntrack_error10=sane helper only supports tcp.
 save_conntrack_error11=snmp helper only supports udp.
 save_conntrack_error12=netbios-ns helper only supports udp.
 
-list_flowstat_error1="type" and target "type" cant be the same.
-list_flowstat_error2="is equal to" is required.
+list_flowstat_error1=target is required.
