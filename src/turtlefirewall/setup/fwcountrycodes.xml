@@ -251,10 +251,12 @@
 	<countrycode name="VU" description="Vanuatu"> </countrycode>
 	<countrycode name="WF" description="Wallis and Futuna"> </countrycode>
 	<countrycode name="WS" description="Samoa"> </countrycode>
+	<countrycode name="XK" description="Kosovo"> </countrycode>
 	<countrycode name="YE" description="Yemen"> </countrycode>
 	<countrycode name="YT" description="Mayotte"> </countrycode>
 	<countrycode name="ZA" description="South Africa"> </countrycode>
 	<countrycode name="ZM" description="Zambia"> </countrycode>
 	<countrycode name="ZW" description="Zimbabwe"> </countrycode>
+	<countrycode name="ZZ" description="Non Geographic"> </countrycode>
 
 </countrycodes>
