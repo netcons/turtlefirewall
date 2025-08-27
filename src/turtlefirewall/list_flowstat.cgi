@@ -139,7 +139,7 @@ sub showstats {
 	my $graphwidth = 300;
 
 	print "Using $flowcount of $logflowcount flows";
-	if( $is_target ) { print " where $text{$flowreports{$target_type}{NAMEIDX}} $sqloperators{$target_op}{DESC} <i>".&ui_text_color($target, 'info')."</i>"; }
+	if( $is_target ) { print " where $text{$flowreports{$target_type}{NAMEIDX}} $text{$sqloperators{$target_op}{DESCIDX}} <i>".&ui_text_color($target, 'info')."</i>"; }
 	print " ( $firstflowtime --> $lastflowtime )";
 
 	@tds = ( "style=white-space:nowrap", "width=$graphwidth", "", "width=1% style=text-align:right;white-space:nowrap" );

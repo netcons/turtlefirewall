@@ -32,7 +32,7 @@ sub reportFlowStat {
 	my @items_target_op = ();
 	my @target_ops = sort keys %sqloperators;
 	for my $k (@target_ops) {
-		my @opts = ( "$k", "$sqloperators{$k}{DESC}" );
+		my @opts = ( "$k", "$text{$sqloperators{$k}{DESCIDX}}" );
 		push(@items_target_op, \@opts);
 	}
 

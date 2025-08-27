@@ -89,8 +89,8 @@ sub confdir {
 );
 
 %sqloperators = ( 
-	'=' => { DESC => 'is equal to' },
-	'like' => { DESC => 'contains' }
+	'=' => { DESCIDX => 'sql_operator_equal_desc' },
+	'like' => { DESCIDX => 'sql_operator_like_desc' }
 );
 
 %blacklists = ( 
