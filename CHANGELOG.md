@@ -14,6 +14,7 @@
 - Bug : Standardize library include and table syntax.
 - Bug : Fixed missing sort in item selection.
 - Bug : Fixed custom config file definition.
+- Bug : Fixed connection marking.
 - OS : Remove unused iptables_restore_emu.
 - OS : Remove depreciated dkms feature: CLEAN
 - Todo : Translate new features.

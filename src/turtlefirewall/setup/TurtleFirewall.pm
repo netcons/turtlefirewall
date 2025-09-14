@@ -2255,7 +2255,7 @@ sub getIptablesRules {
 
 	# Copy packet mark to connection mark and vice versa
 	if( $rules_mangle_connmarkpreroute || $rules_mangle_connmark ) {
-		$rules_mangle .= "-A PREROUTING -j CONNMARK --restore-mark\n";
+		$rules_mangle .= "-I PREROUTING -j CONNMARK --restore-mark\n";
 		$rules_mangle .= "-A POSTROUTING -j CONNMARK --save-mark\n";
 	}
 
@@ -3325,10 +3325,12 @@ sub _applyService {
 				# First Packet Classification only
 				$cmd .= "-m ndpi --all ";
 			} else {
-				my $cmddpi = $cmd;
-				# Allow beyond First Packet Classification
-				$cmddpi .= "-m ndpi --inprogress $ndpi -j ACCEPT ";
-				$rules .= "$cmddpi\n";
+				if( $mangle_mark eq '' ) {
+					my $cmddpi = $cmd;
+					# Allow beyond First Packet Classification
+					$cmddpi .= "-m ndpi --inprogress $ndpi -j ACCEPT ";
+					$rules .= "$cmddpi\n";
+				}
 				$cmd .= "-m ndpi --proto $ndpi ";
 			}
 			if( $hostname ne '' ) { $cmd .= "--host /$hostname/ "; }
