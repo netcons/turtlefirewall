@@ -220,6 +220,7 @@
 	<ndpiprotocol name="lolwildrift" category="gaming"> </ndpiprotocol>
 	<ndpiprotocol name="lustre" category="storage-backup"> </ndpiprotocol>
 	<ndpiprotocol name="mastodon" category="social-media"> </ndpiprotocol>
+	<ndpiprotocol name="matter" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="mdns" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="megaco" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="melsec" category="iot-scada"> </ndpiprotocol>
@@ -327,6 +328,7 @@
 	<ndpiprotocol name="s7comm" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="s7commplus" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="salesforce" category="other"> </ndpiprotocol>
+	<ndpiprotocol name="samsungsdp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="sap" category="database"> </ndpiprotocol>
 	<ndpiprotocol name="sctp" category="networking"> </ndpiprotocol>
 	<ndpiprotocol name="sd-rtn" category="networking"> </ndpiprotocol>
@@ -397,6 +399,7 @@
 	<ndpiprotocol name="tor" category="proxy"> </ndpiprotocol>
 	<ndpiprotocol name="tplink_shp" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="trdp" category="iot-scada"> </ndpiprotocol>
+	<ndpiprotocol name="tristation" category="iot-scada"> </ndpiprotocol>
 	<ndpiprotocol name="truphone" category="telephony"> </ndpiprotocol>
 	<ndpiprotocol name="tumblr" category="social-media"> </ndpiprotocol>
 	<ndpiprotocol name="tunein" category="video-audio"> </ndpiprotocol>
