@@ -1487,7 +1487,8 @@ sub LoadNdpiProtocols {
 						my $ndpiprotocol = $attrs{'NAME'};
 
 						%{ $this->{ndpiprotocols}{$ndpiprotocol} } = (
-							'CATEGORY' => $attrs{'CATEGORY'}
+							'CATEGORY' => $attrs{'CATEGORY'},
+							'DPI' => $attrs{'DPI'}
 						);
 
 					}
@@ -3109,6 +3110,18 @@ sub applyRule {
 		$ndpi = join(",", @items);
 	}
 
+	# ndpi service is a list of ndpi services?
+	if( $ndpi =~ /,/ ) {
+		my @ndpis = split( /,/, $ndpi );
+		my %newrule = %rule;
+		foreach my $nserv (@ndpis) {
+			$newrule{NDPI} = $nserv;
+			$newrule{CATEGORY} = '';
+			$rules .= $this->applyRule( 0, $mangle, $raw, $preroute, %newrule );
+		}
+		return $rules;
+	} 
+
 	# hostnameset items
 	if( $hostnameset ne '' ) { 
 		my ($hostname_list) = $this->expand_hostnameset_item( $hostnameset );
@@ -3207,15 +3220,15 @@ sub applyRule {
 	if( $mangle ) {
 		# Mangle Rule
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
-		   	$port, $ndpi, $category, $hostname, $risk, '', $t_days, $t_start, $t_stop, '', '', $mark, '' );
+		   	$port, $ndpi, $hostname, $risk, '', $t_days, $t_start, $t_stop, '', '', $mark, '' );
 	}  elsif( $raw ) {
 		# Raw Rule
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
-		       	$port, $ndpi, $category, $hostname, $risk, '', $t_days, $t_start, $t_stop, '', '', '', $helper );
+		       	$port, $ndpi, $hostname, $risk, '', $t_days, $t_start, $t_stop, '', '', '', $helper );
 	}  else {
 		# Filter Rule
 		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
-		       	$port, $ndpi, $category, $hostname, $risk, $ratelimit, $t_days, $t_start, $t_stop, $log, $target, '', '' );
+		       	$port, $ndpi, $hostname, $risk, $ratelimit, $t_days, $t_start, $t_stop, $log, $target, '', '' );
 	}
 	
 	return $rules;
@@ -3231,7 +3244,7 @@ sub applyService {
 sub _applyService {
 	my $this = shift;
 	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type,
-	$port, $ndpi, $category, $hostname, $risk, $ratelimit, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper ) = @_;
+	$port, $ndpi, $hostname, $risk, $ratelimit, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper ) = @_;
 
 	my %service = %{$ref_services->{$serviceName}};
 
@@ -3252,7 +3265,7 @@ sub _applyService {
 		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyService( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type, $port, $ndpi, $category, $hostname, $risk, $ratelimit,
+				$goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type, $port, $ndpi, $hostname, $risk, $ratelimit,
 			       	$t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper );
 			next;
 		}
@@ -3325,7 +3338,7 @@ sub _applyService {
 				# First Packet Classification only
 				$cmd .= "-m ndpi --all ";
 			} else {
-				if( $mangle_mark eq '' ) {
+				if( $this->{ndpiprotocols}{$ndpi}{'DPI'} && $mangle_mark eq '' ) {
 					my $cmddpi = $cmd;
 					# Allow beyond First Packet Classification
 					$cmddpi .= "-m ndpi --inprogress $ndpi -j ACCEPT ";
@@ -3351,8 +3364,6 @@ sub _applyService {
 					$logprefix = "TFW=RISK-$risk";
 				} elsif( $hostname ne '') { 
 					$logprefix = "TFW=$hostname";
-				} elsif( $category ne '') { 
-					$logprefix = "TFW=$category";
 				} elsif( $ndpi ne '' ) {
 					$logprefix = "TFW=$ndpi";
 				} elsif( $src_type eq 'GEOIP' || $dst_type eq 'GEOIP' ) {
