@@ -21,11 +21,7 @@ foreach my $d (@INC) {
 	}
 }
 if( ! $gotXmlParser ) {
-	&ui_print_header( undef, $text{'title'}, "" );
-	print "<br><br><b>XML::Parser perl module is needed, please install it!</b><br>";
-	print '<a href="/cpan/download.cgi?source=3&cpan=XML::Parser&mode=2">install XML::Parser from CPAN</a><br><br>';
-	&ui_print_footer('/',$text{'index'});
-	exit;
+	&error( 'Perl XML::Parser Module not found.' );
 }
 
 # do you need to install startup scripts?
@@ -39,9 +35,6 @@ if( -f "./setup/turtlefirewall" ) {
 	print &ui_form_end();
 	print "<br><b>Notes:</b> ";
 	print "Remember to install xt_ndpi, xt_geoip and xt_ratelimit kernel modules.";
-	#print "Remember to enable your Linux box to act as a router ";
-	#print "(select \"Act as router\"=yes in Hardware->Network->Routing webmin form).";
-	#print "<li>Remember to install XML::Parser Perl module</li>";
 	print "<br>\n";
 	&ui_print_footer('/',$text{'index'});
 	exit;
@@ -49,32 +42,35 @@ if( -f "./setup/turtlefirewall" ) {
 
 my $tfwlib = '/usr/lib/turtlefirewall/TurtleFirewall.pm';
 if( ! -f $tfwlib ) {
-	&error( 'Turtle Firewall Library not found. Install Turtle Firewall.' );
+	&error( 'Turtle Firewall Library not found.' );
 }
 
 if( -f $config{fw_logfile} ) {
 	$SysLogFile = $config{fw_logfile};
-} elsif( -f  "/var/log/messages" ) {
+} elsif( -f "/var/log/messages" ) {
 	$SysLogFile =  "/var/log/messages";
-} elsif( -f  "/var/log/syslog" ) {
+} elsif( -f "/var/log/syslog" ) {
 	$SysLogFile =  "/var/log/syslog";
+}
+
+if( -f $config{fw_file} ) {
+	$tfwconf = $config{fw_file};
+} elsif( -f "/etc/turtlefirewall/fw.xml" ) {
+	$tfwconf = "/etc/turtlefirewall/fw.xml";
+} else {
+	&error( 'Turtle Firewall Config not found.' );
 }
 
 $FlowLogFile = "/var/log/flowinfo.log";
 
 require $tfwlib;
 $fw = new TurtleFirewall();
-if( -f $config{fw_file} ) {
-	$fw->LoadFirewall( $config{fw_file} );
-} else {
-	$fw->LoadFirewall( "/etc/turtlefirewall/fw.xml" );
-}
+$fw->LoadFirewall( $tfwconf );
 
 sub confdir {
 	if( $config{fw_file} =~ /(.*)\// ) {
 		return $1;
 	} else {
-		#return '/tmp';
 		return '/etc/turtlefirewall';
 	}
 }
