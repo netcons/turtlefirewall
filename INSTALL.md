@@ -109,9 +109,9 @@ Download source.
 ```
 VERSION="3.30"
 cd /usr/src
-wget https://codeberg.org/jengelh/xtables-addons/releases/download/v${VERSION}/xtables-addons-${VERSION}.tar.xz
-tar -xvf xtables-addons-${VERSION}.tar.xz
-rm -rf xtables-addons-${VERSION}.tar.xz
+wget https://codeberg.org/jengelh/xtables-addons/releases/download/v${VERSION}/xtables-addons-${VERSION}.tar.zst
+tar --zstd -xvf xtables-addons-${VERSION}.tar.zst
+rm -rf xtables-addons-${VERSION}.tar.zst
 cd xtables-addons-$VERSION
 ```
 
