@@ -30,6 +30,14 @@
 	<ndpiprotocol name="atg" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="avast" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="avastsecuredns" category="other" dpi="1"> </ndpiprotocol>
+	<ndpiprotocol name="aws_api_gateway" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="aws_cloudfront" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="aws_cognito" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="aws_dynamodb" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="aws_ec2" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="aws_emr" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="aws_kinesis" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="aws_s3" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="azure" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="bacnet" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="badoo" category="social-media" dpi="0"> </ndpiprotocol>
@@ -105,6 +113,7 @@
 	<ndpiprotocol name="electronicarts" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="epicgames" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="esp" category="tunnelling" dpi="1"> </ndpiprotocol>
+	<ndpiprotocol name="espn" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="ethereum" category="crypto-currency" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="ethernetglobaldata" category="iot-scada" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="ethernetip" category="networking" dpi="1"> </ndpiprotocol>
