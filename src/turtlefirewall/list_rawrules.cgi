@@ -11,7 +11,7 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "$icons{HELPER}{IMAGE}$text{'list_rawrules_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_rawrules'}", $text{'title'}, "" );
 
 $form = 0;
 showConntrackPreroute();

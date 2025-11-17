@@ -17,6 +17,7 @@
 - Bug : Fixed connection marking.
 - OS : Remove unused iptables_restore_emu.
 - OS : Remove depreciated dkms feature: CLEAN
+- Theme : Webmin 2.600 support.
 - Todo : Translate new features.
 - Todo : Fix backup.cgi restore upload.
 

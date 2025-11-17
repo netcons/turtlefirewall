@@ -15,7 +15,7 @@ if( $in{download} ) {
 	&backup_download();
 }
 
-&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'backup_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_backup'}", $text{'title'}, "" );
 
 if( $in{upload} ) {
 	# FIXME

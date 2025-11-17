@@ -11,7 +11,7 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "$icons{LOG}{IMAGE}$text{'log_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_log'}", $text{'title'}, "" );
 
 &showLog();
 
@@ -111,7 +111,7 @@ sub showLog {
 	}
 
 	print &ui_form_start("list_actionlog.cgi", "post");
-	print "<center>$pageindex</center>\n";
+	print "<div style=text-align:center>$pageindex</div>\n";
 
 	my $opz;
 
@@ -201,7 +201,7 @@ sub showLog {
 
 	print &ui_form_end();
 
-	print "<center>$pageindex</center>\n";
+	print "<div style=text-align:center>$pageindex</div>\n";
 }
 
 sub showTD {

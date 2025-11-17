@@ -11,7 +11,7 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "$icons{MARK}{IMAGE}$text{'list_manglerules_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_manglerules'}", $text{'title'}, "" );
 
 $form = 0;
 &showConnmarkPreroute();

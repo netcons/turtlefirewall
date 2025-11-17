@@ -10,7 +10,7 @@
 
 require './turtlefirewall-lib.pl';
 
-&ui_print_header( "$icons{RISK}{IMAGE}$text{'list_ndpirisks_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_ndpirisks'}", $text{'title'}, "" );
 
 &LoadNdpiRisks($fw);
 &showNdpiRisks();

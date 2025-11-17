@@ -54,7 +54,7 @@ if( $new ) {
 	$log = $rule{'LOG'} eq 'YES';
 	$description = $rule{'DESCRIPTION'};
 }
-&ui_print_header( $heading, $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_rules'}", $text{'title'}, "" );
 
 my @idxs = ();
 for( my $i=1; $i<=$nRules; $i++ ) { push @idxs, $i; }

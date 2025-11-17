@@ -12,7 +12,7 @@ require './turtlefirewall-lib.pl';
 &ReadParse();
 use Time::Piece;
 
-&ui_print_header( "$icons{LOG}{IMAGE}$text{'flowlog_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_flowlog'}", $text{'title'}, "" );
 
 &LoadNdpiRisks($fw);
 &showLog();
@@ -170,7 +170,7 @@ sub showLog {
 	}
 
 	print &ui_form_start("list_flowlog.cgi", "post");
-	print "<center>$pageindex</center>\n";
+	print "<div style=text-align:center>$pageindex</div>\n";
 
 	my $opz;
 
@@ -335,7 +335,7 @@ sub showLog {
 
 	print &ui_form_end();
 
-	print "<center>$pageindex</center>\n";
+	print "<div style=text-align:center>$pageindex</div>\n";
 }
 
 sub showTD {

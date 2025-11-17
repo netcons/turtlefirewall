@@ -23,7 +23,7 @@ if( $new ) {
 } else {
 	$heading = "$icons{EDIT}{IMAGE}$text{'edit_zone_title_edit'}";
 }
-&ui_print_header( $heading, $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_items'}", $text{'title'}, "" );
 
 my %z = $fw->GetZone($in{'zone'});
 my $if = $z{'IF'};

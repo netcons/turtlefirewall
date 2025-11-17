@@ -10,7 +10,7 @@
 
 require './turtlefirewall-lib.pl';
 
-&ui_print_header( "$icons{NDPISERVICE}{IMAGE}$text{'list_ndpiprotocols_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_ndpiprotocols'}", $text{'title'}, "" );
 
 &LoadNdpiProtocols($fw);
 &showNdpiProtocols();

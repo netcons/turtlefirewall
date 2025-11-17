@@ -19,7 +19,7 @@ if( $new ) {
 } else {
 	$heading = "$icons{EDIT}{IMAGE}$text{'edit_net_title_edit'}";
 }
-&ui_print_header( $heading, $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_items'}", $text{'title'}, "" );
 
 my $net = $in{'net'};
 my $newnet = $in{'newnet'};

@@ -11,7 +11,7 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "$icons{RULE}{IMAGE}$text{'list_rules_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_rules'}", $text{'title'}, "" );
 
 &showRule();
 
@@ -20,6 +20,7 @@ require './turtlefirewall-lib.pl';
 #============================================================================
 
 sub showRule {
+	print &ui_subheading($icons{RULE}{IMAGE},$text{'rule'});
 	print &ui_form_start("save_rule.cgi", "post");
 	@links = ( &select_all_link("d"),
        		   &select_invert_link("d"),

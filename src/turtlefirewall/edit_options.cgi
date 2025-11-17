@@ -10,7 +10,7 @@
 
 require './turtlefirewall-lib.pl';
 
-&ui_print_header( "$icons{EDIT}{IMAGE}$text{'edit_options_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_options'}", $text{'title'}, "" );
 
 &getOptionsList();
 

@@ -30,7 +30,7 @@ if( $is_target ) {
 	if( $target eq '' ) { &error( $text{list_flowstat_error1} ); }
 }
 
-&ui_print_header( "$icons{FLOWSTAT}{IMAGE}$text{'report_flowstat_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_flowstat'}", $text{'title'}, "" );
 
 if( $type eq 'risk' ) { &LoadNdpiRisks($fw); }
 
@@ -87,6 +87,7 @@ my @stats = &getstats($log,$type,$top,$is_target,$target_type,$target_op,$target
 my $txtindex = $flowreports{$type}{DESCIDX};
 my $icoindex = $flowreports{$type}{ICOIDX};
 
+print &ui_subheading($icons{FLOWSTAT}{IMAGE},$text{'report_flowstat_title'});
 &showstats($type,$is_target,$target_type,$target_op,$in{'target'},$flowcount,$flowtotal,$logflowcount,$firstflowtime,$lastflowtime,$txtindex,$icoindex,@stats);
 
 &ui_print_footer("edit_flowstat.cgi",'flow statistics');

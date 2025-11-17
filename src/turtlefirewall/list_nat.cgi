@@ -11,7 +11,7 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "$icons{NAT}{IMAGE}$text{'list_nat_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_nat'}", $text{'title'}, "" );
 
 $form = 0;
 &showNat();

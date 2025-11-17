@@ -10,7 +10,7 @@
 
 require './turtlefirewall-lib.pl';
 
-&ui_print_header( "$icons{SERVICE}{IMAGE}$text{'list_services_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_services'}", $text{'title'}, "" );
 
 &LoadServices($fw);
 &showServices();

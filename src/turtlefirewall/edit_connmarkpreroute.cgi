@@ -48,7 +48,7 @@ if( $new ) {
 	$mark = $rule{'MARK'};
 	$active = $rule{'ACTIVE'} ne 'NO';
 }
-&ui_print_header( $heading, $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_manglerules'}", $text{'title'}, "" );
 
 my @idxs = ();
 for( my $i=1; $i<=$nConnmarkPreroutes; $i++ ) { push @idxs, $i; }

@@ -38,7 +38,7 @@ if( $new ) {
 	$helper = $rule{'HELPER'};
 	$active = $rule{'ACTIVE'} ne 'NO';
 }
-&ui_print_header( $heading, $text{'title'}, "" );
+&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_rawrules'}", $text{'title'}, "" );
 
 my @idxs = ();
 for( my $i=1; $i<=$nConntrackPreroutes; $i++ ) { push @idxs, $i; }
