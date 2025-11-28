@@ -53,12 +53,17 @@ apt-get -y install libxml-parser-perl libnet-cidr-lite-perl libtext-csv-xs-perl 
 
 RHEL.
 ```
-if ! (grep -w "10" /etc/redhat-release) > /dev/null 2>&1
+if (grep -w "10" /etc/redhat-release) > /dev/null 2>&1
+ then
+  dnf -y install centos-release-hyperscale-kernel
+fi
+if (grep -w "9" /etc/redhat-release) > /dev/null 2>&1
  then
   dnf -y install centos-release-hyperscale-experimental
-  dnf -y upgrade kernel
-  reboot
 fi
+
+dnf -y upgrade kernel
+reboot
 
 dnf -y install kernel-devel kernel-headers
 dnf -y install kernel-modules-extra

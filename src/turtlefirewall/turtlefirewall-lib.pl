@@ -96,7 +96,7 @@ sub confdir {
 );
 
 %icons = ( 
-	'SHIELD' => { IMAGE => '<img src=images/shield.png hspace=4>' },
+	'ICON' => { IMAGE => '<img src=images/icon.gif hspace=4 width=24>' },
 	'ADDRESSLIST' => { IMAGE => '<img src=images/address.png hspace=4>' },
 	'FIREWALL' => { IMAGE => '<img src=images/firewall.png hspace=4>' },
 	'ZONE' => { IMAGE => '<img src=images/zone.png hspace=4>' },

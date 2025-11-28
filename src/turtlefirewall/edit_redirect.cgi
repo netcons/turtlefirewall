@@ -40,7 +40,7 @@ if( $new ) {
 	$is_redirect = $redirect{'REDIRECT'} ne 'NO';
 	$active = $redirect{'ACTIVE'} ne 'NO';
 }
-&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_nat'}", $text{'title'}, "" );
+&ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_nat'}", $text{'title'}, "" );
 
 my @idxs = ();
 for( my $i=1; $i<=$nRedirect; $i++ ) { push @idxs, $i; }

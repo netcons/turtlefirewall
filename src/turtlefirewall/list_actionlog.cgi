@@ -11,7 +11,7 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_log'}", $text{'title'}, "" );
+&ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_log'}", $text{'title'}, "" );
 
 &showLog();
 

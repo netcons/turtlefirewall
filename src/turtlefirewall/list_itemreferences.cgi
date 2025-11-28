@@ -13,7 +13,7 @@ require './turtlefirewall-lib.pl';
 
 my $item = $in{'item'};
 
-&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'list_itemreferences_title'}", $text{'title'}, "" );
+&ui_print_header( "$icons{ICON}{IMAGE}$text{'list_itemreferences_title'}", $text{'title'}, "" );
 
 &showItemReferences();
 

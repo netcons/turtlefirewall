@@ -11,7 +11,7 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-&ui_print_header( "$icons{SHIELD}{IMAGE} v ".$fw->Version(), $text{'title'}, "", undef, 1, 1, 0,
+&ui_print_header( "$icons{ICON}{IMAGE} v ".$fw->Version(), $text{'title'}, "", undef, 1, 1, 0,
         &help_search_link("iptables", "man", "doc"));
 
 my @olinks = ('list_items.cgi',

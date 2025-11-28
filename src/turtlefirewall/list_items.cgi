@@ -10,7 +10,7 @@
 
 require './turtlefirewall-lib.pl';
 
-&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_items'}", $text{'title'}, "" );
+&ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_items'}", $text{'title'}, "" );
 
 $form = 0;
 &showAddressList();

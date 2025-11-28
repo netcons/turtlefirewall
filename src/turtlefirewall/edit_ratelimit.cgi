@@ -21,7 +21,7 @@ if( $new ) {
 } else {
 	$heading = "$icons{EDIT}{IMAGE}$text{'edit_ratelimit_title_edit'}";
 }
-&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_items'}", $text{'title'}, "" );
+&ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_items'}", $text{'title'}, "" );
 
 my %r = $fw->GetRateLimit($ratelimit);
 my $rate = $r{'RATE'};

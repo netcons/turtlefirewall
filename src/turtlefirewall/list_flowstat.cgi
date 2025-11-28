@@ -30,7 +30,7 @@ if( $is_target ) {
 	if( $target eq '' ) { &error( $text{list_flowstat_error1} ); }
 }
 
-&ui_print_header( "$icons{SHIELD}{IMAGE}$text{'index_icon_flowstat'}", $text{'title'}, "" );
+&ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_flowstat'}", $text{'title'}, "" );
 
 if( $type eq 'risk' ) { &LoadNdpiRisks($fw); }
 
