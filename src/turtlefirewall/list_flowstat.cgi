@@ -14,9 +14,18 @@ use Tie::File;
 use Time::Piece;
 
 my $log = $in{'log'};
-if( $log =~ /\*/ ) { $log = join("\0", glob("${FlowLogFile}-*")); }
+
+my $is_log = $in{'is_log'};
+if( $is_log eq '0' ) {
+	$log = join("\0", glob("${FlowLogFile}-*"));
+} elsif( $is_log eq '2' ) {
+	$log = "/var/log/flowinfo.tmp";
+	system("cp -f $FlowLogFile $log > /dev/null 2>&1");
+	system("convertflowinfo.pl --log=$log > /dev/null 2>&1");
+}
 $log =~ s/\0/ UNION ALL select * from /g;
 $log = "(select * from $log)";
+
 my $type = $in{'type'};
 my $top = $in{'top'};
 my $is_target = $in{'is_target'};
@@ -89,6 +98,8 @@ my $icoindex = $flowreports{$type}{ICOIDX};
 
 print &ui_subheading($icons{FLOWSTAT}{IMAGE},$text{'report_flowstat_title'});
 &showstats($type,$is_target,$target_type,$target_op,$in{'target'},$flowcount,$flowtotal,$logflowcount,$firstflowtime,$lastflowtime,$txtindex,$icoindex,@stats);
+
+unlink "/var/log/flowinfo.tmp";
 
 &ui_print_footer("edit_flowstat.cgi",'flow statistics');
 

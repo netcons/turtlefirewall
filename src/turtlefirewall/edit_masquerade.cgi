@@ -76,7 +76,7 @@ print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'masq_dst'}</b>", $col ], \
 $col = &formService($service, $port, 1);
 print &ui_columns_row([ "$icons{SERVICE}{IMAGE}<b>$text{'rule_service'}</b>", $col ], \@tds);
 my @opts = ( [ 0, "$text{NO}<br>" ], [ 1, $text{YES} ] );
-$col = &ui_radio("masquerade", $is_masquerade ? 1 : 0, \@opts);
+$col = &ui_radio("masquerade", $is_masquerade, \@opts);
 print &ui_columns_row([ "$icons{MASQUERADE}{IMAGE}<b>$text{'masq_masquerade'}</b>", $col ], \@tds);
 $col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
 print &ui_columns_row([ "$icons{ACTIVE}{IMAGE}<b>$text{'masq_active'}</b>", $col ], \@tds);

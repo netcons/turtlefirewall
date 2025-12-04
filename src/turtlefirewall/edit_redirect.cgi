@@ -80,7 +80,7 @@ print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'redirect_dst'}</b>", $col 
 $col = &formService($service, $port, 1);
 print &ui_columns_row([ "$icons{SERVICE}{IMAGE}<b>$text{'rule_service'}</b>", $col ], \@tds);
 my @opts = ( [ 0, "$text{NO}<br>" ], [ 1, "$text{YES}" ] );
-$col = &ui_radio("redirect", $is_redirect ? 1 : 0, \@opts);
+$col = &ui_radio("redirect", $is_redirect, \@opts);
 $col .= " : $text{redirect_toport} : ";
 $col .= &ui_textbox("toport", $toport, 5, 0, 5);
 print &ui_columns_row([ "$icons{REDIRECT}{IMAGE}<b>$text{'redirect_redirect'}</b>", $col ], \@tds);

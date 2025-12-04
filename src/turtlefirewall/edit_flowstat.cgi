@@ -38,6 +38,7 @@ sub reportFlowStat {
 
 	my @tops = ( '5', '10', '25', '50' );
 
+	my $is_log = '1';
 	my $log = '';
 	my $type = 'protocol';
 	my $top = '5';
@@ -46,16 +47,17 @@ sub reportFlowStat {
 	my $target_op = '=';
 	my $target = '';
 
-	my @logs = ('*');
+	my @logs = ();
 	push @logs, sort { $b cmp $a } glob("${FlowLogFile}-*");
-	my $selected_log = $logs[1];
+	my $selected_log = $logs[0];
 
 	print &ui_subheading("$icons{CREATE}{IMAGE}$text{'edit_flowstat_title_create'}");
 	print &ui_form_start("list_flowstat.cgi", "post");
 	my @tds = ( "width=20% style=white-space:nowrap", "width=80%" );
 	print &ui_columns_start(undef, 100, 0, \@tds);
 	my $col = '';
-	$col = &ui_select("log", $selected_log, \@logs, 5, 1);
+	my @opts = ( [ 0, "$text{'flowlog_all'}<br>" ], [ 1, "".&ui_select("log", $selected_log, \@logs, 5, 1)."<br>" ], [ 2, "$text{'flowlog_current'}" ] );
+	$col = &ui_radio("is_log", $is_log, \@opts);
 	print &ui_columns_row([ "$icons{LOG}{IMAGE}<b>$text{'edit_flowstat_log'}</b>", $col ], \@tds);
 	$col = &ui_select("type", $type, \@items_type);
 	print &ui_columns_row([ "$icons{OPTION}{IMAGE}<b>$text{'edit_flowstat_type'}</b>", $col ], \@tds);
@@ -63,7 +65,7 @@ sub reportFlowStat {
 	print &ui_columns_row([ "$icons{FLOWSTAT}{IMAGE}<b>$text{'edit_flowstat_top'}</b>", $col ], \@tds);
 
 	my @opts = ( [ 0, "$text{NO}<br>" ], [ 1, "$text{YES}" ] );
-	$col = &ui_radio("is_target", $is_target ? 1 : 0, \@opts);
+	$col = &ui_radio("is_target", $is_target, \@opts);
 	$col .= "&nbsp; where &nbsp;";
 	$col .= &ui_select("target_type", $target_type, \@items_type);
 	$col .= "&nbsp;";
