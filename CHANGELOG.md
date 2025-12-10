@@ -18,6 +18,7 @@
 - OS : Remove unused iptables_restore_emu.
 - OS : Remove depreciated dkms feature: CLEAN
 - Theme : Webmin 2.600 support.
+- Theme : Update lib to use ui standard.
 - Todo : Translate new features.
 - Todo : Fix backup.cgi restore upload.
 

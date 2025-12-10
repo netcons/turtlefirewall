@@ -32,8 +32,7 @@ my @zones = grep(!/FIREWALL/, $fw->GetZoneList());
 
 &LoadCountryCodes($fw);
 my @items_countrycode = ();
-my @countrycodes = $fw->GetCountryCodesList();
-for my $k (@countrycodes) {
+for my $k ($fw->GetCountryCodesList()) {
 	my %country = $fw->GetCountryCode($k);
 	my @opts = ( "$k", "$k - $country{DESCRIPTION}" );
 	push(@items_countrycode, \@opts);

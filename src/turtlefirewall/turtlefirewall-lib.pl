@@ -215,46 +215,41 @@ sub formService {
 	my( $service, $port, $multiple ) = @_;
 	my $this = '';
 
-	my @services = split( /,/, $service );
+	my @selected_services = ();
+	my @services = ();
+	my $selected_service3 = '';
+	my @services3 = ('tcp','udp');
+	my $servicetype = '2';
 
-	my $options_service = '';
+	if( $service eq 'all' ) {
+		$servicetype = '1';
+	} elsif( $service =~ /^(tcp|udp)$/ ) {
+		$servicetype = '3';
+		$selected_service3 = $service;
+
+	} else {
+		@selected_services = split( /,/, $service );
+	}
+
 	&LoadServices($fw);
 	for my $k ($fw->GetServicesList()) {
 		if( !($k =~ /^(tcp|udp|all)$/) ) {
 			my %service = $fw->GetService($k);
-			my $selected = 0;
-			foreach my $s (@services) {
-				if( $k eq $s ) {
-					$selected = 1;
-					last;
-				}
-			}
-			$options_service .= qq~<option value="$k"~.($selected ? ' SELECTED' : '').">$k - $service{DESCRIPTION}</option>";
+			my @opts = ( "$k", "$k - $service{DESCRIPTION}" );
+			push(@services, \@opts);
 		}
 	}
 
-	$this .= '<table border="0" cellpadding="0">';
-	$this .= '<tr><td><input type="RADIO" name="servicetype" value="1"'.($service eq 'all' ? ' CHECKED' : '')."></td><td>$text{rule_all_services}</td></tr>";
-
-	$this .= '<tr><td><input type="RADIO" name="servicetype" value="2"'.(!($service =~ /^(tcp|udp|all)$/) ? ' CHECKED' : '').'></td>';
-		if( $multiple ) {
-	$this .= '<td><select name="service2" size="5" MULTIPLE>';
-	} else {
-		$this .= '<td><select name="service2" size="1">';
-	}
-	$this .= $options_service;
-	$this .= '</select></td></tr>';
-
-	$this .= '<tr><td><input type="RADIO" name="servicetype" value="3"'.($service =~ /^(tcp|udp)$/ ? ' CHECKED' : '').'></td>';
-	$this .= '<td><select name="service3" size="1">';
-	$this .= '<option'.($service eq 'tcp' ? ' SELECTED' : '').'>tcp</option>';
-	$this .= '<option'.($service eq 'udp' ? ' SELECTED' : '').'>udp</option>';
-	$this .= '</select>';
-	$this .= " $text{rule_port} : <input type=\"TEXT\" name=\"port\" value=\"$port\" size=\"11\" maxlength=\"11\"> <small><i>$text{port_help}</i></small></td></tr></table>";
+	my @opts = ( 
+		[ 1, "$text{rule_all_services}<br>" ],
+	       	[ 2, "".&ui_select("service2", \@selected_services, \@services, 5, $multiple)."<br>" ],
+	       	[ 3, "".&ui_select("service3", $selected_service3, \@services3, 1)." $text{rule_port} : ".&ui_textbox("port", $port, 11, 0, 11)."<small><i>$text{port_help}</i></small>" ]
+       	);
+	$this = &ui_radio("servicetype", $servicetype, \@opts);
 	return $this;
 }
 
-# Parse service inputs and return name of service choosed
+# Parse service inputs and return name of service chosen
 sub formServiceParse {
 	my ($servicetype, $service2, $service3, $port ) = @_;
 
@@ -276,23 +271,25 @@ sub formNdpiProtocol {
 	my( $ndpiprotocol, $category, $multiple ) = @_;
 	my $this = '';
 
-	my @ndpiprotocols = split( /,/, $ndpiprotocol );
-
+	my @selected_ndpiprotocols = ();
+	my @ndpiprotocols = ();
 	my @categorys = ();
+	my $ndpiprotocoltype = '2';
 
-	my $options_ndpiprotocol = '';
+	if( $ndpiprotocol eq 'all' ) {
+		$ndpiprotocoltype = '1';
+	} elsif( $category ne '' ) {
+		$ndpiprotocoltype = '3';
+	} else {
+		@selected_ndpiprotocols = split( /,/, $ndpiprotocol );
+	}
+
 	&LoadNdpiProtocols($fw);
 	for my $k ($fw->GetNdpiProtocolsList()) {
 		if( !($k =~ /^(all)$/) ) {
 			my %ndpiprotocol = $fw->GetNdpiProtocol($k);
-			my $selected = 0;
-			foreach my $n (@ndpiprotocols) {
-				if( $k eq $n ) {
-					$selected = 1;
-					last;
-				}
-			}
-			$options_ndpiprotocol .= qq~<option value="$k"~.($selected ? ' SELECTED' : '').">$k - $ndpiprotocol{CATEGORY}</option>";
+			my @opts = ( "$k", "$k - $ndpiprotocol{CATEGORY}" );
+			push(@ndpiprotocols, \@opts);
 			push(@categorys, $ndpiprotocol{CATEGORY});
 		}
 	}
@@ -303,33 +300,16 @@ sub formNdpiProtocol {
 	my $prev = '***none***';
 	@categorys = grep($_ ne $prev && (($prev) = $_), @categorys);
 
-	for my $k (@categorys) {
-		my $selected = 0;
-		if( $k eq $category ) { $selected = 1; }
-		$options_category .= qq~<option value="$k"~.($selected ? ' SELECTED' : '').">$k";
-	}
-
-	$this .= '<table border="0" cellpadding="0">';
-	$this .= '<tr><td><input type="RADIO" name="ndpiprotocoltype" value="1"'.($ndpiprotocol eq 'all' ? ' CHECKED' : '')."></td><td>$text{rule_all_ndpiprotocols}</td></tr>";
-
-	$this .= '<tr><td><input type="RADIO" name="ndpiprotocoltype" value="2"'.(!($ndpiprotocol =~ /^(all)$/) ? ' CHECKED' : '').'></td>';
-	if( $multiple ) {
-		$this .= '<td><select name="ndpiprotocol2" size="5" MULTIPLE>';
-	} else {
-		$this .= '<td><select name="ndpiprotocol2" size="1">';
-	}
-	$this .= $options_ndpiprotocol;
-	$this .= '</select></td></tr>';
-
-	$this .= '<tr><td><input type="RADIO" name="ndpiprotocoltype" value="3"'.($category ne '' ? ' CHECKED' : '').'></td>';
-	$this .= "<td>$text{category} : ";
-	$this .= '<select name="category" size="1">';
-	$this .= $options_category;
-	$this .= '</select></td></tr></table>';
+	my @opts = ( 
+		[ 1, "$text{rule_all_ndpiprotocols}<br>" ],
+	       	[ 2, "".&ui_select("ndpiprotocol2", \@selected_ndpiprotocols, \@ndpiprotocols, 5, $multiple)."<br>" ],
+	       	[ 3, "$text{category} : ".&ui_select("category", $category, \@categorys, 1)."" ]
+       	);
+	$this = &ui_radio("ndpiprotocoltype", $ndpiprotocoltype, \@opts);
 	return $this;
 }
 
-# Parse ndpiprotocol inputs and return name of ndpiprotocol choosen
+# Parse ndpiprotocol inputs and return name of ndpiprotocol chosen
 sub formNdpiProtocolParse {
 	my ($ndpiprotocoltype, $ndpiprotocol2, $category ) = @_;
 
