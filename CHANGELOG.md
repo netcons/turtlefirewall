@@ -1,5 +1,10 @@
 # ChangeLog
 
+## v.2.7 (11-12-2025)
+- Feature : nDPI 5.1 support.
+- Todo : Translate new features.
+- Todo : Fix backup.cgi restore upload.
+
 ## v.2.6 (30-04-2025)
 - Feature : nDPI 4.15 support.
 - Feature : Remove JA3 logging.
@@ -19,8 +24,6 @@
 - OS : Remove depreciated dkms feature: CLEAN
 - Theme : Webmin 2.600 support.
 - Theme : Update lib to use ui standard.
-- Todo : Translate new features.
-- Todo : Fix backup.cgi restore upload.
 
 ## v.2.5 (01-01-2025)
 - Services : Make user defined services permanent.

@@ -140,7 +140,7 @@ make install
 
 Download source.
 ```
-VERSION="4.15.0"
+VERSION="5.1.0"
 cd /usr/src
 wget https://github.com/vel21ripn/nDPI/archive/master.zip -O nDPI-flow_info-4.zip
 unzip nDPI-flow_info-4.zip
@@ -162,6 +162,7 @@ dkms install -m ndpi-netfilter -v $VERSION
 Install library.
 ```
 ./autogen.sh
+./configure
 cd ndpi-netfilter
 make
 make install

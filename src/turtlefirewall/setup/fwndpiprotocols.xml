@@ -9,6 +9,7 @@
 	<ndpiprotocol name="afp" category="storage-backup" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="ah" category="tunnelling" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="ajp" category="infrastructure" dpi="1"> </ndpiprotocol>
+	<ndpiprotocol name="akamai" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="alibaba" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="alicloud" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="amazon" category="other" dpi="0"> </ndpiprotocol>
@@ -206,7 +207,8 @@
 	<ndpiprotocol name="iqiyi" category="video-audio" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="jabber" category="instant-messaging" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="jrmi" category="other" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="json-rpc" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="json" category="networking" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="json-rpc" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="kafka" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="kakaotalk" category="collaboration" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="kakaotalk_voice" category="telephony" dpi="1"> </ndpiprotocol>
@@ -235,6 +237,7 @@
 	<ndpiprotocol name="melsec" category="iot-scada" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="memcached" category="infrastructure" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="merakicloud" category="other" dpi="1"> </ndpiprotocol>
+	<ndpiprotocol name="messagepack" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="mgcp" category="telephony" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="microsoft" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="microsoft365" category="other" dpi="0"> </ndpiprotocol>

@@ -4,7 +4,7 @@
 # ln -sf /usr/lib/turtlefirewall/sha1_blacklist /etc/cron.daily/sha1_blacklist
 #
 
-echo -e "\nTurtle Firewall 2.6 - SHA1 Blacklist";
+echo -e "\nTurtle Firewall 2.7 - SHA1 Blacklist";
 echo -e "Copyright (c) 2001-2025 Andrea Frigido <andrea@frisoft.it>\n";
 
 blacklist_file="/etc/turtlefirewall/sha1_blacklist.dat"
