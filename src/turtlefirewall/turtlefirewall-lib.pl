@@ -219,6 +219,7 @@ sub formService {
 	my @services = ();
 	my $selected_service3 = '';
 	my @services3 = ('tcp','udp');
+	# Default selection for new rules
 	my $servicetype = '2';
 
 	if( $service eq 'all' ) {
@@ -226,8 +227,8 @@ sub formService {
 	} elsif( $service =~ /^(tcp|udp)$/ ) {
 		$servicetype = '3';
 		$selected_service3 = $service;
-
 	} else {
+		# servicetype 2
 		@selected_services = split( /,/, $service );
 	}
 
@@ -274,6 +275,7 @@ sub formNdpiProtocol {
 	my @selected_ndpiprotocols = ();
 	my @ndpiprotocols = ();
 	my @categorys = ();
+	# Default selection for new rules
 	my $ndpiprotocoltype = '2';
 
 	if( $ndpiprotocol eq 'all' ) {
@@ -281,6 +283,7 @@ sub formNdpiProtocol {
 	} elsif( $category ne '' ) {
 		$ndpiprotocoltype = '3';
 	} else {
+		# ndpiprotocoltype 2
 		@selected_ndpiprotocols = split( /,/, $ndpiprotocol );
 	}
 
