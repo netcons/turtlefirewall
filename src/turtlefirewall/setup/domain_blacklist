@@ -5,7 +5,7 @@
 #
 
 echo -e "\nTurtle Firewall 2.7 - Domain Blacklist";
-echo -e "Copyright (c) 2001-2025 Andrea Frigido <andrea@frisoft.it>\n";
+echo -e "Copyright (c) 2001-2026 Andrea Frigido <andrea@frisoft.it>\n";
 
 blacklist_file="/etc/turtlefirewall/domain_blacklist.dat"
 also_blacklist_file="/etc/turtlefirewall/also_domain_blacklist.dat"

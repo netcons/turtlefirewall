@@ -2,9 +2,10 @@
 
 Turtle Firewall allows you to configure a Linux firewall in a simple and fast way.
 It's based on Netfilter iptables. Its operation is easy to understand: you can define the different firewall elements (zones, hosts, networks, geoips, ipsets) and then set the services (port, dpi) you want to control (allow, deny, ratelimit, log) among the different elements or groups of elements.
-You can do this by simply editing a XML file or using the web interface [Webmin](http://www.webmin.com/).
+You can do this by simply editing a XML file or using the web interface ([Webmin](https://www.webmin.com/)).
 
-Turtle Firewall is an Open Source project written using the perl language and realeased under GPL version 2.0 by Andrea Frigido (Frisoft).
+Turtle Firewall is an Open Source project written using the perl language and realeased under GPL version 2.0
+by Andrea Frigido ([frisoft](https://github.com/frisoft)).
 
 ## New Features
 

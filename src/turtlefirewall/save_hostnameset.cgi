@@ -3,7 +3,7 @@
 #======================================================================
 # Turtle Firewall webmin module
 #
-# Copyright (c) 2001-2025 Andrea Frigido <andrea@frisoft.it>
+# Copyright (c) 2001-2026 Andrea Frigido <andrea@frisoft.it>
 # You may distribute under the terms of either the GNU General Public
 # License
 #======================================================================

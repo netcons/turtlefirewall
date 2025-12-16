@@ -3,7 +3,7 @@
 #======================================================================
 # Turtle Firewall webmin module
 #
-# Copyright (c) 2001-2025 Andrea Frigido <andrea@frisoft.it>
+# Copyright (c) 2001-2026 Andrea Frigido <andrea@frisoft.it>
 # You may distribute under the terms of either the GNU General Public
 # License
 #======================================================================
@@ -75,7 +75,7 @@ $col .= &ui_textbox("port", $port, 11, 0, 11);
 $col .= "<small><i>$text{port_help}</i></small>";
 print &ui_columns_row([ "$icons{SERVICE}{IMAGE}<b>$text{'rule_service'}</b>", $col ], \@tds);
 $col = &ui_select("helper", $helper, \@helpers);
-print &ui_columns_row([ "$icons{NDPISERVICE}{IMAGE}<b>$text{'rule_helper'}</b>", $col ], \@tds);
+print &ui_columns_row([ "$icons{HELPER}{IMAGE}<b>$text{'rule_helper'}</b>", $col ], \@tds);
 $col = &ui_checkbox("active", 1, undef, $active ? 1 : 0);
 print &ui_columns_row([ "$icons{ACTIVE}{IMAGE}<b>$text{'rule_active'}</b>", $col ], \@tds);
 print &ui_columns_end();
