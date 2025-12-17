@@ -856,7 +856,7 @@ sub RenameItem {
 		# An Item with this name exists
 		return 0;
 	} else {
-		$type = $this->{fwItems}{$oldname};
+		my $type = $this->{fwItems}{$oldname};
 		%{$this->{fw}{$type}{$newname}} = %{$this->{fw}{$type}{$oldname}};
 		$this->{fw}{$type}{$newname}{NAME} = $newname;
 		$this->{fwItems}{$newname} = $type;
@@ -870,22 +870,22 @@ sub RenameItem {
 
 		# If it's a zone, I need to change all items that use this zone.
 		if( $type eq 'ZONE' ) {
-			foreach $k (@{$this->{fwKeys}{HOST}}) {
+			foreach my $k (@{$this->{fwKeys}{HOST}}) {
 				if( $this->{fw}{HOST}{$k}{ZONE} eq $oldname ) {
 					$this->{fw}{HOST}{$k}{ZONE} = $newname;
 				}
 			}
-			foreach $k (@{$this->{fwKeys}{NET}}) {
+			foreach my $k (@{$this->{fwKeys}{NET}}) {
 				if( $this->{fw}{NET}{$k}{ZONE} eq $oldname ) {
 					$this->{fw}{NET}{$k}{ZONE} = $newname;
 				}
 			}
-			foreach $k (@{$this->{fwKeys}{GEOIP}}) {
+			foreach my $k (@{$this->{fwKeys}{GEOIP}}) {
 				if( $this->{fw}{GEOIP}{$k}{ZONE} eq $oldname ) {
 					$this->{fw}{GEOIP}{$k}{ZONE} = $newname;
 				}
 			}
-			foreach $k (@{$this->{fwKeys}{IPSET}}) {
+			foreach my $k (@{$this->{fwKeys}{IPSET}}) {
 				if( $this->{fw}{IPSET}{$k}{ZONE} eq $oldname ) {
 					$this->{fw}{IPSET}{$k}{ZONE} = $newname;
 				}
@@ -894,7 +894,7 @@ sub RenameItem {
 
 		# If it's an addresslist, I need to change all ipsets that use this addresslist.
 		if( $type eq 'ADDRESSLIST' ) {
-			foreach $k (@{$this->{fwKeys}{IPSET}}) {
+			foreach my $k (@{$this->{fwKeys}{IPSET}}) {
 				if( $this->{fw}{IPSET}{$k}{IP} eq $oldname ) {
 					$this->{fw}{IPSET}{$k}{IP} = $newname;
 				}
@@ -922,7 +922,7 @@ sub RenameItem {
 		# Change item name in all rules
 		foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','CONNTRACK','NAT','MASQUERADE','REDIRECT') {
 			for( my $i=0; $i<=$#{$this->{fw}{$ruletype}}; $i++ ) {
-				foreach $item ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
+				foreach my $item ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
 					my @item_list = split( /,/, $this->{fw}{$ruletype}[$i]{$item} );
 					if( grep( /^$oldname$/, @item_list ) ) {
 						s/^$oldname$/$newname/ for @item_list;
@@ -945,25 +945,25 @@ sub GetItemReferences {
 	my %references = ();
 
 	if( $type eq 'ZONE' ) {
-		foreach $k (@{$this->{fwKeys}{HOST}}) { 
+		foreach my $k (@{$this->{fwKeys}{HOST}}) { 
 			if( $this->{fw}{HOST}{$k}{ZONE} eq $item ) { 
 				$references{$k} = 'HOST';
 			}
 		}
 
-		foreach $k (@{$this->{fwKeys}{NET}}) {
+		foreach my $k (@{$this->{fwKeys}{NET}}) {
 			if( $this->{fw}{NET}{$k}{ZONE} eq $item ) {
 				$references{$k} = 'NET';
 			}
 		}
 
-		foreach $k (@{$this->{fwKeys}{GEOIP}}) {
+		foreach my $k (@{$this->{fwKeys}{GEOIP}}) {
 			if( $this->{fw}{GEOIP}{$k}{ZONE} eq $item ) {
 				$references{$k} = 'GEOIP';
 			}
 		}
 
-		foreach $k (@{$this->{fwKeys}{IPSET}}) {
+		foreach my $k (@{$this->{fwKeys}{IPSET}}) {
 			if( $this->{fw}{IPSET}{$k}{ZONE} eq $item ) {
 				$references{$k} = 'IPSET';
 			}
@@ -971,7 +971,7 @@ sub GetItemReferences {
 	}
 
 	if( $type eq 'ADDRESSLIST' ) {
-		foreach $k (@{$this->{fwKeys}{IPSET}}) {
+		foreach my $k (@{$this->{fwKeys}{IPSET}}) {
 			if( $this->{fw}{IPSET}{$k}{IP} eq $item ) {
 				$references{$k} = 'IPSET';
 			}
@@ -996,7 +996,7 @@ sub GetItemReferences {
 
 	foreach my $ruletype ('RULE','CONNMARKPREROUTE','CONNMARK','CONNTRACKPREROUTE','CONNTRACK','NAT','MASQUERADE','REDIRECT') {
 		for( my $i=0; $i<=$#{$this->{fw}{$ruletype}}; $i++ ) {
-			foreach $ruleitem ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
+			foreach my $ruleitem ('SRC','DST','ZONE','VIRTUAL','REAL','TIME','HOSTNAMESET','RISKSET','RATELIMIT') {
 				my @ruleitem_list = split( /,/, $this->{fw}{$ruletype}[$i]{$ruleitem} );
 				if( grep( /^$item$/, @ruleitem_list ) ) {
 					$references{"$ruleitem $i $ruletype"} = $ruletype;
@@ -1153,7 +1153,7 @@ sub LoadFirewall {
 		my $name = uc($tree[$i]);
 		if ($name eq 'FIREWALL') {
 			my @list = @{$tree[$i+1]};
-			my %attr = shift @list;
+			my %attr = %{shift @list};
 
 			# Loop over second-level tags (hosts, groups, rules etc.)
 			for( my $j=0; $j<=$#list; $j+=2 ) {
@@ -1194,8 +1194,9 @@ sub _LoadFirewallItem {
 	my $name = $attrs{'NAME'};
 
 	if( $this->{fwItems}{$name} ne '' ) {
-		print STDERR qq~Error: "$name" item is already present.\n~;
+		print STDERR "Error: $name item is already present.\n";
 	}
+
 	$this->{fwItems}{$name} = $type;
 	push @{$this->{fwKeys}{$type}}, $name;
 	%{$this->{fw}{$type}{$name}} = %attrs;
@@ -1380,7 +1381,7 @@ sub LoadServices {
 
 	my $xml = new XML::Parser( Style=>'Tree' );
 
-	foreach $fileName ( ($servicesFile, $userdefServicesFile) ) {
+	foreach my $fileName ( ($servicesFile, $userdefServicesFile) ) {
 		if( -f $fileName ) {
 
 			my @tree = @{ $xml->parsefile( $fileName ) };
@@ -1541,8 +1542,7 @@ sub LoadNdpiRisks {
 sub upperKeys {
 	my %hash = @_;
 	my %newHash;
-	@ks = keys %hash;
-	foreach $k (@ks) {
+	foreach my $k (keys %hash) {
 		$newHash{uc($k)} = $hash{$k};
 	}
 	return %newHash;
@@ -2224,10 +2224,10 @@ sub getIptablesRules {
 	my $connmarksCount = $this->GetConnmarksCount();
 	if( $connmarksCount > 0 ) {
 		my @zone = $this->GetZoneList();
-		for(my $i=0; $i<=$#zone; $i++ ) {
+		for( my $i=0; $i<=$#zone; $i++ ) {
 			my $z1 = $zone[$i];
 			my %zone1 = $this->GetZone($z1);
-			for($j=0; $j<=$#zone; $j++ ) {
+			for( my $j=0; $j<=$#zone; $j++ ) {
 				my $z2 = $zone[$j];
 				my %zone2 = $this->GetZone($z2);
 				if( $z1 eq 'FIREWALL' || $z2 eq 'FIREWALL' ) {
@@ -2299,7 +2299,6 @@ sub getIptablesRules {
 	}
 
 	# Application of NATs
-	my $rules_nat = '';
 	for( my $i=1; $i <= $this->GetNatsCount(); $i++ ) {
 		$rules_nat .= $this->applyNat( $this->GetNat($i) );
 	}
@@ -2332,10 +2331,10 @@ sub getIptablesRules {
 
 	# Create the chains for the ZONES
 	my @zone = $this->GetZoneList();
-	for(my $i=0; $i<=$#zone; $i++ ) {
+	for( my $i=0; $i<=$#zone; $i++ ) {
 		my $z1 = $zone[$i];
 		my %zone1 = $this->GetZone($z1);
-		for($j=0; $j<=$#zone; $j++ ) {
+		for( my $j=0; $j<=$#zone; $j++ ) {
 			my $z2 = $zone[$j];
 			my %zone2 = $this->GetZone($z2);
 			if( $z1 eq 'FIREWALL' || $z2 eq 'FIREWALL' ) {
@@ -2363,10 +2362,10 @@ sub getIptablesRules {
 	}
 	
 	# Close the zone chains
-	for(my $i=0; $i<=$#zone; $i++ ) {
-		$z1 = $zone[$i];
-		for($j=0; $j<=$#zone; $j++ ) {
-			$z2 = $zone[$j];
+	for( my $i=0; $i<=$#zone; $i++ ) {
+		my $z1 = $zone[$i];
+		for( my $j=0; $j<=$#zone; $j++ ) {
+			my $z2 = $zone[$j];
 			if( $z1 ne 'FIREWALL' || $z2 ne 'FIREWALL' ) {
 				my $logprefix = "TFW=$z1-$z2";
 				# iptables --log-prefix max = 29
@@ -2643,10 +2642,10 @@ sub applyMasquerade {
 
 	my ($src_zone, $src_peer, $src_type, $src_mac) = $this->expand_item( $src );
 	my %src_zone_attr = $this->GetZone( $src_zone );
-	$src_if = $src_zone_attr{IF};
+	my $src_if = $src_zone_attr{IF};
 	my ($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
 	my %dst_zone_attr = $this->GetZone( $dst_zone );
-	$dst_if = $dst_zone_attr{IF};
+	my $dst_if = $dst_zone_attr{IF};
 	
 	print $is_masquerade ? '' : 'NOT ',"MASQUERADE port($service";
 	if( $service eq 'tcp' || $service eq 'udp' ) { print "/$port"; }
@@ -2809,6 +2808,7 @@ sub applyRedirect {
 	my $dst_zone;
 	my $dst_peer;
 	my $dst_if;
+	my $dst_type;
 	if( $dst eq '*' ) {
 		$dst_zone = '*';
 		$dst_peer = '0.0.0.0/0';
@@ -2977,6 +2977,8 @@ sub applyRule {
 	my $helper = $rule{HELPER};
 	my $log = $rule{LOG};
 
+	my $prev = '';
+
 	if( $display ) {
 		if( $target ne '' ) { 
 			print "$target"; 
@@ -3036,7 +3038,7 @@ sub applyRule {
 	# sort
 	@srcs = sort(@srcs);
 	# unique values
-	my $prev = '***none***';
+	$prev = '***none***';
 	@srcs = grep($_ ne $prev && (($prev) = $_), @srcs);
 	if( $#srcs > 0 ) {
 		# more then one element
@@ -3053,11 +3055,13 @@ sub applyRule {
 	my @dsts = ();
 	my @dst_list = split( /,/, $dst );
 	foreach my $d (@dst_list) {
-		if( $d eq '*' && not $preroute ) {
-			# all zones
-			foreach my $item ( sort(keys(%{$fw{ZONE}})) ) {
-				if( $item ne 'FIREWALL' ) {
-					push @dsts, $item;
+		if( $d eq '*' ) {
+			if( ! $preroute ) {
+				# all zones
+				foreach my $item ( sort(keys(%{$fw{ZONE}})) ) {
+					if( $item ne 'FIREWALL' ) {
+						push @dsts, $item;
+					}
 				}
 			}
 		} elsif( $fwItems{$d} eq 'GROUP' ) {
@@ -3072,7 +3076,7 @@ sub applyRule {
 	# sort
 	@dsts = sort(@dsts);
 	# unique values
-	my $prev = '***none***';
+	$prev = '***none***';
 	@dsts = grep($_ ne $prev && (($prev) = $_), @dsts);
 	if( $#dsts > 0 ) {
 		# more then one element
@@ -3126,12 +3130,11 @@ sub applyRule {
 	if( $hostnameset ne '' ) { 
 		my ($hostname_list) = $this->expand_hostnameset_item( $hostnameset );
 
-		my @hostnames = ();
 		my @hostnames = split( /,/, $hostname_list );
 		# sort
 		@hostnames = sort(@hostnames);
 		# unique values
-		my $prev = '***none***';
+		$prev = '***none***';
 		@hostnames = grep($_ ne $prev && (($prev) = $_), @hostnames);
 		if( $#hostnames > 0 ) {
 			# more than one element
@@ -3165,9 +3168,9 @@ sub applyRule {
 	}
 
 	# time items
-	$t_days = '';
-	$t_start = '';
-	$t_stop = '';
+	my $t_days = '';
+	my $t_start = '';
+	my $t_stop = '';
 	if( $time ne '' ) {
 		my @times = ();
 		if( $fwItems{$time} eq 'TIMEGROUP' ) {
@@ -3181,7 +3184,7 @@ sub applyRule {
 		# sort
  		@times = sort(@times);
 		# unique values
-		my $prev = '***none***';
+		$prev = '***none***';
 		@times = grep($_ ne $prev && (($prev) = $_), @times);
 		if( $#times > 0 ) {
 			# more then one element
@@ -3360,6 +3363,7 @@ sub _applyService {
 		if( $log eq "YES" ) {
 			my $cmdlog = $cmd;
 			if( $target =~ /DROP|REJECT/ ) {
+				my $logprefix = '';
 				if( $risk ne '' ) {
 					$logprefix = "TFW=RISK-$risk";
 				} elsif( $hostname ne '') { 

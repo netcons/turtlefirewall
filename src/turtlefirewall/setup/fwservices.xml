@@ -223,21 +223,21 @@
 		<filter direction="go" p="tcp" sport="1024:65535" state="ESTABLISHED,RELATED"/>
 	</service>
 
-	<service name="ipsec-ESP" Description="VPN IPSec protocol with IKE and ESP">
+	<service name="ipsec-ESP" description="VPN IPSec protocol with IKE and ESP">
 		<filter direction="go" p="udp" sport="500" dport="500"/>
 		<filter direction="back" p="udp" sport="500" dport="500" jump="ACCEPT"/>
 		<filter direction="go" p="50"/>
 		<filter direction="back" p="50" jump="ACCEPT"/>
 	</service>
 
-	<service name="ipsec-AH" Description="VPN IPSec protocol with IKE and AH">
+	<service name="ipsec-AH" description="VPN IPSec protocol with IKE and AH">
 		<filter direction="go" p="udp" sport="500" dport="500"/>
 		<filter direction="back" p="udp" sport="500" dport="500" jump="ACCEPT"/>
 		<filter direction="go" p="51"/>
 		<filter direction="back" p="51" jump="ACCEPT"/>
 	</service>
 
-	<service name="ipsec-ESP-AH" Description="VPN IPSec protocol with IKE, ESP and AH">
+	<service name="ipsec-ESP-AH" description="VPN IPSec protocol with IKE, ESP and AH">
 		<filter direction="go" p="udp" sport="500" dport="500"/>
 		<filter direction="back" p="udp" sport="500" dport="500" jump="ACCEPT"/>
 		<filter direction="go" p="50"/>
@@ -370,7 +370,7 @@
 		<filter direction="back" p="tcp" sport="1080"/>
 	</service>
 
-	<service name="soulseek" Description="Soulseek std">
+	<service name="soulseek" description="Soulseek std">
 		<filter direction="go" p="tcp" dport="2242"/>
 		<filter direction="back" p="tcp" sport="2242" jump="ACCEPT"/>
 
@@ -390,7 +390,7 @@
 		<filter direction="back" p="udp" sport="5538" jump="ACCEPT"/>
 	</service>
 
-	<service name="aim-icq" Description="AIM / ICQ">
+	<service name="aim-icq" description="AIM / ICQ">
 		<filter direction="go" p="tcp" dport="5190"/>
 		<filter direction="back" p="tcp" sport="5190" jump="ACCEPT"/>
 		<filter direction="go" p="udp" dport="5194"/>
