@@ -1404,13 +1404,13 @@ sub LoadServices {
 
 							%{ $this->{services}{$service} } = (
 								'DESCRIPTION' => $attrs{'DESCRIPTION'},
-								'FILTERS' => ()
+								'FILTERS' => undef
 								);
 
 							for( my $k=0; $k<=$#filters; $k+=2 ) {
 								my $name3 = uc( $filters[$k] );
-								my %filter = upperKeys( %{shift @{$filters[$k+1]}} );
 								if( $name3 eq 'FILTER' ) {
+									my %filter = upperKeys( %{shift @{$filters[$k+1]}} );
 									%{$this->{services}{$service}{FILTERS}[$#{$this->{services}{$service}{FILTERS}}+1]} = %filter;
 								}
 							}

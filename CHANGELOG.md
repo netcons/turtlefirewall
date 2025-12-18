@@ -6,6 +6,7 @@
 - Bug: Add invalid service check.
 - Bug: Don't check group membership for * zone during apply of Masquerade and Redirect.
 - Bug : Improve expand_item.
+- Bug : Rework LoadServices.
 - Todo : Translate new features.
 - Todo : Fix backup.cgi restore upload.
 
