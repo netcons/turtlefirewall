@@ -2649,8 +2649,11 @@ sub applyMasquerade {
 	}
 
 	my ($src_zone, $src_peer, $src_type, $src_mac) = $this->expand_item( $src );
-	my %src_zone_attr = $this->GetZone( $src_zone );
-	my $src_if = $src_zone_attr{IF};
+	my $src_if = '';
+	if( $src ne '*' ) {
+		my %src_zone_attr = $this->GetZone( $src_zone );
+		$src_if = $src_zone_attr{IF};
+	}
 	my ($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
 	my %dst_zone_attr = $this->GetZone( $dst_zone );
 	my $dst_if = $dst_zone_attr{IF};
@@ -2817,17 +2820,9 @@ sub applyRedirect {
 	my ($src_zone, $src_peer, $src_type, $src_mac) = $this->expand_item( $src );
 	my %src_zone_attr = $this->GetZone( $src_zone );
 	my $src_if = $src_zone_attr{IF};
-
-	my $dst_zone;
-	my $dst_peer;
-	my $dst_if;
-	my $dst_type;
-	if( $dst eq '*' ) {
-		$dst_zone = '*';
-		$dst_peer = '0.0.0.0/0';
-		$dst_if = '';
-	} else {
-		($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
+	my ($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
+	my $dst_if = '';
+	if( $dst ne '*' ) {
 		my %dst_zone_attr = $this->GetZone( $dst_zone );
 		$dst_if = $dst_zone_attr{IF};
 	}
@@ -3462,11 +3457,19 @@ sub expand_item {
 
 	my %fw = %{$this->{fw}};
 	my %fwItems = %{$this->{fwItems}};
-	my $type = $fwItems{$item};
 
 	my $zone = '';
 	my $ip = '';
+	my $type = '';
 	my $mac = '';
+
+	$item = $item ? $item : '';
+
+	if( $item eq '*' ) {
+	       	$type = 'ZONE';
+	} elsif( $item ne '' ) {
+	       	$type = $fwItems{$item};
+	}
 
 	if( $type eq 'ZONE' ) {
 		$zone = $item;
