@@ -2602,16 +2602,19 @@ sub applyMasquerade {
 	#	return
 	#}
 
-	# See if I have a group as source
-	if( $fwItems{$src} eq 'GROUP' ) {
-		my %newmasq = %masq;
-		foreach my $item ( @{$fw{GROUP}{$src}{ITEMS}} ) {
-			if( $item ne 'FIREWALL' ) {
-				$newmasq{SRC} = $item;
-				$rules .= $this->applyMasquerade( %newmasq );
+	# Don't check group membership for * zone
+	if( $src ne '*' ) {
+		# See if I have a group as source
+		if( $fwItems{$src} eq 'GROUP' ) {
+			my %newmasq = %masq;
+			foreach my $item ( @{$fw{GROUP}{$src}{ITEMS}} ) {
+				if( $item ne 'FIREWALL' ) {
+					$newmasq{SRC} = $item;
+					$rules .= $this->applyMasquerade( %newmasq );
+				}
 			}
+			return $rules;
 		}
-		return $rules;
 	}
 
 	# See if I have a group as destination
@@ -2788,19 +2791,22 @@ sub applyRedirect {
 		return $rules;
 	}
 
-	# See if I have a group as destination
-	if( $fwItems{$dst} eq 'GROUP' ) {
-		my %newredirect = %redirect;
-		foreach my $item ( @{$fw{GROUP}{$dst}{ITEMS}} ) {
-			# Ignore ZONE items (PREROUTING don't accept -o option)
-			if( $item ne 'FIREWALL' && $fw{ZONE}{$item}{IF} eq '' ) {
-				$newredirect{DST} = $item;
-				$rules .= $this->applyRedirect( %newredirect );
-			} else {
-				print "REDIRECT INVALID : IGNORING : $src --> $dst\n";
+	# Don't check group membership for * zone
+	if( $dst ne '*' ) {
+		# See if I have a group as destination
+		if( $fwItems{$dst} eq 'GROUP' ) {
+			my %newredirect = %redirect;
+			foreach my $item ( @{$fw{GROUP}{$dst}{ITEMS}} ) {
+				# Ignore ZONE items (PREROUTING don't accept -o option)
+				if( $item ne 'FIREWALL' && $fw{ZONE}{$item}{IF} eq '' ) {
+					$newredirect{DST} = $item;
+					$rules .= $this->applyRedirect( %newredirect );
+				} else {
+					print "REDIRECT INVALID : IGNORING : $src --> $dst\n";
+				}
 			}
+			return $rules;
 		}
-		return $rules;
 	}
 
 	# I define the SERVICE

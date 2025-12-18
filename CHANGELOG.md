@@ -4,6 +4,7 @@
 - Feature : nDPI 5.1 support.
 - Bug: Fix variable declarations.
 - Bug: Add invalid service check.
+- Bug: Don't check group membership for * zone during apply of Masquerade and Redirect.
 - Todo : Translate new features.
 - Todo : Fix backup.cgi restore upload.
 
