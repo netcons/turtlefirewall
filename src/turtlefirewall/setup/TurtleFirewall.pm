@@ -433,7 +433,7 @@ sub AddZone {
 # AddMasquerade( $idx, $zone, $active ) if $idx==0 then add new Masquerade
 sub AddMasquerade {
 	my ($this, $idx, $src, $dst, $service, $port, $masquerade, $active ) = @_;
-	
+
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
 	if( $port ne '' ) { $attr{PORT} = $port; }
 	if( ! $masquerade ) { $attr{MASQUERADE} = 'NO'; }
@@ -831,7 +831,7 @@ sub DeleteItem {
 			last;
 		}
 	}
-		
+
 	if( !$found ) {
 		delete $this->{fw}{$type}{$name};
 		delete $this->{fwItems}{$name};
@@ -1236,7 +1236,7 @@ sub _LoadFirewallNat {
 	my $type = shift;
 	my @list = @_;
 	my %attrs = upperKeys( %{shift @list} );
-	
+
 	###
 	# Backward compatibility with TurtleFirewall < 1.29 configuration file
 	if( $type eq 'MASQUERADE' ) {
@@ -1248,7 +1248,7 @@ sub _LoadFirewallNat {
 			$attrs{SERVICE} = 'all';
 		}
 	}
-	
+
 	%{$this->{fw}{$type}[$#{$this->{fw}{$type}}+1]} = %attrs;
 }
 
@@ -1787,10 +1787,10 @@ sub startFirewall {
 	# PreLoad module for nDPI
 	print "ndpi_module: on\n";	
 	$this->command('modprobe xt_ndpi ndpi_enable_flow=1 ndpi_flow_opt=cFR', '/dev/null');
-	
+
 	# Enable IP forwarding
 	$this->command('echo "1"', '/proc/sys/net/ipv4/ip_forward');
-	
+
 	if( $this->{fw}{OPTION}{rp_filter} eq 'unchange' ) {
 		print "rp_filter: unchange\n";
 	} else {
@@ -1818,12 +1818,12 @@ sub startFirewall {
 		}
 		$this->command( "for f in /proc/sys/net/ipv4/conf/*/log_martians; do echo $flag > \$f; done" );
 	}
-	
+
 	# I want all icmp_echo_ignore_all set to off. Turtle Firewall uses iptables
 	# rules for drop or allow icmp echo packets. Andrea Frigido 2004-07-17
 	$this->command( 'echo "1"', '/proc/sys/net/ipv4/icmp_echo_ignore_broadcasts' );
 	$this->command( 'echo "0"', '/proc/sys/net/ipv4/icmp_echo_ignore_all' );
-	
+
 	# Disable tcp_ecn flag.
 	$this->command( 'echo 0', '/proc/sys/net/ipv4/tcp_ecn' );
 
@@ -1839,7 +1839,7 @@ sub startFirewall {
 
 	# Enable bad error message protection.
 	$this->command( 'echo 1', '/proc/sys/net/ipv4/icmp_ignore_bogus_error_responses' );
-	
+
 	# Other options
 	if( $this->{fw}{OPTION}{nf_conntrack_max} > 0 ) {
 		open( FILE, ">/proc/sys/net/netfilter/nf_conntrack_max" );
@@ -1886,7 +1886,7 @@ sub startFirewall {
 
 	# Restore IPtables Rules
 	my $rules = $this->getIptablesRules();
-	
+
 	umask 0077;
 	open FILE, ">/etc/turtlefirewall/iptables.dat";
 	print FILE $rules;
@@ -1967,7 +1967,7 @@ sub stopFirewall {
 		"iptables -P INPUT ACCEPT; ".
 		"iptables -P OUTPUT ACCEPT; ".
 		"iptables -P FORWARD ACCEPT" );
-	
+
 	# Enable ping
 	$this->command( 'echo "0"', '/proc/sys/net/ipv4/icmp_echo_ignore_all' );
 	# Flush conntrack table
@@ -1976,13 +1976,13 @@ sub stopFirewall {
 
 sub getIptablesRules {
 	my $this = shift;
-	
+
 	my $chains = '';
 	my $rules = '';
 
 	my $chains_nat = '';
 	my $rules_nat = '';
-	
+
 	my $chains_mangle = '';
 	my $rules_mangle = '';
 
@@ -2015,7 +2015,7 @@ sub getIptablesRules {
 	}
 	$this->{log_limit} = $log_limit;
 	$this->{log_limit_burst} = $log_limit_burst;
-	
+
 	# Chains for filter table
 	$chains .= "*filter\n".
 		":FORWARD DROP [0:0]\n".
@@ -2049,7 +2049,7 @@ sub getIptablesRules {
 	# START of INVALID Packets filter by Mark Francis
 	$chains .= ":INVALID - [0:0]\n";
 	$chains .= ":CHECK_INVALID - [0:0]\n";
-	
+
 	print "drop_invalid_state: ";
 	if( $this->{fw}{OPTION}{drop_invalid_state} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -m conntrack --ctstate INVALID -j INVALID\n";
@@ -2059,7 +2059,7 @@ sub getIptablesRules {
 	} else {
 		print "off\n";
 	}
-	
+
 	print "drop_invalid_all: ";
 	if( $this->{fw}{OPTION}{drop_invalid_all} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags ALL ALL -j INVALID\n";
@@ -2069,7 +2069,7 @@ sub getIptablesRules {
 	} else {
 		print "off\n";
 	}
-	
+
 	print "drop_invalid_none: ";
 	if( $this->{fw}{OPTION}{drop_invalid_none} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags ALL NONE -j INVALID\n";
@@ -2079,7 +2079,7 @@ sub getIptablesRules {
 	} else {
 		print "off\n";
 	}
-	
+
 	print "drop_invalid_fin_notack: ";
 	if( $this->{fw}{OPTION}{drop_invalid_fin_notack} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags FIN,ACK FIN -j INVALID\n";
@@ -2089,7 +2089,7 @@ sub getIptablesRules {
 	} else {
 		print "off\n";
 	}
-	
+
 	print "drop_invalid_sys_fin: ";
 	if( $this->{fw}{OPTION}{drop_invalid_syn_fin} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags SYN,FIN SYN,FIN -j INVALID\n";
@@ -2109,7 +2109,7 @@ sub getIptablesRules {
 	} else {
 		print "off\n";
 	}
-	
+
 	print "drop_invalid_fragment: ";
 	if( $this->{fw}{OPTION}{drop_invalid_fragment} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -f -j INVALID\n";
@@ -2130,7 +2130,7 @@ sub getIptablesRules {
 	$rules .= "-A FORWARD -j CHECK_INVALID\n";
 	# END of INVALID Packets filter by Mark Francis
 	###############################################
-	
+
 	print "drop_ip_blacklist: ";
 	if( $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
 		$chains .= ":IP_BLACKLIST - [0:0]\n";
@@ -2185,7 +2185,7 @@ sub getIptablesRules {
 	} else {
 		print "off\n";
 	}
-	
+
 	# Definition for the return chain
 	# Return packet chain (NO new connections)
 	$chains .= ":BACK - [0:0]\n";
@@ -2200,7 +2200,7 @@ sub getIptablesRules {
 	$rules .= "-A ICMP-ACC -p icmp --icmp-type time-exceeded -j ACCEPT\n";
 	$rules .= "-A ICMP-ACC -p icmp --icmp-type parameter-problem -j ACCEPT\n";
 	$rules .= "-A ICMP-ACC -j RETURN\n";
-	
+
 	# Application of CONNMARKPREROUTEs
 	my $connmarkpreroutesCount = $this->GetConnmarkPreroutesCount();
 	if( $connmarkpreroutesCount > 0 ) {
@@ -2315,7 +2315,7 @@ sub getIptablesRules {
 		# Close the MASQ chain with a RETURN to the POSTROUTING parent chain
 		$rules_nat .= "-A MASQ -j RETURN\n";
 	}
-	
+
 	# REDIRECT
 	my $redirectCount = $this->GetRedirectCount();
 	if( $redirectCount > 0 ) {
@@ -2360,7 +2360,7 @@ sub getIptablesRules {
 	for( my $i=1; $i <= $rulesCount; $i++ ) {
 		$rules .= $this->applyRule( 1, 0, 0, 0, $this->GetRule($i) );
 	}
-	
+
 	# Close the zone chains
 	for( my $i=0; $i<=$#zone; $i++ ) {
 		my $z1 = $zone[$i];
@@ -2382,7 +2382,7 @@ sub getIptablesRules {
 		$rules .= "-A $chain -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
 	}
 	print "DROP any other connections and LOG Action\n";
-	
+
 	return	($rules_raw_conntrackpreroute || $rules_raw_conntrack ? $chains_raw.$rules_raw."COMMIT\n" : "*raw\nCOMMIT\n").
 		($rules_mangle_connmarkpreroute || $rules_mangle_connmark || $rules_mangle_option ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").
 		$chains.$rules."COMMIT\n".$chains_nat.$rules_nat."COMMIT\n";
@@ -2397,7 +2397,7 @@ sub applyNat {
 	my %services = %{$this->{services}};
 
 	my $rules = '';
-	
+
 	if( $nat{ACTIVE} eq 'NO' ) {
 		return '';
 	}
@@ -2474,14 +2474,14 @@ sub applyNat {
 		# to $real_ip:$dport, while on the 'back' way we do a SNAT from $real_ip:$sport
 		# to $virtual_ip:$sport. $state conditions and $jump tags are added to the iptables
 		# entries as well.
-		
+
 		print "NAT virtual($virtual),port($nmService".
 				($port ne '' ? "/$port" : '').
 				") --> real($real)".
 				($toport ne '' ? ",port($nmService/$toport)" : '').
 			" \n";
 		#$rules .= "#NAT virtual( $virtual ) -to-> real( $real ) on service( $nmService($port) )\n";
-		
+
 		if( !grep /^$nmService$/, keys %services ) {
 			print STDERR "Error: NAT service $nmService invalid.\n";
 			return $rules;
@@ -2569,7 +2569,7 @@ sub applyNat {
 sub applyMasquerade {
 	my $this = shift;
 	my %masq = @_;
-	
+
 	my %fw = %{$this->{fw}};
 	my %fwItems = %{$this->{fwItems}};
 	my %services = %{$this->{services}};
@@ -2579,13 +2579,13 @@ sub applyMasquerade {
 	if( $masq{ACTIVE} eq 'NO' ) {
 		return '';
 	}
-	
+
 	# Masquerade or don't masquerade?
 	my $is_masquerade = $masq{MASQUERADE} ne 'NO';
 
 	my $src = $masq{SRC};
 	my $dst = $masq{DST};
-	
+
 	###
 	# Backward compatibility with TurtleFirewall < 1.29
 	if( !$dst && $masq{ZONE} ) {
@@ -2628,7 +2628,7 @@ sub applyMasquerade {
 		}
 		return $rules;
 	}
-	
+
 	# Define the SERVICE
 	my $service = $masq{SERVICE};
 	my $port = $masq{PORT};
@@ -2654,13 +2654,13 @@ sub applyMasquerade {
 	my ($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
 	my %dst_zone_attr = $this->GetZone( $dst_zone );
 	my $dst_if = $dst_zone_attr{IF};
-	
+
 	print $is_masquerade ? '' : 'NOT ',"MASQUERADE port($service";
 	if( $service eq 'tcp' || $service eq 'udp' ) { print "/$port"; }
 	print $src ? ") $src" : ' *';
 	if( $src_mac ne '' ) { print "(mac:$src_mac)"; }
 	print " --> $dst IF $dst_if\n";
-	
+
 	$rules .= $this->applyServiceMasquerade( \%services, $service, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $is_masquerade);
 	return $rules;
 }
@@ -2676,7 +2676,7 @@ sub _applyServiceMasquerade {
 	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $is_masquerade) = @_;
 
 	my $rules = '';
-	
+
 	my %service = ();
 	if( !grep /^$serviceName$/, keys %{$ref_services} ) {
 		print STDERR "Error: MASQUERADE service $serviceName invalid.\n";
@@ -2742,17 +2742,17 @@ sub _applyServiceMasquerade {
 			if( $sport ne '' ) { $cmd .= "--sport $sport "; }
 			if( $dport ne '' ) { $cmd .= "--dport $dport "; }
 			if( $state ne '' ) { $cmd .= "-m conntrack --ctstate $state "; }
-			
+
 			if( $is_masquerade ) {
 				$cmd .= "-j MASQUERADE";
 			} else {
 				# Don't masquerade and return to parent chain
 				$cmd .= "-j RETURN";
 			}
-			
+
 			# Print commands, for debugging
 			#print "$cmd\n";
-			
+
 			$rules .= "$cmd\n";
 		}
 	}
@@ -2768,7 +2768,7 @@ sub applyRedirect {
 	my %services = %{$this->{services}};
 
 	my $rules = '';	
-	
+
 	if( $redirect{ACTIVE} eq 'NO' ) {
 		return '';
 	}
@@ -2849,7 +2849,7 @@ sub applyRedirect {
 
 	# I create the 2 return chains
 	$rules .= $this->applyServiceRedirect( \%services, $service, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect);
-	
+
 	return $rules;
 }
 
@@ -2864,7 +2864,7 @@ sub _applyServiceRedirect {
 	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect) = @_;
 
 	my $rules = '';
-	
+
 	my %service = ();
 	if( !grep /^$serviceName$/, keys %{$ref_services} ) {
 		print STDERR "Error: REDIRECT service $serviceName invalid.\n";
@@ -2972,13 +2972,13 @@ sub applyRule {
 	if( $rule{ACTIVE} eq 'NO' ) {
 		return '';
 	}
-	
+
 	my %fw = %{$this->{fw}};
 	my %fwItems = %{$this->{fwItems}};
 	my %services = %{$this->{services}};
 
 	my $rules = '';
-	
+
 	my $src = $rule{SRC};
 	my $dst = $rule{DST};
 	my $time = $rule{TIME};
@@ -3221,7 +3221,7 @@ sub applyRule {
 
 	#command( "" );
 	#comment( "# service $service: $src --> $dst  ($src_peer -> $dst_peer) [$src_zone -> $dst_zone]" );
-	
+
 	# Create the Chains
 	my $goChain = '';
 	my $backChain = '';
@@ -3237,7 +3237,7 @@ sub applyRule {
        	} else {
 	       	$backChain = "$dst_zone-$src_zone";
       	}
-	
+
         # Create the Rules
 	if( $mangle ) {
 		# Mangle Rule
@@ -3252,7 +3252,7 @@ sub applyRule {
 		$rules .= $this->applyService( \%services, $service, $goChain, $backChain, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
 		       	$port, $ndpi, $hostname, $risk, $ratelimit, $weekdays, $timestart, $timestop, $log, $target, '', '' );
 	}
-	
+
 	return $rules;
 }
 
@@ -3277,14 +3277,14 @@ sub _applyService {
 	} else {
 		%service = %{$ref_services->{$serviceName}};
 	}
-	
+
 	$ref_calledServices->{$serviceName} = 1;
 
 	# loop on the filering rules
 	for( my $i=0; $i<=$#{$service{FILTERS}}; $i++ ) {
 
 		my %filter = %{$service{FILTERS}[$i]};
-	
+
 		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyService( $ref_calledServices, $ref_services, $filter{SERVICE},
@@ -3459,7 +3459,7 @@ sub _applyService {
 sub expand_item {
 	my $this = shift;
 	my $item = shift;
-	
+
 	my %fw = %{$this->{fw}};
 	my %fwItems = %{$this->{fwItems}};
 	my $type = $fwItems{$item};
@@ -3506,7 +3506,7 @@ sub expand_time_item {
         $weekdays = $fw{TIME}{$item}{WEEKDAYS};
         $timestart = $fw{TIME}{$item}{TIMESTART};
         $timestop = $fw{TIME}{$item}{TIMESTOP};
-        
+
         return ( $weekdays, $timestart, $timestop );
 }
 
@@ -3518,7 +3518,7 @@ sub expand_hostnameset_item {
 
         my $hostnames = '';
 	$hostnames = $fw{HOSTNAMESET}{$item}{HOSTNAMES};
-        
+
         return ($hostnames);
 }
 
