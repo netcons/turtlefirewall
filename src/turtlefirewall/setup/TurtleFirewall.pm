@@ -2481,6 +2481,11 @@ sub applyNat {
 				($toport ne '' ? ",port($nmService/$toport)" : '').
 			" \n";
 		#$rules .= "#NAT virtual( $virtual ) -to-> real( $real ) on service( $nmService($port) )\n";
+		
+		if( !grep /^$nmService$/, keys %services ) {
+			print STDERR "Error: NAT service $nmService invalid.\n";
+			return $rules;
+		}
 
 		# Outputs a nat roule for each defined service channel
 		foreach my $filter (@{$services{$nmService}{FILTERS}}) {
@@ -2666,19 +2671,21 @@ sub applyServiceMasquerade {
 sub _applyServiceMasquerade {
 	my $this = shift;
 	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $is_masquerade) = @_;
-	
-	my %service = %{$ref_services->{$serviceName}};
-
-	# Service comment
-	#comment( "# $serviceName: ".$service{DESCRIPTION} );
-
-	$ref_calledServices->{$serviceName} = 1;
 
 	my $rules = '';
 	
+	my %service = ();
+	if( !grep /^$serviceName$/, keys %{$ref_services} ) {
+		print STDERR "Error: MASQUERADE service $serviceName invalid.\n";
+		return $rules;
+	} else {
+		%service = %{$ref_services->{$serviceName}};
+	}
+
+	$ref_calledServices->{$serviceName} = 1;
+
 	# Loop on filering rules
-	my $i;
-	for( $i = 0; $i <= $#{$service{FILTERS}}; $i++ ) {
+	for( my $i=0; $i<=$#{$service{FILTERS}}; $i++ ) {
 
 		my %filter = %{$service{FILTERS}[$i]};
 
@@ -2852,12 +2859,18 @@ sub _applyServiceRedirect {
 
 	my $rules = '';
 	
-	my %service = %{$ref_services->{$serviceName}};
+	my %service = ();
+	if( !grep /^$serviceName$/, keys %{$ref_services} ) {
+		print STDERR "Error: REDIRECT service $serviceName invalid.\n";
+		return $rules;
+	} else {
+		%service = %{$ref_services->{$serviceName}};
+	}
 
 	$ref_calledServices->{$serviceName} = 1;
 
 	# loop on filering rules
-	for( my $i = 0; $i <= $#{$service{FILTERS}}; $i++ ) {
+	for( my $i=0; $i<=$#{$service{FILTERS}}; $i++ ) {
 
 		my %filter = %{$service{FILTERS}[$i]};
 
@@ -3249,19 +3262,20 @@ sub _applyService {
 	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type,
 	$port, $ndpi, $hostname, $risk, $ratelimit, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper ) = @_;
 
-	my %service = %{$ref_services->{$serviceName}};
-
 	my $rules = '';
+
+	my %service = ();
+	if( !grep /^$serviceName$/, keys %{$ref_services} ) {
+		print STDERR "Error: service $serviceName invalid.\n";
+		return $rules;
+	} else {
+		%service = %{$ref_services->{$serviceName}};
+	}
 	
 	$ref_calledServices->{$serviceName} = 1;
 
-	# service comment
-	#comment( "# $serviceName: ".$service{DESCRIPTION} );
-	#
-	
 	# loop on the filering rules
-	my $i;
-	for( $i = 0; $i <= $#{$service{FILTERS}}; $i++ ) {
+	for( my $i=0; $i<=$#{$service{FILTERS}}; $i++ ) {
 
 		my %filter = %{$service{FILTERS}[$i]};
 	

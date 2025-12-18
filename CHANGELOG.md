@@ -2,6 +2,8 @@
 
 ## v.2.7 (11-12-2025)
 - Feature : nDPI 5.1 support.
+- Bug: Fix variable declarations.
+- Bug: Add invalid service check.
 - Todo : Translate new features.
 - Todo : Fix backup.cgi restore upload.
 
