@@ -3181,9 +3181,9 @@ sub applyRule {
 	}
 
 	# time items
-	my $t_days = '';
-	my $t_start = '';
-	my $t_stop = '';
+	my $weekdays = '';
+	my $timestart = '';
+	my $timestop = '';
 	if( $time ne '' ) {
 		my @times = ();
 		if( $fwItems{$time} eq 'TIMEGROUP' ) {
@@ -3210,41 +3210,41 @@ sub applyRule {
 		} else {
 			$time = shift @times;
 		}
-		($t_days, $t_start, $t_stop) = $this->expand_time_item( $time );
+		($weekdays, $timestart, $timestop) = $this->expand_time_item( $time );
 	}
 
 	#command( "" );
 	#comment( "# service $service: $src --> $dst  ($src_peer -> $dst_peer) [$src_zone -> $dst_zone]" );
 	
 	# Create the Chains
-	my $andata = '';
-	my $ritorno = '';
+	my $goChain = '';
+	my $backChain = '';
 
 	if( $preroute ) {
-	       	$andata = "$src_zone-IN"; 
+	       	$goChain = "$src_zone-IN"; 
 	} else {
-	       	$andata = "$src_zone-$dst_zone";
+	       	$goChain = "$src_zone-$dst_zone";
        	}
 
 	if( $preroute || $raw ) {
-	       	$ritorno = '';
+	       	$backChain = '';
        	} else {
-	       	$ritorno = "$dst_zone-$src_zone";
+	       	$backChain = "$dst_zone-$src_zone";
       	}
 	
         # Create the Rules
 	if( $mangle ) {
 		# Mangle Rule
-		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
-		   	$port, $ndpi, $hostname, $risk, '', $t_days, $t_start, $t_stop, '', '', $mark, '' );
+		$rules .= $this->applyService( \%services, $service, $goChain, $backChain, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
+		   	$port, $ndpi, $hostname, $risk, '', $weekdays, $timestart, $timestop, '', '', $mark, '' );
 	}  elsif( $raw ) {
 		# Raw Rule
-		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
-		       	$port, $ndpi, $hostname, $risk, '', $t_days, $t_start, $t_stop, '', '', '', $helper );
+		$rules .= $this->applyService( \%services, $service, $goChain, $backChain, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
+		       	$port, $ndpi, $hostname, $risk, '', $weekdays, $timestart, $timestop, '', '', '', $helper );
 	}  else {
 		# Filter Rule
-		$rules .= $this->applyService( \%services, $service, $andata, $ritorno, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
-		       	$port, $ndpi, $hostname, $risk, $ratelimit, $t_days, $t_start, $t_stop, $log, $target, '', '' );
+		$rules .= $this->applyService( \%services, $service, $goChain, $backChain, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
+		       	$port, $ndpi, $hostname, $risk, $ratelimit, $weekdays, $timestart, $timestop, $log, $target, '', '' );
 	}
 	
 	return $rules;
@@ -3260,7 +3260,7 @@ sub applyService {
 sub _applyService {
 	my $this = shift;
 	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type,
-	$port, $ndpi, $hostname, $risk, $ratelimit, $t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper ) = @_;
+	$port, $ndpi, $hostname, $risk, $ratelimit, $weekdays, $timestart, $timestop, $log, $target, $mangle_mark, $helper ) = @_;
 
 	my $rules = '';
 
@@ -3283,7 +3283,7 @@ sub _applyService {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyService( $ref_calledServices, $ref_services, $filter{SERVICE},
 				$goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type, $port, $ndpi, $hostname, $risk, $ratelimit,
-			       	$t_days, $t_start, $t_stop, $log, $target, $mangle_mark, $helper );
+			       	$weekdays, $timestart, $timestop, $log, $target, $mangle_mark, $helper );
 			next;
 		}
 
@@ -3369,8 +3369,8 @@ sub _applyService {
 
 		if( $state ne '' ) { $cmd .= "-m conntrack --ctstate $state "; }
 
-		if( $t_days ne '' && $t_start ne '' && $t_stop ne '' ) { 
-			$cmd .= "-m time --timestart $t_start --timestop $t_stop --weekdays $t_days ";
+		if( $weekdays ne '' && $timestart ne '' && $timestop ne '' ) { 
+			$cmd .= "-m time --timestart $timestart --timestop $timestop --weekdays $weekdays ";
 		}
 
 		# LOG before target
