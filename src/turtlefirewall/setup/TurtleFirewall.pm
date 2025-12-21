@@ -20,7 +20,7 @@ sub Version {
 }
 
 sub new {
-	my $this ={};
+	my $this = {};
 	$this->{fw} = ();
 	$this->{fwItems} = ();
 	$this->{fwKeys} = ();
@@ -1193,7 +1193,7 @@ sub _LoadFirewallItem {
 	my %attrs = upperKeys( %{shift @list} );
 	my $name = $attrs{'NAME'};
 
-	if( $this->{fwItems}{$name} ne '' ) {
+	if( defined($this->{fwItems}{$name}) && $this->{fwItems}{$name} ne '' ) {
 		print STDERR "Error: $name item is already present.\n";
 	}
 
@@ -1260,14 +1260,14 @@ sub _LoadFirewallRule {
 
 	my @srcs = split(/,/,$attrs{'SRC'});
 	foreach my $src (@srcs) {
-		if( $this->{fwItems}{$src} eq '' && $src ne '*' ) {
+		if( defined($this->{fwItems}{$src}) && $this->{fwItems}{$src} eq '' && $src ne '*' ) {
 			print STDERR "Error: rule number ".($#{$this->{fw}{RULE}}+2)." has an invalid source item ($src).\n";
 		}
 	}
 
 	my @dsts = split(/,/,$attrs{'DST'});
 	foreach my $dst (@dsts) {
-		if( $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
+		if( defined($this->{fwItems}{$dst}) && $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
 			print STDERR "Error: rule number ".($#{$this->{fw}{RULE}}+2)." has an invalid destination item ($dst).\n";
 		}
 	}
@@ -1282,12 +1282,12 @@ sub _LoadFirewallConnmarkPreroute {
 	my %attrs = upperKeys( %{shift @list} );
 
 	my $src = $attrs{'SRC'};
-	if( $this->{fwItems}{$src} eq '' && $src ne '*' ) {
+	if( defined($this->{fwItems}{$src}) && $this->{fwItems}{$src} eq '' && $src ne '*' ) {
 		print STDERR "Error: rule number ".($#{$this->{fw}{CONNMARKPREROUTE}}+2)." has an invalid source item ($src).\n";
 	}
 
 	my $dst = $attrs{'DST'};
-	if( $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
+	if( defined($this->{fwItems}{$dst}) && $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
 		print STDERR "Error: rule number ".($#{$this->{fw}{CONNMARKPREROUTE}}+2)." has an invalid destination item ($dst).\n";
 	}
 
@@ -1302,14 +1302,14 @@ sub _LoadFirewallConnmark {
 
 	my @srcs = split(/,/,$attrs{'SRC'});
 	foreach my $src (@srcs) {
-		if( $this->{fwItems}{$src} eq '' && $src ne '*' ) {
+		if( defined($this->{fwItems}{$src}) && $this->{fwItems}{$src} eq '' && $src ne '*' ) {
 			print STDERR "Error: rule number ".($#{$this->{fw}{CONNMARK}}+2)." has an invalid source item ($src).\n";
 		}
 	}
 
 	my @dsts = split(/,/,$attrs{'DST'});
 	foreach my $dst (@dsts) {
-		if( $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
+		if( defined($this->{fwItems}{$dst}) && $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
 			print STDERR "Error: rule number ".($#{$this->{fw}{CONNMARK}}+2)." has an invalid destination item ($dst).\n";
 		}
 	}
@@ -1324,12 +1324,12 @@ sub _LoadFirewallConntrackPreroute {
 	my %attrs = upperKeys( %{shift @list} );
 
 	my $src = $attrs{'SRC'};
-	if( $this->{fwItems}{$src} eq '' && $src ne '*' ) {
+	if( defined($this->{fwItems}{$src}) && $this->{fwItems}{$src} eq '' && $src ne '*' ) {
 		print STDERR "Error: rule number ".($#{$this->{fw}{CONNTRACKPREROUTE}}+2)." has an invalid source item ($src).\n";
 	}
 
 	my $dst = $attrs{'DST'};
-	if( $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
+	if( defined($this->{fwItems}{$dst}) && $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
 		print STDERR "Error: rule number ".($#{$this->{fw}{CONNTRACKPREROUTE}}+2)." has an invalid destination item ($dst).\n";
 	}
 
@@ -1343,12 +1343,12 @@ sub _LoadFirewallConntrack {
 	my %attrs = upperKeys( %{shift @list} );
 
 	my $src = $attrs{'SRC'};
-	if( $this->{fwItems}{$src} eq '' && $src ne '*' ) {
+	if( defined($this->{fwItems}{$src}) && $this->{fwItems}{$src} eq '' && $src ne '*' ) {
 		print STDERR "Error: rule number ".($#{$this->{fw}{CONNTRACK}}+2)." has an invalid source item ($src).\n";
 	}
 
 	my $dst = $attrs{'DST'};
-	if( $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
+	if( defined($this->{fwItems}{$dst}) && $this->{fwItems}{$dst} eq '' && $dst ne '*' ) {
 		print STDERR "Error: rule number ".($#{$this->{fw}{CONNTRACK}}+2)." has an invalid destination item ($dst).\n";
 	}
 
@@ -1870,7 +1870,7 @@ sub startFirewall {
 			my @item_list = ();
 			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{SRC} ) );
 			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{DST} ) );
-		       	if( grep( /^$s$/, @item_list ) && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
+		       	if( grep( /^$s$/, @item_list ) && !$this->{fw}{RULE}[$i]{ACTIVE} ) {
 				my $addresslist_file = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{FILE};
 				my $addresslist_type = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{TYPE};
 				if( ! -e $addresslist_file ) {
@@ -1907,7 +1907,7 @@ sub startFirewall {
 	for my $r ($this->GetRateLimitList()) {
 		my %ratelimit = $this->GetRateLimit($r);
 		for( my $i=0; $i<=$#{$this->{fw}{RULE}}; $i++ ) {
-		       	if( $this->{fw}{RULE}[$i]{RATELIMIT} eq $r && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
+		       	if( defined($this->{fw}{RULE}[$i]{RATELIMIT}) && $this->{fw}{RULE}[$i]{RATELIMIT} eq $r && !$this->{fw}{RULE}[$i]{ACTIVE} ) {
 				# Convert to bps
 				my $rate = $ratelimit{'RATE'} * 1024000; 
 				print "run ratelimit-restore $r($ratelimit{'RATE'} Mbps)\n";
@@ -1925,7 +1925,7 @@ sub startFirewall {
 			my @item_list = ();
 			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{SRC} ) );
 			push(@item_list, split( /,/, $this->{fw}{RULE}[$i]{DST} ) );
-		       	if( grep( /^$s$/, @item_list ) && $this->{fw}{RULE}[$i]{ACTIVE} ne 'NO') {
+		       	if( grep( /^$s$/, @item_list ) && !$this->{fw}{RULE}[$i]{ACTIVE} ) {
 				print "run ipset-restore $s($ipset{'IP'})\n";
 				my $addresslist_file = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{FILE};
 				my $addresslist_type = $this->{fw}{ADDRESSLIST}{$ipset{'IP'}}{TYPE};
@@ -2398,18 +2398,18 @@ sub applyNat {
 
 	my $rules = '';
 
-	if( $nat{ACTIVE} eq 'NO' ) {
+	if( $nat{ACTIVE} ) {
 		return '';
 	}
 
-	my $virtual	= $nat{VIRTUAL};
-	my $real	= $nat{REAL};
-	my $nmService	= $nat{SERVICE};
-	my $port	= $nat{PORT};			# Optional port identifier
-	my $toport	= $nat{TOPORT};			# Optional port identifier
-	my $virtual_ip='';
-	my $virtual_if='';
-	my $real_ip='';
+	my $virtual = defined($nat{VIRTUAL}) ? $nat{VIRTUAL} : '';
+	my $real = defined($nat{REAL}) ? $nat{REAL} : '';
+	my $nmService = defined($nat{SERVICE}) ? $nat{SERVICE} : '';
+	my $port = defined($nat{PORT}) ? $nat{PORT} : '';		# Optional port identifier
+	my $toport = defined($nat{TOPORT}) ? $nat{TOPORT} : '';		# Optional to port identifier
+	my $virtual_ip = '';
+	my $virtual_if = '';
+	my $real_ip = '';
 
 	# Service is a list of services?
 	if( $nmService =~ /,/ ) {
@@ -2487,14 +2487,15 @@ sub applyNat {
 			return $rules;
 		}
 
-		# Outputs a nat roule for each defined service channel
+		# Outputs a nat rule for each defined service channel
 		foreach my $filter (@{$services{$nmService}{FILTERS}}) {
-			my $direction	= $filter->{DIRECTION};
-			my $proto	= $filter->{P};
-			my $icmptype	= $filter->{ICMPTYPE};
-			my $sport	= $filter->{SPORT};
-			my $dport	= $filter->{DPORT};
-			my $state	= $filter->{STATE};
+
+			my $direction = defined($filter->{DIRECTION}) ? $filter->{DIRECTION} : '';
+			my $proto = defined($filter->{P}) ? $filter->{P} : '';
+			my $icmptype = defined($filter->{ICMPTYPE}) ? $filter->{ICMPTYPE} : '';
+			my $sport = defined($filter->{SPORT}) ? $filter->{SPORT} : '';
+			my $dport = defined($filter->{DPORT}) ? $filter->{DPORT} : '';
+			my $state = defined($filter->{STATE}) ? $filter->{STATE} : '';
 
 			# Fetches
 			if( $sport eq 'PORT' ) { $sport = $port; }
@@ -2576,15 +2577,15 @@ sub applyMasquerade {
 
 	my $rules = '';
 
-	if( $masq{ACTIVE} eq 'NO' ) {
+	if( $masq{ACTIVE} ) {
 		return '';
 	}
 
 	# Masquerade or don't masquerade?
-	my $is_masquerade = $masq{MASQUERADE} ne 'NO';
+	my $is_masquerade = !$masq{MASQUERADE};
 
-	my $src = $masq{SRC};
-	my $dst = $masq{DST};
+	my $src = defined($masq{SRC}) ? $masq{SRC} : '';
+	my $dst = defined($masq{DST}) ? $masq{DST} : '';
 
 	###
 	# Backward compatibility with TurtleFirewall < 1.29
@@ -2630,8 +2631,8 @@ sub applyMasquerade {
 	}
 
 	# Define the SERVICE
-	my $service = $masq{SERVICE};
-	my $port = $masq{PORT};
+	my $service = defined($masq{SERVICE}) ? $masq{SERVICE} : '';
+	my $port = defined($masq{PORT}) ? $masq{PORT} : '';;
 
 	# Service is a list of services?
 	if( $service =~ /,/ ) {
@@ -2695,20 +2696,20 @@ sub _applyServiceMasquerade {
 
 		my %filter = %{$service{FILTERS}[$i]};
 
-		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
+		if( defined($filter{SERVICE}) && $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyServiceMasquerade
 			$rules .= $this->_applyServiceMasquerade( $ref_calledServices, $ref_services, $filter{SERVICE},
 				$src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $is_masquerade );
 			next;
 		}
 
-		my $direction = $filter{DIRECTION};
-		my $p = $filter{P};
-		my $icmptype = $filter{ICMPTYPE};
-		my $sport = $filter{SPORT};
-		my $dport = $filter{DPORT};
-		my $state = $filter{STATE};
-		my $jump = $filter{JUMP};
+		my $direction = defined($filter{DIRECTION}) ? $filter{DIRECTION} : '';
+		my $p = defined($filter{P}) ? $filter{P} : '';
+		my $icmptype = defined($filter{ICMPTYPE}) ? $filter{ICMPTYPE} : '';
+		my $sport = defined($filter{SPORT}) ? $filter{SPORT} : '';
+		my $dport = defined($filter{DPORT}) ? $filter{DPORT} : '';
+		my $state = defined($filter{STATE}) ? $filter{STATE} : '';
+		my $jump = defined($filter{JUMP}) ? $filter{JUMP} : '';
 
 		if( $direction ne 'go' ) {
 			# Don't process Back filters, masquerade is apply only for go direction
@@ -2772,15 +2773,15 @@ sub applyRedirect {
 
 	my $rules = '';	
 
-	if( $redirect{ACTIVE} eq 'NO' ) {
+	if( $redirect{ACTIVE} ) {
 		return '';
 	}
 
 	# Redirect or don't redirect?
-	my $is_redirect = $redirect{REDIRECT} ne 'NO';
+	my $is_redirect = !$redirect{REDIRECT};
 
-	my $src = $redirect{SRC};
-	my $dst = $redirect{DST};
+	my $src = defined($redirect{SRC}) ? $redirect{SRC} : '';
+	my $dst = defined($redirect{DST}) ? $redirect{DST} : '';
 
 	# See if I have a group as source
 	if( $fwItems{$src} eq 'GROUP' ) {
@@ -2813,9 +2814,9 @@ sub applyRedirect {
 	}
 
 	# I define the SERVICE
-	my $service = $redirect{SERVICE};
-	my $port = $redirect{PORT};
-	my $toport = $redirect{TOPORT};
+	my $service = defined($redirect{SERVICE}) ? $redirect{SERVICE} : '';
+	my $port = defined($redirect{PORT}) ? $redirect{PORT} : '';
+	my $toport = defined($redirect{TOPORT}) ? $redirect{TOPORT} : '';
 
 	my ($src_zone, $src_peer, $src_type, $src_mac) = $this->expand_item( $src );
 	my %src_zone_attr = $this->GetZone( $src_zone );
@@ -2875,24 +2876,24 @@ sub _applyServiceRedirect {
 
 		my %filter = %{$service{FILTERS}[$i]};
 
-		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
+		if( defined($filter{SERVICE}) && $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyServiceRedirect( $ref_calledServices, $ref_services, $filter{SERVICE},
 				$src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect );
 			next;
 		}
 
-		my $direction = $filter{DIRECTION};
-		my $p = $filter{P};
-		my $icmptype = $filter{ICMPTYPE};
-		my $sport = $filter{SPORT};
-		my $dport = $filter{DPORT};
-		my $state = $filter{STATE};
-		my $jump = $filter{JUMP};
+		my $direction = defined($filter{DIRECTION}) ? $filter{DIRECTION} : '';
+		my $p = defined($filter{P}) ? $filter{P} : '';
+		my $icmptype = defined($filter{ICMPTYPE}) ? $filter{ICMPTYPE} : '';
+		my $sport = defined($filter{SPORT}) ? $filter{SPORT} : '';
+		my $dport = defined($filter{DPORT}) ? $filter{DPORT} : '';
+		my $state = defined($filter{STATE}) ? $filter{STATE} : '';
+		my $jump = defined($filter{JUMP}) ? $filter{JUMP} : '';
 
 		# I only use the first tcp/udp filter rule
 		if( $direction eq 'go' && ($p eq 'tcp' || $p eq 'udp' || $p eq '') &&
-		    ($filter{JUMP} eq '' || $filter{JUMP} eq 'ACCEPT') ) {
+		    ($jump eq '' || $jump eq 'ACCEPT') ) {
 
 			if( $dport eq 'PORT' ) {
 				$dport = $port;
@@ -2964,7 +2965,7 @@ sub applyRule {
 	my $preroute = shift; 
 	my %rule = @_;
 
-	if( $rule{ACTIVE} eq 'NO' ) {
+	if( $rule{ACTIVE} ) {
 		return '';
 	}
 
@@ -2974,22 +2975,22 @@ sub applyRule {
 
 	my $rules = '';
 
-	my $src = $rule{SRC};
-	my $dst = $rule{DST};
-	my $time = $rule{TIME};
-	my $target = $rule{TARGET};
-	my $service = $rule{SERVICE};
-	my $ndpi = $rule{NDPI};
-	my $category = $rule{CATEGORY};
-	my $hostnameset = $rule{HOSTNAMESET};
-	my $hostname = $rule{HOSTNAME};
-	my $riskset = $rule{RISKSET};
-	my $risk = $rule{RISK};
-	my $ratelimit = $rule{RATELIMIT};
-	my $port = $rule{PORT};
-	my $mark = $rule{MARK};
-	my $helper = $rule{HELPER};
-	my $log = $rule{LOG};
+	my $src = defined($rule{SRC}) ? $rule{SRC} : '';
+	my $dst = defined($rule{DST}) ? $rule{DST} : '';
+	my $time = defined($rule{TIME}) ? $rule{TIME} : '';
+	my $target = defined($rule{TARGET}) ? $rule{TARGET} : '';
+	my $service = defined($rule{SERVICE}) ? $rule{SERVICE} : '';
+	my $ndpi = defined($rule{NDPI}) ? $rule{NDPI} : '';
+	my $category = defined($rule{CATEGORY}) ? $rule{CATEGORY} : '';
+	my $hostnameset = defined($rule{HOSTNAMESET}) ? $rule{HOSTNAMESET} : '';
+	my $hostname = defined($rule{HOSTNAME}) ? $rule{HOSTNAME} : '';
+	my $riskset = defined($rule{RISKSET}) ? $rule{RISKSET} : '';
+	my $risk = defined($rule{RISK}) ? $rule{RISK} : '';
+	my $ratelimit = defined($rule{RATELIMIT}) ? $rule{RATELIMIT} : '';
+	my $port = defined($rule{PORT}) ? $rule{PORT} : '';
+	my $mark = defined($rule{MARK}) ? $rule{MARK} : '';
+	my $helper = defined($rule{HELPER}) ? $rule{HELPER} : '';
+	my $log = defined($rule{LOG}) ? $rule{LOG} : '';
 
 	my $prev = '';
 
@@ -3280,7 +3281,7 @@ sub _applyService {
 
 		my %filter = %{$service{FILTERS}[$i]};
 
-		if( $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
+		if( defined($filter{SERVICE}) && $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyService( $ref_calledServices, $ref_services, $filter{SERVICE},
 				$goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type, $port, $ndpi, $hostname, $risk, $ratelimit,
@@ -3288,13 +3289,13 @@ sub _applyService {
 			next;
 		}
 
-		my $direction = $filter{DIRECTION};
-		my $p = $filter{P};
-		my $icmptype = $filter{ICMPTYPE};
-		my $sport = $filter{SPORT};
-		my $dport = $filter{DPORT};
-		my $state = $filter{STATE};
-		my $jump = $filter{JUMP};
+		my $direction = defined($filter{DIRECTION}) ? $filter{DIRECTION} : '';
+		my $p = defined($filter{P}) ? $filter{P} : '';;
+		my $icmptype = defined($filter{ICMPTYPE}) ? $filter{ICMPTYPE} : '';;
+		my $sport = defined($filter{SPORT}) ? $filter{SPORT} : '';;
+		my $dport = defined($filter{DPORT}) ? $filter{DPORT} : '';;
+		my $state = defined($filter{STATE}) ? $filter{STATE} : '';;
+		my $jump = defined($filter{JUMP}) ? $filter{JUMP} : '';;
 
 		if( $target =~ /DROP|REJECT/ && $direction ne 'go' && $ratelimit eq '' ) {
 			# Don't process Back filters
@@ -3463,7 +3464,7 @@ sub expand_item {
 	my $type = '';
 	my $mac = '';
 
-	$item = $item ? $item : '';
+	$item = defined($item) ? $item : '';
 
 	if( $item eq '*' ) {
 	       	$type = 'ZONE';

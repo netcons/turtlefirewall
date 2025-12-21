@@ -65,7 +65,7 @@ sub reportFlowStat {
 	print &ui_columns_row([ "$icons{FLOWSTAT}{IMAGE}<b>$text{'edit_flowstat_top'}</b>", $col ], \@tds);
 
 	my @opts = ( [ 0, "$text{NO}<br>" ], [ 1, "$text{YES}" ] );
-	$col = &ui_radio("is_target", $is_target, \@opts);
+	$col = &ui_radio("is_target", $is_target ? 1 : 0, \@opts);
 	$col .= "&nbsp; where &nbsp;";
 	$col .= &ui_select("target_type", $target_type, \@items_type);
 	$col .= "&nbsp;";
