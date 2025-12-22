@@ -3508,36 +3508,39 @@ sub expand_item {
 	my $type = '';
 	my $mac = '';
 
-	$item = defined($item) ? $item : '';
+	if( defined($item) ) {
 
-	if( $item eq '*' ) {
-	       	$type = 'ZONE';
-	} elsif( $item ne '' ) {
-	       	$type = $fwItems{$item};
+		if( $item eq '*' ) {
+		       	$type = 'ZONE';
+	       	} else { 
+			$type = $fwItems{$item};
+		}
+
+		if( $type eq 'ZONE' ) {
+			$zone = $item;
+			$ip = '0.0.0.0/0';
+		}
+		if( $type eq 'GEOIP' ) {
+			$zone = $fw{GEOIP}{$item}{ZONE};
+			$ip = $fw{GEOIP}{$item}{IP};
+		}
+		if( $type eq 'IPSET' ) {
+			$zone = $fw{IPSET}{$item}{ZONE};
+			$ip = $fw{IPSET}{$item}{IP};
+		}
+		if( $type eq 'NET' ) {
+			$zone = $fw{NET}{$item}{ZONE};
+			$ip = $fw{NET}{$item}{IP}.'/'.$fw{NET}{$item}{NETMASK};
+		}
+		if( $type eq 'HOST' ) {
+			$zone = $fw{HOST}{$item}{ZONE};
+			$ip = $fw{HOST}{$item}{IP};
+			if( $ip ne '' ) {$ip = $ip.'/32';}
+			$mac = $fw{HOST}{$item}{MAC};
+		}
+
 	}
 
-	if( $type eq 'ZONE' ) {
-		$zone = $item;
-		$ip = '0.0.0.0/0';
-	}
-	if( $type eq 'GEOIP' ) {
-		$zone = $fw{GEOIP}{$item}{ZONE};
-		$ip = $fw{GEOIP}{$item}{IP};
-	}
-	if( $type eq 'IPSET' ) {
-		$zone = $fw{IPSET}{$item}{ZONE};
-		$ip = $fw{IPSET}{$item}{IP};
-	}
-	if( $type eq 'NET' ) {
-		$zone = $fw{NET}{$item}{ZONE};
-		$ip = $fw{NET}{$item}{IP}.'/'.$fw{NET}{$item}{NETMASK};
-	}
-	if( $type eq 'HOST' ) {
-		$zone = $fw{HOST}{$item}{ZONE};
-		$ip = $fw{HOST}{$item}{IP};
-		if( $ip ne '' ) {$ip = $ip.'/32';}
-		$mac = $fw{HOST}{$item}{MAC};
-	}
 	return ($zone, $ip, $type, $mac );
 }
 
