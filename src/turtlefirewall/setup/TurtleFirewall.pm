@@ -39,127 +39,127 @@ sub new {
 # Public method for get firewall info (after LoadFirewall)
 sub GetZoneList {
 	my $this = shift;
-	return sort( keys %{ $this->{fw}{ZONE} } );
+	return exists($this->{fw}{ZONE}) ? sort( keys %{ $this->{fw}{ZONE} } ) : ();
 }
 
 sub GetGeoipList {
 	my $this = shift;
-	return sort( keys %{ $this->{fw}{GEOIP} } );
+	return exists($this->{fw}{GEOIP}) ? sort( keys %{ $this->{fw}{GEOIP} } ) : ();
 }
 
 sub GetNetList {
 	my $this = shift;
-	return sort( keys %{ $this->{fw}{NET} } );
+	return exists($this->{fw}{NET}) ? sort( keys %{ $this->{fw}{NET} } ) : ();
 }
 
 sub GetHostList {
 	my $this = shift;
-	return sort( keys %{ $this->{fw}{HOST} } );
+	return exists($this->{fw}{HOST}) ? sort( keys %{ $this->{fw}{HOST} } ) : ();
 }
 
 sub GetTimeList {
 	my $this = shift;
-	return sort( keys %{ $this->{fw}{TIME} } );
+	return exists($this->{fw}{TIME}) ? sort( keys %{ $this->{fw}{TIME} } ) : ();
 }
 
 sub GetGroupList {
 	my $this = shift;
-	return sort @{$this->{fwKeys}{GROUP}};
+	return exists($this->{fwKeys}{GROUP}) ? sort @{ $this->{fwKeys}{GROUP} } : ();
 }
 
 sub GetTimeGroupList {
 	my $this = shift;
-	return sort @{$this->{fwKeys}{TIMEGROUP}};
+	return exists($this->{fwKeys}{TIMEGROUP}) ? sort @{$this->{fwKeys}{TIMEGROUP}} : ();
 }
 
 sub GetHostNameSetList {
 	my $this = shift;
-	return sort( keys %{ $this->{fw}{HOSTNAMESET} } );
+	return exists($this->{fw}{HOSTNAMESET}) ? sort( keys %{ $this->{fw}{HOSTNAMESET} } ) : ();
 }
 
 sub GetRiskSetList {
 	my $this = shift;
-	return sort( keys %{ $this->{fw}{RISKSET} } );
+	return exists($this->{fw}{RISKSET}) ? sort( keys %{ $this->{fw}{RISKSET} } ) : ();
 }
 
 sub GetRateLimitList {
 	my $this = shift;
-	return sort( keys %{ $this->{fw}{RATELIMIT} } );
+	return exists($this->{fw}{RATELIMIT}) ? sort( keys %{ $this->{fw}{RATELIMIT} } ) : ();
 }
 
 sub GetAddressListList {
 	my $this = shift;
-	return sort( keys %{ $this->{fw}{ADDRESSLIST} } );
+	return exists($this->{fw}{ADDRESSLIST}) ? sort( keys %{ $this->{fw}{ADDRESSLIST} } ) : ();
 }
 
 sub GetIPSetList {
 	my $this = shift;
-	return sort( keys %{ $this->{fw}{IPSET} } );
+	return exists($this->{fw}{IPSET}) ? sort( keys %{ $this->{fw}{IPSET} } ) : ();
 }
 
 sub GetZone {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{ZONE}{$name} };
+	return exists($this->{fw}{ZONE}{$name}) ? %{ $this->{fw}{ZONE}{$name} } : ();
 }
 
 sub GetGeoip {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{GEOIP}{$name} };
+	return exists($this->{fw}{GEOIP}{$name}) ? %{ $this->{fw}{GEOIP}{$name} } : ();
 }
 
 sub GetNet {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{NET}{$name} };
+	return exists($this->{fw}{NET}{$name}) ? %{ $this->{fw}{NET}{$name} } : ();
 }
 
 sub GetHost {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{HOST}{$name} };
+	return exists($this->{fw}{HOST}{$name}) ? %{ $this->{fw}{HOST}{$name} } : ();
 }
 
 sub GetTime {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{TIME}{$name} };
+	return exists($this->{fw}{TIME}{$name}) ? %{ $this->{fw}{TIME}{$name} } : ();
 }
 
 sub GetGroup {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{GROUP}{$name} };
+	return exists($this->{fw}{GROUP}{$name}) ? %{ $this->{fw}{GROUP}{$name} } : ();
 }
 
 sub GetTimeGroup {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{TIMEGROUP}{$name} };
+	return exists($this->{fw}{TIMEGROUP}{$name}) ? %{ $this->{fw}{TIMEGROUP}{$name} } : ();
 }
 
 sub GetHostNameSet {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{HOSTNAMESET}{$name} };
+	return exists($this->{fw}{HOSTNAMESET}{$name}) ? %{ $this->{fw}{HOSTNAMESET}{$name} } : ();
 }
 
 sub GetRiskSet {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{RISKSET}{$name} };
+	return exists($this->{fw}{RISKSET}{$name}) ? %{ $this->{fw}{RISKSET}{$name} } : ();
 }
 
 sub GetRateLimit {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{RATELIMIT}{$name} };
+	return exists($this->{fw}{RATELIMIT}{$name}) ? %{ $this->{fw}{RATELIMIT}{$name} } : ();
 }
 
 sub GetAddressList {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{ADDRESSLIST}{$name} };
+	return exists($this->{fw}{ADDRESSLIST}{$name}) ? %{ $this->{fw}{ADDRESSLIST}{$name} } : ();
 }
 
 sub GetIPSet {
 	my ($this,$name) = @_;
-	return %{ $this->{fw}{IPSET}{$name} };
+	return exists($this->{fw}{IPSET}{$name}) ? %{ $this->{fw}{IPSET}{$name} } : ();
 }
 
 sub GetAllItemsList {
 	my $this = shift;
-	return sort( keys %{ $this->{fwItems} } );
+	return exists($this->{fwItems}) ? sort( keys %{ $this->{fwItems} } ) : ();
 }
 
 # GetItemsAllowToGroup( group )
@@ -169,16 +169,18 @@ sub GetItemsAllowToGroup {
 	my $group = shift;
 	my @items = ();
 	push @items, 'FIREWALL';
-	push @items, @{$this->{fwKeys}{ZONE}};
-	push @items, @{$this->{fwKeys}{NET}};
-	push @items, @{$this->{fwKeys}{HOST}};
-	push @items, @{$this->{fwKeys}{GEOIP}};
-	push @items, @{$this->{fwKeys}{IPSET}};
-	foreach my $g ( @{$this->{fwKeys}{GROUP}} ) {
-		if( $g eq $group ) {
-			last;
+	push @items, exists($this->{fwKeys}{ZONE}) ? @{$this->{fwKeys}{ZONE}} : ();
+	push @items, exists($this->{fwKeys}{NET}) ? @{$this->{fwKeys}{NET}} : ();
+	push @items, exists($this->{fwKeys}{HOST}) ? @{$this->{fwKeys}{HOST}} : ();
+	push @items, exists($this->{fwKeys}{GEOIP}) ? @{$this->{fwKeys}{GEOIP}} : ();
+	push @items, exists($this->{fwKeys}{IPSET}) ? @{$this->{fwKeys}{IPSET}} : ();
+	if( exists($this->{fwKeys}{GROUP}) ) {
+		foreach my $g ( @{$this->{fwKeys}{GROUP}} ) {
+			if( $g eq $group ) {
+				last;
+			}
+			push @items, $g;
 		}
-		push @items, $g;
 	}
 	return sort @items;
 }
@@ -187,7 +189,7 @@ sub GetItemsAllowToTimeGroup {
 	my $this = shift;
 	my $timegroup = shift;
 	my @items = ();
-	push @items, @{$this->{fwKeys}{TIME}};
+	push @items, exists($this->{fwKeys}{TIME}) ? @{$this->{fwKeys}{TIME}} : ();
 	return sort @items;
 }
 
@@ -1569,123 +1571,163 @@ sub SaveFirewallAs {
 	$xml .= "</options>\n";
 	$xml .= "\n";
 
-	foreach my $k (keys %{$fw{'ZONE'}}) {
-		if( $k ne 'FIREWALL' ) {
-			$xml .= $this->attr2xml( 'zone', %{$fw{'ZONE'}{$k}} );
+	if( exists($fw{'ZONE'}) ) {
+		foreach my $k (keys %{$fw{'ZONE'}}) {
+			if( $k ne 'FIREWALL' ) {
+				$xml .= $this->attr2xml( 'zone', %{$fw{'ZONE'}{$k}} );
+			}
 		}
+		$xml .= "\n";
 	}
-	$xml .= "\n";
 
-	foreach my $k (keys %{$fw{'NET'}}) {
-		$xml .= $this->attr2xml( 'net', %{$fw{'NET'}{$k}} );
-	}
-	if( %{$fw{'NET'}} ) { $xml .= "\n"; }
-
-	foreach my $k (keys %{$fw{'HOST'}}) {
-		$xml .= $this->attr2xml( 'host', %{$fw{'HOST'}{$k}} );
-	}
-	if( %{$fw{'HOST'}} ) { $xml .= "\n"; }
-
-	foreach my $k (keys %{$fw{'GEOIP'}}) {
-		$xml .= $this->attr2xml( 'geoip', %{$fw{'GEOIP'}{$k}} );
-	}
-	if( %{$fw{'GEOIP'}} ) { $xml .= "\n"; }
-
-	foreach my $k (keys %{$fw{'ADDRESSLIST'}}) {
-		$xml .= $this->attr2xml( 'addresslist', %{$fw{'ADDRESSLIST'}{$k}} );
-	}
-	if( %{$fw{'ADDRESSLIST'}} ) { $xml .= "\n"; }
-
-	foreach my $k (keys %{$fw{'IPSET'}}) {
-		$xml .= $this->attr2xml( 'ipset', %{$fw{'IPSET'}{$k}} );
-	}
-	if( %{$fw{'IPSET'}} ) { $xml .= "\n"; }
-
-	foreach my $k (@{$this->{fwKeys}{GROUP}}) {
-		$xml .= "<group name=\"$k\" description=\"".$this->_clean($fw{'GROUP'}{$k}{DESCRIPTION})."\">\n";
-		foreach my $item (@{$fw{'GROUP'}{$k}{ITEMS}}) {
-			$xml .= "\t<item name=\"".$this->_clean($item)."\"/>\n";
+	if( exists($fw{'NET'}) ) {
+		foreach my $k (keys %{$fw{'NET'}}) {
+			$xml .= $this->attr2xml( 'net', %{$fw{'NET'}{$k}} );
 		}
-		$xml .= "</group>\n";
+		$xml .= "\n";
 	}
-	if( @{$this->{fwKeys}{GROUP}} ) { $xml .= "\n"; }
 
-	foreach my $k (keys %{$fw{'TIME'}}) {
-		$xml .= $this->attr2xml( 'time', %{$fw{'TIME'}{$k}} );
-	}
-	if( %{$fw{'TIME'}} ) { $xml .= "\n"; }
-
-	foreach my $k (@{$this->{fwKeys}{TIMEGROUP}}) {
-		$xml .= "<timegroup name=\"$k\" description=\"".$this->_clean($fw{'TIMEGROUP'}{$k}{DESCRIPTION})."\">\n";
-		foreach my $item (@{$fw{'TIMEGROUP'}{$k}{ITEMS}}) {
-			$xml .= "\t<item name=\"".$this->_clean($item)."\"/>\n";
+	if( exists($fw{'HOST'}) ) {
+		foreach my $k (keys %{$fw{'HOST'}}) {
+			$xml .= $this->attr2xml( 'host', %{$fw{'HOST'}{$k}} );
 		}
-		$xml .= "</timegroup>\n";
+		$xml .= "\n";
 	}
-	if( @{$this->{fwKeys}{TIMEGROUP}} ) { $xml .= "\n"; }
 
-	foreach my $k (keys %{$fw{'HOSTNAMESET'}}) {
-		$xml .= $this->attr2xml( 'hostnameset', %{$fw{'HOSTNAMESET'}{$k}} );
+	if( exists($fw{'GEOIP'}) ) {
+		foreach my $k (keys %{$fw{'GEOIP'}}) {
+			$xml .= $this->attr2xml( 'geoip', %{$fw{'GEOIP'}{$k}} );
+		}
+		$xml .= "\n";
 	}
-	if( %{$fw{'HOSTNAMESET'}} ) { $xml .= "\n"; }
 
-	foreach my $k (keys %{$fw{'RISKSET'}}) {
-		$xml .= $this->attr2xml( 'riskset', %{$fw{'RISKSET'}{$k}} );
+	if( exists($fw{'ADDRESSLIST'}) ) {
+		foreach my $k (keys %{$fw{'ADDRESSLIST'}}) {
+			$xml .= $this->attr2xml( 'addresslist', %{$fw{'ADDRESSLIST'}{$k}} );
+		}
+		$xml .= "\n";
 	}
-	if( %{$fw{'RISKSET'}} ) { $xml .= "\n"; }
 
-	foreach my $k (keys %{$fw{'RATELIMIT'}}) {
-		$xml .= $this->attr2xml( 'ratelimit', %{$fw{'RATELIMIT'}{$k}} );
+	if( exists($fw{'IPSET'}) ) {
+		foreach my $k (keys %{$fw{'IPSET'}}) {
+			$xml .= $this->attr2xml( 'ipset', %{$fw{'IPSET'}{$k}} );
+		}
+		$xml .= "\n";
 	}
-	if( %{$fw{'RATELIMIT'}} ) { $xml .= "\n"; }
 
-	my @nats = @{$fw{'NAT'}};
-	for my $i (0..$#nats) {
-		$xml .= $this->attr2xml( 'nat', %{$nats[$i]} );
+	if( exists($this->{fwKeys}{GROUP}) ) {
+		foreach my $k (@{$this->{fwKeys}{GROUP}}) {
+			$xml .= "<group name=\"$k\" description=\"".$this->_clean($fw{'GROUP'}{$k}{DESCRIPTION})."\">\n";
+			foreach my $item (@{$fw{'GROUP'}{$k}{ITEMS}}) {
+				$xml .= "\t<item name=\"".$this->_clean($item)."\"/>\n";
+			}
+			$xml .= "</group>\n";
+		}
+		$xml .= "\n";
 	}
-	if( @{$fw{'NAT'}} ) { $xml .= "\n"; }
 
-	my @masq = @{$fw{'MASQUERADE'}};
-	for my $i (0..$#masq) {
-		$xml .= $this->attr2xml( 'masquerade', %{$masq[$i]} );
+	if( exists($fw{'TIME'}) ) {
+		foreach my $k (keys %{$fw{'TIME'}}) {
+			$xml .= $this->attr2xml( 'time', %{$fw{'TIME'}{$k}} );
+		}
+		$xml .= "\n";
 	}
-	if( @{$fw{'MASQUERADE'}} ) { $xml .= "\n"; }
 
-	my @redirectlist = @{$fw{'REDIRECT'}};
-	for my $i (0..$#redirectlist) {
-		$xml .= $this->attr2xml( 'redirect', %{$redirectlist[$i]} );
+	if( exists($this->{fwKeys}{TIMEGROUP}) ) {
+		foreach my $k (@{$this->{fwKeys}{TIMEGROUP}}) {
+			$xml .= "<timegroup name=\"$k\" description=\"".$this->_clean($fw{'TIMEGROUP'}{$k}{DESCRIPTION})."\">\n";
+			foreach my $item (@{$fw{'TIMEGROUP'}{$k}{ITEMS}}) {
+				$xml .= "\t<item name=\"".$this->_clean($item)."\"/>\n";
+			}
+			$xml .= "</timegroup>\n";
+		}
+		$xml .= "\n";
 	}
-	if( @{$fw{'REDIRECT'}} ) { $xml .= "\n"; }
 
-	my @conntrackpreroutes = @{$fw{'CONNTRACKPREROUTE'}};
-	for my $i (0..$#conntrackpreroutes) {
-		$xml .= $this->attr2xml( 'conntrackpreroute', %{$conntrackpreroutes[$i]} );
+	if( exists($fw{'HOSTNAMESET'}) ) {
+		foreach my $k (keys %{$fw{'HOSTNAMESET'}}) {
+			$xml .= $this->attr2xml( 'hostnameset', %{$fw{'HOSTNAMESET'}{$k}} );
+		}
+		$xml .= "\n";
 	}
-	if( @{$fw{'CONNTRACKPREROUTE'}} ) { $xml .= "\n"; }
 
-	my @conntracks = @{$fw{'CONNTRACK'}};
-	for my $i (0..$#conntracks) {
-		$xml .= $this->attr2xml( 'conntrack', %{$conntracks[$i]} );
+	if( exists($fw{'RISKSET'}) ) {
+		foreach my $k (keys %{$fw{'RISKSET'}}) {
+			$xml .= $this->attr2xml( 'riskset', %{$fw{'RISKSET'}{$k}} );
+		}
+		$xml .= "\n";
 	}
-	if( @{$fw{'CONNTRACK'}} ) { $xml .= "\n"; }
 
-	my @connmarkpreroutes = @{$fw{'CONNMARKPREROUTE'}};
-	for my $i (0..$#connmarkpreroutes) {
-		$xml .= $this->attr2xml( 'connmarkpreroute', %{$connmarkpreroutes[$i]} );
+	if( exists($fw{'RATELIMIT'}) ) {
+		foreach my $k (keys %{$fw{'RATELIMIT'}}) {
+			$xml .= $this->attr2xml( 'ratelimit', %{$fw{'RATELIMIT'}{$k}} );
+		}
+		$xml .= "\n";
 	}
-	if( @{$fw{'CONNMARKPREROUTE'}} ) { $xml .= "\n"; }
 
-	my @connmarks = @{$fw{'CONNMARK'}};
-	for my $i (0..$#connmarks) {
-		$xml .= $this->attr2xml( 'connmark', %{$connmarks[$i]} );
+	if( exists($fw{'NAT'}) ) {
+		my @nats = @{$fw{'NAT'}};
+		for my $i (0..$#nats) {
+			$xml .= $this->attr2xml( 'nat', %{$nats[$i]} );
+		}
+		$xml .= "\n"; 
 	}
-	if( @{$fw{'CONNMARK'}} ) { $xml .= "\n"; }
 
-	my @rules = @{$fw{'RULE'}};
-	for my $i (0..$#rules) {
-		$xml .= $this->attr2xml( 'rule', %{$rules[$i]} );
+	if( exists($fw{'MASQUERADE'}) ) {
+		my @masq = @{$fw{'MASQUERADE'}};
+		for my $i (0..$#masq) {
+			$xml .= $this->attr2xml( 'masquerade', %{$masq[$i]} );
+		}
+		$xml .= "\n";
 	}
-	$xml .= "\n";
+
+	if( exists($fw{'REDIRECT'}) ) {
+		my @redirectlist = @{$fw{'REDIRECT'}};
+		for my $i (0..$#redirectlist) {
+			$xml .= $this->attr2xml( 'redirect', %{$redirectlist[$i]} );
+		}
+		$xml .= "\n";
+	}
+
+	if( exists($fw{'CONNTRACKPREROUTE'}) ) {
+		my @conntrackpreroutes = @{$fw{'CONNTRACKPREROUTE'}};
+		for my $i (0..$#conntrackpreroutes) {
+			$xml .= $this->attr2xml( 'conntrackpreroute', %{$conntrackpreroutes[$i]} );
+		}
+		$xml .= "\n";
+	}
+
+	if( exists($fw{'CONNTRACK'}) ) {
+		my @conntracks = @{$fw{'CONNTRACK'}};
+		for my $i (0..$#conntracks) {
+			$xml .= $this->attr2xml( 'conntrack', %{$conntracks[$i]} );
+		}
+		$xml .= "\n";
+	}
+
+	if( exists($fw{'CONNMARKPREROUTE'}) ) {
+		my @connmarkpreroutes = @{$fw{'CONNMARKPREROUTE'}};
+		for my $i (0..$#connmarkpreroutes) {
+			$xml .= $this->attr2xml( 'connmarkpreroute', %{$connmarkpreroutes[$i]} );
+		}
+		$xml .= "\n";
+	}
+
+	if( exists($fw{'CONNMARK'}) ) {
+		my @connmarks = @{$fw{'CONNMARK'}};
+		for my $i (0..$#connmarks) {
+			$xml .= $this->attr2xml( 'connmark', %{$connmarks[$i]} );
+		}
+		$xml .= "\n";
+	}
+
+	if( exists($fw{'RULE'}) ) {
+		my @rules = @{$fw{'RULE'}};
+		for my $i (0..$#rules) {
+			$xml .= $this->attr2xml( 'rule', %{$rules[$i]} );
+		}
+		$xml .= "\n";
+	}
 
 	$xml .= "</firewall>\n";
 
