@@ -12,6 +12,8 @@
 
 package TurtleFirewall;
 
+use strict;
+use warnings;
 use XML::Parser;
 
 # Turtle Firewall Version
