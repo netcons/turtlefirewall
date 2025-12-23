@@ -1835,11 +1835,11 @@ sub startFirewall {
 	# Enable IP forwarding
 	$this->command('echo "1"', '/proc/sys/net/ipv4/ip_forward');
 
-	if( $this->{fw}{OPTION}{rp_filter} eq 'unchange' ) {
+	if( !defined($this->{fw}{OPTION}{rp_filter}) || $this->{fw}{OPTION}{rp_filter} eq 'unchange' ) {
 		print "rp_filter: unchange\n";
 	} else {
 		my $flag;
-		if( $this->{fw}{OPTION}{rp_filter} eq 'off' ) {
+		if( defined($this->{fw}{OPTION}{rp_filter}) && $this->{fw}{OPTION}{rp_filter} eq 'off' ) {
 			print "rp_filter: off\n";
 			$flag = 0;
 		} else {
@@ -1849,11 +1849,11 @@ sub startFirewall {
 		$this->command( "for f in /proc/sys/net/ipv4/conf/*/rp_filter; do echo $flag > \$f; done" );
 	}
 
-	if( $this->{fw}{OPTION}{log_martians} eq 'unchange' ) {
+	if( !defined($this->{fw}{OPTION}{log_martians}) || $this->{fw}{OPTION}{log_martians} eq 'unchange' ) {
 		print "log_martians: unchange\n";
 	} else {
 		my $flag;
-		if( $this->{fw}{OPTION}{log_martians} eq 'off' ) {
+		if( defined($this->{fw}{OPTION}{log_martians}) && $this->{fw}{OPTION}{log_martians} eq 'off' ) {
 			print "log_martians: off\n";
 			$flag = 0;
 		} else {
@@ -1885,7 +1885,7 @@ sub startFirewall {
 	$this->command( 'echo 1', '/proc/sys/net/ipv4/icmp_ignore_bogus_error_responses' );
 
 	# Other options
-	if( $this->{fw}{OPTION}{nf_conntrack_max} > 0 ) {
+	if( defined($this->{fw}{OPTION}{nf_conntrack_max}) && $this->{fw}{OPTION}{nf_conntrack_max} > 0 ) {
 		open( FILE, ">/proc/sys/net/netfilter/nf_conntrack_max" );
 		print FILE $this->{fw}{OPTION}{nf_conntrack_max};
 		close FILE;
@@ -1893,17 +1893,17 @@ sub startFirewall {
 	}
 
 	# Ensure ipset item present for IP Blacklist
-	if( $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_ip_blacklist}) || $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
 		$this->command('/usr/lib/turtlefirewall/ip_blacklist -I', '/dev/null');
 	}
 
 	# Ensure dpi item present for Domain Blacklist
-	if( $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_domain_blacklist}) || $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
 		$this->command('/usr/lib/turtlefirewall/domain_blacklist -I', '/dev/null');
 	}
 
 	# Ensure dpi item present for SHA1 Blacklist
-	if( $this->{fw}{OPTION}{drop_sha1_blacklist} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_sha1_blacklist}) || $this->{fw}{OPTION}{drop_sha1_blacklist} ne 'off' ) {
 		$this->command('/usr/lib/turtlefirewall/sha1_blacklist -I', '/dev/null');
 	}
 
@@ -2048,17 +2048,18 @@ sub getIptablesRules {
 	my $rules_raw_conntrack = ''; 
 
 	my $log_limit=60;
-	my $log_limit_burst=5;
-	if( $this->{fw}{OPTION}{log_limit} > 0 ) {
+	if( defined($this->{fw}{OPTION}{log_limit}) && $this->{fw}{OPTION}{log_limit} > 0 ) {
 		$log_limit = $this->{fw}{OPTION}{log_limit};
-		print "log_limit: $log_limit\n";
-	}
-	if( $this->{fw}{OPTION}{log_limit_burst} > 0 ) {
-		$log_limit_burst = $this->{fw}{OPTION}{log_limit_burst};
-		print "log_limit_burst: $log_limit_burst\n";
 	}
 	$this->{log_limit} = $log_limit;
+	print "log_limit: $log_limit\n";
+
+	my $log_limit_burst=5;
+	if( defined($this->{fw}{OPTION}{log_limit_burst}) && $this->{fw}{OPTION}{log_limit_burst} > 0 ) {
+		$log_limit_burst = $this->{fw}{OPTION}{log_limit_burst};
+	}
 	$this->{log_limit_burst} = $log_limit_burst;
+	print "log_limit_burst: $log_limit_burst\n";
 
 	# Chains for filter table
 	$chains .= "*filter\n".
@@ -2095,7 +2096,7 @@ sub getIptablesRules {
 	$chains .= ":CHECK_INVALID - [0:0]\n";
 
 	print "drop_invalid_state: ";
-	if( $this->{fw}{OPTION}{drop_invalid_state} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_invalid_state}) || $this->{fw}{OPTION}{drop_invalid_state} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -m conntrack --ctstate INVALID -j INVALID\n";
 		$rules .= "-A INVALID -m conntrack --ctstate INVALID ".
 			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-STATE(DRO) \"\n";
@@ -2105,7 +2106,7 @@ sub getIptablesRules {
 	}
 
 	print "drop_invalid_all: ";
-	if( $this->{fw}{OPTION}{drop_invalid_all} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_invalid_all}) || $this->{fw}{OPTION}{drop_invalid_all} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags ALL ALL -j INVALID\n";
 		$rules .= "-A INVALID -p tcp --tcp-flags ALL ALL ".
 			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-ALL(DRO) \"\n";
@@ -2115,7 +2116,7 @@ sub getIptablesRules {
 	}
 
 	print "drop_invalid_none: ";
-	if( $this->{fw}{OPTION}{drop_invalid_none} ne 'off' ) {
+	if( !defined( $this->{fw}{OPTION}{drop_invalid_none}) || $this->{fw}{OPTION}{drop_invalid_none} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags ALL NONE -j INVALID\n";
 		$rules .= "-A INVALID -p tcp --tcp-flags ALL NONE ".
 			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-NONE(DRO) \"\n";
@@ -2125,7 +2126,7 @@ sub getIptablesRules {
 	}
 
 	print "drop_invalid_fin_notack: ";
-	if( $this->{fw}{OPTION}{drop_invalid_fin_notack} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_invalid_fin_notack}) || $this->{fw}{OPTION}{drop_invalid_fin_notack} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags FIN,ACK FIN -j INVALID\n";
 		$rules .= "-A INVALID -p tcp --tcp-flags FIN,ACK FIN ".
 			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-FIN,!ACK(DRO) \"\n";
@@ -2135,7 +2136,7 @@ sub getIptablesRules {
 	}
 
 	print "drop_invalid_sys_fin: ";
-	if( $this->{fw}{OPTION}{drop_invalid_syn_fin} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_invalid_syn_fin}) || $this->{fw}{OPTION}{drop_invalid_syn_fin} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags SYN,FIN SYN,FIN -j INVALID\n";
 		$rules .= "-A INVALID -p tcp --tcp-flags SYN,FIN SYN,FIN ".
 			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-SYN,FIN(DRO) \"\n";
@@ -2145,7 +2146,7 @@ sub getIptablesRules {
 	}
 
 	print "drop_invalid_syn_rst: ";
-	if( $this->{fw}{OPTION}{drop_invalid_syn_rst} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_invalid_syn_rst}) || $this->{fw}{OPTION}{drop_invalid_syn_rst} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -p tcp --tcp-flags SYN,RST SYN,RST  -j INVALID\n";
 		$rules .= "-A INVALID -p tcp --tcp-flags SYN,RST SYN,RST ".
 			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-SYN,RST(DRO) \"\n";
@@ -2155,7 +2156,7 @@ sub getIptablesRules {
 	}
 
 	print "drop_invalid_fragment: ";
-	if( $this->{fw}{OPTION}{drop_invalid_fragment} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_invalid_fragment}) || $this->{fw}{OPTION}{drop_invalid_fragment} ne 'off' ) {
 		$rules .= "-A CHECK_INVALID -f -j INVALID\n";
 		$rules .= "-A INVALID -f ".
 			" -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=INVALID-FRAGMENT(DRO) \"\n";
@@ -2176,7 +2177,7 @@ sub getIptablesRules {
 	###############################################
 
 	print "drop_ip_blacklist: ";
-	if( $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_ip_blacklist}) || $this->{fw}{OPTION}{drop_ip_blacklist} ne 'off' ) {
 		$chains .= ":IP_BLACKLIST - [0:0]\n";
                 $rules .= "-A IP_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=IP-BLACKLIST(DRO) \"\n";
                 $rules .= "-A IP_BLACKLIST -j DROP\n";
@@ -2190,7 +2191,7 @@ sub getIptablesRules {
 	}
 
 	print "drop_domain_blacklist: ";
-	if( $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_domain_blacklist}) || $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
 		$chains .= ":DOMAIN_BLACKLIST - [0:0]\n";
                 $rules .= "-A DOMAIN_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=DOMAIN-BLACKLIST(DRO) \"\n";
                 $rules .= "-A DOMAIN_BLACKLIST -j DROP\n";
@@ -2208,7 +2209,7 @@ sub getIptablesRules {
 	}
 
 	print "drop_sha1_blacklist: ";
-	if( $this->{fw}{OPTION}{drop_sha1_blacklist} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{drop_sha1_blacklist}) || $this->{fw}{OPTION}{drop_sha1_blacklist} ne 'off' ) {
 		$chains .= ":SHA1_BLACKLIST - [0:0]\n";
                 $rules .= "-A SHA1_BLACKLIST -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"TFW=SHA1-BLACKLIST(DRO) \"\n";
                 $rules .= "-A SHA1_BLACKLIST -j DROP\n";
@@ -2222,7 +2223,7 @@ sub getIptablesRules {
 	}
 
 	print "clamp_mss_to_pmtu: ";
-	if( $this->{fw}{OPTION}{clamp_mss_to_pmtu} ne 'off' ) {
+	if( !defined($this->{fw}{OPTION}{clamp_mss_to_pmtu}) || $this->{fw}{OPTION}{clamp_mss_to_pmtu} ne 'off' ) {
                 $rules_mangle_option .= "-A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o ppp+ -j TCPMSS --clamp-mss-to-pmtu\n";
 		$rules_mangle .= $rules_mangle_option;
 		print "on\n";
@@ -3511,8 +3512,8 @@ sub expand_item {
 	if( defined($item) ) {
 
 		if( $item eq '*' ) {
-		       	$type = 'ZONE';
-	       	} else { 
+			$type = 'ZONE';
+		} else { 
 			$type = $fwItems{$item};
 		}
 
