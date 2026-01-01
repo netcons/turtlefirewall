@@ -2468,16 +2468,15 @@ sub applyNat {
 	}
 
 	if( $virtual eq '' ) {
-		print STDERR "Error: VIRTUAL attribute missing in NAT rule definition.\n";
+		print "Error: VIRTUAL attribute missing in NAT rule definition.\n";
 		return $rules;
 	}
 	if( $real eq '' ) {
-		print STDERR "Error: REAL attribute missing in NAT rule definition.\n";
+		print "Error: REAL attribute missing in NAT rule definition.\n";
 		return $rules;
 	}
-
 	if( $fwItems{$virtual} ne 'HOST' && $fwItems{$virtual} ne 'ZONE' ) {
-		print STDERR "Error: in a NAT rule definition, VIRTUAL attribute [$virtual] is not a valid host or zone name.\n";
+		print "Error: in a NAT rule definition, VIRTUAL attribute [$virtual] is not a valid host or zone name.\n";
 		return $rules;
 	}
 	if( $fwItems{$virtual} eq 'HOST' ) {
@@ -2486,12 +2485,16 @@ sub applyNat {
 	if( $fwItems{$virtual} eq 'ZONE' ) {
 		$virtual_if = $fw{ZONE}{$virtual}{IF};
 	}
-
 	if( $fwItems{$real} ne 'HOST' ) {
-		print STDERR "Error: in a NAT rule definition, REAL attribute is not a valid host name.\n";
+		print "Error: in a NAT rule definition, REAL attribute is not a valid host name.\n";
 		return $rules;
 	}
-	$real_ip = $fw{HOST}{$real}{IP};
+	if( $fw{HOST}{$real}{IP} ne '' ) {
+		$real_ip = $fw{HOST}{$real}{IP};
+	} else {
+		print "Error: in a NAT rule definition, IP attribute missing for $fw{HOST}{$real}{NAME}.\n";
+		return $rules;
+	}
 
 	if( $nmService eq '' || $nmService eq 'all' ) {
 		# Interface-wide nat. This was the only way natting was used to be.
@@ -2528,7 +2531,7 @@ sub applyNat {
 		#$rules .= "#NAT virtual( $virtual ) -to-> real( $real ) on service( $nmService($port) )\n";
 
 		if( !grep /^$nmService$/, keys %services ) {
-			print STDERR "Error: NAT service $nmService invalid.\n";
+			print "Error: NAT service $nmService invalid.\n";
 			return $rules;
 		}
 
@@ -2639,12 +2642,12 @@ sub applyMasquerade {
 	}
 
 	if( $dst eq '' ) {
-		print STDERR "Error: DST or ZONE attribute missing in MASQUERADE rule.\n";
+		print "Error: DST or ZONE attribute missing in MASQUERADE rule.\n";
 		return $rules;
 	}
 
 	#if( $fwItems{$zone} ne 'ZONE' ) {
-	#	print STDERR "Error: invalid ZONE attribute missing in MASQUERADE rule.\n";
+	#	print "Error: ZONE attribute missing in MASQUERADE rule.\n";
 	#	return
 	#}
 
@@ -2700,9 +2703,15 @@ sub applyMasquerade {
 		my %src_zone_attr = $this->GetZone( $src_zone );
 		$src_if = $src_zone_attr{IF};
 	}
-	my ($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
+	my ($dst_zone, $dst_peer, $dst_type, $dst_mac) = $this->expand_item( $dst );
 	my %dst_zone_attr = $this->GetZone( $dst_zone );
 	my $dst_if = $dst_zone_attr{IF};
+
+	# Invalid Masquerade, Ignore
+	if( $dst_mac ne '' && $dst_peer eq '' ) {
+	       	print "Error: MASQUERADE $dst (mac:$dst_mac) invalid.\n";
+		return $rules;
+	}
 
 	print $is_masquerade ? '' : 'NOT ',"MASQUERADE port($service";
 	if( $service eq 'tcp' || $service eq 'udp' ) { print "/$port"; }
@@ -2728,7 +2737,7 @@ sub _applyServiceMasquerade {
 
 	my %service = ();
 	if( !grep /^$serviceName$/, keys %{$ref_services} ) {
-		print STDERR "Error: MASQUERADE service $serviceName invalid.\n";
+		print "Error: MASQUERADE service $serviceName invalid.\n";
 		return $rules;
 	} else {
 		%service = %{$ref_services->{$serviceName}};
@@ -2846,12 +2855,12 @@ sub applyRedirect {
 		if( $fwItems{$dst} eq 'GROUP' ) {
 			my %newredirect = %redirect;
 			foreach my $item ( @{$fw{GROUP}{$dst}{ITEMS}} ) {
-				# Ignore ZONE items (PREROUTING don't accept -o option)
+				# Ignore ZONE items (PREROUTING doesn't accept -o option)
 				if( $item ne 'FIREWALL' && $fw{ZONE}{$item}{IF} eq '' ) {
 					$newredirect{DST} = $item;
 					$rules .= $this->applyRedirect( %newredirect );
 				} else {
-					print "REDIRECT INVALID : IGNORING : $src --> $dst\n";
+					print "Error: REDIRECT $src --> $dst invalid.\n";
 				}
 			}
 			return $rules;
@@ -2866,30 +2875,33 @@ sub applyRedirect {
 	my ($src_zone, $src_peer, $src_type, $src_mac) = $this->expand_item( $src );
 	my %src_zone_attr = $this->GetZone( $src_zone );
 	my $src_if = $src_zone_attr{IF};
-	my ($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
+	my ($dst_zone, $dst_peer, $dst_type, $dst_mac) = $this->expand_item( $dst );
 	my $dst_if = '';
 	if( $dst ne '*' ) {
 		my %dst_zone_attr = $this->GetZone( $dst_zone );
 		$dst_if = $dst_zone_attr{IF};
 	}
 
+	# Invalid Redirect, Ignore
+	if( $src_mac ne '' && $src_peer eq '' ) {
+	       	print "Error: REDIRECT $src (mac:$src_mac) invalid.\n";
+		return $rules;
+	}
+	if( $dst_mac ne '' && $dst_peer eq '' ) {
+	       	print "Error: REDIRECT $dst (mac:$dst_mac) invalid.\n";
+		return $rules;
+	}
+
 	print $is_redirect ? '' : 'NOT ',"REDIRECT port($service";
 	if( $service eq 'tcp' || $service eq 'udp' ) { print "/$port"; }
-	# Invalid Redirect, Ignore
-	# print " $src";
-	# if( $src_mac ne '' ) { print " (mac:$src_mac)"; }
-	if( $src_mac ne '' ) { print " : INVALID : IGNORING : $src (mac:$src_mac)";
-       	} else {
-		print ") $src";
-	}
-	print " --> $dst";
+	print ") $src --> $dst";	
 	if( $is_redirect ) {
 		 print " TO LOCAL PORT $toport";
 	}
 	print "\n";
 
 	# I create the 2 return chains
-	$rules .= $this->applyServiceRedirect( \%services, $service, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect);
+	$rules .= $this->applyServiceRedirect( \%services, $service, $src_if, $src_peer, $src_type, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect);
 
 	return $rules;
 }
@@ -2902,13 +2914,13 @@ sub applyServiceRedirect {
 
 sub _applyServiceRedirect {
 	my $this = shift;
-	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect) = @_;
+	my ($ref_calledServices, $ref_services, $serviceName, $src_if, $src_peer, $src_type, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect) = @_;
 
 	my $rules = '';
 
 	my %service = ();
 	if( !grep /^$serviceName$/, keys %{$ref_services} ) {
-		print STDERR "Error: REDIRECT service $serviceName invalid.\n";
+		print "Error: REDIRECT service $serviceName invalid.\n";
 		return $rules;
 	} else {
 		%service = %{$ref_services->{$serviceName}};
@@ -2924,7 +2936,7 @@ sub _applyServiceRedirect {
 		if( defined($filter{SERVICE}) && $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyServiceRedirect( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$src_if, $src_peer, $src_type, $src_mac, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect );
+				$src_if, $src_peer, $src_type, $dst_if, $dst_peer, $dst_type, $port, $toport, $is_redirect );
 			next;
 		}
 
@@ -2951,11 +2963,6 @@ sub _applyServiceRedirect {
 				if( $src_type eq 'IPSET' ) { $cmd .= "-m set --match-set $src_peer src "; }
 				if( $src_type =~ /HOST|NET/ ) { $cmd .= "-s $src_peer "; }
 			}
-
-			# Invalid Redirect, Ignore
-			#if( $src_mac =~ /^[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}\:[0-9a-fA-F]{2}$/ ) {
-			#	$cmd .= "-m mac --mac-source $src_mac ";
-			#}
 
 			# iptables prerouting chain doesn't accept -o option.
 			#if( $dst_if ne '' ) { $cmd .= "-o $dst_if "; }
@@ -3060,7 +3067,6 @@ sub applyRule {
 		if( $hostnameset ne '' ) { print " hostname($hostnameset)"; }
 		if( $riskset ne '' ) { print " risk($riskset)"; }
 		print " $src --> $dst";
-		#if( $src_mac ne '' ) { print "(mac:$src_mac)"; }
 		if( $ratelimit ne '' ) { print " WHEN rate($ratelimit)"; }
 		if( $time ne '' ) { print " AT $time"; }
 		if( $mark ne '' ) { print " WITH mark($mark)"; }
@@ -3217,13 +3223,18 @@ sub applyRule {
 	}
 
 	my ($src_zone, $src_peer, $src_type, $src_mac) = $this->expand_item( $src );
-	my ($dst_zone, $dst_peer, $dst_type, undef) = $this->expand_item( $dst );
+	my ($dst_zone, $dst_peer, $dst_type, $dst_mac) = $this->expand_item( $dst );
 
 	if( $src_zone eq 'FIREWALL' && $dst_zone eq 'FIREWALL' ) {
 		# ignore chain FIREWALL-FIREWALL
 		if( !$mangle ) {
-			print "** FIREWALL-->FIREWALL ignored **\n";
+			print "Error: FIREWALL-->FIREWALL invalid.\n";
 		}
+		return $rules;
+	}
+
+	if( $dst_mac ne '' && $dst_peer eq '' ) {
+		print "Error: destination (mac:$dst_mac) invalid.\n";
 		return $rules;
 	}
 
@@ -3313,7 +3324,7 @@ sub _applyService {
 
 	my %service = ();
 	if( !grep /^$serviceName$/, keys %{$ref_services} ) {
-		print STDERR "Error: service $serviceName invalid.\n";
+		print "Error: service $serviceName invalid.\n";
 		return $rules;
 	} else {
 		%service = %{$ref_services->{$serviceName}};
