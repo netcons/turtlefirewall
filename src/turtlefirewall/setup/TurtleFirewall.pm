@@ -3024,6 +3024,7 @@ sub applyRule {
 	my %fw = %{$this->{fw}};
 	my %fwItems = %{$this->{fwItems}};
 	my %services = %{$this->{services}};
+	my %ndpiprotocols = %{$this->{ndpiprotocols}};
 
 	my $rules = '';
 
@@ -3170,8 +3171,7 @@ sub applyRule {
 	# ndpi services within category
 	if( $category ne '' ) { 
 		my @items = ();
-       		my @ndpiprotocols = $this->GetNdpiProtocolsList();
-		foreach my $k (@ndpiprotocols) {
+		foreach my $k (keys %ndpiprotocols) {
 			my %ndpiprotocol = $this->GetNdpiProtocol($k);
 			if( $ndpiprotocol{CATEGORY} eq $category ) {
 				push(@items, $k);
@@ -3294,15 +3294,15 @@ sub applyRule {
 	if( $mangle ) {
 		# Mangle Rule
 		$rules .= $this->applyService( \%services, $service, $goChain, $backChain, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
-		   	$port, $ndpi, $hostname, $risk, '', $weekdays, $timestart, $timestop, '', '', $mark, '' );
+		   	$port, \%ndpiprotocols, $ndpi, $hostname, $risk, '', $weekdays, $timestart, $timestop, '', '', $mark, '' );
 	}  elsif( $raw ) {
 		# Raw Rule
 		$rules .= $this->applyService( \%services, $service, $goChain, $backChain, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
-		       	$port, $ndpi, $hostname, $risk, '', $weekdays, $timestart, $timestop, '', '', '', $helper );
+		       	$port, \%ndpiprotocols, $ndpi, $hostname, $risk, '', $weekdays, $timestart, $timestop, '', '', '', $helper );
 	}  else {
 		# Filter Rule
 		$rules .= $this->applyService( \%services, $service, $goChain, $backChain, $src_peer, $src_type, $src_mac, $dst_peer, $dst_type,
-		       	$port, $ndpi, $hostname, $risk, $ratelimit, $weekdays, $timestart, $timestop, $log, $target, '', '' );
+		       	$port, \%ndpiprotocols, $ndpi, $hostname, $risk, $ratelimit, $weekdays, $timestart, $timestop, $log, $target, '', '' );
 	}
 
 	return $rules;
@@ -3318,7 +3318,7 @@ sub applyService {
 sub _applyService {
 	my $this = shift;
 	my( $ref_calledServices, $ref_services, $serviceName, $goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type,
-	$port, $ndpi, $hostname, $risk, $ratelimit, $weekdays, $timestart, $timestop, $log, $target, $mangle_mark, $helper ) = @_;
+	$port, $ref_ndpiprotocols, $ndpi, $hostname, $risk, $ratelimit, $weekdays, $timestart, $timestop, $log, $target, $mangle_mark, $helper ) = @_;
 
 	my $rules = '';
 
@@ -3332,6 +3332,13 @@ sub _applyService {
 
 	$ref_calledServices->{$serviceName} = 1;
 
+	if( $ndpi ne '' ) { 
+		if( !grep /^$ndpi$/, keys %{$ref_ndpiprotocols} ) {
+			print "Error: nDPI service $ndpi invalid.\n";
+			return $rules;
+		}
+	}
+
 	# loop on the filering rules
 	for( my $i=0; $i<=$#{$service{FILTERS}}; $i++ ) {
 
@@ -3340,7 +3347,7 @@ sub _applyService {
 		if( defined($filter{SERVICE}) && $filter{SERVICE} ne '' && !$ref_calledServices->{$filter{SERVICE}} ) {
 			# It is a subservice, recursion call to _applyService
 			$rules .= $this->_applyService( $ref_calledServices, $ref_services, $filter{SERVICE},
-				$goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type, $port, $ndpi, $hostname, $risk, $ratelimit,
+				$goChain, $backChain, $src, $src_type, $src_mac, $dst, $dst_type, $port, $ref_ndpiprotocols, $ndpi, $hostname, $risk, $ratelimit,
 			       	$weekdays, $timestart, $timestop, $log, $target, $mangle_mark, $helper );
 			next;
 		}

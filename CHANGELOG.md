@@ -3,12 +3,13 @@
 ## v.2.7 (11-12-2025)
 - Feature : nDPI 5.1 support.
 - Bug : Fix variable declarations.
-- Bug : Add invalid service check.
+- Bug : Add invalid port service check.
 - Bug : Don't check group membership for * zone during apply of Masquerade and Redirect.
 - Bug : Improve expand_item.
 - Bug : Rework LoadServices.
 - Bug : Enable strict mode.
 - Bug : Add invalid use of MAC address check.
+- Bug : Add invalid nDPI service check.
 - Todo : Translate new features.
 - Todo : Fix backup.cgi restore upload.
 
