@@ -2449,7 +2449,7 @@ sub applyNat {
 
 	my $virtual = defined($nat{VIRTUAL}) ? $nat{VIRTUAL} : '';
 	my $real = defined($nat{REAL}) ? $nat{REAL} : '';
-	my $nmService = defined($nat{SERVICE}) ? $nat{SERVICE} : '';
+	my $service = defined($nat{SERVICE}) ? $nat{SERVICE} : '';
 	my $port = defined($nat{PORT}) ? $nat{PORT} : '';		# Optional port identifier
 	my $toport = defined($nat{TOPORT}) ? $nat{TOPORT} : '';		# Optional to port identifier
 	my $virtual_ip = '';
@@ -2457,10 +2457,10 @@ sub applyNat {
 	my $real_ip = '';
 
 	# Service is a list of services?
-	if( $nmService =~ /,/ ) {
-		my @services = split( /,/, $nmService );
+	if( $service =~ /,/ ) {
+		my @servicelist = split( /,/, $service );
 		my %newnat = %nat;
-		foreach my $serv (@services) {
+		foreach my $serv (@servicelist) {
 			$newnat{SERVICE} = $serv;
 			$rules .= $this->applyNat( %newnat );
 		}
@@ -2496,7 +2496,7 @@ sub applyNat {
 		return $rules;
 	}
 
-	if( $nmService eq '' || $nmService eq 'all' ) {
+	if( $service eq '' || $service eq 'all' ) {
 		# Interface-wide nat. This was the only way natting was used to be.
 		if( $virtual_ip ne '' ) {
 			# Virtual HOST to Real HOST nat
@@ -2523,20 +2523,20 @@ sub applyNat {
 		# to $virtual_ip:$sport. $state conditions and $jump tags are added to the iptables
 		# entries as well.
 
-		print "NAT virtual($virtual),port($nmService".
+		print "NAT virtual($virtual),port($service".
 				($port ne '' ? "/$port" : '').
 				") --> real($real)".
-				($toport ne '' ? ",port($nmService/$toport)" : '').
+				($toport ne '' ? ",port($service/$toport)" : '').
 			" \n";
-		#$rules .= "#NAT virtual( $virtual ) -to-> real( $real ) on service( $nmService($port) )\n";
+		#$rules .= "#NAT virtual( $virtual ) -to-> real( $real ) on service( $service($port) )\n";
 
-		if( !grep /^$nmService$/, keys %services ) {
-			print "Error: NAT service $nmService invalid.\n";
+		if( !grep /^$service$/, keys %services ) {
+			print "Error: NAT service $service invalid.\n";
 			return $rules;
 		}
 
 		# Outputs a nat rule for each defined service channel
-		foreach my $filter (@{$services{$nmService}{FILTERS}}) {
+		foreach my $filter (@{$services{$service}{FILTERS}}) {
 
 			my $direction = defined($filter->{DIRECTION}) ? $filter->{DIRECTION} : '';
 			my $proto = defined($filter->{P}) ? $filter->{P} : '';
@@ -2684,9 +2684,9 @@ sub applyMasquerade {
 
 	# Service is a list of services?
 	if( $service =~ /,/ ) {
-		my @services = split( /,/, $service );
+		my @servicelist = split( /,/, $service );
 		my %newmasq = %masq;
-		foreach my $serv (@services) {
+		foreach my $serv (@servicelist) {
 			$newmasq{SERVICE} = $serv;
 			$rules .= $this->applyMasquerade( %newmasq );
 		}
@@ -3159,9 +3159,9 @@ sub applyRule {
 
 	# service is a list of services?
 	if( $service =~ /,/ ) {
-		my @services = split( /,/, $service );
+		my @servicelist = split( /,/, $service );
 		my %newrule = %rule;
-		foreach my $serv (@services) {
+		foreach my $serv (@servicelist) {
 			$newrule{SERVICE} = $serv;
 			$rules .= $this->applyRule( 0, $mangle, $raw, $preroute, %newrule );
 		}
@@ -3182,10 +3182,10 @@ sub applyRule {
 
 	# ndpi service is a list of ndpi services?
 	if( $ndpi =~ /,/ ) {
-		my @ndpis = split( /,/, $ndpi );
+		my @ndpilist = split( /,/, $ndpi );
 		my %newrule = %rule;
-		foreach my $nserv (@ndpis) {
-			$newrule{NDPI} = $nserv;
+		foreach my $ndpiproto (@ndpilist) {
+			$newrule{NDPI} = $ndpiproto;
 			$newrule{CATEGORY} = '';
 			$rules .= $this->applyRule( 0, $mangle, $raw, $preroute, %newrule );
 		}
