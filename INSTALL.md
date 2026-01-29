@@ -19,7 +19,7 @@ apt-get -y install wget
 wget https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
 sh setup-repos.sh -f
 
-apt-get install webmin --install-recommends
+apt-get -y install webmin --install-recommends
 ```
 
 ## Turtlefirewall Webmin Module
@@ -39,7 +39,9 @@ Build source.
 
 Install RHEL.
 ```
-dnf -y install perl-XML-Parser perl-Net-CIDR-Lite perl-Text-CSV_XS iptables-nft ipset conntrack-tools rsyslog dos2unix gawk crontabs q-text-as-data
+dnf -y install https://github.com/harelba/q/releases/download/v3.1.6/q-text-as-data-3.1.6.x86_64.rpm
+
+dnf -y install perl-XML-Parser perl-Net-CIDR-Lite perl-Text-CSV_XS iptables-nft ipset conntrack-tools rsyslog dos2unix gawk crontabs
 /usr/libexec/webmin/install-module.pl /tmp/turtlefirewall-master/build/turtlefirewall-*.wbm.gz
 ```
 
@@ -75,7 +77,7 @@ systemctl enable dkms --now
 
 Debian.
 ```
-apt-get -y install linux-headers-$(uname -r)
+apt-get -y install linux-headers-amd64
 apt-get -y install libxtables-dev libpcap-dev libjson-c-dev libgcrypt-dev libmodule-path-perl
 apt-get -y install autoconf automake libtool
 apt-get -y install dkms

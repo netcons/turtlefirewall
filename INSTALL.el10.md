@@ -19,6 +19,11 @@ curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
+curl -s https://api.github.com/repos/harelba/q/releases/latest \
+| grep "browser_download_url.*.rpm" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
 createrepo ./
 
 cd /etc/pki/rpm-gpg
