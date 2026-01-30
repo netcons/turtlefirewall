@@ -31,14 +31,6 @@
 	<ndpiprotocol name="atg" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="avast" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="avastsecuredns" category="other" dpi="1"> </ndpiprotocol>
-	<ndpiprotocol name="aws_api_gateway" category="other" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="aws_cloudfront" category="other" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="aws_cognito" category="other" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="aws_dynamodb" category="other" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="aws_ec2" category="other" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="aws_emr" category="other" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="aws_kinesis" category="other" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="aws_s3" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="azure" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="bacnet" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="badoo" category="social-media" dpi="0"> </ndpiprotocol>
@@ -49,12 +41,10 @@
 	<ndpiprotocol name="bitcoin" category="crypto-currency" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="bittorrent" category="storage-backup" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="bjnp" category="printing" dpi="1"> </ndpiprotocol>
-	<ndpiprotocol name="blacknut" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="dlep" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="blizzard" category="gaming" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="bloomberg" category="financial" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="bluesky" category="social-media" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="boosteroid" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="cachefly" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="cactusvpn" category="tunnelling" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="canonical" category="other" dpi="0"> </ndpiprotocol>
@@ -104,7 +94,6 @@
 	<ndpiprotocol name="drda" category="infrastructure" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="dropbox" category="storage-backup" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="dtls" category="browsing" dpi="1"> </ndpiprotocol>
-	<ndpiprotocol name="easyweather" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="eaq" category="telephony" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="ebay" category="shopping" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="edgecast" category="video-audio" dpi="0"> </ndpiprotocol>
@@ -114,7 +103,6 @@
 	<ndpiprotocol name="electronicarts" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="epicgames" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="esp" category="tunnelling" dpi="1"> </ndpiprotocol>
-	<ndpiprotocol name="espn" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="ethereum" category="crypto-currency" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="ethernetglobaldata" category="iot-scada" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="ethernetip" category="networking" dpi="1"> </ndpiprotocol>
@@ -141,7 +129,6 @@
 	<ndpiprotocol name="git" category="other" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="github" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="gitlab" category="other" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="glbp" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="gmail" category="email" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="gnutella" category="storage-backup" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="google" category="other" dpi="0"> </ndpiprotocol>
@@ -231,7 +218,6 @@
 	<ndpiprotocol name="lolwildrift" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="lustre" category="storage-backup" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="mastodon" category="social-media" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="matter" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="mdns" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="megaco" category="telephony" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="melsec" category="iot-scada" dpi="1"> </ndpiprotocol>
@@ -251,7 +237,6 @@
 	<ndpiprotocol name="mpegdash" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="mqtt" category="infrastructure" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="msdo" category="other" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="mudfish" category="tunnelling" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="mullvad" category="tunnelling" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="mumble" category="telephony" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="munin" category="infrastructure" dpi="0"> </ndpiprotocol>
@@ -334,13 +319,11 @@
 	<ndpiprotocol name="rtp" category="video-audio" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="rtps" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="rtsp" category="video-audio" dpi="1"> </ndpiprotocol>
-	<ndpiprotocol name="rumble" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="rutube" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="rx" category="infrastructure" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="s7comm" category="iot-scada" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="s7commplus" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="salesforce" category="other" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="samsungsdp" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="sap" category="database" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="sctp" category="networking" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="sd-rtn" category="networking" dpi="1"> </ndpiprotocol>
@@ -411,7 +394,6 @@
 	<ndpiprotocol name="tor" category="proxy" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="tplink_shp" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="trdp" category="iot-scada" dpi="0"> </ndpiprotocol>
-	<ndpiprotocol name="tristation" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="truphone" category="telephony" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="tumblr" category="social-media" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="tunein" category="video-audio" dpi="0"> </ndpiprotocol>

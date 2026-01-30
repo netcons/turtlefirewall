@@ -22,7 +22,7 @@
 	<ndpirisk id="18" description="SSH Obsolete Cli Vers/Cipher"> </ndpirisk>
 	<ndpirisk id="19" description="SSH Obsolete Ser Vers/Cipher"> </ndpirisk>
 	<ndpirisk id="20" description="SMB Insecure Vers"> </ndpirisk>
-	<ndpirisk id="21" description="Mismatching Protocol with Server IP Address"> </ndpirisk>
+<!--	<ndpirisk id="21" description="FREE21"> </ndpirisk> -->
 	<ndpirisk id="22" description="Unsafe Protocol"> </ndpirisk>
 	<ndpirisk id="23" description="Susp DNS Traffic"> </ndpirisk>
 	<ndpirisk id="24" description="Missing SNI TLS Extn"> </ndpirisk>
@@ -52,7 +52,7 @@
 	<ndpirisk id="48" description="Periodic Flow"> </ndpirisk>
 	<ndpirisk id="49" description="Minor Issues"> </ndpirisk>
 	<ndpirisk id="50" description="TCP Connection Issues"> </ndpirisk>
-	<ndpirisk id="51" description="Unresolved Hostname"> </ndpirisk>
+<!--	<ndpirisk id="51" description="FREE51"> </ndpirisk> -->
 	<ndpirisk id="52" description="ALPN/SNI Mismatch"> </ndpirisk>
 	<ndpirisk id="53" description="Client Contacted A Malware Host"> </ndpirisk>
 	<ndpirisk id="54" description="Binary File/Data Transfer (Attempt)"> </ndpirisk>

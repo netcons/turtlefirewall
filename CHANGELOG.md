@@ -1,7 +1,7 @@
 # ChangeLog
 
 ## v.2.7 (11-12-2025)
-- Feature : nDPI 5.1 support.
+- Feature : nDPI 5.1 support. ( INPROGRESS )
 - Bug : Fix variable declarations.
 - Bug : Add invalid port service check.
 - Bug : Don't check group membership for * zone during apply of Masquerade and Redirect.
