@@ -28,7 +28,6 @@ Install Turtle Firewall.
 apt-get -y upgrade linux-image-amd64 linux-headers-amd64
 reboot
 
-apt-get -y install ipt-ratelimit ndpi-netfilter xtables-addons-common
 apt-get -y install turtlefirewall
 ```
 
