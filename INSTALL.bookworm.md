@@ -1,8 +1,8 @@
-## Debian 13
+## Debian 12
 
 Activate Repos.
 ```
-cp /usr/share/doc/apt/examples/debian.sources /etc/apt/sources.list.d
+cp /usr/share/doc/apt/examples/sources.list /etc/apt/sources.list.d
 sed -i "s/^deb cdrom:/#deb cdrom:/" /etc/apt/sources.list
 apt-get update
 apt-get -y install curl wget dpkg-dev
@@ -13,7 +13,7 @@ sh setup-repos.sh -f
 mkdir -p /var/tmp/tfw
 cd /var/tmp/tfw
 curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
-| grep "browser_download_url.*.trixie.deb" \
+| grep "browser_download_url.*.bookworm.deb" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
