@@ -13,7 +13,7 @@ sh setup-repos.sh -f
 mkdir -p /var/tmp/tfw
 cd /var/tmp/tfw
 curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
-| grep "browser_download_url.*.bookworm.deb" \
+| grep "browser_download_url.*deb12.deb" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -

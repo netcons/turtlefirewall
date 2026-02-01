@@ -13,7 +13,7 @@ sh setup-repos.sh -f
 mkdir -p /var/tmp/tfw
 cd /var/tmp/tfw
 curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
-| grep "browser_download_url.*.trixie.deb" \
+| grep "browser_download_url.*deb13.deb" \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
