@@ -3332,7 +3332,7 @@ sub _applyService {
 
 	$ref_calledServices->{$serviceName} = 1;
 
-	if( $ndpi ne '' ) { 
+	if( $ndpi ne '' && $ndpi ne 'all' ) { 
 		if( !grep /^$ndpi$/, keys %{$ref_ndpiprotocols} ) {
 			print "Error: nDPI service $ndpi invalid.\n";
 			return $rules;
