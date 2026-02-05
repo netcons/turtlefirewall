@@ -77,6 +77,9 @@ systemctl enable dkms --now
 
 Debian.
 ```
+apt-get -y upgrade linux-image-amd64
+reboot
+
 apt-get -y install linux-headers-amd64
 apt-get -y install libxtables-dev libpcap-dev libjson-c-dev libgcrypt-dev libmodule-path-perl
 apt-get -y install autoconf automake libtool

@@ -36,9 +36,10 @@ Install Turtle Firewall.
 ```
 dnf -y upgrade kernel
 dnf -y install kernel-devel kernel-headers
+reboot
+
 dnf -y install turtlefirewall
 systemctl enable dkms --now
-reboot
 ```
 
 Disable Firewalld.
