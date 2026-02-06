@@ -1,6 +1,7 @@
 # ChangeLog
 
 ## v.2.7 (11-12-2025)
+- OS : DEB package, remove EOL OS instructions.
 - Feature : nDPI 5.1 support. ( INPROGRESS )
 - Bug : Fix variable declarations.
 - Bug : Add invalid port service check.
