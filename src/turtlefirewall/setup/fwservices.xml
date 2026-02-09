@@ -649,5 +649,10 @@
 		<filter direction="go" p="udp" dport="19302:19309"/>
 		<filter direction="back" p="udp" sport="19302:19309"/>
 	</service>
+
+	<service name="wireguard" description="Wireguard (udp 51820)">
+		<filter direction="go" p="udp" dport="51820"/>
+		<filter direction="back" p="udp" sport="51820"/>
+	</service>
 	
 </services>
