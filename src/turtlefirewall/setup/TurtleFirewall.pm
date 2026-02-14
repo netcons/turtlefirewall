@@ -3178,6 +3178,10 @@ sub applyRule {
 			}
 		}
 		$ndpi = join(",", @items);
+		if( $ndpi eq '' ) { 
+			print "Error: nDPI category $category invalid.\n";
+			return $rules;
+		}
 	}
 
 	# ndpi service is a list of ndpi services?

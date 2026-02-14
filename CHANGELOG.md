@@ -12,6 +12,7 @@
 - Bug : Add invalid use of MAC address check.
 - Bug : Add invalid nDPI service check.
 - Services : Add Wireguard on port 51820 service.
+- Bug : Add invalid nDPI category check.
 - Todo : Translate new features.
 - Todo : Fix backup.cgi restore upload.
 
