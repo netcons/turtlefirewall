@@ -576,6 +576,8 @@
 	<service name="unifi" description="Unifi Controller">
 		<filter direction="go" p="udp" dport="3478"/>
 		<filter direction="back" p="udp" sport="3478"/>
+		<filter direction="go" p="udp" dport="5514"/>
+		<filter direction="back" p="udp" sport="5514"/>
 		<filter direction="go" p="tcp" dport="8080"/>
 		<filter direction="back" p="tcp" sport="8080"/>
 		<filter direction="go" p="tcp" dport="8443"/>
