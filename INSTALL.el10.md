@@ -19,11 +19,6 @@ curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 | cut -d : -f 2,3 \
 | tr -d \" \
 | wget -qi -
-curl -s https://api.github.com/repos/harelba/q/releases/latest \
-| grep "browser_download_url.*.rpm" \
-| cut -d : -f 2,3 \
-| tr -d \" \
-| wget -qi -
 createrepo ./
 
 cd /etc/pki/rpm-gpg
@@ -46,6 +41,8 @@ Install Turtle Firewall.
 dnf -y upgrade kernel
 dnf -y install kernel-devel kernel-headers
 reboot
+
+dnf -y install https://github.com/harelba/q/releases/download/v3.1.6/q-text-as-data-3.1.6.x86_64.rpm
 
 dnf -y install turtlefirewall
 systemctl enable dkms --now
