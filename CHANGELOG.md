@@ -2,7 +2,7 @@
 
 ## v.2.7 (11-12-2025)
 - OS : DEB package, remove EOL OS instructions.
-- Feature : nDPI 5.1 support. ( INPROGRESS )
+- Feature : nDPI 5.1 support.
 - Bug : Fix variable declarations.
 - Bug : Add invalid port service check.
 - Bug : Don't check group membership for * zone during apply of Masquerade and Redirect.
@@ -11,9 +11,9 @@
 - Bug : Enable strict mode.
 - Bug : Add invalid use of MAC address check.
 - Bug : Add invalid nDPI service check.
+- Bug : Add invalid nDPI category check.
 - Services : Add Wireguard on port 51820 service.
 - Services : Add udp port 5514 to Unifi service.
-- Bug : Add invalid nDPI category check.
 - Todo : Translate new features.
 - Todo : Fix backup.cgi restore upload.
 
