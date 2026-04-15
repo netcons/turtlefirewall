@@ -102,7 +102,7 @@ sub showNat {
 			}
 		}
 		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
-		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+		my $cb = $sb eq '' ? '<span style=color:#0d8264>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $nimage = $attr{'ACTIVE'} eq 'NO' ? $icons{NAT}{IMAGE} : $icons{NAT_A}{IMAGE};
 		push(@cols, "${nimage}${sb}${bb}${cb}$text{YES}${ce}${be}${se}" );
@@ -212,12 +212,12 @@ sub showMasquerade {
 		}
 		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
 		if( $attr{'MASQUERADE'} eq 'NO' ) {
-			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
+			my $cb = $sb eq '' ? '<span style=color:#b64034>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MASQUERADE}{IMAGE} : $icons{MASQUERADE_NO}{IMAGE};
 			push(@cols, "${dimage}${sb}${bb}${cb}$text{NO}${ce}${be}${se}" );
 		} else {
-			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+			my $cb = $sb eq '' ? '<span style=color:#0d8264>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MASQUERADE}{IMAGE} : $icons{MASQUERADE_A}{IMAGE};
 			push(@cols, "${aimage}${sb}${bb}${cb}$text{YES}${ce}${be}${se}" );
@@ -327,13 +327,13 @@ sub showRedirect {
 		}
 		push(@cols, "${sb}${bb}${servicelist}${be}${se}");
 		if( $attr{'REDIRECT'} eq 'NO' ) {
-			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
+			my $cb = $sb eq '' ? '<span style=color:#b64034>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? $icons{REDIRECT}{IMAGE} : $icons{REDIRECT_NO}{IMAGE};
 			push(@cols, "${dimage}${sb}${bb}${cb}$text{NO}${ce}${be}${se}" );
 			push(@cols, "" );
 		} else {
-			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+			my $cb = $sb eq '' ? '<span style=color:#0d8264>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';			# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? $icons{REDIRECT}{IMAGE} : $icons{REDIRECT_A}{IMAGE};
 			push(@cols, "${aimage}${sb}${bb}${cb}$text{YES}${ce}${be}${se}" );

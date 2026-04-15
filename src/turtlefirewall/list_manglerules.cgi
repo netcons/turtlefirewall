@@ -129,7 +129,7 @@ sub showConnmarkPreroute {
 			$cimage = $icons{$type}{IMAGE};
 		}
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
-		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+		my $cb = $sb eq '' ? '<span style=color:#0d8264>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $mimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MARK}{IMAGE} : $icons{MARK_A}{IMAGE};
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
@@ -280,7 +280,7 @@ sub showConnmark {
 			$cimage = $icons{$type}{IMAGE};
 		}
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
-		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+		my $cb = $sb eq '' ? '<span style=color:#0d8264>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $mimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MARK}{IMAGE} : $icons{MARK_A}{IMAGE};
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );

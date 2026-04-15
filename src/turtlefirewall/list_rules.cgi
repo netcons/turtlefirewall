@@ -141,17 +141,17 @@ sub showRule {
 		}
 		push(@cols, "${cimage}${sb}${bb}$attr{'TIME'}${be}${se}" );
  		if( $attr{'TARGET'} eq 'ACCEPT' ) {
-			my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+			my $cb = $sb eq '' ? '<span style=color:#0d8264>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? $icons{ACCEPT}{IMAGE} : $icons{ACCEPT_A}{IMAGE};
 			push(@cols, "${aimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
 		} elsif( $attr{'TARGET'} eq 'DROP' ) {
-			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
+			my $cb = $sb eq '' ? '<span style=color:#b64034>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? $icons{DROP}{IMAGE} : $icons{DROP_A}{IMAGE};
 			push(@cols, "${dimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
 		} elsif( $attr{'TARGET'} eq 'REJECT' ) {
-			my $cb = $sb eq '' ? '<span style=color:red>' : '';	# ColourBegin
+			my $cb = $sb eq '' ? '<span style=color:#b64034>' : '';	# ColourBegin
 			my $ce = $se eq '' ? '</span>' : '';		# ColourEnd
 			my $dimage = $attr{'ACTIVE'} eq 'NO' ? $icons{REJECT}{IMAGE} : $icons{REJECT_A}{IMAGE};
 			push(@cols, "${dimage}${sb}${bb}${cb}$attr{'TARGET'}${ce}${be}${se}" );
@@ -190,7 +190,7 @@ sub showRule {
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
-	print &ui_columns_row([undef, undef, "$icons{ZONE}{IMAGE}*", "$icons{ZONE}{IMAGE}*", "$icons{SERVICE}{IMAGE}all", "", "", "", "", "", "$icons{DROP_A}{IMAGE}<span style=color:red>DROP</span>", "$icons{LOG_A}{IMAGE}<span style=color:steelblue>ACT</span>", "$icons{DESCRIPTION}{IMAGE}Implicit Deny", undef], \@tds);
+	print &ui_columns_row([undef, undef, "$icons{ZONE}{IMAGE}*", "$icons{ZONE}{IMAGE}*", "$icons{SERVICE}{IMAGE}all", "", "", "", "", "", "$icons{DROP_A}{IMAGE}<span style=color:#b64034>DROP</span>", "$icons{LOG_A}{IMAGE}<span style=color:steelblue>ACT</span>", "$icons{DESCRIPTION}{IMAGE}Implicit Deny", undef], \@tds);
 	print &ui_columns_end();
 	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';

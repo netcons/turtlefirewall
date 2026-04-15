@@ -14,6 +14,7 @@
 - Bug : Add invalid nDPI category check.
 - Services : Add Wireguard on port 51820 service.
 - Services : Add udp port 5514 to Unifi service.
+- Theme : Rework Webmin images.
 - Todo : Translate new features.
 - Todo : Fix backup.cgi restore upload.
 

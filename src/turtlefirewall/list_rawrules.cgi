@@ -87,7 +87,7 @@ sub showConntrackPreroute {
 		} else {
 			push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/all${be}${se}");
 		}
-		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+		my $cb = $sb eq '' ? '<span style=color:#0d8264>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? $icons{HELPER}{IMAGE} : $icons{HELPER_A}{IMAGE};
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
@@ -186,7 +186,7 @@ sub showConntrack {
 		} else {
 			push(@cols, "$icons{SERVICE}{IMAGE}${sb}${bb}$attr{'SERVICE'}/all${be}${se}");
 		}
-		my $cb = $sb eq '' ? '<span style=color:green>' : '';	# ColourBegin
+		my $cb = $sb eq '' ? '<span style=color:#0d8264>' : '';	# ColourBegin
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? $icons{HELPER}{IMAGE} : $icons{HELPER_A}{IMAGE};
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
