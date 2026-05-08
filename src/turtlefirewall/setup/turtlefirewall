@@ -19,7 +19,7 @@ $firewall = new TurtleFirewall();
 print "\nTurtle Firewall ".$firewall->Version()."\n";
 print "Copyright (c) 2001-2026 Andrea Frigido <andrea\@frisoft.it>\n\n";
 
-# parsing dei parametri
+# Parameter Parsing
 my $fwFile;
 my $servicesFile;
 my $userdefServicesFile;
