@@ -353,6 +353,7 @@
 	<ndpiprotocol name="showtime" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="signal" category="instant-messaging" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="signalvoip" category="telephony" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="simplebinaryencoding" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="sinaweibo" category="social-media" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="sip" category="telephony" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="siriusxmradio" category="video-audio" dpi="0"> </ndpiprotocol>
@@ -468,10 +469,10 @@
 	<ndpiprotocol name="yandexmusic" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="yojimbo" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="youtube" category="video-audio" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="youtubekids" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="youtubeupload" category="storage-backup" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="z3950" category="database" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="zabbix" category="networking" dpi="1"> </ndpiprotocol>
-	<ndpiprotocol name="zattoo" category="video-audio" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="zeromq" category="infrastructure" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="zoom" category="collaboration" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="zug" category="crypto-currency" dpi="0"> </ndpiprotocol>
