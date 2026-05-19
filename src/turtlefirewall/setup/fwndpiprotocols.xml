@@ -186,7 +186,7 @@
 	<ndpiprotocol name="hulu" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="i3d" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="iax" category="telephony" dpi="1"> </ndpiprotocol>
-	<ndpiprotocol name="icecast" category="video-audio" dpi="1"> </ndpiprotocol>
+	<ndpiprotocol name="icecast" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="icloudprivaterelay" category="proxy" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="icmp" category="networking" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="icmpv6" category="networking" dpi="1"> </ndpiprotocol>
