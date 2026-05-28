@@ -206,6 +206,7 @@
 	<ndpiprotocol name="ipp" category="printing" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="ipsec" category="tunnelling" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="irc" category="instant-messaging" dpi="1"> </ndpiprotocol>
+	<ndpiprotocol name="iris" category="database" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="iso9506-1-mms" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="iqiyi" category="video-audio" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="jabber" category="instant-messaging" dpi="1"> </ndpiprotocol>
@@ -224,6 +225,7 @@
 	<ndpiprotocol name="lastfm" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="ldap" category="authentication" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="ldp" category="networking" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="libp2p" category="tunnelling" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="likee" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="line" category="instant-messaging" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="linecall" category="telephony" dpi="0"> </ndpiprotocol>

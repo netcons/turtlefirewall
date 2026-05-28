@@ -59,5 +59,6 @@
 	<ndpirisk id="55" description="Probing Attempt"> </ndpirisk>
 	<ndpirisk id="56" description="Obfuscated Traffic"> </ndpirisk>
 	<ndpirisk id="57" description="(Possible) Slow DoS"> </ndpirisk>
+	<ndpirisk id="58" description="Non PQC Compliant Flow"> </ndpirisk>
 
 </ndpirisks>
