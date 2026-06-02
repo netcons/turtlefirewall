@@ -55,20 +55,11 @@ apt-get -y install libxml-parser-perl libnet-cidr-lite-perl libtext-csv-xs-perl 
 
 RHEL.
 ```
-if (grep -w "10" /etc/redhat-release) > /dev/null 2>&1
- then
-  dnf -y install centos-release-hyperscale-kernel
-fi
-if (grep -w "9" /etc/redhat-release) > /dev/null 2>&1
- then
-  dnf -y install centos-release-hyperscale-experimental
-fi
-
+dnf -y install centos-release-kmods-kernel
 dnf -y upgrade kernel
 reboot
 
 dnf -y install kernel-devel kernel-headers
-dnf -y install kernel-modules-extra
 dnf -y install iptables-devel libpcap-devel json-c-devel libgcrypt-devel perl-File-Path
 dnf -y install autoconf automake libtool
 dnf -y install dkms

@@ -6,7 +6,7 @@ dnf config-manager --set-enabled extras-common
 dnf config-manager --set-enabled crb
 dnf config-manager --save --setopt=optional_metadata_types=filelists
 dnf -y install epel-release
-dnf -y install centos-release-hyperscale-kernel
+dnf -y install centos-release-kmods-kernel
 dnf -y install createrepo wget
 
 wget https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
