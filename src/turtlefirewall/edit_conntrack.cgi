@@ -13,7 +13,7 @@ require './turtlefirewall-lib.pl';
 
 my $nConntracks = $fw->GetConntracksCount();
 
-$new = $in{'new'};
+my $new = $in{'new'};
 
 if( $new ) {
 	$heading = "$icons{CREATE}{IMAGE}$text{'edit_conntrack_title_create'}";

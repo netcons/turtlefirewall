@@ -21,7 +21,7 @@ print "<br><br>";
 #============================================================================
 
 sub showNdpiRisks {
-	@tds = ( "width=5%", "width=95%" );
+	my @tds = ( "width=5%", "width=95%" );
 	print &ui_columns_start([ "<b>$text{'id'}</b>", "<b>$text{'description'}</b>" ], 100, 0, \@tds);
         my @ndpirisks = $fw->GetNdpiRisksList();
 	foreach $id (sort { $a <=> $b } @ndpirisks) {

@@ -22,7 +22,7 @@ print "<br><br>";
 #============================================================================
 
 sub showCountryCodes {
-	@tds = ( "width=5%", "width=95%" );
+	my @tds = ( "width=5%", "width=95%" );
 	print &ui_columns_start([ "<b>$text{'name'}</b>", "<b>$text{'description'}</b>" ], 100, 0, \@tds);
         my @countrycodes = $fw->GetCountryCodesList();
 	foreach my $name (@countrycodes) {

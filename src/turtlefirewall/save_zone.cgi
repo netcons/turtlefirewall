@@ -11,10 +11,10 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-$newzone = $in{'newzone'};
-$zone = $in{'zone'};
-$if = $in{'if'};
-$description = $in{'description'};
+my $newzone = $in{'newzone'};
+my $zone = $in{'zone'};
+my $if = $in{'if'};
+my $description = $in{'description'};
 
 if( ! $fw->checkName($newzone) ) { &error( $text{save_zone_error8} ); }
 

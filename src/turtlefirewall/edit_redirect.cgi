@@ -13,7 +13,7 @@ require './turtlefirewall-lib.pl';
 
 my $nRedirect = $fw->GetRedirectCount();
 
-$new = $in{'new'};
+my $new = $in{'new'};
 
 if( $new ) {
 	$heading = "$icons{CREATE}{IMAGE}$text{'edit_redirect_title_create'}";

@@ -11,9 +11,9 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-$new = $in{'new'};
-$ratelimit = $in{'ratelimit'};
-$newratelimit = $in{'newratelimit'};
+my $new = $in{'new'};
+my $ratelimit = $in{'ratelimit'};
+my $newratelimit = $in{'newratelimit'};
 
 my $heading = '';
 if( $new ) {

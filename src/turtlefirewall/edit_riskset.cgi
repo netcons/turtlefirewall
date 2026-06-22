@@ -11,9 +11,9 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-$new = $in{'new'};
-$riskset = $in{'riskset'};
-$newriskset = $in{'newriskset'};
+my $new = $in{'new'};
+my $riskset = $in{'riskset'};
+my $newriskset = $in{'newriskset'};
 
 my $heading = '';
 if( $new ) {

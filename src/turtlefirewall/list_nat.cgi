@@ -31,10 +31,10 @@ print "<br><br>";
 sub showNat {
 	print &ui_subheading($icons{NAT}{IMAGE},$text{'nat'});
 	print &ui_form_start("save_nat.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_nat.cgi?new=1\">$text{'list_nat_create_nat'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "width=1% style=text-align:center;vertical-align:top",
 		 "width=25% style=vertical-align:top;white-space:normal",
 		 "width=25% style=vertical-align:top;white-space:normal",
@@ -74,7 +74,7 @@ sub showNat {
 
 	for( my $i=1; $i<=$nNat; $i++ ) {
 		my %attr = $fw->GetNat( $i );
-		local @cols;
+		my @cols = ();
 		my $bb = $idx == $i && $in{table} eq 'nat' ? '<b>' : '';       # BoldBegin
 		my $be = $idx == $i && $in{table} eq 'nat'? '</b>' : '';      # BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
@@ -108,8 +108,7 @@ sub showNat {
 		push(@cols, "${nimage}${sb}${bb}${cb}$text{YES}${ce}${be}${se}" );
 		my $timage = $attr{'TOPORT'} eq '' ? '' : $icons{TOPORT}{IMAGE};
 		push(@cols, "${timage}${sb}${bb}$attr{'TOPORT'}${be}${se}" );
-		local $mover;
-		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
+		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
 
 		if( $i < $nNat ) {
 			$mover .= "<td width=50%><a href='list_nat.cgi?table=nat&idx=$i&down=1'>
@@ -144,10 +143,10 @@ sub showNat {
 sub showMasquerade {
 	print &ui_subheading($icons{MASQUERADE}{IMAGE},$text{'masquerade'});
 	print &ui_form_start("save_masquerade.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_masquerade.cgi?new=1\">$text{'list_nat_create_masq'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "width=1% style=text-align:center;vertical-align:top",
 		 "width=25% style=vertical-align:top;white-space:normal",
 		 "width=25% style=vertical-align:top;white-space:normal",
@@ -185,7 +184,7 @@ sub showMasquerade {
 
 	for( my $i=1; $i<=$nMasq; $i++ ) {
 		my %attr = $fw->GetMasquerade( $i );
-		local @cols;
+		my @cols = ();
 		my $bb = $idx == $i && $in{table} eq 'masquerade' ? '<b>' : '';       # BoldBegin
 		my $be = $idx == $i && $in{table} eq 'masquerade' ? '</b>' : '';      # BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
@@ -222,8 +221,7 @@ sub showMasquerade {
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MASQUERADE}{IMAGE} : $icons{MASQUERADE_A}{IMAGE};
 			push(@cols, "${aimage}${sb}${bb}${cb}$text{YES}${ce}${be}${se}" );
 		}
-		local $mover;
-		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
+		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
 		if( $i < $nMasq ) {
 			$mover .= "<td width=50%><a href='list_nat.cgi?table=masquerade&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='down'></a>
@@ -257,10 +255,10 @@ sub showMasquerade {
 sub showRedirect {
 	print &ui_subheading($icons{REDIRECT}{IMAGE},$text{'redirect_redirect'});
 	print &ui_form_start("save_redirect.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_redirect.cgi?new=1\">$text{'list_nat_create_redirect'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "width=1% style=text-align:center;vertical-align:top",
 		 "width=25% style=vertical-align:top;white-space:normal",
 		 "width=25% style=vertical-align:top;white-space:normal",
@@ -300,7 +298,7 @@ sub showRedirect {
 
 	for( my $i=1; $i<=$nRedirect; $i++ ) {
 		my %attr = $fw->GetRedirect( $i );
-		local @cols;
+		my @cols = ();
 		my $bb = $idx == $i && $in{table} eq 'redirect' ? '<b>' : '';       # BoldBegin
 		my $be = $idx == $i && $in{table} eq 'redirect' ? '</b>' : '';      # BoldEnd
 		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
@@ -340,8 +338,7 @@ sub showRedirect {
 			my $timage = $attr{'TOPORT'} eq '' ? '' : $icons{TOPORT}{IMAGE};
 			push(@cols, "${timage}${sb}${bb}$attr{'TOPORT'}${be}${se}" );
 		}
-		local $mover;
-		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
+		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
 		if( $i < $nRedirect ) {
 			$mover .= "<td width=50%><a href='list_nat.cgi?table=redirect&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='down'></a>

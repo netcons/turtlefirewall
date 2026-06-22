@@ -21,7 +21,7 @@ print "<br><br>";
 #============================================================================
 
 sub showNdpiProtocols {
-	@tds = ( "width=20%", "width=20%", "width=60%" );
+	my @tds = ( "width=20%", "width=20%", "width=60%" );
 	print &ui_columns_start([ "<b>$text{'name'}</b>", "<b>$text{'category'}</b>", "<b>$text{'flag'}</b>" ], 100, 0, \@tds);
         my @ndpiprotocols = $fw->GetNdpiProtocolsList();
 	foreach my $name (@ndpiprotocols) {

@@ -154,13 +154,13 @@ sub showstats {
 	if( $is_target ) { print " where $text{$flowreports{$target_type}{NAMEIDX}} $text{$sqloperators{$target_op}{DESCIDX}} <i>".&ui_text_color($target, 'info')."</i>"; }
 	print " ( $firstflowtime --> $lastflowtime )";
 
-	@tds = ( "style=white-space:nowrap", "width=$graphwidth", "", "width=1% style=text-align:right;white-space:nowrap" );
+	my @tds = ( "style=white-space:nowrap", "width=$graphwidth", "", "width=1% style=text-align:right;white-space:nowrap" );
 
 	print &ui_columns_start([ "<b>$text{$txtindex}</b>", "<b>$text{'flowstat_percent'}</b>", "", "<b>$text{'flowstat_traffic'}</b>" ], 100, 0, \@tds);
 
 	foreach my $l (@stats) {
-		local @cols;
-		my ( $item, $bytes) = @$l;
+		my @cols = ();
+		my ($item, $bytes) = @$l;
 
 		# Compared to overall traffic
 		my $width = ($bytes/$flowtotal) * $graphwidth;

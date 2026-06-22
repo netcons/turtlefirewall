@@ -27,10 +27,10 @@ print "<br><br>";
 sub showConnmarkPreroute {
 	print &ui_subheading($icons{MARK}{IMAGE},$text{'connmark_preroute'});
 	print &ui_form_start("save_connmarkpreroute.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_connmarkpreroute.cgi?new=1\">$text{'list_connmarkpreroutes_create_rule'}</a>" );
-	@tds = ( 
+	my @tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=vertical-align:top",
 		"width=10% style=vertical-align:top;white-space:normal",
@@ -77,7 +77,7 @@ sub showConnmarkPreroute {
 
 	for( my $i=1; $i<=$nConnmarkPreroutes; $i++ ) {
 		my %attr = $fw->GetConnmarkPreroute($i);
-		local @cols;
+		my @cols = ();
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i && $in{table} eq 'connmarkpreroute' ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i && $in{table} eq 'connmarkpreroute' ? '</b>' : '';	# BoldEnd
@@ -133,8 +133,7 @@ sub showConnmarkPreroute {
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $mimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MARK}{IMAGE} : $icons{MARK_A}{IMAGE};
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
-		local $mover;
-		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
+		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
 		if( $i < $nConnmarkPreroutes ) {
 			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmarkpreroute&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
@@ -168,10 +167,10 @@ sub showConnmarkPreroute {
 sub showConnmark {
 	print &ui_subheading($icons{MARK}{IMAGE},$text{'connmark'});
 	print &ui_form_start("save_connmark.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_connmark.cgi?new=1\">$text{'list_connmarks_create_rule'}</a>" );
-	@tds = ( 
+	my @tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=vertical-align:top",
 	 	"width=10% style=vertical-align:top;white-space:normal",
@@ -218,7 +217,7 @@ sub showConnmark {
 
 	for( my $i=1; $i<=$nConnmarks; $i++ ) {
 		my %attr = $fw->GetConnmark($i);
-		local @cols;
+		my @cols = ();
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i && $in{table} eq 'connmark' ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i && $in{table} eq 'connmark' ? '</b>' : '';	# BoldEnd
@@ -284,8 +283,7 @@ sub showConnmark {
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $mimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MARK}{IMAGE} : $icons{MARK_A}{IMAGE};
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
-		local $mover;
-		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
+		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
 		if( $i < $nConnmarks ) {
 			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmark&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>

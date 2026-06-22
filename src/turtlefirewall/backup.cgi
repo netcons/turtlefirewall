@@ -25,10 +25,10 @@ if( $in{upload} ) {
 } else {
 	print qq~<br/>
 	<table border="0" width="100%">
-	<tr $tb>
+	<tr>
 		<th>$text{'backup_backuptitle'}</th>
 	</tr>
-	<tr $cb>
+	<tr>
 		<td style=text-align:center>
 		<br/>~;
 	print   &ui_form_start("backup.cgi?download=1", "post");
@@ -40,10 +40,10 @@ if( $in{upload} ) {
 	</table>
 
 	<table border="0" width="100%">
-	<tr $tb>
+	<tr>
 		<th>$text{'backup_restoretitle'}</th>
 	</tr>
-	<tr $cb>
+	<tr>
 		<td style=text-align:center>
 		<br/>~;
 	print   &ui_form_start("backup.cgi", "form-data");
@@ -95,10 +95,10 @@ sub restore_upload {
 	close TARGZ;
 
 	print qq~<table border="0" width="100%">
-		<tr $tb>
+		<tr>
 			<th>$text{'backup_restoretitle'}</th>
 		</tr>
-		<tr $cb>
+		<tr>
 			<td style=text-align:center><pre>~;
 	open FILE, "<$output";
 	while( <FILE> ) { print; }

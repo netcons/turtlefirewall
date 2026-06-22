@@ -13,7 +13,7 @@ require './turtlefirewall-lib.pl';
 
 my $nConnmarkPreroutes = $fw->GetConnmarkPreroutesCount();
 
-$new = $in{'new'};
+my $new = $in{'new'};
 
 if( $new ) {
 	$heading = "$icons{CREATE}{IMAGE}$text{'edit_connmarkpreroute_title_create'}";

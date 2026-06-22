@@ -11,7 +11,7 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-$new = $in{'new'};
+my $new = $in{'new'};
 
 my $heading = '';
 if( $new ) {

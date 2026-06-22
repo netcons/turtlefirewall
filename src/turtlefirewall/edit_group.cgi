@@ -11,9 +11,9 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-$new = $in{'new'};
-$group = $in{'group'};
-$newgroup = $in{'newgroup'};
+my $new = $in{'new'};
+my $group = $in{'group'};
+my $newgroup = $in{'newgroup'};
 
 my $heading = '';
 if( $new ) {

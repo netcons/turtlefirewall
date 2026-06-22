@@ -18,7 +18,7 @@ foreach my $l (qx{/usr/sbin/turtlefirewall --stop 2>&1}) {
 &ui_print_header( undef, $text{'title'}, "" );
 
 print "<table border=0 width=100%>
-       <tr $cb><td>";
+       <tr><td>";
 print "<pre>\n";
 print @output;
 print "</pre>";

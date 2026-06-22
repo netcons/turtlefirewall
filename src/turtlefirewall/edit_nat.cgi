@@ -11,9 +11,9 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-$nNat = $fw->GetNatsCount();
+my $nNat = $fw->GetNatsCount();
 
-$new = $in{'new'};
+my $new = $in{'new'};
 
 if( $new ) {
 	$heading = "$icons{CREATE}{IMAGE}$text{'edit_nat_title_create'}";

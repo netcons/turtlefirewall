@@ -115,82 +115,72 @@ sub showLog {
 
 	my $opz;
 
-	local @head;
+	my @head = ();
 
-        local $hdate;
-        $hdate .= "<b>DATE<br></b>";
-        push(@head, $hdate );
+	my $hdate = "<b>DATE<br></b>";
+	push(@head, $hdate );
 
-	local $haction;
-	$haction .= "<b>ACTION<br><select name='action' size='1'>";
-        foreach $opz (sort keys %action_list) {$haction .= "<option".($in{action} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	my $haction = "<b>ACTION<br><select name='action' size='1'>";
+	foreach $opz (sort keys %action_list) {$haction .= "<option".($in{action} eq $opz ? ' SELECTED' : '').">$opz</option>";}
 	$haction .= "</select></b>";
 	push(@head, $haction );
 
-	local $hin;
-	$hin .= "<b>IN<br><select name='in' size='1'>";
-        foreach $opz (sort keys %in_list) {$hin .= "<option".($in{in} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	my $hin = "<b>IN<br><select name='in' size='1'>";
+	foreach $opz (sort keys %in_list) {$hin .= "<option".($in{in} eq $opz ? ' SELECTED' : '').">$opz</option>";}
 	$hin .= "</select></b>";
 	push(@head, $hin );
 
-	local $hout;
-	$hout .= "<b>OUT<br><select name='out' size='1'>";
-        foreach $opz (sort keys %out_list) {$hout .= "<option".($in{out} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	my $hout = "<b>OUT<br><select name='out' size='1'>";
+	foreach $opz (sort keys %out_list) {$hout .= "<option".($in{out} eq $opz ? ' SELECTED' : '').">$opz</option>";}
 	$hout .= "</select></b>";
 	push(@head, $hout );
 
-	local $hsrc;
-	$hsrc .= "<b>SRC<br><select name='src' size='1'>";
-        foreach $opz (sort keys %src_list) {$hsrc .= "<option".($in{src} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	my $hsrc = "<b>SRC<br><select name='src' size='1'>";
+	foreach $opz (sort keys %src_list) {$hsrc .= "<option".($in{src} eq $opz ? ' SELECTED' : '').">$opz</option>";}
 	$hsrc .= "</select></b>";
 	push(@head, $hsrc );
 
-	local $hdst;
-	$hdst .= "<b>DST<br><select name='dst' size='1'>";
-        foreach $opz (sort keys %dst_list) {$hdst .= "<option".($in{dst} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	my $hdst = "<b>DST<br><select name='dst' size='1'>";
+	foreach $opz (sort keys %dst_list) {$hdst .= "<option".($in{dst} eq $opz ? ' SELECTED' : '').">$opz</option>";}
 	$hdst .= "</select></b>";
 	push(@head, $hdst );
 
-	local $hproto;
-	$hproto .= "<b>PROTO<br><select name='proto' size='1'>";
-        foreach $opz (sort keys %proto_list) {$hproto .= "<option".($in{proto} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	my $hproto = "<b>PROTO<br><select name='proto' size='1'>";
+	foreach $opz (sort keys %proto_list) {$hproto .= "<option".($in{proto} eq $opz ? ' SELECTED' : '').">$opz</option>";}
 	$hproto .= "</select></b>";
 	push(@head, $hproto );
 
-	local $hspt;
-	$hspt .= "<b>SPORT<br><select name='spt' size='1'>";
-        foreach $opz (sort keys %spt_list) {$hspt .= "<option".($in{spt} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	my $hspt = "<b>SPORT<br><select name='spt' size='1'>";
+	foreach $opz (sort keys %spt_list) {$hspt .= "<option".($in{spt} eq $opz ? ' SELECTED' : '').">$opz</option>";}
 	$hspt .= "</select></b>";
 	push(@head, $hspt );
 
-	local $hdpt;
-	$hdpt .= "<b>DPORT<br><select name='dpt' size='1'>";
-        foreach $opz (sort keys %dpt_list) {$hdpt .= "<option".($in{dpt} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	my $hdpt = "<b>DPORT<br><select name='dpt' size='1'>";
+	foreach $opz (sort keys %dpt_list) {$hdpt .= "<option".($in{dpt} eq $opz ? ' SELECTED' : '').">$opz</option>";}
 	$hdpt .= "</select></b>";
 	push(@head, $hdpt );
 
-	local $hmac;
-	$hmac .= "<b>MAC<br><select name='mac' size='1'>";
-        foreach $opz (sort keys %mac_list) {$hmac .= "<option".($in{mac} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	my $hmac = "<b>MAC<br><select name='mac' size='1'>";
+	foreach $opz (sort keys %mac_list) {$hmac .= "<option".($in{mac} eq $opz ? ' SELECTED' : '').">$opz</option>";}
 	$hmac .= "</select></b>";
 	push(@head, $hmac );
 
-	@tds = ( "style=white-space:nowrap", "style=text-align:center", "style=text-align:center", "", "", "", "style=text-align:center", "", "", "" );
+	my @tds = ( "style=white-space:nowrap", "style=text-align:center", "style=text-align:center", "", "", "", "style=text-align:center", "", "", "" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
 	foreach my $l (@buffer) {
-		local @cols;
+		my @cols = ();
 		my ($time, $action, $in, $out, $mac, $src, $dst, $proto, $spt, $dpt) = @$l;
-		&showTD($time);
-		&showTD($action);
-		&showTD($in);
-		&showTD($out);
-		&showTD($src);
-		&showTD($dst);
-		&showTD($proto);
-		&showTD($spt);
-		&showTD($dpt);
-		&showTD($mac);
+		push(@cols, "<i>".($time eq '' ? "&nbsp;" : "$time")."</i>");
+		push(@cols, "<i>".($action eq '' ? "&nbsp;" : "$action")."</i>");
+		push(@cols, "<i>".($in eq '' ? "&nbsp;" : "$in")."</i>");
+		push(@cols, "<i>".($out eq '' ? "&nbsp;" : "$out")."</i>");
+		push(@cols, "<i>".($mac eq '' ? "&nbsp;" : "$mac")."</i>");
+		push(@cols, "<i>".($src eq '' ? "&nbsp;" : "$src")."</i>");
+		push(@cols, "<i>".($dst eq '' ? "&nbsp;" : "$dst")."</i>");
+		push(@cols, "<i>".($proto eq '' ? "&nbsp;" : "$proto")."</i>");
+		push(@cols, "<i>".($spt eq '' ? "&nbsp;" : "$spt")."</i>");
+		push(@cols, "<i>".($dpt eq '' ? "&nbsp;" : "$dpt")."</i>");
 	        print &ui_columns_row(\@cols, \@tds);
 	}
 	print &ui_columns_end();
@@ -202,10 +192,4 @@ sub showLog {
 	print &ui_form_end();
 
 	print "<div style=text-align:center>$pageindex</div>\n";
-}
-
-sub showTD {
-	my $text = shift;
-	if( $text eq '' ) { $text = '&nbsp;'; }
-	push(@cols, "<i>$text</i>");
 }

@@ -14,11 +14,11 @@ require './turtlefirewall-lib.pl';
 &ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_rawrules'}", $text{'title'}, "" );
 
 $form = 0;
-showConntrackPreroute();
+&showConntrackPreroute();
 
 $form++;
 print "<br><br>";
-showConntrack();
+&showConntrack();
 
 &ui_print_footer('index.cgi',$text{'index'});
 
@@ -27,10 +27,10 @@ showConntrack();
 sub showConntrackPreroute {
 	print &ui_subheading($icons{HELPER}{IMAGE},$text{'conntrack_preroute'});
 	print &ui_form_start("save_conntrackpreroute.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_conntrackpreroute.cgi?new=1\">$text{'list_conntrackpreroutes_create_rule'}</a>" );
-	@tds = ( 
+	my @tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=vertical-align:top",
 		"width=25% style=vertical-align:top;white-space:normal",
@@ -69,7 +69,7 @@ sub showConntrackPreroute {
 
 	for( my $i=1; $i<=$nConntrackPreroutes; $i++ ) {
 		my %attr = $fw->GetConntrackPreroute($i);
-		local @cols;
+		my @cols = ();
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i && $in{table} eq 'conntrackpreroute' ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i && $in{table} eq 'conntrackpreroute' ? '</b>' : '';	# BoldEnd
@@ -91,8 +91,7 @@ sub showConntrackPreroute {
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? $icons{HELPER}{IMAGE} : $icons{HELPER_A}{IMAGE};
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
-		local $mover;
-		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
+		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
 		if( $i < $nConntrackPreroutes ) {
 			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrackpreroute&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
@@ -126,10 +125,10 @@ sub showConntrackPreroute {
 sub showConntrack {
 	print &ui_subheading($icons{HELPER}{IMAGE},$text{'conntrack'});
 	print &ui_form_start("save_conntrack.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_conntrack.cgi?new=1\">$text{'list_conntracks_create_rule'}</a>" );
-	@tds = ( 
+	my @tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=vertical-align:top",
 		"width=25% style=vertical-align:top;white-space:normal",
@@ -168,7 +167,7 @@ sub showConntrack {
 
 	for( my $i=1; $i<=$nConntracks; $i++ ) {
 		my %attr = $fw->GetConntrack($i);
-		local @cols;
+		my @cols = ();
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i && $in{table} eq 'conntrack' ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i && $in{table} eq 'conntrack' ? '</b>' : '';	# BoldEnd
@@ -190,8 +189,7 @@ sub showConntrack {
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? $icons{HELPER}{IMAGE} : $icons{HELPER_A}{IMAGE};
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
-		local $mover;
-		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
+		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
 		if( $i < $nConntracks ) {
 			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrack&idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>

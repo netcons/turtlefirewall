@@ -13,7 +13,7 @@ require './turtlefirewall-lib.pl';
 
 my $nMasq = $fw->GetMasqueradesCount();
 
-$new = $in{'new'};
+my $new = $in{'new'};
 
 if( $new ) {
 	$heading = "$icons{CREATE}{IMAGE}$text{'edit_masq_title_create'}";

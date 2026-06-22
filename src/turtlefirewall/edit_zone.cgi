@@ -12,10 +12,10 @@ require './turtlefirewall-lib.pl';
 &ReadParse();
 
 if( $in{'zone'} eq 'FIREWALL' ) {
-	redirect('list_items.cgi');
+	&redirect('list_items.cgi');
 }
 
-$new = $in{'new'};
+my $new = $in{'new'};
 
 my $heading = '';
 if( $new ) {

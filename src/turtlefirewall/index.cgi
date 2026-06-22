@@ -106,8 +106,8 @@ print &ui_form_end();
 
 if( $in{showiptfilter} ne '' ) {
 	print "<br><table border=0 width=100%>
-		<tr $tb><th>FILTER</th></tr>
-		<tr $cb><td>";
+		<tr><th>FILTER</th></tr>
+		<tr><td>";
 	print "<pre><small>";
 	print qx{iptables -L -n -v -x 2>&1};
 	#print qx{nft list table ip filter 2>&1};
@@ -117,8 +117,8 @@ if( $in{showiptfilter} ne '' ) {
 
 if( $in{showiptnat} ne '' ) {
 	print "<br><table border=0 width=100%>
-		<tr $tb><th>NAT</th></tr>
-		<tr $cb><td>";
+		<tr><th>NAT</th></tr>
+		<tr><td>";
 	print "<pre><small>";
 	print qx{iptables -t nat -L -n -v -x 2>&1};
 	#print qx{nft list table ip nat 2>&1};
@@ -128,8 +128,8 @@ if( $in{showiptnat} ne '' ) {
 
 if( $in{showiptmangle} ne '' ) {
 	print "<br><table border=0 width=100%>
-		<tr $tb><th>MANGLE</th></tr>
-		<tr $cb><td>";
+		<tr><th>MANGLE</th></tr>
+		<tr><td>";
 	print "<pre><small>";
 	print qx{iptables -t mangle -L -n -v -x 2>&1};
 	#print qx{nft list table ip mangle 2>&1};
@@ -139,8 +139,8 @@ if( $in{showiptmangle} ne '' ) {
 
 if( $in{showiptraw} ne '' ) {
 	print "<br><table border=0 width=100%>
-		<tr $tb><th>RAW</th></tr>
-		<tr $cb><td>";
+		<tr><th>RAW</th></tr>
+		<tr><td>";
 	print "<pre><small>";
 	print qx{iptables -t raw -L -n -v -x 2>&1};
 	#print qx{nft list table ip raw 2>&1};
@@ -150,8 +150,8 @@ if( $in{showiptraw} ne '' ) {
 
 if( $in{showconntrack} ne '' ) {
 	print "<br><table border=0 width=100%>
-		<tr $tb><th>CONNTRACK</th></tr>
-		<tr $cb><td>";
+		<tr><th>CONNTRACK</th></tr>
+		<tr><td>";
 	print "<pre><small>";
 	print qx{/usr/sbin/conntrack -L -o extended};
 	print "</small></pre>";
@@ -160,8 +160,8 @@ if( $in{showconntrack} ne '' ) {
 
 if( $in{flushconntrack} ne '' ) {
 	print "<br><table border=0 width=100%>
-		<tr $tb><th>CONNTRACK</th></tr>
-		<tr $cb><td>";
+		<tr><th>CONNTRACK</th></tr>
+		<tr><td>";
 	print "<pre><small>";
 	print qx{/usr/sbin/conntrack -F 2>&1};
 	print "</small></pre>";

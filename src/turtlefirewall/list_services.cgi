@@ -21,7 +21,7 @@ print "<br><br>";
 #============================================================================
 
 sub showServices {
-	@tds = ( "width=20%", "width=80%" );
+	my @tds = ( "width=20%", "width=80%" );
         print &ui_columns_start([ "<b>$text{'name'}</b>", "<b>$text{'description'}</b>" ], 100, 0, \@tds);
 	my @services = $fw->GetServicesList();
 	foreach my $name (@services) {

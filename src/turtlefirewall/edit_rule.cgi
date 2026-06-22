@@ -13,7 +13,7 @@ require './turtlefirewall-lib.pl';
 
 my $nRules = $fw->GetRulesCount();
 
-$new = $in{'new'};
+my $new = $in{'new'};
 
 if( $new ) {
 	$heading = "$icons{CREATE}{IMAGE}$text{'edit_rule_title_create'}";

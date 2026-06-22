@@ -68,10 +68,10 @@ print "<br><br>";
 sub showAddressList {
 	print &ui_subheading($icons{ADDRESSLIST}{IMAGE},$text{'addresslist'});
 	print &ui_form_start("save_addresslist.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_addresslist.cgi?new=1\">$text{'list_items_create_addresslist'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -87,7 +87,7 @@ sub showAddressList {
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
         foreach my $b (sort keys %blacklists) {
-		local @cols;
+		my @cols = ();
 		push(@cols, "$icons{BLACKLIST}{IMAGE}<i>$b</i>");
 		push(@cols, "$icons{FILE}{IMAGE}$blacklists{$b}{FILE}");
 		my $blacklistcount = qx{wc -l < $blacklists{$b}{FILE} 2>/dev/null};
@@ -103,7 +103,7 @@ sub showAddressList {
 		my %addresslist = $fw->GetAddressList($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_addresslist.cgi?addresslist=$k",$k);
 		push(@cols, "$icons{ADDRESSLIST}{IMAGE}$href" );
 		push(@cols, "$icons{FILE}{IMAGE}$addresslist{'FILE'}" );
@@ -126,10 +126,10 @@ sub showAddressList {
 sub showZone {
 	print &ui_subheading($icons{ZONE}{IMAGE},"$text{'zone'}");
 	print &ui_form_start("save_zone.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_zone.cgi?new=1\">$text{'list_items_create_zone'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -144,7 +144,7 @@ sub showZone {
 		my %zone = $fw->GetZone($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_zone.cgi?zone=$k",$k);
 		if( $k eq 'FIREWALL' ) {
 			push(@cols, "$icons{FIREWALL}{IMAGE}<i>$k</i>" );
@@ -167,10 +167,10 @@ sub showZone {
 sub showHost {
 	print &ui_subheading($icons{HOST}{IMAGE},$text{'host'});
 	print &ui_form_start("save_host.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_host.cgi?new=1\">$text{'list_items_create_host'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -189,7 +189,7 @@ sub showHost {
 		my %host = $fw->GetHost($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_host.cgi?host=$k",$k);
 		push(@cols, "$icons{HOST}{IMAGE}$href" );
 	        push(@cols, "".($host{'IP'} ne '' ? "$icons{ADDRESS}{IMAGE}$host{'IP'}" : '&nbsp;')."" );
@@ -210,10 +210,10 @@ sub showHost {
 sub showNet {
 	print &ui_subheading($icons{NET}{IMAGE},$text{'net'});
 	print &ui_form_start("save_net.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_net.cgi?new=1\">$text{'list_items_create_net'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -233,7 +233,7 @@ sub showNet {
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
 		push(@cols, $count);
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_net.cgi?net=$k",$k);
 		push(@cols, "$icons{NET}{IMAGE}$href" );
 	        push(@cols, "$icons{ADDRESS}{IMAGE}$net{'IP'}" );
@@ -254,10 +254,10 @@ sub showNet {
 sub showGeoip {
 	print &ui_subheading($icons{GEOIP}{IMAGE},$text{'geoip'});
 	print &ui_form_start("save_geoip.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_geoip.cgi?new=1\">$text{'list_items_create_geoip'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -274,7 +274,7 @@ sub showGeoip {
 		my %geoip = $fw->GetGeoip($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_geoip.cgi?geoip=$k",$k);
 		push(@cols, "$icons{GEOIP}{IMAGE}$href" );
 		my %g = $fw->GetCountryCode($geoip{'IP'});
@@ -295,10 +295,10 @@ sub showGeoip {
 sub showIPSet {
 	print &ui_subheading($icons{IPSET}{IMAGE},$text{'ipset'});
 	print &ui_form_start("save_ipset.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_ipset.cgi?new=1\">$text{'list_items_create_ipset'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -315,7 +315,7 @@ sub showIPSet {
 		my %ipset = $fw->GetIPSet($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_ipset.cgi?ipset=$k",$k);
 		push(@cols, "$icons{IPSET}{IMAGE}$href" );
 		push(@cols, "$icons{ADDRESS}{IMAGE}$ipset{'IP'}" );
@@ -335,10 +335,10 @@ sub showIPSet {
 sub showGroup {
 	print &ui_subheading($icons{GROUP}{IMAGE},$text{'group'});
 	print &ui_form_start("save_group.cgi", "post" );
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_group.cgi?new=1\">$text{'list_items_create_group'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -353,7 +353,7 @@ sub showGroup {
 		my %group = $fw->GetGroup($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_group.cgi?group=$k",$k);
 		push(@cols, "$icons{GROUP}{IMAGE}$href" );
 		my $grouplist;
@@ -378,10 +378,10 @@ sub showGroup {
 sub showHostNameSet {
 	print &ui_subheading($icons{HOSTNAMESET}{IMAGE},$text{'hostnameset'});
 	print &ui_form_start("save_hostnameset.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_hostnameset.cgi?new=1\">$text{'list_items_create_hostnameset'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -396,7 +396,7 @@ sub showHostNameSet {
 		my %hostnameset = $fw->GetHostNameSet($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_hostnameset.cgi?hostnameset=$k",$k);
 		push(@cols, "$icons{HOSTNAMESET}{IMAGE}$href" );
 		my $hostnamesetlist;
@@ -419,10 +419,10 @@ sub showHostNameSet {
 sub showRiskSet {
 	print &ui_subheading($icons{RISKSET}{IMAGE},$text{'riskset'});
 	print &ui_form_start("save_riskset.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_riskset.cgi?new=1\">$text{'list_items_create_riskset'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -437,7 +437,7 @@ sub showRiskSet {
 		my %riskset = $fw->GetRiskSet($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_riskset.cgi?riskset=$k",$k);
 		push(@cols, "$icons{RISKSET}{IMAGE}$href" );
 		my $risksetlist;
@@ -461,10 +461,10 @@ sub showRiskSet {
 sub showRateLimit {
 	print &ui_subheading($icons{RATELIMIT}{IMAGE},$text{'ratelimit'});
 	print &ui_form_start("save_ratelimit.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_ratelimit.cgi?new=1\">$text{'list_items_create_ratelimit'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -479,7 +479,7 @@ sub showRateLimit {
 		my %ratelimit = $fw->GetRateLimit($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_ratelimit.cgi?ratelimit=$k",$k);
 		push(@cols, "$icons{RATELIMIT}{IMAGE}$href" );
         	push(@cols, "$icons{RATE}{IMAGE}$ratelimit{'RATE'} <i>Mbps</i>" );
@@ -498,10 +498,10 @@ sub showRateLimit {
 sub showTime {
 	print &ui_subheading($icons{TIME}{IMAGE},$text{'time'});
 	print &ui_form_start("save_time.cgi", "post");
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_time.cgi?new=1\">$text{'list_items_create_time'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 	 	 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -520,7 +520,7 @@ sub showTime {
 		my %time = $fw->GetTime($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_time.cgi?time=$k",$k);
 		push(@cols, "$icons{TIME}{IMAGE}$href" );
 	        push(@cols, "$icons{ITEM}{IMAGE}$time{'WEEKDAYS'}" );
@@ -541,10 +541,10 @@ sub showTime {
 sub showTimeGroup {
 	print &ui_subheading($icons{TIMEGROUP}{IMAGE},$text{'timegroup'});
 	print &ui_form_start("save_timegroup.cgi", "post" );
-	@links = ( &select_all_link("d", $form),
+	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_timegroup.cgi?new=1\">$text{'list_items_create_timegroup'}</a>" );
-        @tds = ( "width=1% style=vertical-align:top",
+        my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -559,7 +559,7 @@ sub showTimeGroup {
 		my %timegroup = $fw->GetTimeGroup($k);
 		my %itemreferences = $fw->GetItemReferences($k);
 		my $count = keys %itemreferences;	
-		local @cols;
+		my @cols = ();
 		my $href = &ui_link("edit_timegroup.cgi?timegroup=$k",$k);
 		push(@cols, "$icons{TIMEGROUP}{IMAGE}$href" );
 		my $timegrouplist;

@@ -174,103 +174,80 @@ sub showLog {
 
 	my $opz;
 
-	local @head;
+	my @head = ();
 
-	local $hstime;
-	$hstime .= "<b>startTIME<br></b>";
+	my $hstime = "<b>startTIME<br></b>";
 	push(@head, $hstime );
 
-	local $hetime;
-	$hetime .= "<b>endTIME<br></b>";
+	my $hetime = "<b>endTIME<br></b>";
 	push(@head, $hetime );
 
-	local $hl3proto;
-	$hl3proto .= "<b>L3PROTO<br></b>";
+	my $hl3proto = "<b>L3PROTO<br></b>";
 	push(@head, $hl3proto );
 
-	local $hl4proto;
-	$hl4proto .= "<b>L4PROTO<br></b>";
+	my $hl4proto = "<b>L4PROTO<br></b>";
 	push(@head, $hl4proto );
 
-	local $hprotocol;
-	$hprotocol .= "<b>L7PROTO<br></b>";
+	my $hprotocol = "<b>L7PROTO<br></b>";
 	push(@head, $hprotocol );
 
-	local $hhostname;
-	$hhostname .= "<b>hostNAME<br></b>";
+	my $hhostname = "<b>hostNAME<br></b>";
 	push(@head, $hhostname );
 
-	local $hsource;
-	$hsource .= "<b>srcADDR<br><select name='source' size='1'>";
+	my $hsource = "<b>srcADDR<br><select name='source' size='1'>";
 	foreach $opz (sort keys %source_list) {$hsource .= "<option".($in{source} eq $opz ? ' SELECTED' : '').">$opz</option>";}
 	$hsource .= "</select></b>";
 	push(@head, $hsource );
 
-	local $hsport;
-	$hsport .= "<b>srcPORT<br></b>";
+	my $hsport = "<b>srcPORT<br></b>";
 	push(@head, $hsport );
 
-	local $hdestination;
-	$hdestination .= "<b>dstADDR<br></b>";
+	my $hdestination = "<b>dstADDR<br></b>";
 	push(@head, $hdestination );
 
-	local $hdport;
-	$hdport .= "<b>dstPORT<br></b>";
+	my $hdport = "<b>dstPORT<br></b>";
 	push(@head, $hdport );
 
-	local $htbytes;
-	$htbytes .= "<b>totalBYTES<br></b>";
+	my $htbytes = "<b>totalBYTES<br></b>";
 	push(@head, $htbytes );
 
-	local $hubytes;
-	$hubytes .= "<b>upBYTES<br></b>";
+	my $hubytes = "<b>upBYTES<br></b>";
 	push(@head, $hubytes );
 
-	local $hdbytes;
-	$hdbytes .= "<b>downBYTES<br></b>";
+	my $hdbytes = "<b>downBYTES<br></b>";
 	push(@head, $hdbytes );
 
-	local $hupackets;
-	$hupackets .= "<b>upPACKETS<br></b>";
+	my $hupackets = "<b>upPACKETS<br></b>";
 	push(@head, $hupackets );
 
-	local $hdpackets;
-	$hdpackets .= "<b>downPACKETS<br></b>";
+	my $hdpackets = "<b>downPACKETS<br></b>";
 	push(@head, $hdpackets );
 
-	local $hinif;
-	$hinif .= "<b>inIF<br></b>";
+	my $hinif = "<b>inIF<br></b>";
 	push(@head, $hinif );
 
-	local $houtif;
-	$houtif .= "<b>outIF<br></b>";
+	my $houtif = "<b>outIF<br></b>";
 	push(@head, $houtif );
 
-	local $hconnmark;
-	$hconnmark .= "<b>connMARK<br></b>";
+	my $hconnmark = "<b>connMARK<br></b>";
 	push(@head, $hconnmark );
 
-	local $hsrcnat;
-	$hsrcnat .= "<b>srcNAT<br></b>";
+	my $hsrcnat = "<b>srcNAT<br></b>";
 	push(@head, $hsrcnat );
 
-	local $hdstnat;
-	$hdstnat .= "<b>dstNAT<br></b>";
+	my $hdstnat = "<b>dstNAT<br></b>";
 	push(@head, $hdstnat );
 
-	local $hja4c;
-	$hja4c .= "<b>ja4cFINGERPRINT<br></b>";
+	my $hja4c = "<b>ja4cFINGERPRINT<br></b>";
 	push(@head, $hja4c );
 
-	local $htlsfp;
-	$htlsfp .= "<b>tlsFINGERPRINT<br></b>";
+	my $htlsfp = "<b>tlsFINGERPRINT<br></b>";
 	push(@head, $htlsfp );
 
-	local $hrisk;
-	$hrisk .= "<b>RISK<br></b>";
+	my $hrisk = "<b>RISK<br></b>";
 	push(@head, $hrisk );
 
-	@tds = ( "style=white-space:nowrap",
+	my @tds = ( "style=white-space:nowrap",
 	       	 "style=white-space:nowrap",
 		 "style=text-align:center",
 		 "style=text-align:center",
@@ -296,35 +273,44 @@ sub showLog {
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
 	foreach my $l (@buffer) {
-		local @cols;
+		my @cols = ();
 		my ($stime, $etime, $l3proto, $l4proto, $source, $sport, $destination, $dport, $ubytes, $dbytes, $upackets, $dpackets, $ifindex,
 		    $connmark, $srcnat, $dstnat, $protocol, $hostname, $ja4c, $tlsfp, $risk) = @$l;
-	    	&showTD(localtime($stime)->strftime('%b %d %X'));
-	    	&showTD(localtime($etime)->strftime('%b %d %X'));
-		&showTD(&l3protoname($l3proto));
-		&showTD(&l4protoname($l4proto));
-		&showTD($protocol);
-		&showTD($hostname);
-		&showTD($source);
-		&showTD($sport);
-		&showTD($destination);
-		&showTD($dport);
-		&showTD(&roundbytes($ubytes + $dbytes));
-		&showTD(&roundbytes($ubytes));
-		&showTD(&roundbytes($dbytes));
-		&showTD($upackets);
-		&showTD($dpackets);
+		$stime = localtime($stime)->strftime('%b %d %X');
+		push(@cols, "<i>".($stime eq '' ? "&nbsp;" : "$stime&nbsp;&nbsp;")."</i>");
+		$etime = localtime($etime)->strftime('%b %d %X');
+		push(@cols, "<i>".($etime eq '' ? "&nbsp;" : "$etime&nbsp;&nbsp;")."</i>");
+		$l3proto = &l3protoname($l3proto);
+		push(@cols, "<i>".($l3proto eq '' ? "&nbsp;" : "$l3proto&nbsp;&nbsp;")."</i>");
+		$l4proto = &l4protoname($l4proto);
+		push(@cols, "<i>".($l4proto eq '' ? "&nbsp;" : "$l4proto&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($protocol eq '' ? "&nbsp;" : "$protocol&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($hostname eq '' ? "&nbsp;" : "$hostname&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($source eq '' ? "&nbsp;" : "$source&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($sport eq '' ? "&nbsp;" : "$sport&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($destination eq '' ? "&nbsp;" : "$destination&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($dport eq '' ? "&nbsp;" : "$dport&nbsp;&nbsp;")."</i>");
+		my $tbytes = &roundbytes($ubytes + $dbytes);
+		push(@cols, "<i>".($tbytes eq '' ? "&nbsp;" : "$tbytes&nbsp;&nbsp;")."</i>");
+		$ubytes = &roundbytes($ubytes);
+		push(@cols, "<i>".($ubytes eq '' ? "&nbsp;" : "$ubytes&nbsp;&nbsp;")."</i>");
+		$dbytes = &roundbytes($dbytes);
+		push(@cols, "<i>".($dbytes eq '' ? "&nbsp;" : "$dbytes&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($upackets eq '' ? "&nbsp;" : "$upackets&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($dpackets eq '' ? "&nbsp;" : "$dpackets&nbsp;&nbsp;")."</i>");
 		$t = $ifindex;
 		if( $t =~ /I=(.*?)(,|$)/ ) { $inifindex = $1; };
-		&showTD(&getifname($inifindex));
+		my $inifname = &getifname($inifindex);
+		push(@cols, "<i>".($inifname eq '' ? "&nbsp;" : "$inifname&nbsp;&nbsp;")."</i>");
 		if( $t =~ /,(.*?)$/ ) { $outifindex = $1; };
-		&showTD(&getifname($outifindex));
-		&showTD($connmark);
-		&showTD($srcnat);
-		&showTD($dstnat);
-		&showTD($ja4c);
-		&showTD($tlsfp);
-		&showTD(&getrisknames($risk));
+		my $outifname = &getifname($outifindex);
+		push(@cols, "<i>".($outifname eq '' ? "&nbsp;" : "$outifname&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($connmark eq '' ? "&nbsp;" : "$connmark&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($srcnat eq '' ? "&nbsp;" : "$srcnat&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($dstnat eq '' ? "&nbsp;" : "$dstnat&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($ja4c eq '' ? "&nbsp;" : "$ja4c&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($tlsfp eq '' ? "&nbsp;" : "$tlsfp&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($risk eq '' ? "&nbsp;" : "$risk&nbsp;&nbsp;")."</i>");
 	        print &ui_columns_row(\@cols, \@tds);
 	}
 	print &ui_columns_end();
@@ -336,13 +322,6 @@ sub showLog {
 	print &ui_form_end();
 
 	print "<div style=text-align:center>$pageindex</div>\n";
-}
-
-sub showTD {
-	my $text = shift;
-
-	if( $text eq '' ) { $text = '&nbsp;'; }
-	push(@cols, "<i>$text&nbsp;&nbsp;</i>");
 }
 
 sub l3protoname {

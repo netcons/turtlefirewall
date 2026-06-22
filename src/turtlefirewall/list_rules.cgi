@@ -22,10 +22,10 @@ require './turtlefirewall-lib.pl';
 sub showRule {
 	print &ui_subheading($icons{RULE}{IMAGE},$text{'rule'});
 	print &ui_form_start("save_rule.cgi", "post");
-	@links = ( &select_all_link("d"),
+	my @links = ( &select_all_link("d"),
        		   &select_invert_link("d"),
 		   "<a href=\"edit_rule.cgi?new=1\">$text{'list_rules_create_rule'}</a>" );
-	@tds = ( 
+	my @tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=text-align:center;vertical-align:top",
 		"width=10% style=vertical-align:top;white-space:normal",
@@ -76,7 +76,7 @@ sub showRule {
 
 	for( my $i=1; $i<=$nRules; $i++ ) {
 		my %attr = $fw->GetRule($i);
-		local @cols;
+		my @cols = ();
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i ? '</b>' : '';	# BoldEnd
@@ -166,8 +166,7 @@ sub showRule {
 		}
 		my $iimage = $attr{'DESCRIPTION'} eq '' ? '' : $icons{DESCRIPTION}{IMAGE};
 		push(@cols, "${iimage}${sb}${bb}".($attr{'DESCRIPTION'} ne '' ? $attr{'DESCRIPTION'} : '&nbsp;')."${be}${se}" );
-		local $mover;
-		$mover .= "<table cellspacing=0 cellpadding=0><tr>";
+		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
 		if( $i < $nRules ) {
 			$mover .= "<td width=50%><a href='list_rules.cgi?idx=$i&down=1'>
 				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>

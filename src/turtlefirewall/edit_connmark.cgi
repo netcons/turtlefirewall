@@ -13,7 +13,7 @@ require './turtlefirewall-lib.pl';
 
 my $nConnmarks = $fw->GetConnmarksCount();
 
-$new = $in{'new'};
+my $new = $in{'new'};
 
 if( $new ) {
 	$heading = "$icons{CREATE}{IMAGE}$text{'edit_connmark_title_create'}";

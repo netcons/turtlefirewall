@@ -11,9 +11,9 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 
-$new = $in{'new'};
-$hostnameset = $in{'hostnameset'};
-$newhostnameset = $in{'newhostnameset'};
+my $new = $in{'new'};
+my $hostnameset = $in{'hostnameset'};
+my $newhostnameset = $in{'newhostnameset'};
 
 my $heading = '';
 if( $new ) {
