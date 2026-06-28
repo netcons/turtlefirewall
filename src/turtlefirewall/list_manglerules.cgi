@@ -81,7 +81,7 @@ sub showConnmarkPreroute {
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i && $in{table} eq 'connmarkpreroute' ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i && $in{table} eq 'connmarkpreroute' ? '</b>' : '';	# BoldEnd
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<span style=color:grey><s>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_connmarkpreroute.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
@@ -221,7 +221,7 @@ sub showConnmark {
 		if( $attr{'TARGET'} eq '' ) { $attr{'TARGET'} = 'ACCEPT'; }
 		my $bb = $idx == $i && $in{table} eq 'connmark' ? '<b>' : '';	# BoldBegin
 		my $be = $idx == $i && $in{table} eq 'connmark' ? '</b>' : '';	# BoldEnd
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<span style=color:grey><s>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_connmark.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );

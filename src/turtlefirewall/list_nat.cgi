@@ -77,7 +77,7 @@ sub showNat {
 		my @cols = ();
 		my $bb = $idx == $i && $in{table} eq 'nat' ? '<b>' : '';       # BoldBegin
 		my $be = $idx == $i && $in{table} eq 'nat'? '</b>' : '';      # BoldEnd
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<span style=color:grey><s>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_nat.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
@@ -187,7 +187,7 @@ sub showMasquerade {
 		my @cols = ();
 		my $bb = $idx == $i && $in{table} eq 'masquerade' ? '<b>' : '';       # BoldBegin
 		my $be = $idx == $i && $in{table} eq 'masquerade' ? '</b>' : '';      # BoldEnd
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<span style=color:grey><s>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_masquerade.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
@@ -301,7 +301,7 @@ sub showRedirect {
 		my @cols = ();
 		my $bb = $idx == $i && $in{table} eq 'redirect' ? '<b>' : '';       # BoldBegin
 		my $be = $idx == $i && $in{table} eq 'redirect' ? '</b>' : '';      # BoldEnd
-		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<s><span style=color:grey>' : '';	# StrikeBegin
+		my $sb = $attr{'ACTIVE'} eq 'NO' ? '<span style=color:grey><s>' : '';	# StrikeBegin
 		my $se = $attr{'ACTIVE'} eq 'NO' ? '</s></span>' : '';		# StrikeEnd
 		my $href = &ui_link("edit_redirect.cgi?idx=$i","${sb}${bb}${i}${be}${se}");
 		push(@cols, $href );
