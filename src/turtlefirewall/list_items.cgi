@@ -443,7 +443,7 @@ sub showRiskSet {
 		my $risksetlist;
 		for my $i (split(/,/, $riskset{'RISKS'})) {
 			my %ndpirisk = $fw->GetNdpiRisk($i);
-			$risksetlist .= "$icons{RISK}{IMAGE}$i - $ndpirisk{'DESCRIPTION'}<br>";
+			$risksetlist .= "$icons{RISK}{IMAGE}$i - $ndpirisk{'DESCRIPTION'} - $ndpirisk{'SEVERITY'}<br>";
 		}
 		push(@cols, $risksetlist );
 		push(@cols, "".($riskset{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$riskset{'DESCRIPTION'}" : '&nbsp;')."" );

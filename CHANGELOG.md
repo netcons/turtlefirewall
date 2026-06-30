@@ -1,5 +1,10 @@
 # ChangeLog
 
+## v.2.8 (Not Yet Released)
+- Cleanup: Variable Declarations.
+- Cleanup: Formatting Order.
+- Feature: Add Risk Severity Info.
+
 ## v.2.7 (11-12-2025)
 - OS : DEB package, remove EOL OS instructions.
 - Feature : nDPI 5.1 support.

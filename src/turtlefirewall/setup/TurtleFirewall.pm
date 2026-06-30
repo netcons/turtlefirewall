@@ -1531,7 +1531,8 @@ sub LoadNdpiRisks {
 						my $ndpirisk = $attrs{'ID'};
 
 						%{ $this->{ndpirisks}{$ndpirisk} } = (
-							'DESCRIPTION' => $attrs{'DESCRIPTION'}
+							'DESCRIPTION' => $attrs{'DESCRIPTION'},
+							'SEVERITY' => $attrs{'SEVERITY'}
 						);
 
 					}

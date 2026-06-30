@@ -21,12 +21,12 @@ print "<br><br>";
 #============================================================================
 
 sub showNdpiRisks {
-	my @tds = ( "width=5%", "width=95%" );
-	print &ui_columns_start([ "<b>$text{'id'}</b>", "<b>$text{'description'}</b>" ], 100, 0, \@tds);
+	my @tds = ( "width=5%", "width=30%", "width=65%" );
+	print &ui_columns_start([ "<b>$text{'id'}</b>", "<b>$text{'description'}</b>", "<b>$text{'severity'}</b>" ], 100, 0, \@tds);
         my @ndpirisks = $fw->GetNdpiRisksList();
 	foreach $id (sort { $a <=> $b } @ndpirisks) {
 		my %ndpirisk = $fw->GetNdpiRisk($id);
-	        print &ui_columns_row([ "$icons{RISK}{IMAGE}$id", "$icons{DESCRIPTION}{IMAGE}$ndpirisk{'DESCRIPTION'}" ], \@tds);
+	        print &ui_columns_row([ "$icons{RISK}{IMAGE}$id", "$icons{DESCRIPTION}{IMAGE}$ndpirisk{'DESCRIPTION'}", "$ndpirisk{'SEVERITY'}" ], \@tds);
         }
 	print &ui_columns_end();
 }

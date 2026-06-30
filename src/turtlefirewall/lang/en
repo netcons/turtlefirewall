@@ -84,6 +84,7 @@ reference=Ref
 references=References
 file=File
 flag=DPI
+severity=Severity
 category=Category
 index=Turtle Firewall index
 index_start=Start

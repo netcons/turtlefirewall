@@ -44,7 +44,7 @@ for my $k (@risks) {
 		}
 	}
 	my %risk = $fw->GetNdpiRisk($k);
-	my @opts = ( "$k", "$k - $risk{DESCRIPTION}" );
+	my @opts = ( "$k", "$k - $risk{DESCRIPTION} - $risk{SEVERITY}" );
 	push(@items_risk, \@opts);
 }
 
