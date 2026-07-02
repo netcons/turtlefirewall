@@ -4,6 +4,8 @@
 - Cleanup: Variable Declarations.
 - Cleanup: Formatting Order.
 - Feature: Add Risk Severity Info.
+- Bug : Fixed backup.cgi restore upload.
+- Todo : Translate new features.
 
 ## v.2.7 (11-12-2025)
 - OS : DEB package, remove EOL OS instructions.
@@ -20,8 +22,6 @@
 - Services : Add Wireguard on port 51820 service.
 - Services : Add udp port 5514 to Unifi service.
 - Theme : Rework Webmin images.
-- Todo : Translate new features.
-- Todo : Fix backup.cgi restore upload.
 
 ## v.2.6 (30-04-2025)
 - Feature : nDPI 4.15 support.
