@@ -11,33 +11,23 @@
 require './turtlefirewall-lib.pl';
 &ReadParseMime();
 
+&ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_configuration'}", $text{'title'}, "" );
+
 if( $in{backup} ) {
 	my $backup = $in{backup};
 	my $output = &tempname();
 	my $confdir = &confdir();
 
-	open TARGZ, "| tar xvz --directory $confdir fw.xml fwuserdefservices.xml >$output 2>&1" or &error( $text{backup_error1} );
+	open TARGZ, "| tar xvz --directory $confdir fw.xml fwuserdefservices.xml >$output 2>&1" or &error( $text{configuration_error1} );
 	syswrite(TARGZ, $backup, length($backup));
 	close TARGZ;
 
-	&ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_backup'}", $text{'title'}, "" );
-
-	print qq~<table border="0" width="100%">
-		<tr $tb>
-			<th>$text{'backup_restoretitle'}</th>
-		</tr>
-		<tr $cb>
-			<td style=text-align:center><pre>~;
 	open FILE, "<$output";
-	while( <FILE> ) { print; }
+	while (my $f = <FILE>) { print &ui_alert_box("Restored : $f", 'success', undef, undef, ''); }
 	close FILE;
 	unlink $output;
-	print qq~	</pre></td></tr></table>~;
-
-	&ui_print_footer('index.cgi',$text{'index'});
-
 } else {
-
-	&error( $text{backup_error_title1} );
-
+	print &ui_alert_box($text{configuration_error_title1}, 'danger', undef, undef, '');
 }
+
+&ui_print_footer('configuration.cgi',$text{'configuration_title'});

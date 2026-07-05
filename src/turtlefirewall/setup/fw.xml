@@ -19,7 +19,7 @@
 <option value="on" name="clamp_mss_to_pmtu"/>
 </options>
 
-<zone if="ens192" description="" name="lan"/>
+<zone if="ens18" description="" name="lan"/>
 <zone name="primarywan" description="" if="ppp0"/>
 
 <group name="internet" description="Internet">

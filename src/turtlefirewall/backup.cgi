@@ -9,41 +9,16 @@
 #======================================================================
 
 require './turtlefirewall-lib.pl';
-&ReadParse();
 
-&ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_backup'}", $text{'title'}, "" );
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+my $d = sprintf("%04d%02d%02d-%02d%02d", $year+1900, $mday+1, $mday, $hour, $min);
+my $confdir = &confdir();
 
-print qq~<br/>
-<table border="0" width="100%">
-<tr $tb>
-	<th>$text{'backup_backuptitle'}</th>
-</tr>
-<tr $cb>
-	<td style=text-align:center>
-	<br/>~;
-print   &ui_form_start("download.cgi", "post");
-print   &ui_submit($text{'backup_index_download'});
-print   &ui_form_end();
-print qq~<br/><br/>
-	</td>
-</tr>
-</table>
-
-<table border="0" width="100%">
-<tr $tb>
-	<th>$text{'backup_restoretitle'}</th>
-</tr>
-<tr $cb>
-	<td style=text-align:center>
-	<br/>~;
-print   &ui_form_start("restore.cgi", "form-data");
-print 	&ui_upload("backup", 40);
-print 	&ui_submit($text{'backup_index_restore'});
-print   &ui_form_end();
-print qq~<br/><br/>
-	<br/>
-	</td>
-</tr>
-</table><br>~;
-
-&ui_print_footer('index.cgi',$text{'index'});
+print "Content-Disposition: Attachment; filename=turtlefirewall-backup-$d.tar.gz\n";
+print "X-Content-Type-Options: nosniff\n";
+print "Content-type: application/x-gzip\n\n";
+my $buffer = '';
+open TARGZ, "tar cz --directory $confdir fw.xml fwuserdefservices.xml |"
+	or &error( $text{configuration_error2} );
+while(read( TARGZ, $buffer, &get_buffer_size_binary())) { print $buffer; }
+close TARGZ;

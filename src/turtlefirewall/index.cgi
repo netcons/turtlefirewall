@@ -12,7 +12,7 @@ require './turtlefirewall-lib.pl';
 &ReadParse();
 
 &ui_print_header( "$icons{ICON}{IMAGE} v ".$fw->Version(), $text{'title'}, "", undef, 1, 1, 0,
-        &help_search_link("iptables", "man", "doc"));
+		&help_search_link("iptables", "man", "doc"));
 
 my @olinks = ('list_items.cgi',
 	     'list_services.cgi',
@@ -20,21 +20,21 @@ my @olinks = ('list_items.cgi',
 	     'list_ndpirisks.cgi',
 	     'list_countrycodes.cgi',
 	     'edit_options.cgi',
-	     'backup.cgi');
+	     'configuration.cgi');
 my @otitles = ($text{'index_icon_items'},
 	      $text{'index_icon_services'},
 	      $text{'index_icon_ndpiprotocols'},
 	      $text{'index_icon_ndpirisks'},
 	      $text{'index_icon_countrycodes'},
               $text{'index_icon_options'},
-              $text{'index_icon_backup'});
+              $text{'index_icon_configuration'});
 my @oicons = ('images/items.png',
 	     'images/services.png',
 	     'images/ndpiprotocols.png',
 	     'images/ndpirisks.png',
 	     'images/countrycodes.png',
 	     'images/options.png',
-	     'images/backup.png');
+	     'images/configuration.png');
 &icons_table(\@olinks, \@otitles, \@oicons, 10);
 print &ui_hr();
 

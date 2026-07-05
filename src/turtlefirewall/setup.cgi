@@ -3,7 +3,7 @@
 #======================================================================
 # Turtle Firewall webmin module
 #
-# Copyright (c) Andrea Frigido
+# Copyright (c) 2001-2026 Andrea Frigido <andrea@frisoft.it>
 # You may distribute under the terms of either the GNU General Public
 # License
 #======================================================================
@@ -12,7 +12,8 @@ use WebminCore;
 &init_config();
 &ReadParse();
 
-&ui_print_header( undef, $text{'title'}, "" );
+&ui_print_header( "$icons{ICON}{IMAGE} v ".$fw->Version(), $text{'title'}, "", undef, 1, 1, 0,
+		&help_search_link("iptables", "man", "doc"));
 
 # do you need to install startup scripts?
 if( -f "./setup/turtlefirewall" ) {
@@ -24,14 +25,13 @@ if( -f "./setup/turtlefirewall" ) {
 		chdir("../");
 	}
 	if( $err == 0 ) {
-		print "<br><br><b>Congratulation: Turtle Firewall successfully installed, ";
-		print '<a href="index.cgi">Return to index.</a></b><br><br>';
+		print &ui_alert_box('Congratulations: Turtle Firewall successfully installed', 'success', undef, undef, '');
 		system( 'rm -rf setup' );
 	} else {
-		print "<b>Installation error, Turtle Firewall is not successfully installed!</b>";
+		print &ui_alert_box('Installation error: Turtle Firewall was not successfully installed', 'danger', undef, undef, '');
 	}
 }
 
 print "<br><br>\n";
 
-&ui_print_footer('/',$text{'index'});
+&ui_print_footer('index.cgi',$text{'index'});

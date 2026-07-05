@@ -109,7 +109,7 @@ index_icon_options=Options
 index_icon_log=Action Log
 index_icon_flowlog=Flow Log
 index_icon_flowstat=Flow Statistics
-index_icon_backup=Backup
+index_icon_configuration=Configuration
 list_itemreferences_title=Item References
 list_items_create_zone=create new zone
 list_items_create_geoip=create new geoip
@@ -250,14 +250,12 @@ options_log_limit_desc=Maximum average matching rate: number of logs per hour.
 options_log_limit_burst_name=log_limit_burst
 options_log_limit_burst_desc=Maximum initial number of packets to log: this number gets recharged by one every time the limit specified above is not reached, up to this number.
 
-
-backup_title=Backup
-backup_backuptitle=Backup
-backup_restoretitle=Restore
-backup_index_download=Download Config
-backup_index_restore=Upload Config
-backup_error_title1=Restore failed
-backup_error1=Fail to execute tar/gzip commands
+configuration_title=configuration
+configuration_index_download=Backup
+configuration_index_restore=Restore
+configuration_error_title1=Restore failed
+configuration_error1=Fail to execute tar/gzip commands
+configuration_error2=Error during backup
 
 save_zone_error_title1=Fail to delete zone
 save_zone_error_title2=Fail to create new zone

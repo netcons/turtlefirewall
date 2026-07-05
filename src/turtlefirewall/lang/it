@@ -109,7 +109,7 @@ index_icon_options=Opzioni
 index_icon_log=Action Log
 index_icon_flowlog=Flow Log
 index_icon_flowstat=Flow Statistics
-index_icon_backup=Backup Configurazione
+index_icon_configuration=Configurazione
 list_itemreferences_title=Item References
 list_items_create_zone=crea una nuova zona
 list_items_create_geoip=create new geoip
@@ -251,14 +251,12 @@ options_log_limit_desc=Numero medio di log generati in un ora per una singola ca
 options_log_limit_burst_name=log_limit_burst
 options_log_limit_burst_desc=Numero di log generati inizialmente. Ogni volta che viene raggiunto il tempo "limit" senza la generazione di log, questo valore viene incrementato di una unit&agrave;.
 
-
-backup_title=Backup Configurazione
-backup_backuptitle=Backup
-backup_restoretitle=Restore
-backup_index_download=Download Config
-backup_index_restore=Upload Config
-backup_error_title1=Restore fallito
-backup_error1=Errore eseguendo i comandi tar/gzip.
+configuration_title=configuration
+configuration_index_download=Backup
+configuration_index_restore=Restore
+configuration_error_title1=Restore fallito
+configuration_error1=Errore eseguendo i comandi tar/gzip.
+configuration_error2=Error during backup
 
 save_zone_error_title1=Errore eliminando la zona
 save_zone_error_title2=Errore creando la zona
