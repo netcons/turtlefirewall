@@ -17,7 +17,7 @@ my $item = $in{'item'};
 
 &showItemReferences();
 
-&ui_print_footer('list_items.cgi','items list');
+&ui_print_footer('list_items.cgi',$text{'index_items'});
 
 #============================================================================
 

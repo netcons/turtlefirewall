@@ -136,4 +136,4 @@ print "</tr></table>";
 print &ui_form_end();
 
 print "<br><br>";
-&ui_print_footer("list_rules.cgi?idx=$idx",'Rules list');
+&ui_print_footer("list_rules.cgi?idx=$idx",$text{'index_rules'});

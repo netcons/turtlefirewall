@@ -101,7 +101,7 @@ print &ui_subheading($icons{FLOWSTAT}{IMAGE},$text{'report_flowstat_title'});
 
 unlink "/var/log/flowinfo.tmp";
 
-&ui_print_footer("edit_flowstat.cgi",'flow statistics');
+&ui_print_footer("edit_flowstat.cgi",$text{'index_flowstat'});
 
 #============================================================================
 

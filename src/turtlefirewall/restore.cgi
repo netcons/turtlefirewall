@@ -30,4 +30,4 @@ if( $in{backup} ) {
 	print &ui_alert_box($text{configuration_error_title1}, 'danger', undef, undef, '');
 }
 
-&ui_print_footer('configuration.cgi',$text{'configuration_title'});
+&ui_print_footer('configuration.cgi',$text{'index_configuration'});

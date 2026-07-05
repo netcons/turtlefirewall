@@ -78,4 +78,4 @@ print "</tr></table>";
 print &ui_form_end();
 
 print "<br><br>";
-&ui_print_footer('list_items.cgi','items list');
+&ui_print_footer('list_items.cgi',$text{'index_items'});
