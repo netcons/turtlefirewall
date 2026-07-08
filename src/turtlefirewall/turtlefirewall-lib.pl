@@ -353,11 +353,4 @@ sub getOptionsList {
 	%{$options{log_limit_burst}} = ( 'type'=>'text', 'default'=>5, 'addunchangeopz'=>0 );
 }
 
-sub roundbytes {
-	my $bytes = shift;
-	my $n = 0;
-	++$n and $bytes /= 1024 until $bytes < 1024;
-	return sprintf "%.1f %s", $bytes, ( qw[ B KB MB GB TB ] )[ $n ];
-}
-
 1;

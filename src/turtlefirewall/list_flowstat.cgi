@@ -188,11 +188,11 @@ sub showstats {
 
 		push(@cols, "<i>&nbsp;&nbsp;$percent %</i>");
 
-		push(@cols, "<i>".&roundbytes($bytes)."</i>");
+		push(@cols, "<i>".&nice_size($bytes)."</i>");
 
 	        print &ui_columns_row(\@cols, \@tds);
 	}
-	print &ui_columns_row([undef, undef, undef, "<b>Total : ".&roundbytes($flowtotal)."</b>"], \@tds);
+	print &ui_columns_row([undef, undef, undef, "<b>Total : ".&nice_size($flowtotal)."</b>"], \@tds);
 
 	print &ui_columns_end();
 }

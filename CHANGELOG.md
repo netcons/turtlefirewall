@@ -1,8 +1,9 @@
 # ChangeLog
 
 ## v.2.8 (Not Yet Released)
-- Cleanup: Variable Declarations.
-- Cleanup: Formatting Order.
+- Cleanup : Variable Declarations.
+- Cleanup : Formatting Order.
+- Cleanup : Remove custom roundbytes function.
 - Feature: Add Risk Severity Info.
 - Bug : Fixed backup.cgi restore upload.
 - Todo : Translate new features.

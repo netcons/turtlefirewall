@@ -290,11 +290,11 @@ sub showLog {
 		push(@cols, "<i>".($sport eq '' ? "&nbsp;" : "$sport&nbsp;&nbsp;")."</i>");
 		push(@cols, "<i>".($destination eq '' ? "&nbsp;" : "$destination&nbsp;&nbsp;")."</i>");
 		push(@cols, "<i>".($dport eq '' ? "&nbsp;" : "$dport&nbsp;&nbsp;")."</i>");
-		my $tbytes = &roundbytes($ubytes + $dbytes);
+		my $tbytes = &nice_size($ubytes + $dbytes);
 		push(@cols, "<i>".($tbytes eq '' ? "&nbsp;" : "$tbytes&nbsp;&nbsp;")."</i>");
-		$ubytes = &roundbytes($ubytes);
+		$ubytes = &nice_size($ubytes);
 		push(@cols, "<i>".($ubytes eq '' ? "&nbsp;" : "$ubytes&nbsp;&nbsp;")."</i>");
-		$dbytes = &roundbytes($dbytes);
+		$dbytes = &nice_size($dbytes);
 		push(@cols, "<i>".($dbytes eq '' ? "&nbsp;" : "$dbytes&nbsp;&nbsp;")."</i>");
 		push(@cols, "<i>".($upackets eq '' ? "&nbsp;" : "$upackets&nbsp;&nbsp;")."</i>");
 		push(@cols, "<i>".($dpackets eq '' ? "&nbsp;" : "$dpackets&nbsp;&nbsp;")."</i>");
