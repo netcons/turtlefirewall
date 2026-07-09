@@ -41,7 +41,7 @@ sub showConnmarkPreroute {
 		"style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
 		"width=5% style=vertical-align:top;white-space:normal",
-		"width=1% style=vertical-align:top" );
+		"width=64" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",
@@ -133,26 +133,14 @@ sub showConnmarkPreroute {
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $mimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MARK}{IMAGE} : $icons{MARK_A}{IMAGE};
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
-		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
-		if( $i < $nConnmarkPreroutes ) {
-			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmarkpreroute&idx=$i&down=1'>
-				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'>
-				   </td>";
-		}
-		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmarkpreroute&idx=$i&up=1'>
-				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='^'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
-				   </td>";
-		}
-		$mover .= "</tr></table>";
+		my $mover = &ui_up_down_arrows(
+			"list_manglerules.cgi?table=connmarkpreroute&idx=$i&up=1",
+			"list_manglerules.cgi?table=connmarkpreroute&idx=$i&down=1",
+			$i > 1 ? 1 : 0,
+			$i < $nConnmarkPreroutes ? 1 : 0,
+			"images/up.gif",
+			"images/down.gif"
+		);
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
@@ -181,7 +169,7 @@ sub showConnmark {
 		"style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
 		"width=5% style=vertical-align:top;white-space:normal",
-		"width=1% style=vertical-align:top" );
+		"width=64" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",
@@ -283,26 +271,14 @@ sub showConnmark {
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $mimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MARK}{IMAGE} : $icons{MARK_A}{IMAGE};
 		push(@cols, "${mimage}${sb}${bb}${cb}".($attr{'MARK'} ne '' ? $attr{'MARK'} : '&nbsp;')."${ce}${be}${se}" );
-		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
-		if( $i < $nConnmarks ) {
-			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmark&idx=$i&down=1'>
-				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'>
-				   </td>";
-		}
-		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_manglerules.cgi?table=connmark&idx=$i&up=1'>
-				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='^'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
-				   </td>";
-		}
-		$mover .= "</tr></table>";
+		my $mover = &ui_up_down_arrows(
+			"list_manglerules.cgi?table=connmark&idx=$i&up=1",
+			"list_manglerules.cgi?table=connmark&idx=$i&down=1",
+			$i > 1 ? 1 : 0,
+			$i < $nConnmarks ? 1 : 0,
+			"images/up.gif",
+			"images/down.gif"
+		);
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}

@@ -41,7 +41,7 @@ sub showNat {
 		 "style=vertical-align:top;white-space:normal",
 		 "width=1% style=vertical-align:top;text-align:center",
 		 "width=1% style=vertical-align:top;white-space:normal",
-		 "width=1% style=vertical-align:top" );
+		 "width=64" );
         print &ui_columns_start([
                           "",
                           "<b>ID</b>",
@@ -108,27 +108,14 @@ sub showNat {
 		push(@cols, "${nimage}${sb}${bb}${cb}$text{YES}${ce}${be}${se}" );
 		my $timage = $attr{'TOPORT'} eq '' ? '' : $icons{TOPORT}{IMAGE};
 		push(@cols, "${timage}${sb}${bb}$attr{'TOPORT'}${be}${se}" );
-		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
-
-		if( $i < $nNat ) {
-			$mover .= "<td width=50%><a href='list_nat.cgi?table=nat&idx=$i&down=1'>
-				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='down'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'>
-				   </td>";
-		}
-		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_nat.cgi?table=nat&idx=$i&up=1'>
-				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='up'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
-				   </td>";
-		}
-		$mover .= "</tr></table>";
+		my $mover = &ui_up_down_arrows(
+			"list_nat.cgi?table=nat&idx=$i&up=1",
+			"list_nat.cgi?table=nat&idx=$i&down=1",
+			$i > 1 ? 1 : 0,
+			$i < $nNat ? 1 : 0,
+			"images/up.gif",
+			"images/down.gif"
+		);
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
@@ -152,7 +139,7 @@ sub showMasquerade {
 		 "width=25% style=vertical-align:top;white-space:normal",
 		 "style=vertical-align:top;white-space:normal",
 		 "width=1% style=vertical-align:top;text-align:center",
-		 "width=1% style=vertical-align:top" );
+		 "width=64" );
         print &ui_columns_start([
                           "",
                           "<b>ID</b>",
@@ -221,26 +208,14 @@ sub showMasquerade {
 			my $aimage = $attr{'ACTIVE'} eq 'NO' ? $icons{MASQUERADE}{IMAGE} : $icons{MASQUERADE_A}{IMAGE};
 			push(@cols, "${aimage}${sb}${bb}${cb}$text{YES}${ce}${be}${se}" );
 		}
-		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
-		if( $i < $nMasq ) {
-			$mover .= "<td width=50%><a href='list_nat.cgi?table=masquerade&idx=$i&down=1'>
-				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='down'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'>
-				   </td>";
-		}
-		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_nat.cgi?table=masquerade&idx=$i&up=1'>
-				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='up'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
-				   </td>";
-		}
-		$mover .= "</tr></table>";
+		my $mover = &ui_up_down_arrows(
+			"list_nat.cgi?table=masquerade&idx=$i&up=1",
+			"list_nat.cgi?table=masquerade&idx=$i&down=1",
+			$i > 1 ? 1 : 0,
+			$i < $nMasq ? 1 : 0,
+			"images/up.gif",
+			"images/down.gif"
+		);
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
@@ -265,7 +240,7 @@ sub showRedirect {
 		 "style=vertical-align:top;white-space:normal",
 		 "width=1% style=vertical-align:top;text-align:center",
 		 "width=1% style=vertical-align:top;white-space:normal",
-		 "width=1% style=vertical-align:top" );
+		 "width=64" );
         print &ui_columns_start([
                           "",
                           "<b>ID</b>",
@@ -338,26 +313,14 @@ sub showRedirect {
 			my $timage = $attr{'TOPORT'} eq '' ? '' : $icons{TOPORT}{IMAGE};
 			push(@cols, "${timage}${sb}${bb}$attr{'TOPORT'}${be}${se}" );
 		}
-		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
-		if( $i < $nRedirect ) {
-			$mover .= "<td width=50%><a href='list_nat.cgi?table=redirect&idx=$i&down=1'>
-				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='down'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'>
-				   </td>";
-		}
-		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_nat.cgi?table=redirect&idx=$i&up=1'>
-				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='up'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
-				   </td>";
-		}
-		$mover .= "</tr></table>";
+		my $mover = &ui_up_down_arrows(
+			"list_nat.cgi?table=redirect&idx=$i&up=1",
+			"list_nat.cgi?table=redirect&idx=$i&down=1",
+			$i > 1 ? 1 : 0,
+			$i < $nRedirect ? 1 : 0,
+			"images/up.gif",
+			"images/down.gif"
+		);
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}

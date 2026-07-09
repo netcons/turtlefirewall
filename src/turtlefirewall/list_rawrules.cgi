@@ -37,7 +37,7 @@ sub showConntrackPreroute {
 		"width=25% style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
 		"width=1% style=vertical-align:top;white-space:normal",
-		"width=1% style=vertical-align:top" );
+		"width=64" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",
@@ -91,26 +91,14 @@ sub showConntrackPreroute {
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? $icons{HELPER}{IMAGE} : $icons{HELPER_A}{IMAGE};
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
-		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
-		if( $i < $nConntrackPreroutes ) {
-			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrackpreroute&idx=$i&down=1'>
-				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'>
-				   </td>";
-		}
-		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrackpreroute&idx=$i&up=1'>
-				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='^'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
-				   </td>";
-		}
-		$mover .= "</tr></table>";
+		my $mover = &ui_up_down_arrows(
+			"list_rawrules.cgi?table=conntrackpreroute&idx=$i&up=1",
+			"list_rawrules.cgi?table=conntrackpreroute&idx=$i&down=1",
+			$i > 1 ? 1 : 0,
+			$i < $nConntrackPreroutes ? 1 : 0,
+			"images/up.gif",
+			"images/down.gif"
+		);
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
@@ -135,7 +123,7 @@ sub showConntrack {
 		"width=25% style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
 		"width=1% style=vertical-align:top;white-space:normal",
-		"width=1% style=vertical-align:top" );
+		"width=64" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",
@@ -189,26 +177,14 @@ sub showConntrack {
 		my $ce = $se eq '' ? '</span>' : '';           		# ColourEnd
 		my $himage = $attr{'ACTIVE'} eq 'NO' ? $icons{HELPER}{IMAGE} : $icons{HELPER_A}{IMAGE};
 		push(@cols, "${himage}${sb}${bb}${cb}".($attr{'HELPER'} ne '' ? $attr{'HELPER'} : '&nbsp;')."${ce}${be}${se}" );
-		my $mover = "<table cellspacing=0 cellpadding=0><tr>";
-		if( $i < $nConntracks ) {
-			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrack&idx=$i&down=1'>
-				   <img src='images/down.gif' border='0' hspace='1' vspace='0' alt='v'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;&nbsp;&nbsp;'>
-				   </td>";
-		}
-		if( $i > 1 ) {
-			$mover .= "<td width=50%><a href='list_rawrules.cgi?table=conntrack&idx=$i&up=1'>
-				   <img src='images/up.gif' border='0' hspace='1' vspace='0' alt='^'></a>
-				   </td>";
-		} else {
-			$mover .= "<td width=50%>
-				   <img src='images/gap.gif' border='0' hspace='1' vspace='0' alt='&nbsp;&nbsp;'>
-				   </td>";
-		}
-		$mover .= "</tr></table>";
+		my $mover = &ui_up_down_arrows(
+			"list_rawrules.cgi?table=conntrack&idx=$i&up=1",
+			"list_rawrules.cgi?table=conntrack&idx=$i&down=1",
+			$i > 1 ? 1 : 0,
+			$i < $nConntracks ? 1 : 0,
+			"images/up.gif",
+			"images/down.gif"
+		);
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}

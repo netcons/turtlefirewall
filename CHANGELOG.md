@@ -4,6 +4,7 @@
 - Cleanup : Variable Declarations.
 - Cleanup : Formatting Order.
 - Cleanup : Remove custom roundbytes function.
+- Cleanup : Standardize mover function.
 - Feature: Add Risk Severity Info.
 - Bug : Fixed backup.cgi restore upload.
 - Todo : Translate new features.
