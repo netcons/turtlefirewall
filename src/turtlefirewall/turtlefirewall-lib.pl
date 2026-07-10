@@ -162,7 +162,8 @@ sub confdir {
 	'HELPER_A' => { IMAGE => '<img src=images/helper.png hspace=4>' },
 	'MARK' => { IMAGE => '<img src=images/grey-mark.png hspace=4>' },
 	'MARK_A' => { IMAGE => '<img src=images/mark.png hspace=4>' },
-	'TOPORT' => { IMAGE => '<img src=images/toport.png hspace=4>' }
+	'TOPORT' => { IMAGE => '<img src=images/toport.png hspace=4>' },
+	'REF' => { IMAGE => '<img src=images/ref.png hspace=4>' }
 );
 
 sub LoadServices {

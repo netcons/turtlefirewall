@@ -5,8 +5,9 @@
 - Cleanup : Formatting Order.
 - Cleanup : Remove custom roundbytes function.
 - Cleanup : Standardize mover function.
-- Feature: Add Risk Severity Info.
+- Feature : Add Risk Severity Info.
 - Bug : Fixed backup.cgi restore upload.
+- Theme : Add item reference image.
 - Todo : Translate new features.
 
 ## v.2.7 (11-12-2025)
