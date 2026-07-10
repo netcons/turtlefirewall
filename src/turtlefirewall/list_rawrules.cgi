@@ -94,8 +94,8 @@ sub showConntrackPreroute {
 		my $mover = &ui_up_down_arrows(
 			"list_rawrules.cgi?table=conntrackpreroute&idx=$i&up=1",
 			"list_rawrules.cgi?table=conntrackpreroute&idx=$i&down=1",
-			$i > 1 ? 1 : 0,
-			$i < $nConntrackPreroutes ? 1 : 0,
+			$i > 1,
+			$i < $nConntrackPreroutes,
 			"images/up.gif",
 			"images/down.gif"
 		);
@@ -180,8 +180,8 @@ sub showConntrack {
 		my $mover = &ui_up_down_arrows(
 			"list_rawrules.cgi?table=conntrack&idx=$i&up=1",
 			"list_rawrules.cgi?table=conntrack&idx=$i&down=1",
-			$i > 1 ? 1 : 0,
-			$i < $nConntracks ? 1 : 0,
+			$i > 1,
+			$i < $nConntracks,
 			"images/up.gif",
 			"images/down.gif"
 		);

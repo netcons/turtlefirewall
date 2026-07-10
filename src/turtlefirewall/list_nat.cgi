@@ -111,8 +111,8 @@ sub showNat {
 		my $mover = &ui_up_down_arrows(
 			"list_nat.cgi?table=nat&idx=$i&up=1",
 			"list_nat.cgi?table=nat&idx=$i&down=1",
-			$i > 1 ? 1 : 0,
-			$i < $nNat ? 1 : 0,
+			$i > 1,
+			$i < $nNat,
 			"images/up.gif",
 			"images/down.gif"
 		);
@@ -211,8 +211,8 @@ sub showMasquerade {
 		my $mover = &ui_up_down_arrows(
 			"list_nat.cgi?table=masquerade&idx=$i&up=1",
 			"list_nat.cgi?table=masquerade&idx=$i&down=1",
-			$i > 1 ? 1 : 0,
-			$i < $nMasq ? 1 : 0,
+			$i > 1,
+			$i < $nMasq,
 			"images/up.gif",
 			"images/down.gif"
 		);
@@ -316,8 +316,8 @@ sub showRedirect {
 		my $mover = &ui_up_down_arrows(
 			"list_nat.cgi?table=redirect&idx=$i&up=1",
 			"list_nat.cgi?table=redirect&idx=$i&down=1",
-			$i > 1 ? 1 : 0,
-			$i < $nRedirect ? 1 : 0,
+			$i > 1,
+			$i < $nRedirect,
 			"images/up.gif",
 			"images/down.gif"
 		);

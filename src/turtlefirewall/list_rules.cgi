@@ -169,8 +169,8 @@ sub showRule {
 		my $mover = &ui_up_down_arrows(
 			"list_rules.cgi?idx=$i&up=1",
 			"list_rules.cgi?idx=$i&down=1",
-			$i > 1 ? 1 : 0,
-			$i < $nRules ? 1 : 0,
+			$i > 1,
+			$i < $nRules,
 			"images/up.gif",
 			"images/down.gif"
 		);

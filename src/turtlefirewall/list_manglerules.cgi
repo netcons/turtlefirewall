@@ -136,8 +136,8 @@ sub showConnmarkPreroute {
 		my $mover = &ui_up_down_arrows(
 			"list_manglerules.cgi?table=connmarkpreroute&idx=$i&up=1",
 			"list_manglerules.cgi?table=connmarkpreroute&idx=$i&down=1",
-			$i > 1 ? 1 : 0,
-			$i < $nConnmarkPreroutes ? 1 : 0,
+			$i > 1,
+			$i < $nConnmarkPreroutes,
 			"images/up.gif",
 			"images/down.gif"
 		);
@@ -274,8 +274,8 @@ sub showConnmark {
 		my $mover = &ui_up_down_arrows(
 			"list_manglerules.cgi?table=connmark&idx=$i&up=1",
 			"list_manglerules.cgi?table=connmark&idx=$i&down=1",
-			$i > 1 ? 1 : 0,
-			$i < $nConnmarks ? 1 : 0,
+			$i > 1,
+			$i < $nConnmarks,
 			"images/up.gif",
 			"images/down.gif"
 		);
