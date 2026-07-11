@@ -23,7 +23,7 @@ if( $in{backup} ) {
 	close TARGZ;
 
 	open FILE, "<$output";
-	while (my $f = <FILE>) { print &ui_alert_box("Restored : $f", 'success', undef, undef, ''); }
+	while (my $f = <FILE>) { print &ui_alert_box("Restored : ${confdir}/${f}", 'success', undef, undef, ''); }
 	close FILE;
 	unlink $output;
 } else {
