@@ -26,7 +26,7 @@ sub showItemReferences {
 	my $image = $icons{$type}{IMAGE};
 
 	print &ui_subheading($image,$item);
-	my @tds = ();
+	my @tds = ( "style=text-align:left" );
         print &ui_columns_start([ "<b>$text{'references'}</b>" ], 100, 0, \@tds);
 	my %itemreferences = $fw->GetItemReferences($item);
 	foreach my $k (sort keys %itemreferences) {
@@ -41,10 +41,10 @@ sub showItemReferences {
 		if( $idx ne '' ) {
 			$idx++;
 			my $refnamelc = lc($refname);
-			$href = &ui_link("edit_$reftypelc.cgi?idx=$idx","$prefix rule id $idx $refnamelc");
+			$href = &ui_link("edit_$reftypelc.cgi?idx=$idx","$prefix rule id $idx ${refnamelc}$icons{REF}{IMAGE}");
 		} else {
 		# Item in Item
-			$href = &ui_link("edit_$reftypelc.cgi?$reftypelc=$refname","$prefix item $refname");
+			$href = &ui_link("edit_$reftypelc.cgi?$reftypelc=$refname","$prefix item ${refname}$icons{REF}{IMAGE}");
 		}
 	        print &ui_columns_row([ "$icons{$reftype}{IMAGE}$href" ], \@tds);
         }
