@@ -39,7 +39,7 @@ sub showRule {
 		"style=vertical-align:top",
 		"style=vertical-align:top",
 		"style=vertical-align:top;white-space:normal",
-		"width=64" );
+		"width=64 style=vertical-align:top" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",

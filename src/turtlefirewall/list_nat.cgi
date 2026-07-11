@@ -35,13 +35,13 @@ sub showNat {
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_nat.cgi?new=1\">$text{'list_nat_create_nat'}</a>" );
         my @tds = ( "width=1% style=vertical-align:top",
-		 "width=1% style=text-align:center;vertical-align:top",
-		 "width=25% style=vertical-align:top;white-space:normal",
-		 "width=25% style=vertical-align:top;white-space:normal",
-		 "style=vertical-align:top;white-space:normal",
-		 "width=1% style=vertical-align:top;text-align:center",
-		 "width=1% style=vertical-align:top;white-space:normal",
-		 "width=64" );
+		"width=1% style=text-align:center;vertical-align:top",
+		"width=25% style=vertical-align:top;white-space:normal",
+		"width=25% style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top;text-align:center",
+		"width=1% style=vertical-align:top;white-space:normal",
+		"width=64 style=vertical-align:top" );
         print &ui_columns_start([
                           "",
                           "<b>ID</b>",
@@ -134,12 +134,12 @@ sub showMasquerade {
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_masquerade.cgi?new=1\">$text{'list_nat_create_masq'}</a>" );
         my @tds = ( "width=1% style=vertical-align:top",
-		 "width=1% style=text-align:center;vertical-align:top",
-		 "width=25% style=vertical-align:top;white-space:normal",
-		 "width=25% style=vertical-align:top;white-space:normal",
-		 "style=vertical-align:top;white-space:normal",
-		 "width=1% style=vertical-align:top;text-align:center",
-		 "width=64" );
+		"width=1% style=text-align:center;vertical-align:top",
+		"width=25% style=vertical-align:top;white-space:normal",
+		"width=25% style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top;text-align:center",
+		"width=64 style=vertical-align:top" );
         print &ui_columns_start([
                           "",
                           "<b>ID</b>",
@@ -234,13 +234,13 @@ sub showRedirect {
        		   &select_invert_link("d", $form),
 		   "<a href=\"edit_redirect.cgi?new=1\">$text{'list_nat_create_redirect'}</a>" );
         my @tds = ( "width=1% style=vertical-align:top",
-		 "width=1% style=text-align:center;vertical-align:top",
-		 "width=25% style=vertical-align:top;white-space:normal",
-		 "width=25% style=vertical-align:top;white-space:normal",
-		 "style=vertical-align:top;white-space:normal",
-		 "width=1% style=vertical-align:top;text-align:center",
-		 "width=1% style=vertical-align:top;white-space:normal",
-		 "width=64" );
+		"width=1% style=text-align:center;vertical-align:top",
+		"width=25% style=vertical-align:top;white-space:normal",
+		"width=25% style=vertical-align:top;white-space:normal",
+		"style=vertical-align:top;white-space:normal",
+		"width=1% style=vertical-align:top;text-align:center",
+		"width=1% style=vertical-align:top;white-space:normal",
+		"width=64 style=vertical-align:top" );
         print &ui_columns_start([
                           "",
                           "<b>ID</b>",

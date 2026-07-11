@@ -37,7 +37,7 @@ sub showConntrackPreroute {
 		"width=25% style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
 		"width=1% style=vertical-align:top;white-space:normal",
-		"width=64" );
+		"width=64 style=vertical-align:top" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",
@@ -123,7 +123,7 @@ sub showConntrack {
 		"width=25% style=vertical-align:top;white-space:normal",
 		"style=vertical-align:top;white-space:normal",
 		"width=1% style=vertical-align:top;white-space:normal",
-		"width=64" );
+		"width=64 style=vertical-align:top" );
         print &ui_columns_start([
 			'',
 			"<b>ID<b>",
