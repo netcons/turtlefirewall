@@ -23,11 +23,11 @@ if( $in{backup} ) {
 	close TARGZ;
 
 	open FILE, "<$output";
-	while (my $f = <FILE>) { print &ui_alert_box("Restored : ${confdir}/${f}", 'success', undef, undef, ''); }
+	while (my $f = <FILE>) { print &ui_alert_box("Restored : ${confdir}/${f}", 'success'); }
 	close FILE;
 	unlink $output;
 } else {
-	print &ui_alert_box($text{configuration_error_title1}, 'danger', undef, undef, '');
+	print &ui_alert_box($text{configuration_error_title1}, 'danger');
 }
 
 &ui_print_footer('configuration.cgi',$text{'index_configuration'});
