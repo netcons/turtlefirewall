@@ -19,6 +19,7 @@ by Andrea Frigido ([frisoft](https://github.com/frisoft)).
 
 ## Requirements
 
+- Linux Kernel 6.x or newer
 - expat library installed.
 - XML::Parser perl module installed.
 - Webmin installed. ([webmin](https://github.com/webmin/webmin))
