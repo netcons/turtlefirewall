@@ -29,7 +29,7 @@ sub showConnmarkPreroute {
 	print &ui_form_start("save_connmarkpreroute.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_connmarkpreroute.cgi?new=1\">$text{'list_connmarkpreroutes_create_rule'}</a>" );
+		   &ui_link("edit_connmarkpreroute.cgi?new=1", "$text{'list_connmarkpreroutes_create_rule'}") );
 	my @tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=vertical-align:top",
@@ -157,7 +157,7 @@ sub showConnmark {
 	print &ui_form_start("save_connmark.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_connmark.cgi?new=1\">$text{'list_connmarks_create_rule'}</a>" );
+		   &ui_link("edit_connmark.cgi?new=1", "$text{'list_connmarks_create_rule'}") );
 	my @tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=vertical-align:top",

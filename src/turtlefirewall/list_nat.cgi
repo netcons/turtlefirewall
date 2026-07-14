@@ -33,7 +33,7 @@ sub showNat {
 	print &ui_form_start("save_nat.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_nat.cgi?new=1\">$text{'list_nat_create_nat'}</a>" );
+		   &ui_link("edit_nat.cgi?new=1", "$text{'list_nat_create_nat'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		"width=1% style=text-align:center;vertical-align:top",
 		"width=25% style=vertical-align:top;white-space:normal",
@@ -132,7 +132,7 @@ sub showMasquerade {
 	print &ui_form_start("save_masquerade.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_masquerade.cgi?new=1\">$text{'list_nat_create_masq'}</a>" );
+		   &ui_link("edit_masquerade.cgi?new=1", "$text{'list_nat_create_masq'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		"width=1% style=text-align:center;vertical-align:top",
 		"width=25% style=vertical-align:top;white-space:normal",
@@ -232,7 +232,7 @@ sub showRedirect {
 	print &ui_form_start("save_redirect.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_redirect.cgi?new=1\">$text{'list_nat_create_redirect'}</a>" );
+		   &ui_link("edit_redirect.cgi?new=1", "$text{'list_nat_create_redirect'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		"width=1% style=text-align:center;vertical-align:top",
 		"width=25% style=vertical-align:top;white-space:normal",

@@ -70,7 +70,7 @@ sub showAddressList {
 	print &ui_form_start("save_addresslist.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_addresslist.cgi?new=1\">$text{'list_items_create_addresslist'}</a>" );
+		   &ui_link("edit_addresslist.cgi?new=1", "$text{'list_items_create_addresslist'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -128,7 +128,7 @@ sub showZone {
 	print &ui_form_start("save_zone.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_zone.cgi?new=1\">$text{'list_items_create_zone'}</a>" );
+		   &ui_link("edit_zone.cgi?new=1", "$text{'list_items_create_zone'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -169,7 +169,7 @@ sub showHost {
 	print &ui_form_start("save_host.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_host.cgi?new=1\">$text{'list_items_create_host'}</a>" );
+		   &ui_link("edit_host.cgi?new=1", "$text{'list_items_create_host'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -212,7 +212,7 @@ sub showNet {
 	print &ui_form_start("save_net.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_net.cgi?new=1\">$text{'list_items_create_net'}</a>" );
+		   &ui_link("edit_net.cgi?new=1", "$text{'list_items_create_net'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -256,7 +256,7 @@ sub showGeoip {
 	print &ui_form_start("save_geoip.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_geoip.cgi?new=1\">$text{'list_items_create_geoip'}</a>" );
+		   &ui_link("edit_geoip.cgi?new=1", "$text{'list_items_create_geoip'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -297,7 +297,7 @@ sub showIPSet {
 	print &ui_form_start("save_ipset.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_ipset.cgi?new=1\">$text{'list_items_create_ipset'}</a>" );
+		   &ui_link("edit_ipset.cgi?new=1", "$text{'list_items_create_ipset'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -337,7 +337,7 @@ sub showGroup {
 	print &ui_form_start("save_group.cgi", "post" );
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_group.cgi?new=1\">$text{'list_items_create_group'}</a>" );
+		   &ui_link("edit_group.cgi?new=1", "$text{'list_items_create_group'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -380,7 +380,7 @@ sub showHostNameSet {
 	print &ui_form_start("save_hostnameset.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_hostnameset.cgi?new=1\">$text{'list_items_create_hostnameset'}</a>" );
+		   &ui_link("edit_hostnameset.cgi?new=1", "$text{'list_items_create_hostnameset'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -421,7 +421,7 @@ sub showRiskSet {
 	print &ui_form_start("save_riskset.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_riskset.cgi?new=1\">$text{'list_items_create_riskset'}</a>" );
+		   &ui_link("edit_riskset.cgi?new=1", "$text{'list_items_create_riskset'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -463,7 +463,7 @@ sub showRateLimit {
 	print &ui_form_start("save_ratelimit.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_ratelimit.cgi?new=1\">$text{'list_items_create_ratelimit'}</a>" );
+		   &ui_link("edit_ratelimit.cgi?new=1", "$text{'list_items_create_ratelimit'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -500,7 +500,7 @@ sub showTime {
 	print &ui_form_start("save_time.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_time.cgi?new=1\">$text{'list_items_create_time'}</a>" );
+		   &ui_link("edit_time.cgi?new=1", "$text{'list_items_create_time'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 	 	 "style=vertical-align:top",
 		 "style=vertical-align:top",
@@ -543,7 +543,7 @@ sub showTimeGroup {
 	print &ui_form_start("save_timegroup.cgi", "post" );
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_timegroup.cgi?new=1\">$text{'list_items_create_timegroup'}</a>" );
+		   &ui_link("edit_timegroup.cgi?new=1", "$text{'list_items_create_timegroup'}") );
         my @tds = ( "width=1% style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",

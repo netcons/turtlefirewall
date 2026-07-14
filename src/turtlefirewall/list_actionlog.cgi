@@ -107,7 +107,7 @@ sub showLog {
 	$lastpag = int(($count-1) / $pagelen) + 1;
 	if( $pag < $lastpag ) {
 		$pageindex .= "&nbsp;<a href=\"list_actionlog.cgi?pag=".($pag+1)."&$urlparam\">&gt;</a>&nbsp;";
-		$pageindex .= qq~&nbsp;<a href="list_actionlog.cgi?pag=$lastpag&$urlparam">&gt;&gt;</a>&nbsp;~;
+		$pageindex .= "&nbsp;<a href=\"list_actionlog.cgi?pag=$lastpag&$urlparam\">&gt;&gt;</a>&nbsp;";
 	}
 
 	print &ui_form_start("list_actionlog.cgi", "post");

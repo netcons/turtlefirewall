@@ -29,7 +29,7 @@ sub showConntrackPreroute {
 	print &ui_form_start("save_conntrackpreroute.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_conntrackpreroute.cgi?new=1\">$text{'list_conntrackpreroutes_create_rule'}</a>" );
+		   &ui_link("edit_conntrackpreroute.cgi?new=1", "$text{'list_conntrackpreroutes_create_rule'}") );
 	my @tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=vertical-align:top",
@@ -115,7 +115,7 @@ sub showConntrack {
 	print &ui_form_start("save_conntrack.cgi", "post");
 	my @links = ( &select_all_link("d", $form),
        		   &select_invert_link("d", $form),
-		   "<a href=\"edit_conntrack.cgi?new=1\">$text{'list_conntracks_create_rule'}</a>" );
+		   &ui_link("edit_conntrack.cgi?new=1", "$text{'list_conntracks_create_rule'}") );
 	my @tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=vertical-align:top",

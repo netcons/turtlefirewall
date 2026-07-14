@@ -24,7 +24,7 @@ sub showRule {
 	print &ui_form_start("save_rule.cgi", "post");
 	my @links = ( &select_all_link("d"),
        		   &select_invert_link("d"),
-		   "<a href=\"edit_rule.cgi?new=1\">$text{'list_rules_create_rule'}</a>" );
+		   &ui_link("edit_rule.cgi?new=1", "$text{'list_rules_create_rule'}") );
 	my @tds = ( 
 		"width=1% style=vertical-align:top",
 		"width=1% style=text-align:center;vertical-align:top",
