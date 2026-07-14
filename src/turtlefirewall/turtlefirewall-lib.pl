@@ -21,7 +21,10 @@ foreach my $d (@INC) {
 	}
 }
 if( ! $gotXmlParser ) {
-	&error( 'Perl XML::Parser Module not found.' );
+	&ui_print_header( undef, $text{'title'}, "" );
+	print &ui_alert_box("Perl XML::Parser not found.", 'danger');
+	&ui_print_footer('/',$text{'index'});
+	exit;
 }
 
 # do you need to install startup scripts?
@@ -41,7 +44,10 @@ if( -f "./setup/turtlefirewall" ) {
 
 my $tfwlib = '/usr/lib/turtlefirewall/TurtleFirewall.pm';
 if( ! -f $tfwlib ) {
-	&error( 'Turtle Firewall Library not found.' );
+	&ui_print_header( undef, $text{'title'}, "" );
+	print &ui_alert_box("Turtle Firewall Library not found.", 'danger');
+	&ui_print_footer('/',$text{'index'});
+	exit;
 }
 
 if( -f $config{fw_logfile} ) {
@@ -57,7 +63,10 @@ if( -f $config{fw_file} ) {
 } elsif( -f "/etc/turtlefirewall/fw.xml" ) {
 	$tfwconf = "/etc/turtlefirewall/fw.xml";
 } else {
-	&error( 'Turtle Firewall Config not found.' );
+	&ui_print_header( undef, $text{'title'}, "" );
+	print &ui_alert_box("Turtle Firewall Configuration not found.", 'danger');
+	&ui_print_footer('/',$text{'index'});
+	exit;
 }
 
 $FlowLogFile = "/var/log/flowinfo.log";
