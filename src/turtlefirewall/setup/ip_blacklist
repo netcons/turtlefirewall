@@ -4,7 +4,9 @@
 # ln -sf /usr/lib/turtlefirewall/ip_blacklist /etc/cron.daily/ip_blacklist
 #
 
-echo -e "\nTurtle Firewall 2.7 - IP Blacklist";
+Version=$(/usr/bin/env perl -I /usr/lib/turtlefirewall -M TurtleFirewall -e 'print TurtleFirewall->Version();')
+
+echo -e "\nTurtle Firewall $Version - IP Blacklist";
 echo -e "Copyright (c) 2001-2026 Andrea Frigido <andrea@frisoft.it>\n";
 
 blacklist_file="/etc/turtlefirewall/ip_blacklist.dat"
