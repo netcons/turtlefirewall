@@ -13,7 +13,7 @@ use WebminCore;
 &init_config();
 
 # if XML::Parser is not present
-$gotXmlParser = 0;
+my $gotXmlParser = 0;
 foreach my $d (@INC) {
 	if( -f "$d/XML/Parser.pm" ) {
 		$gotXmlParser++;
@@ -222,7 +222,6 @@ sub LoadCountryCodes {
 # Generates html for service input
 sub formService {
 	my( $service, $port, $multiple ) = @_;
-	my $this = '';
 
 	my @selected_services = ();
 	my @services = ();
@@ -255,8 +254,8 @@ sub formService {
 	       	[ 2, "".&ui_select("service2", \@selected_services, \@services, 5, $multiple)."<br>" ],
 	       	[ 3, "".&ui_select("service3", $selected_service3, \@services3, 1)." $text{rule_port} : ".&ui_textbox("port", $port, 11, 0, 11)."<small><i>$text{port_help}</i></small>" ]
        	);
-	$this = &ui_radio("servicetype", $servicetype, \@opts);
-	return $this;
+
+	return &ui_radio("servicetype", $servicetype, \@opts);
 }
 
 # Parse service inputs and return name of service chosen
@@ -279,7 +278,6 @@ sub formServiceParse {
 # Generates html for ndpiprotocol input
 sub formNdpiProtocol {
 	my( $ndpiprotocol, $category, $multiple ) = @_;
-	my $this = '';
 
 	my @selected_ndpiprotocols = ();
 	my @ndpiprotocols = ();
@@ -317,8 +315,8 @@ sub formNdpiProtocol {
 	       	[ 2, "".&ui_select("ndpiprotocol2", \@selected_ndpiprotocols, \@ndpiprotocols, 5, $multiple)."<br>" ],
 	       	[ 3, "$text{category} : ".&ui_select("category", $category, \@categorys, 1)."" ]
        	);
-	$this = &ui_radio("ndpiprotocoltype", $ndpiprotocoltype, \@opts);
-	return $this;
+
+	return &ui_radio("ndpiprotocoltype", $ndpiprotocoltype, \@opts);
 }
 
 # Parse ndpiprotocol inputs and return name of ndpiprotocol chosen
