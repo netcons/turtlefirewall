@@ -430,8 +430,8 @@ sub AddNet {
 # AddZone( $name, $if, $mssfix, $description  )
 sub AddZone {
 	my ($this, $name, $if, $mssfix, $description) = @_;
-	if( $mssfix ) { $mssfix = 'YES'; }
-	%{ $this->{fw}{ZONE}{$name} } = ('NAME'=>$name, 'IF'=>$if, 'MSSFIX'=>$mssfix, 'DESCRIPTION'=>$description );
+	%{ $this->{fw}{ZONE}{$name} } = ('NAME'=>$name, 'IF'=>$if, 'DESCRIPTION'=>$description );
+	if( $mssfix ) { ${ $this->{fw}{ZONE}{$name} }{MSSFIX} = 'YES'; }
 	$this->{fwItems}{$name} = 'ZONE';
 }
 
@@ -2366,7 +2366,7 @@ sub getIptablesRules {
 	for( my $i=0; $i<=$#zone; $i++ ) {
 		my $z1 = $zone[$i];
 		my %zone1 = $this->GetZone($z1);
-		if( defined($zone1{'MSSFIX'}) ) {
+		if( defined($zone1{'MSSFIX'}) && $zone1{'MSSFIX'} eq 'YES' ) {
 			$rules_mangle_option .= "-A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $zone1{'IF'} -j TCPMSS --clamp-mss-to-pmtu\n";
 	   	}
 		for( my $j=0; $j<=$#zone; $j++ ) {

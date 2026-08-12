@@ -27,7 +27,7 @@ if( $new ) {
 
 my %z = $fw->GetZone($in{'zone'});
 my $if = $z{'IF'};
-my $mssfix = $z{'MSSFIX'};
+my $mssfix = $z{'MSSFIX'} eq 'YES';
 my $description = $z{'DESCRIPTION'};
 
 print &ui_subheading($heading);
