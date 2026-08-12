@@ -172,6 +172,8 @@ sub confdir {
 	'MARK' => { IMAGE => '<img src=images/grey-mark.png hspace=4>' },
 	'MARK_A' => { IMAGE => '<img src=images/mark.png hspace=4>' },
 	'TOPORT' => { IMAGE => '<img src=images/toport.png hspace=4>' },
+	'MSSFIX' => { IMAGE => '<img src=images/grey-mssfix.png hspace=4>' },
+	'MSSFIX_A' => { IMAGE => '<img src=images/mssfix.png hspace=4>' },
 	'REF' => { IMAGE => '<img src=images/ref.png hspace=4>' }
 );
 
@@ -341,7 +343,7 @@ sub getOptionsList {
 			'drop_invalid_state', 'drop_invalid_all', 'drop_invalid_none', 'drop_invalid_fin_notack',
 			'drop_invalid_syn_fin', 'drop_invalid_syn_rst', 'drop_invalid_fragment',
 		       	'drop_ip_blacklist', 'drop_domain_blacklist', 'drop_sha1_blacklist',
-			'nf_conntrack_max', 'clamp_mss_to_pmtu', 'log_limit', 'log_limit_burst' );
+			'nf_conntrack_max', 'log_limit', 'log_limit_burst' );
 	%options = ();
 	%{$options{rp_filter}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>1 );
 	%{$options{log_martians}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>1 );
@@ -356,7 +358,6 @@ sub getOptionsList {
 	%{$options{drop_domain_blacklist}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{drop_sha1_blacklist}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{nf_conntrack_max}} = ( 'type'=>'text', 'default'=>262144, 'addunchangeopz'=>0 );
-	%{$options{clamp_mss_to_pmtu}} = ( 'type'=>'radio', 'default'=>'on', 'addunchangeopz'=>0 );
 	%{$options{log_limit}} = ( 'type'=>'text', 'default'=>60, 'addunchangeopz'=>0 );
 	%{$options{log_limit_burst}} = ( 'type'=>'text', 'default'=>5, 'addunchangeopz'=>0 );
 }

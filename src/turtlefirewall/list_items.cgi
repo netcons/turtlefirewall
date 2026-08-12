@@ -133,11 +133,13 @@ sub showZone {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
+		 "style=vertical-align:top",
 		 "width=1% style=vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
                           "<b>$text{'interface'}</b>",
+                          "<b>$text{'mssfix'}</b>",
                           "<b>$text{'description'}</b>",
                           "<b>$text{'reference'}</b>" ], 100, 0, \@tds);
 	for my $k ($fw->GetZoneList()) {
@@ -152,6 +154,7 @@ sub showZone {
 			push(@cols, "$icons{ZONE}{IMAGE}$href" );
 		}
 		push(@cols, "".($zone{'IF'} ne '' ? "$icons{INTERFACE}{IMAGE}$zone{'IF'}" : '&nbsp;')."" );
+		push(@cols, "".($zone{'MSSFIX'} ne '' ? "$icons{MSSFIX_A}{IMAGE}<span style=color:#0d8264>$text{'YES'}</span>" : '&nbsp;')."" );
 		push(@cols, "".($zone{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$zone{'DESCRIPTION'}" : '&nbsp;')."" );
 		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
 		push(@cols, $href);

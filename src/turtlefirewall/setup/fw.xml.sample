@@ -16,11 +16,10 @@
 <option value="262144" name="nf_conntrack_max"/>
 <option name="drop_invalid_all" value="off"/>
 <option value="on" name="drop_invalid_syn_fin"/>
-<option value="on" name="clamp_mss_to_pmtu"/>
 </options>
 
 <zone if="ens18" description="" name="lan"/>
-<zone description="" if="ppp0" name="primarywan"/>
+<zone description="" if="ppp0" name="primarywan" mssfix="YES"/>
 
 <net netmask="255.255.255.0" ip="20.160.50.0" description="" zone="primarywan" name="net-support"/>
 

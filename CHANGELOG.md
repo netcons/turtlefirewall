@@ -1,12 +1,13 @@
 # ChangeLog
 
 ## v.2.8 (Not Yet Released)
-- Cleanup : Variable Declarations.
-- Cleanup : Formatting Order.
-- Cleanup : Remove custom roundbytes function.
-- Cleanup : Standardize mover function.
-- Feature : Add Risk Severity Info.
-- Bug : Fixed backup.cgi restore upload.
+- Bug : Fix more variable declarations.
+- Bug : Fix formatting order.
+- Bug : Remove custom roundbytes function.
+- Bug : Standardize mover function.
+- Bug : Fix backup.cgi restore upload.
+- Feature : Add Risk Severity info.
+- Feature : Rework clamp_mss_to_pmtu option from global to per interface.
 - Theme : Add item reference image.
 - Todo : Translate new features.
 

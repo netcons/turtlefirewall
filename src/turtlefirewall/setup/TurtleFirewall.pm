@@ -427,10 +427,11 @@ sub AddNet {
 	$this->{fwItems}{$name} = 'NET';
 }
 
-# AddZone( $name, $if, $description  )
+# AddZone( $name, $if, $mssfix, $description  )
 sub AddZone {
-	my ($this, $name, $if, $description) = @_;
-	%{ $this->{fw}{ZONE}{$name} } = ('NAME'=>$name, 'IF'=>$if, 'DESCRIPTION'=>$description );
+	my ($this, $name, $if, $mssfix, $description) = @_;
+	if( $mssfix ) { $mssfix = 'YES'; }
+	%{ $this->{fw}{ZONE}{$name} } = ('NAME'=>$name, 'IF'=>$if, 'MSSFIX'=>$mssfix, 'DESCRIPTION'=>$description );
 	$this->{fwItems}{$name} = 'ZONE';
 }
 
@@ -2223,15 +2224,6 @@ sub getIptablesRules {
 		print "off\n";
 	}
 
-	print "clamp_mss_to_pmtu: ";
-	if( !defined($this->{fw}{OPTION}{clamp_mss_to_pmtu}) || $this->{fw}{OPTION}{clamp_mss_to_pmtu} ne 'off' ) {
-                $rules_mangle_option .= "-A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o ppp+ -j TCPMSS --clamp-mss-to-pmtu\n";
-		$rules_mangle .= $rules_mangle_option;
-		print "on\n";
-	} else {
-		print "off\n";
-	}
-
 	# Definition for the return chain
 	# Return packet chain (NO new connections)
 	$chains .= ":BACK - [0:0]\n";
@@ -2298,12 +2290,6 @@ sub getIptablesRules {
 		}
 		$chains_mangle .= $chains_mangle_connmark;
 		$rules_mangle .= $rules_mangle_connmark;
-	}
-
-	# Copy packet mark to connection mark and vice versa
-	if( $rules_mangle_connmarkpreroute || $rules_mangle_connmark ) {
-		$rules_mangle .= "-I PREROUTING -j CONNMARK --restore-mark\n";
-		$rules_mangle .= "-A POSTROUTING -j CONNMARK --save-mark\n";
 	}
 
 	# Application of CONNTRACKPREROUTEs
@@ -2380,6 +2366,9 @@ sub getIptablesRules {
 	for( my $i=0; $i<=$#zone; $i++ ) {
 		my $z1 = $zone[$i];
 		my %zone1 = $this->GetZone($z1);
+		if( defined($zone1{'MSSFIX'}) ) {
+			$rules_mangle_option .= "-A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $zone1{'IF'} -j TCPMSS --clamp-mss-to-pmtu\n";
+	   	}
 		for( my $j=0; $j<=$#zone; $j++ ) {
 			my $z2 = $zone[$j];
 			my %zone2 = $this->GetZone($z2);
@@ -2428,6 +2417,15 @@ sub getIptablesRules {
 		$rules .= "-A $chain -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
 	}
 	print "DROP any other connections and LOG Action\n";
+
+	# Check for MSSFIX
+	if( $rules_mangle_option ) { $rules_mangle .= $rules_mangle_option; }
+
+	# Copy packet mark to connection mark and vice versa
+	if( $rules_mangle_connmarkpreroute || $rules_mangle_connmark ) {
+		$rules_mangle .= "-I PREROUTING -j CONNMARK --restore-mark\n";
+		$rules_mangle .= "-A POSTROUTING -j CONNMARK --save-mark\n";
+	}
 
 	return	($rules_raw_conntrackpreroute || $rules_raw_conntrack ? $chains_raw.$rules_raw."COMMIT\n" : "*raw\nCOMMIT\n").
 		($rules_mangle_connmarkpreroute || $rules_mangle_connmark || $rules_mangle_option ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").
