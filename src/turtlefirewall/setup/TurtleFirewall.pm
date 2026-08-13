@@ -427,11 +427,11 @@ sub AddNet {
 	$this->{fwItems}{$name} = 'NET';
 }
 
-# AddZone( $name, $if, $mssfix, $description  )
+# AddZone( $name, $if, $clampmss, $description  )
 sub AddZone {
-	my ($this, $name, $if, $mssfix, $description) = @_;
+	my ($this, $name, $if, $clampmss, $description) = @_;
 	%{ $this->{fw}{ZONE}{$name} } = ('NAME'=>$name, 'IF'=>$if, 'DESCRIPTION'=>$description );
-	if( $mssfix ) { ${ $this->{fw}{ZONE}{$name} }{MSSFIX} = 'YES'; }
+	if( $clampmss ) { ${ $this->{fw}{ZONE}{$name} }{CLAMPMSS} = 'YES'; }
 	$this->{fwItems}{$name} = 'ZONE';
 }
 
@@ -2366,7 +2366,7 @@ sub getIptablesRules {
 	for( my $i=0; $i<=$#zone; $i++ ) {
 		my $z1 = $zone[$i];
 		my %zone1 = $this->GetZone($z1);
-		if( defined($zone1{'MSSFIX'}) && $zone1{'MSSFIX'} eq 'YES' ) {
+		if( defined($zone1{'CLAMPMSS'}) && $zone1{'CLAMPMSS'} eq 'YES' ) {
 			$rules_mangle_option .= "-A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $zone1{'IF'} -j TCPMSS --clamp-mss-to-pmtu\n";
 	   	}
 		for( my $j=0; $j<=$#zone; $j++ ) {
@@ -2418,7 +2418,7 @@ sub getIptablesRules {
 	}
 	print "DROP any other connections and LOG Action\n";
 
-	# Check for MSSFIX
+	# Check for CLAMPMSS
 	if( $rules_mangle_option ) { $rules_mangle .= $rules_mangle_option; }
 
 	# Copy packet mark to connection mark and vice versa

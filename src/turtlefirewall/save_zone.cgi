@@ -14,7 +14,7 @@ require './turtlefirewall-lib.pl';
 my $newzone = $in{'newzone'};
 my $zone = $in{'zone'};
 my $if = $in{'if'};
-my $mssfix = $in{'mssfix'};
+my $clampmss = $in{'clampmss'};
 my $description = $in{'description'};
 
 if( ! $fw->checkName($newzone) ) { &error( $text{save_zone_error8} ); }
@@ -48,10 +48,10 @@ if( $in{'delete'} ) {
 			}
 		}
 		if( ! $fw->checkName($zone) ) { &error( $text{save_zone_error8} ); }
-		$fw->AddZone( $zone, $if, $mssfix, $description );
+		$fw->AddZone( $zone, $if, $clampmss, $description );
 	} else {
 		# save zone
-		$fw->AddZone( $zone, $if, $mssfix, $description );
+		$fw->AddZone( $zone, $if, $clampmss, $description );
 		if( $newzone ne $zone ) {
 			if( !$fw->RenameItem( $zone, $newzone ) ) {
 				&error( &text('save_zone_error7', $zone, $newzone) );

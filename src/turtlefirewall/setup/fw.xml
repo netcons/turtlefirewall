@@ -19,7 +19,7 @@
 </options>
 
 <zone if="ens18" description="" name="lan"/>
-<zone name="primarywan" description="" if="ppp0" mssfix="YES"/>
+<zone name="primarywan" description="" if="ppp0" clampmss="YES"/>
 
 <group name="internet" description="Internet">
 	<item name="primarywan"/>

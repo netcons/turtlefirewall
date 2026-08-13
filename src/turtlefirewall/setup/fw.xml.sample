@@ -19,7 +19,7 @@
 </options>
 
 <zone if="ens18" description="" name="lan"/>
-<zone description="" if="ppp0" name="primarywan" mssfix="YES"/>
+<zone description="" if="ppp0" name="primarywan" clampmss="YES"/>
 
 <net netmask="255.255.255.0" ip="20.160.50.0" description="" zone="primarywan" name="net-support"/>
 

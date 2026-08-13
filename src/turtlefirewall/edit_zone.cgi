@@ -27,7 +27,7 @@ if( $new ) {
 
 my %z = $fw->GetZone($in{'zone'});
 my $if = $z{'IF'};
-my $mssfix = $z{'MSSFIX'} eq 'YES';
+my $clampmss = $z{'CLAMPMSS'} eq 'YES';
 my $description = $z{'DESCRIPTION'};
 
 print &ui_subheading($heading);
@@ -45,8 +45,8 @@ print &ui_columns_row([ "$icons{ZONE}{IMAGE}<b>$text{'name'}</b>", $col ], \@tds
 $col = &ui_textbox("if", $if);
 $col .= "<small><i>$text{zone_help}</i></small>";
 print &ui_columns_row([ "$icons{INTERFACE}{IMAGE}<b>$text{'interface'}</b>", $col ], \@tds);
-$col = &ui_checkbox("mssfix", 1, undef, $mssfix ? 1 : 0);
-print &ui_columns_row([ "$icons{MSSFIX}{IMAGE}<b>$text{'mssfix'}</b>", $col ], \@tds);
+$col = &ui_checkbox("clampmss", 1, undef, $clampmss ? 1 : 0);
+print &ui_columns_row([ "$icons{CLAMPMSS}{IMAGE}<b>$text{'clampmss'}</b>", $col ], \@tds);
 $col = &ui_textbox("description", $description, 60, 0, 60);
 print &ui_columns_row([ "$icons{DESCRIPTION}{IMAGE}<b>$text{'description'}</b>", $col ], \@tds);
 print &ui_columns_end();
