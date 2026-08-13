@@ -77,7 +77,7 @@ sub showAddressList {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -134,7 +134,7 @@ sub showZone {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -179,7 +179,7 @@ sub showHost {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -222,7 +222,7 @@ sub showNet {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -265,7 +265,7 @@ sub showGeoip {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -306,7 +306,7 @@ sub showIPSet {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -345,7 +345,7 @@ sub showGroup {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -388,7 +388,7 @@ sub showHostNameSet {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -429,7 +429,7 @@ sub showRiskSet {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -471,7 +471,7 @@ sub showRateLimit {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -510,7 +510,7 @@ sub showTime {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
@@ -551,7 +551,7 @@ sub showTimeGroup {
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
 		 "style=vertical-align:top",
-		 "width=5% style=vertical-align:top" );
+		 "width=8% style=text-align:right;vertical-align:top" );
         print &ui_columns_start([
 			  "",
                           "<b>$text{'name'}</b>",
