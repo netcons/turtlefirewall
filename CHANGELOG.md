@@ -9,6 +9,7 @@
 - Feature : Add Risk Severity info.
 - Feature : Rework clamp_mss_to_pmtu option from global to per interface.
 - Theme : Add item reference image.
+- Services : Add udp port 4500 to ipsec service.
 - Todo : Translate new features.
 
 ## v.2.7 (11-12-2025)

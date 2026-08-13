@@ -223,23 +223,11 @@
 		<filter direction="go" p="tcp" sport="1024:65535" state="ESTABLISHED,RELATED"/>
 	</service>
 
-	<service name="ipsec-ESP" description="VPN IPSec protocol with IKE and ESP">
+	<service name="ipsec" description="IPSec VPN with IKE, ESP, AH and NAT-T">
 		<filter direction="go" p="udp" sport="500" dport="500"/>
 		<filter direction="back" p="udp" sport="500" dport="500" jump="ACCEPT"/>
-		<filter direction="go" p="50"/>
-		<filter direction="back" p="50" jump="ACCEPT"/>
-	</service>
-
-	<service name="ipsec-AH" description="VPN IPSec protocol with IKE and AH">
-		<filter direction="go" p="udp" sport="500" dport="500"/>
-		<filter direction="back" p="udp" sport="500" dport="500" jump="ACCEPT"/>
-		<filter direction="go" p="51"/>
-		<filter direction="back" p="51" jump="ACCEPT"/>
-	</service>
-
-	<service name="ipsec-ESP-AH" description="VPN IPSec protocol with IKE, ESP and AH">
-		<filter direction="go" p="udp" sport="500" dport="500"/>
-		<filter direction="back" p="udp" sport="500" dport="500" jump="ACCEPT"/>
+		<filter direction="go" p="udp" sport="4500" dport="4500"/>
+		<filter direction="back" p="udp" sport="4500" dport="4500" jump="ACCEPT"/>
 		<filter direction="go" p="50"/>
 		<filter direction="back" p="50" jump="ACCEPT"/>
 		<filter direction="go" p="51"/>
@@ -275,7 +263,7 @@
 		<filter direction="back" p="udp" sport="mysql"/>
 	</service>
 
-	<service name="l2tp" description="L2TP">
+	<service name="l2tp" description="L2TP VPN">
 		<filter direction="go" p="udp" dport="500"/>
 		<filter direction="back" p="udp" sport="500"/>
 		<filter direction="go" p="udp" dport="1701"/>
@@ -652,7 +640,7 @@
 		<filter direction="back" p="udp" sport="19302:19309"/>
 	</service>
 
-	<service name="wireguard" description="Wireguard (udp 51820)">
+	<service name="wireguard" description="Wireguard VPN (udp 51820)">
 		<filter direction="go" p="udp" dport="51820"/>
 		<filter direction="back" p="udp" sport="51820"/>
 	</service>
