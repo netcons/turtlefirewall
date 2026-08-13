@@ -4,7 +4,7 @@
 # ln -sf /usr/lib/turtlefirewall/sha1_blacklist /etc/cron.daily/sha1_blacklist
 #
 
-Version=$(/usr/bin/env perl -I /usr/lib/turtlefirewall -M TurtleFirewall -e 'print TurtleFirewall->Version();')
+Version=$(/usr/bin/env perl -I /usr/lib/turtlefirewall -M-TurtleFirewall -e 'print TurtleFirewall->Version();')
 
 echo -e "\nTurtle Firewall $Version - SHA1 Blacklist";
 echo -e "Copyright (c) 2001-2026 Andrea Frigido <andrea@frisoft.it>\n";
