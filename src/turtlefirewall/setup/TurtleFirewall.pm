@@ -2032,7 +2032,7 @@ sub getIptablesRules {
 	my $chains_mangle = '';
 	my $rules_mangle = '';
 
-	my $rules_mangle_option = '';
+	my $rules_mangle_clampmss = '';
 
 	my $chains_mangle_connmarkpreroute = '';
 	my $rules_mangle_connmarkpreroute = ''; 
@@ -2239,6 +2239,18 @@ sub getIptablesRules {
 	$rules .= "-A ICMP-ACC -p icmp --icmp-type parameter-problem -j ACCEPT\n";
 	$rules .= "-A ICMP-ACC -j RETURN\n";
 
+	# Application of CLAMPMSSPOSTROUTEs
+	my @zone = $this->GetZoneList();
+	for( my $i=0; $i<=$#zone; $i++ ) {
+		my $z = $zone[$i];
+		my %zone = $this->GetZone($z);
+		if( defined($zone{'CLAMPMSS'}) && $zone{'CLAMPMSS'} eq 'YES' ) {
+			$rules_mangle_clampmss .= "-A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $zone{'IF'} -j TCPMSS --clamp-mss-to-pmtu\n";
+			print "CLAMPMSS POSTROUTE $z\n";
+	   	}
+	}
+	if( $rules_mangle_clampmss ) { $rules_mangle .= $rules_mangle_clampmss; }
+
 	# Application of CONNMARKPREROUTEs
 	my $connmarkpreroutesCount = $this->GetConnmarkPreroutesCount();
 	if( $connmarkpreroutesCount > 0 ) {
@@ -2251,6 +2263,7 @@ sub getIptablesRules {
 				$rules_mangle_connmarkpreroute .= "-A PREROUTING -i ".$zone1{'IF'}." -j $z1-IN\n";
 			}
 		}
+		# Apply
 		for( my $i=1; $i <= $connmarkpreroutesCount; $i++ ) {
 			$rules_mangle_connmarkpreroute .= $this->applyRule( 1, 1, 0, 1, $this->GetConnmarkPreroute($i) );
 		}
@@ -2285,11 +2298,18 @@ sub getIptablesRules {
 				}
 			}
 		}
+		# Apply
 		for( my $i=1; $i <= $connmarksCount; $i++ ) {
 			$rules_mangle_connmark .= $this->applyRule( 1, 1, 0, 0, $this->GetConnmark($i) );
 		}
 		$chains_mangle .= $chains_mangle_connmark;
 		$rules_mangle .= $rules_mangle_connmark;
+	}
+
+	# Copy packet mark to connection mark and vice versa ( always after any mangle rules )
+	if( $rules_mangle_connmarkpreroute || $rules_mangle_connmark ) {
+		$rules_mangle .= "-I PREROUTING -j CONNMARK --restore-mark\n";
+		$rules_mangle .= "-A POSTROUTING -j CONNMARK --save-mark\n";
 	}
 
 	# Application of CONNTRACKPREROUTEs
@@ -2304,6 +2324,7 @@ sub getIptablesRules {
 				$rules_raw_conntrackpreroute .= "-A PREROUTING -i ".$zone1{'IF'}." -j $z1-IN\n";
 			}
 		}
+		# Apply
 		for( my $i=1; $i <= $conntrackpreroutesCount; $i++ ) {
 			$rules_raw_conntrackpreroute .= $this->applyRule( 1, 0, 1, 1, $this->GetConntrackPreroute($i) );
 		}
@@ -2323,6 +2344,7 @@ sub getIptablesRules {
 				$rules_raw_conntrack .= "-A OUTPUT -o ".$zone2{'IF'}." -j FIREWALL-$z2\n";
 			}
 		}
+		# Apply
 		for( my $i=1; $i <= $conntracksCount; $i++ ) {
 			$rules_raw_conntrack .= $this->applyRule( 1, 0, 1, 0, $this->GetConntrack($i) );
 		}
@@ -2331,8 +2353,12 @@ sub getIptablesRules {
 	}
 
 	# Application of NATs
-	for( my $i=1; $i <= $this->GetNatsCount(); $i++ ) {
-		$rules_nat .= $this->applyNat( $this->GetNat($i) );
+	my $natsCount = $this->GetNatsCount();
+	if( $natsCount > 0 ) {
+		# Apply
+		for( my $i=1; $i <= $natsCount; $i++ ) {
+			$rules_nat .= $this->applyNat( $this->GetNat($i) );
+		}
 	}
 
 	# MASQUERADE (always after the NAT)
@@ -2341,6 +2367,7 @@ sub getIptablesRules {
 		# Add MASQ chain
 		$chains_nat .= ":MASQ - [0:0]\n";
 		$rules_nat .= "-A POSTROUTING -j MASQ\n";
+		# Apply
 		for( my $i=1; $i <= $masqueradesCount; $i++ ) {
 			$rules_nat .= $this->applyMasquerade( $this->GetMasquerade($i) );
 		}
@@ -2354,6 +2381,7 @@ sub getIptablesRules {
 		# Add REDIR chain
 		$chains_nat .= ":REDIR - [0:0]\n";
 		$rules_nat .= "-A PREROUTING -j REDIR\n";
+		# Apply
 		for( my $i=1; $i <= $redirectCount; $i++ ) {
 			$rules_nat .= $this->applyRedirect( $this->GetRedirect($i) );
 		}
@@ -2361,74 +2389,65 @@ sub getIptablesRules {
 		$rules_nat .= "-A REDIR -j RETURN\n";
 	}
 
-	# Create the chains for the ZONES
-	my @zone = $this->GetZoneList();
-	for( my $i=0; $i<=$#zone; $i++ ) {
-		my $z1 = $zone[$i];
-		my %zone1 = $this->GetZone($z1);
-		if( defined($zone1{'CLAMPMSS'}) && $zone1{'CLAMPMSS'} eq 'YES' ) {
-			$rules_mangle_option .= "-A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -o $zone1{'IF'} -j TCPMSS --clamp-mss-to-pmtu\n";
-	   	}
-		for( my $j=0; $j<=$#zone; $j++ ) {
-			my $z2 = $zone[$j];
-			my %zone2 = $this->GetZone($z2);
-			if( $z1 eq 'FIREWALL' || $z2 eq 'FIREWALL' ) {
-				# I define chains for packets where the target or origin are the firewall
-				# Notice that FIREWALL -> FIREWALL is excluded.
-				if( $z1 eq 'FIREWALL' && $z2 ne 'FIREWALL' ) {
-					$chains .= ":$z1-$z2 - [0:0]\n";
-					$rules .= "-A OUTPUT -o \"".$zone2{'IF'}."\" -j $z1-$z2\n";
-				}
-				if( $z1 ne 'FIREWALL' && $z2 eq 'FIREWALL' ) {
-					$chains .= ":$z1-$z2 - [0:0]\n";
-					$rules .= "-A INPUT -i ".$zone1{'IF'}." -j $z1-$z2\n";
-				}
-			} else {
-				$chains .= ":$z1-$z2 - [0:0]\n";
-				$rules .= "-A FORWARD -i ".$zone1{'IF'}." -o ".$zone2{'IF'}." -j $z1-$z2\n";
-			}
-		}
-	}
-
-	# Application of the RULES
+	# Application of FILTERs
 	my $rulesCount = $this->GetRulesCount();
-	for( my $i=1; $i <= $rulesCount; $i++ ) {
-		$rules .= $this->applyRule( 1, 0, 0, 0, $this->GetRule($i) );
-	}
-
-	# Close the zone chains
-	for( my $i=0; $i<=$#zone; $i++ ) {
-		my $z1 = $zone[$i];
-		for( my $j=0; $j<=$#zone; $j++ ) {
-			my $z2 = $zone[$j];
-			if( $z1 ne 'FIREWALL' || $z2 ne 'FIREWALL' ) {
-				my $logprefix = "TFW=$z1-$z2";
-				# iptables --log-prefix max = 29
-				if( length($logprefix) > 23 ) { $logprefix = substr( $logprefix, 0, 23 ); }
-				$logprefix = "$logprefix(DRO)";
-				#comment( "# Chain closure $z1 -> $z2" );
-				$rules .= "-A $z1-$z2 -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
-				$rules .= "-A $z1-$z2 -j DROP\n";
+	if( $rulesCount > 0 ) {
+		# Create the chains for the ZONES
+		my @zone = $this->GetZoneList();
+		for( my $i=0; $i<=$#zone; $i++ ) {
+			my $z1 = $zone[$i];
+			my %zone1 = $this->GetZone($z1);
+			for( my $j=0; $j<=$#zone; $j++ ) {
+				my $z2 = $zone[$j];
+				my %zone2 = $this->GetZone($z2);
+				if( $z1 eq 'FIREWALL' || $z2 eq 'FIREWALL' ) {
+					# I define chains for packets where the target or origin are the firewall
+					# Notice that FIREWALL -> FIREWALL is excluded.
+					if( $z1 eq 'FIREWALL' && $z2 ne 'FIREWALL' ) {
+						$chains .= ":$z1-$z2 - [0:0]\n";
+						$rules .= "-A OUTPUT -o \"".$zone2{'IF'}."\" -j $z1-$z2\n";
+					}
+					if( $z1 ne 'FIREWALL' && $z2 eq 'FIREWALL' ) {
+						$chains .= ":$z1-$z2 - [0:0]\n";
+						$rules .= "-A INPUT -i ".$zone1{'IF'}." -j $z1-$z2\n";
+					}
+				} else {
+					$chains .= ":$z1-$z2 - [0:0]\n";
+					$rules .= "-A FORWARD -i ".$zone1{'IF'}." -o ".$zone2{'IF'}." -j $z1-$z2\n";
+				}
+			}
+		}
+		# Apply
+		for( my $i=1; $i <= $rulesCount; $i++ ) {
+			$rules .= $this->applyRule( 1, 0, 0, 0, $this->GetRule($i) );
+		}
+		# Close the zone chains
+		for( my $i=0; $i<=$#zone; $i++ ) {
+			my $z1 = $zone[$i];
+			for( my $j=0; $j<=$#zone; $j++ ) {
+				my $z2 = $zone[$j];
+				if( $z1 ne 'FIREWALL' || $z2 ne 'FIREWALL' ) {
+					my $logprefix = "TFW=$z1-$z2";
+					# iptables --log-prefix max = 29
+					if( length($logprefix) > 23 ) { $logprefix = substr( $logprefix, 0, 23 ); }
+					$logprefix = "$logprefix(DRO)";
+					#comment( "# Chain closure $z1 -> $z2" );
+					$rules .= "-A $z1-$z2 -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
+					$rules .= "-A $z1-$z2 -j DROP\n";
+				}
 			}
 		}
 	}
+
+	# Implicit Deny
 	for my $chain (('INPUT','OUTPUT','FORWARD')) {
 		my $logprefix = "TFW=$chain(DRO)";
 		$rules .= "-A $chain -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
 	}
 	print "DROP any other connections and LOG Action\n";
 
-	# Check for CLAMPMSS
-	if( $rules_mangle_option ) { $rules_mangle .= $rules_mangle_option; }
-
-	# Copy packet mark to connection mark and vice versa
-	if( $rules_mangle_connmarkpreroute || $rules_mangle_connmark ) {
-		$rules_mangle .= "-I PREROUTING -j CONNMARK --restore-mark\n";
-		$rules_mangle .= "-A POSTROUTING -j CONNMARK --save-mark\n";
-	}
-
 	return	($rules_raw_conntrackpreroute || $rules_raw_conntrack ? $chains_raw.$rules_raw."COMMIT\n" : "*raw\nCOMMIT\n").
-		($rules_mangle_connmarkpreroute || $rules_mangle_connmark || $rules_mangle_option ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").
+		($rules_mangle_connmarkpreroute || $rules_mangle_connmark || $rules_mangle_clampmss ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").
 		$chains.$rules."COMMIT\n".$chains_nat.$rules_nat."COMMIT\n";
 }
 
