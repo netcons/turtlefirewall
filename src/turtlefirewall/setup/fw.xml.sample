@@ -16,6 +16,7 @@
 <option value="262144" name="nf_conntrack_max"/>
 <option name="drop_invalid_all" value="off"/>
 <option value="on" name="drop_invalid_syn_fin"/>
+<option name="implicit_filter_action" value="DROP"/>
 </options>
 
 <zone if="ens18" description="" name="lan"/>

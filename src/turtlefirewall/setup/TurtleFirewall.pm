@@ -2440,11 +2440,18 @@ sub getIptablesRules {
 	}
 
 	# Implicit Deny
-	for my $chain (('INPUT','OUTPUT','FORWARD')) {
-		my $logprefix = "TFW=$chain(DRO)";
-		$rules .= "-A $chain -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
+	if( !defined($this->{fw}{OPTION}{implicit_filter_action}) || $this->{fw}{OPTION}{implicit_filter_action} ne 'ACCEPT' ) {
+		for my $chain (('INPUT','OUTPUT','FORWARD')) {
+			my $logprefix = "TFW=$chain(DRO)";
+			$rules .= "-A $chain -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
+		}
+		print "DROP any other connections and LOG Action\n";
+	} else {
+		for my $chain (('INPUT','OUTPUT','FORWARD')) {
+			$rules .= "-A $chain -j ACCEPT\n";
+		}
+		print "ACCEPT any other connections\n";
 	}
-	print "DROP any other connections and LOG Action\n";
 
 	return	($rules_raw_conntrackpreroute || $rules_raw_conntrack ? $chains_raw.$rules_raw."COMMIT\n" : "*raw\nCOMMIT\n").
 		($rules_mangle_connmarkpreroute || $rules_mangle_connmark || $rules_mangle_clampmss ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").

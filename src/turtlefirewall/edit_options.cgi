@@ -58,5 +58,9 @@ sub showOption {
 	if( $type eq 'text' ) {
 		$col = &ui_textbox($var, $value);
 	}
+	if( $type eq 'select' ) {
+		my @opts = ( 'DROP', 'ACCEPT' );
+		$col = &ui_select($var, $value, \@opts);
+	}
 	print &ui_columns_row([ "$icons{OPTION}{IMAGE}<b>$name</b>", $col, "$desc<br>Default: <b>$default</b>" ], \@tds);
 }

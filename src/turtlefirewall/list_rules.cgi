@@ -177,7 +177,11 @@ sub showRule {
 		push(@cols, $mover);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $i);
 	}
-	print &ui_columns_row([undef, undef, "$icons{ZONE}{IMAGE}*", "$icons{ZONE}{IMAGE}*", "$icons{SERVICE}{IMAGE}all", "", "", "", "", "", "$icons{DROP_A}{IMAGE}<span style=color:#b64034>DROP</span>", "$icons{LOG_A}{IMAGE}<span style=color:steelblue>ACT</span>", "$icons{DESCRIPTION}{IMAGE}Implicit Deny", undef], \@tds);
+	if( $fw->GetOption("implicit_filter_action") ne 'ACCEPT' ) {
+		print &ui_columns_row([undef, undef, "$icons{ZONE}{IMAGE}*", "$icons{ZONE}{IMAGE}*", "$icons{SERVICE}{IMAGE}all", "", "", "", "", "", "$icons{DROP_A}{IMAGE}<span style=color:#b64034>DROP</span>", "$icons{LOG_A}{IMAGE}<span style=color:steelblue>ACT</span>", "$icons{DESCRIPTION}{IMAGE}Implicit Deny", undef], \@tds);
+	} else {
+		print &ui_columns_row([undef, undef, "$icons{ZONE}{IMAGE}*", "$icons{ZONE}{IMAGE}*", "$icons{SERVICE}{IMAGE}all", "", "", "", "", "", "$icons{ACCEPT_A}{IMAGE}<span style=color:#0d8264>ACCEPT</span>", "", "$icons{DESCRIPTION}{IMAGE}Implicit Allow", undef], \@tds);
+	}
 	print &ui_columns_end();
 	print "<table width=100%><tr>";
 	print '<td>'.&ui_links_row(\@links).'</td>';

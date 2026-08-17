@@ -27,6 +27,12 @@ if [ $? != 0 ]
   sed -i '/^<\/options>$/ i\<option name="nf_conntrack_max" value="262144"\/>' /etc/turtlefirewall/fw.xml
 fi
 
+grep 'name="implicit_filter_action"' /etc/turtlefirewall/fw.xml > /dev/null
+if [ $? != 0 ]
+ then
+  sed -i '/^<\/options>$/ i\<option name="implicit_filter_action" value="DROP"\/>' /etc/turtlefirewall/fw.xml
+fi
+
 sed -i '/name="ip_conntrack_max"/d' /etc/turtlefirewall/fw.xml
 sed -i '/name="drop_unclean"/d' /etc/turtlefirewall/fw.xml
 sed -i '/name="drop_ja3_blacklist"/d' /etc/turtlefirewall/fw.xml
