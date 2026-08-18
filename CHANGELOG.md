@@ -4,7 +4,7 @@
 - Bug : Fix more variable declarations.
 - Bug : Fix formatting order.
 - Bug : Remove custom roundbytes function.
-- Bug : Standardize mover function.
+- Bug : Standardize mover function to use UI standard.
 - Bug : Fix backup.cgi restore upload.
 - Feature : Add Risk Severity info.
 - Feature : Rework clamp_mss_to_pmtu option from global to per interface.
@@ -47,7 +47,7 @@
 - OS : Remove unused iptables_restore_emu.
 - OS : Remove depreciated dkms feature: CLEAN
 - Theme : Webmin 2.600 support.
-- Theme : Update lib to use ui standard.
+- Theme : Update lib to use UI standard.
 
 ## v.2.5 (01-01-2025)
 - Services : Make user defined services permanent.
@@ -87,7 +87,7 @@
 - Logging : Replaced JA3 server with JA4 client.
 - Theme : Rework group item selection.
 - Theme : Split Port and nDPI service column in rule views.
-- Theme : Update edit forms to use ui standard.
+- Theme : Update edit forms to use UI standard.
 - Theme : Standardize Webmin images.
 
 ## v.2.2 (03-06-2023)
@@ -141,7 +141,7 @@
 - New service definitions were added:
   igmp (Internet Group Management Protocol).
   bpalogin (BPALogin).
-  Thanks to Rene Cunningham for this two services.
+  Thanks to Rene Cunningham for these two services.
   openvpn (OpenVPN protocolo, www.openvpn.net).
 - Bugs were fixed.
 
@@ -153,7 +153,7 @@
 
 ## v.1.34 (31-11-2005)
 - Add mangle mark rule attribute for QoS (iproute2).
-- Bugfix on turtlefirewall stop procedure (signaled by Ulf Seltmann).
+- Bugfix on turtlefirewall stop procedure (signalled by Ulf Seltmann).
 
 ## v.1.33 (??-??-2005)
 - Add source and destination option to the NAT rules.
@@ -171,9 +171,9 @@
 
 ## v.1.29 (19-11-2004)
 - Set icmp_echo_ignore_all flag to 0. Turtle Firewall use iptables 
-  rules for drop or allow icmp echo packets. This fix a bug in tfw ping.
+  rules for drop or allow icmp echo packets. This fixes a bug in tfw ping.
 - Disable tcp_ecn flag.
-- In masquerading configuration now you can specify source,destinatio,service,
+- In masquerading configuration now you can specify source, destination, service,
   port and action (masquerade or not masquerade).
 
 ## v.1.28 (15-07-2004)
@@ -206,7 +206,7 @@
 
 ## v.1.23 (18-02-2003)
 - Add proxy, ssh21, dhcp, snmptrap, socks and eDonkey services (Karl Lovink).
-- Fix a bug into log viewer (Fredrik Tuomas).
+- Fix a bug in log viewer (Fredrik Tuomas).
 - Add Configuration Backup/Restore.
 
 ## v.1.22 (02-02-2003)
@@ -214,7 +214,7 @@
 - Change LOG prefix from "TFW DROP" to "TFW".
 - Add --start, --stop and --status options to turtlefirewall main script.
 - Add stop button in the webmin turtlefirewall index page.
-- Translate error messages (english and italian).
+- Translate error messages (English and Italian).
 - Add icmp_all service for all messages (request+reply).
 - Add all icmp messages in the special service "all".
    
@@ -231,22 +231,22 @@
    
 ## v.1.19 (26-11-2002)
 - Fix bug in Zone deletion.
-- Fix a bug using aliased interfaces (signaled by Torsten)
+- Fix a bug using aliased interfaces (signalled by Torsten)
 - Add German translation (Jimmy Collins)
 - Add mysql and kazaa services (Jimmy Collins)
 - Add pptp (vpn) and rdp services (Joe MacDonald)
 - Add PC-Anyware service (Chris Carter)
-- Change setup script for Slackware Linux distribution (A.Frigido, Patrik)
+- Change setup script for Slackware Linux distribution (A Frigido, Patrik)
 
 ## v.1.18 (13-11-2002)
 - Add Firewall Configuration Options.
 - Now you can change firewall rules order (more readable).
-- Add fwuserdefservices.xml file for userdefined services. With this file you can write your own
+- Add fwuserdefservices.xml file for user defined services. With this file you can write your own
   services filter without changing official fwservices.xml file.
   The structure of this new file is identical of fwservices.xml file structure.
   If you write a service with a name used by fwservices.xml, this new service definition overwrite
   the original service definition so, if you want, you can rewrite all services.
-  IMPORTANT: I invite all to send me your userdefined service filter definitions, so I can add them into
+  IMPORTANT: I invite all to send me your user defined service filter definitions, so I can add them into
   the predefined services list (fwservices.xml) for all Turtle Firewall users.
   
 ## v.1.17 (16-10-2002)
@@ -265,8 +265,8 @@
 - Fix "DROP INVALID unclean" bug.
 
 ## v.1.14 (10-09-2002)
-- The configurable options contains now the option to select the logfile (Karl Lovink)
-- The dutch language has been added (Karl Lovink).
+- The configurable options now contain the option to select the logfile (Karl Lovink)
+- The Dutch language has been added (Karl Lovink).
 
 ## v.1.13 (03-09-2002)
 - Add NAT from a zone interface to a real host (etc. modem interface ip to my pc host).
@@ -281,7 +281,7 @@
 
 ## v.1.11 (08-07-2002)
 - Setup procedure into webmin module, now Turtle Firewall installation is very easy.
-- Removed chkconfig command for setup, it isn't availabe in all GNU/Linux distributions.
+- Removed chkconfig command for setup, it isn't available in all GNU/Linux distributions.
 - Fix bug in "Create Nat" web interface.
 - Other minor changes.
 
@@ -293,25 +293,25 @@
 ## v.1.00 (20-06-2002)
 - Change SystemV service start/stop order from 00/99 to 08/92.
 - Change TurtleFirewall package file name.
-- Check if XML::Parser perl module is installed.
+- Check if XML::Parser Perl module is installed.
 - Add Telnet service.
 
 ## v.0.99 (14-06-2002)
 - Fix turtlefirewall privileges bug.
 - Use iptables from PATH (iptables directory need to be in PATH env. var.)
-- PreLoad modules for ftp connections and NAT.
+- Preload modules for ftp connections and NAT.
 - Add CVS, NNTP services.
  
 ## v.0.98 (23-05-2002)
 - Do you need port-based natting? Here it is... (Giampaolo Tomassoni)
 - Fixed the I-Wanna-Reply-To-Pings-But-It-Doesn't bug: when
-  the fw accepts pings on a <somewere> => FIREWALL base,
+  the fw accepts pings on a <somewhere> => FIREWALL base,
   don't turn the /proc/sys/net/ipv4/icmp_echo_ignore_all
   kernel flag on... (Giampaolo Tomassoni)
-- Applied few ahestetic make-ups (Giampaolo Tomassoni)
+- Applied a few aesthetic make-ups (Giampaolo Tomassoni)
 
 ## v.0.97 (17-05-2002)
-- Add franch webmin language file.
+- Add French webmin language file.
 - Fix bugs.
 
 ## v.0.96 (17-04-2002)
