@@ -2063,11 +2063,16 @@ sub getIptablesRules {
 	$this->{log_limit_burst} = $log_limit_burst;
 	print "log_limit_burst: $log_limit_burst\n";
 
+	my $implicit_filter_action = 'DROP';
+	if( defined($this->{fw}{OPTION}{implicit_filter_action}) && $this->{fw}{OPTION}{implicit_filter_action} =~ /DROP|ACCEPT/ ) {
+		$implicit_filter_action = $this->{fw}{OPTION}{implicit_filter_action};
+	}
+
 	# Chains for filter table
 	$chains .= "*filter\n".
-		":FORWARD DROP [0:0]\n".
-		":INPUT DROP [0:0]\n".
-		":OUTPUT DROP [0:0]\n";
+		":FORWARD $implicit_filter_action [0:0]\n".
+		":INPUT $implicit_filter_action [0:0]\n".
+		":OUTPUT $implicit_filter_action [0:0]\n";
 
 	# Chains for nat table
 	$chains_nat .= "*nat\n".
@@ -2427,29 +2432,29 @@ sub getIptablesRules {
 			for( my $j=0; $j<=$#zone; $j++ ) {
 				my $z2 = $zone[$j];
 				if( $z1 ne 'FIREWALL' || $z2 ne 'FIREWALL' ) {
-					my $logprefix = "TFW=$z1-$z2";
-					# iptables --log-prefix max = 29
-					if( length($logprefix) > 23 ) { $logprefix = substr( $logprefix, 0, 23 ); }
-					$logprefix = "$logprefix(DRO)";
-					#comment( "# Chain closure $z1 -> $z2" );
-					$rules .= "-A $z1-$z2 -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
-					$rules .= "-A $z1-$z2 -j DROP\n";
+					# Implicit Deny : Zone to Zone
+					if ( $implicit_filter_action eq 'DROP' ) {
+						my $logprefix = "TFW=$z1-$z2";
+						# iptables --log-prefix max = 29
+						if( length($logprefix) > 23 ) { $logprefix = substr( $logprefix, 0, 23 ); }
+						$logprefix = "$logprefix(DRO)";
+						#comment( "# Chain closure $z1 -> $z2" );
+						$rules .= "-A $z1-$z2 -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
+						$rules .= "-A $z1-$z2 -j DROP\n";
+					}
 				}
 			}
 		}
 	}
 
-	# Implicit Deny
-	if( !defined($this->{fw}{OPTION}{implicit_filter_action}) || $this->{fw}{OPTION}{implicit_filter_action} ne 'ACCEPT' ) {
+	# Implicit Deny : Other
+	if ( $implicit_filter_action eq 'DROP' ) {
 		for my $chain (('INPUT','OUTPUT','FORWARD')) {
 			my $logprefix = "TFW=$chain(DRO)";
 			$rules .= "-A $chain -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
 		}
 		print "DROP any other connections and LOG Action\n";
 	} else {
-		for my $chain (('INPUT','OUTPUT','FORWARD')) {
-			$rules .= "-A $chain -j ACCEPT\n";
-		}
 		print "ACCEPT any other connections\n";
 	}
 
