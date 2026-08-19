@@ -108,7 +108,7 @@ make all install
 
 Download source.
 ```
-VERSION="3.30"
+VERSION="3.31"
 cd /usr/src
 wget https://codeberg.org/jengelh/xtables-addons/releases/download/v${VERSION}/xtables-addons-${VERSION}.tar.zst
 tar --zstd -xvf xtables-addons-${VERSION}.tar.zst
