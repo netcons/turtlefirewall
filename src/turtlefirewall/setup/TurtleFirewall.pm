@@ -2433,7 +2433,7 @@ sub getIptablesRules {
 				my $z2 = $zone[$j];
 				if( $z1 ne 'FIREWALL' || $z2 ne 'FIREWALL' ) {
 					# Implicit Deny : Zone to Zone
-					if ( $implicit_filter_action eq 'DROP' ) {
+					if( $implicit_filter_action eq 'DROP' ) {
 						my $logprefix = "TFW=$z1-$z2";
 						# iptables --log-prefix max = 29
 						if( length($logprefix) > 23 ) { $logprefix = substr( $logprefix, 0, 23 ); }
@@ -2448,7 +2448,7 @@ sub getIptablesRules {
 	}
 
 	# Implicit Deny : Other
-	if ( $implicit_filter_action eq 'DROP' ) {
+	if( $implicit_filter_action eq 'DROP' ) {
 		for my $chain (('INPUT','OUTPUT','FORWARD')) {
 			my $logprefix = "TFW=$chain(DRO)";
 			$rules .= "-A $chain -m limit --limit $log_limit/hour --limit-burst $log_limit_burst -j LOG --log-prefix \"$logprefix \"\n";
