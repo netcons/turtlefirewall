@@ -94,6 +94,7 @@
 	<ndpiprotocol name="dingtalk" category="instant-messaging" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="directv" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="discord" category="instant-messaging" dpi="1"> </ndpiprotocol>
+	<ndpiprotocol name="discordcall" category="telephony" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="disneyplus" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="dnp3" category="infrastructure" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="dns" category="networking" dpi="1"> </ndpiprotocol>
@@ -242,6 +243,7 @@
 	<ndpiprotocol name="melsec" category="iot-scada" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="memcached" category="infrastructure" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="merakicloud" category="other" dpi="1"> </ndpiprotocol>
+	<ndpiprotocol name="meshtastic" category="tunnelling" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="messagepack" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="mgcp" category="telephony" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="microsoft" category="other" dpi="0"> </ndpiprotocol>
@@ -268,11 +270,13 @@
 	<ndpiprotocol name="nat-pmp" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="nats" category="instant-messaging" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="naver" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="nebula" category="tunnelling" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="nestlogsink" category="other" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="netbios" category="networking" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="neteasegames" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="netflix" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="netflow" category="networking" dpi="1"> </ndpiprotocol>
+	<ndpiprotocol name="netmotion" category="tunnelling" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="nexon" category="gaming" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="nfs" category="storage-backup" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="nintendo" category="gaming" dpi="1"> </ndpiprotocol>
@@ -313,7 +317,16 @@
 	<ndpiprotocol name="privateinternetaccess" category="tunnelling" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="profinet_io" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="protobuf" category="networking" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="proton" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="protoncalendar" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="protondocs" category="storage-backup" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="protondrive" category="storage-backup" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="protonlumo" category="other" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="protonmail" category="email" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="protonmeet" category="collaboration" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="protonpass" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="protonvpn" category="tunnelling" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="protonwallet" category="crypto-currency" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="psiphon" category="tunnelling" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="ptpv2" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="qq" category="instant-messaging" dpi="1"> </ndpiprotocol>
@@ -469,6 +482,7 @@
 	<ndpiprotocol name="yandexmarket" category="shopping" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="yandexmetrika" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="yandexmusic" category="video-audio" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="yggdrasil" category="tunnelling" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="yojimbo" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="youtube" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="youtubekids" category="video-audio" dpi="0"> </ndpiprotocol>
