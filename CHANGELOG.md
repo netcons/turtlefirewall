@@ -3,7 +3,7 @@
 ## v.2.8 (Not Yet Released)
 - Bug : Fix more variable declarations.
 - Bug : Fix formatting order.
-- Bug : Remove custom roundbytes function.
+- Bug : Remove custom roundbytes function and use UI standard.
 - Bug : Standardize mover function to use UI standard.
 - Bug : Fix backup.cgi restore upload.
 - Feature : Add Risk Severity info.
