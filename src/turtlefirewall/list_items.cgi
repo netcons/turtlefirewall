@@ -95,7 +95,7 @@ sub showAddressList {
 		push(@cols, $blacklistcount);
 		push(@cols, "$icons{OPTION}{IMAGE}$blacklists{$b}{TYPE}" );
 		push(@cols, "$icons{DESCRIPTION}{IMAGE}$text{$blacklists{$b}{DESCIDX}}");
-		my $href = &ui_link("edit_options.cgi", "".($fw->GetOption("drop_$b") eq 'on' ? "1$icons{REF}{IMAGE}" : '&nbsp;')."");
+		my $href = &ui_link("edit_options.cgi", "".($fw->GetOption("drop_$b") eq 'on' ? "1$icons{REF}{IMAGE}" : "0$icons{REF}{IMAGE}")."");
 		push(@cols, $href );
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
         }
@@ -112,7 +112,7 @@ sub showAddressList {
 		push(@cols, $listcount);
 		push(@cols, "$icons{OPTION}{IMAGE}$addresslist{'TYPE'}" );
 		push(@cols, "".($addresslist{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$addresslist{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
@@ -156,7 +156,7 @@ sub showZone {
 		push(@cols, "".($zone{'IF'} ne '' ? "$icons{INTERFACE}{IMAGE}$zone{'IF'}" : '&nbsp;')."" );
 		push(@cols, "".($zone{'CLAMPMSS'} eq 'YES' ? "$icons{CLAMPMSS_A}{IMAGE}<span style=color:#0d8264>$text{'YES'}</span>" : '&nbsp;')."" );
 		push(@cols, "".($zone{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$zone{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
@@ -199,7 +199,7 @@ sub showHost {
 	        push(@cols, "".($host{'MAC'} ne '' ? "$icons{ADDRESS}{IMAGE}$host{'MAC'}" : '&nbsp;')."" );
 	        push(@cols, "$icons{ZONE}{IMAGE}$host{'ZONE'}" );
 	        push(@cols, "".($host{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$host{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
@@ -243,7 +243,7 @@ sub showNet {
 	        push(@cols, "$icons{NETMASK}{IMAGE}$net{'NETMASK'}" );
 	        push(@cols, "$icons{ZONE}{IMAGE}$net{'ZONE'}" );
 	        push(@cols, "".($net{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$net{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
@@ -284,7 +284,7 @@ sub showGeoip {
 		push(@cols, "$icons{COUNTRYCODE}{IMAGE}$geoip{'IP'} - $g{'DESCRIPTION'}" );
 	        push(@cols, "$icons{ZONE}{IMAGE}$geoip{'ZONE'}" );
 		push(@cols, "".($geoip{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$geoip{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
@@ -324,7 +324,7 @@ sub showIPSet {
 		push(@cols, "$icons{ADDRESS}{IMAGE}$ipset{'IP'}" );
 	        push(@cols, "$icons{ZONE}{IMAGE}$ipset{'ZONE'}" );
 		push(@cols, "".($ipset{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$ipset{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
@@ -367,7 +367,7 @@ sub showGroup {
 		}
         	push(@cols, $grouplist );
 	        push(@cols, "".($group{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$group{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
@@ -408,7 +408,7 @@ sub showHostNameSet {
 		}
         	push(@cols, $hostnamesetlist );
 	        push(@cols, "".($hostnameset{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$hostnameset{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
@@ -450,7 +450,7 @@ sub showRiskSet {
 		}
 		push(@cols, $risksetlist );
 		push(@cols, "".($riskset{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$riskset{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
@@ -487,7 +487,7 @@ sub showRateLimit {
 		push(@cols, "$icons{RATELIMIT}{IMAGE}$href" );
         	push(@cols, "$icons{RATE}{IMAGE}$ratelimit{'RATE'} <i>Mbps</i>" );
 	        push(@cols, "".($ratelimit{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$ratelimit{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
@@ -530,7 +530,7 @@ sub showTime {
 	        push(@cols, "$icons{TIMESTART}{IMAGE}$time{'TIMESTART'}" );
 	        push(@cols, "$icons{TIMESTOP}{IMAGE}$time{'TIMESTOP'}" );
 	        push(@cols, "".($time{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$time{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
@@ -571,7 +571,7 @@ sub showTimeGroup {
 		}
         	push(@cols, $timegrouplist );
 	        push(@cols, "".($timegroup{'DESCRIPTION'} ne '' ? "$icons{DESCRIPTION}{IMAGE}$timegroup{'DESCRIPTION'}" : '&nbsp;')."" );
-		$href = $count > 0 ? &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}") : '&nbsp;';
+		$href = &ui_link("list_itemreferences.cgi?item=$k", "${count}$icons{REF}{IMAGE}");
 		push(@cols, $href);
 		print &ui_checked_columns_row(\@cols, \@tds, "d", $k);
 	}
