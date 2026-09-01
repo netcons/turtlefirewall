@@ -66,7 +66,16 @@ my @licons = ('images/log.png',
 print &ui_hr();
 
 # $status == 1 if Firewall is ON
-$status = $fw->GetStatus();
+my $status = $fw->GetStatus();
+
+if( $in{enable} ne '' ) {
+	qx{systemctl enable turtlefirewall 2>/dev/null};
+}
+if( $in{disable} ne '' ) {
+	qx{systemctl disable turtlefirewall 2>/dev/null};
+}
+my $bootstatus = qx{systemctl is-enabled turtlefirewall 2>/dev/null};
+$bootstatus =~ s/\n//;
 
 print '<table width=100%><tr>';
 print '<td>';
@@ -78,15 +87,23 @@ if ( ($status && $in{stop} eq '') || $in{start} ne '') {
 }	
 print &ui_form_end();
 print '</td>';
-print '<td style=text-align:right>';
+print '<td>';
 print &ui_form_start("stop.cgi", "post");
 if( ($status && $in{stop} eq '') || $in{start} ne '' ) {
 	print &ui_submit( $text{'index_stop'}, "stop");
 }
 print &ui_form_end();
 print '</td>';
+print '<td style=text-align:right>';
+print &ui_form_start("index.cgi", "post");
+if( $bootstatus eq "enabled" ) {
+	print &ui_submit( $text{'index_disable'}, "disable");
+} else {
+	print &ui_submit( $text{'index_enable'}, "enable");
+}
+print &ui_form_end();
+print '</td>';
 print '</tr></table>';
-
 print &ui_hr();
 
 print &ui_form_start("index.cgi", "post");
