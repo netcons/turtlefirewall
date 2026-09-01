@@ -55,7 +55,7 @@ apt-get -y install libxml-parser-perl libnet-cidr-lite-perl libtext-csv-xs-perl 
 
 RHEL.
 ```
-dnf -y install centos-release-kmods-kernel
+dnf -y install centos-release-kmods-kernel-6.18
 dnf -y upgrade kernel
 reboot
 

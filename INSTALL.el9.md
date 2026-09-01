@@ -5,7 +5,7 @@ Activate Repos.
 dnf config-manager --set-enabled extras-common
 dnf config-manager --set-enabled crb
 dnf -y install epel-release
-dnf -y install centos-release-kmods-kernel
+dnf -y install centos-release-kmods-kernel-6.18
 dnf -y install createrepo wget
 
 wget https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
