@@ -12,7 +12,6 @@
 - Feature : Add service control button.
 - Theme : Rework item reference.
 - Services : Add udp port 4500 to ipsec service.
-- Todo : Translate new features.
 
 ## v.2.7 (11-12-2025)
 - OS : DEB package, remove EOL OS instructions.
