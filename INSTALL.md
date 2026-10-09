@@ -136,7 +136,7 @@ make install
 
 Download source.
 ```
-VERSION="5.1.0"
+VERSION="6.1.0"
 cd /usr/src
 wget https://github.com/vel21ripn/nDPI/archive/master.zip -O nDPI-flow_info-4.zip
 unzip nDPI-flow_info-4.zip

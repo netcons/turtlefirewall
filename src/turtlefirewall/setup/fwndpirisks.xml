@@ -60,5 +60,6 @@
 	<ndpirisk id="56" description="Obfuscated Traffic" severity="High"> </ndpirisk>
 	<ndpirisk id="57" description="(Possible) Slow DoS" severity="High"> </ndpirisk>
 	<ndpirisk id="58" description="Non PQC Compliant Flow" severity="Medium"> </ndpirisk>
+	<ndpirisk id="59" description="Possible AI Inference Traffic" severity="Low"> </ndpirisk>
 
 </ndpirisks>

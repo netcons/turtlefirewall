@@ -61,6 +61,7 @@
 	<ndpiprotocol name="cassandra" category="database" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="ceph" category="storage-backup" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="capwap" category="networking" dpi="1"> </ndpiprotocol>
+	<ndpiprotocol name="characterai" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="checkmk" category="infrastructure" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="cip" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="ciscoskinny" category="telephony" dpi="1"> </ndpiprotocol>
@@ -105,6 +106,7 @@
 	<ndpiprotocol name="drda" category="infrastructure" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="dropbox" category="storage-backup" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="dtls" category="browsing" dpi="1"> </ndpiprotocol>
+	<ndpiprotocol name="duckduckgo" category="browsing" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="easyweather" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="eaq" category="telephony" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="ebay" category="shopping" dpi="0"> </ndpiprotocol>
@@ -130,6 +132,7 @@
 	<ndpiprotocol name="fix" category="financial" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="flute" category="storage-backup" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="forticlient" category="tunnelling" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="freefire" category="gaming" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="ftp_control" category="storage-backup" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="ftp_data" category="storage-backup" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="ftps" category="storage-backup" dpi="0"> </ndpiprotocol>
@@ -220,6 +223,7 @@
 	<ndpiprotocol name="kcp" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="kerberos" category="authentication" dpi="1"> </ndpiprotocol>
 	<ndpiprotocol name="kick" category="video-audio" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="kik" category="instant-messaging" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="kismet" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="knxnet_ip" category="iot-scada" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="lagofast" category="tunnelling" dpi="0"> </ndpiprotocol>
@@ -304,6 +308,7 @@
 	<ndpiprotocol name="paramountplus" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="pastebin" category="other" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="pathofexile" category="gaming" dpi="0"> </ndpiprotocol>
+	<ndpiprotocol name="peacock" category="video-audio" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="pfcp" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="pgm" category="networking" dpi="0"> </ndpiprotocol>
 	<ndpiprotocol name="pinterest" category="social-media" dpi="0"> </ndpiprotocol>

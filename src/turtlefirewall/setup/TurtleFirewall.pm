@@ -2473,6 +2473,7 @@ sub applyNat {
 
 	my $rules = '';
 
+	# ACTIVE attribute is only set when it is NO
 	if( $nat{ACTIVE} ) {
 		return '';
 	}
@@ -2655,6 +2656,7 @@ sub applyMasquerade {
 
 	my $rules = '';
 
+	# ACTIVE attribute is only set when it is NO
 	if( $masq{ACTIVE} ) {
 		return '';
 	}
@@ -2857,6 +2859,7 @@ sub applyRedirect {
 
 	my $rules = '';	
 
+	# ACTIVE attribute is only set when it is NO
 	if( $redirect{ACTIVE} ) {
 		return '';
 	}
@@ -3047,6 +3050,7 @@ sub applyRule {
 	my $preroute = shift; 
 	my %rule = @_;
 
+	# ACTIVE attribute is only set when it is NO
 	if( $rule{ACTIVE} ) {
 		return '';
 	}

@@ -1,6 +1,7 @@
 # ChangeLog
 
-## v.2.8 (Not Yet Released)
+## v.2.8 (09-10-2026)
+- Feature : nDPI 6.1 support.
 - Bug : Fix more variable declarations.
 - Bug : Fix formatting order.
 - Bug : Remove custom roundbytes function and use UI standard.
