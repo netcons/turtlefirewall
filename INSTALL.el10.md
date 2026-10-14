@@ -14,7 +14,7 @@ sh setup-repos.sh -f
 
 mkdir -p /var/tmp/tfw
 cd /var/tmp/tfw
-curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
+curl -s https://api.github.com/repos/netcons/turtlefirewall/releases/latest \
 | grep "browser_download_url.*.el10.*rpm" \
 | cut -d : -f 2,3 \
 | tr -d \" \
@@ -22,7 +22,7 @@ curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
 createrepo ./
 
 cd /etc/pki/rpm-gpg
-curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
+curl -s https://api.github.com/repos/netcons/turtlefirewall/releases/latest \
 | grep "browser_download_url.*RPM-GPG-KEY-tfw" \
 | cut -d : -f 2,3 \
 | tr -d \" \

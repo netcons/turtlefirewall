@@ -61,7 +61,7 @@ reboot
 
 dnf -y install kernel-devel kernel-headers
 dnf -y install iptables-devel libpcap-devel json-c-devel libgcrypt-devel perl-File-Path
-dnf -y install autoconf automake libtool
+dnf -y install autoconf automake libtool unzip
 dnf -y install dkms
 systemctl enable dkms --now
 ```

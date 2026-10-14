@@ -13,7 +13,7 @@ sh setup-repos.sh -f
 
 mkdir -p /var/tmp/tfw
 cd /var/tmp/tfw
-curl -s https://api.github.com/repos/netcons/turtlefirewall/releases \
+curl -s https://api.github.com/repos/netcons/turtlefirewall/releases/latest \
 | grep "browser_download_url.*.el9.*rpm" \
 | cut -d : -f 2,3 \
 | tr -d \" \
