@@ -6,7 +6,7 @@ dnf config-manager --set-enabled extras-common
 dnf config-manager --set-enabled crb
 dnf config-manager --save --setopt=optional_metadata_types=filelists
 dnf -y install epel-release
-dnf -y install centos-release-kmods-kernel-6.18
+dnf -y install centos-release-hyperscale-kernel
 dnf -y install createrepo wget
 
 wget https://raw.githubusercontent.com/webmin/webmin/master/setup-repos.sh
@@ -40,6 +40,7 @@ Install Turtle Firewall.
 ```
 dnf -y upgrade kernel
 dnf -y install kernel-devel kernel-headers
+dnf -y install kernel-modules-extra
 reboot
 
 dnf -y install https://github.com/harelba/q/releases/download/v3.1.6/q-text-as-data-3.1.6.x86_64.rpm
