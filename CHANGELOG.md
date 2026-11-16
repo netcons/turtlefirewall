@@ -1,12 +1,13 @@
 # ChangeLog
 
 ## v.2.8 (09-10-2026)
-- Feature : nDPI 6.1 support.
+- Bug : Fix rule save dpi category selection.
 - Bug : Fix more variable declarations.
 - Bug : Fix formatting order.
 - Bug : Remove custom roundbytes function and use UI standard.
 - Bug : Standardize mover function to use UI standard.
 - Bug : Fix backup.cgi restore upload.
+- Feature : nDPI 6.1 support.
 - Feature : Add Risk Severity info.
 - Feature : Rework clamp_mss_to_pmtu option from global to per interface.
 - Feature : Add implicit filter action option.

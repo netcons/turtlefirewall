@@ -29,6 +29,8 @@ if( $time eq 'always' ) { $time = ''; }
 my $mark = $in{'mark'};
 my $active = $in{'active'};
 
+if( ($hostnameset ne '' || $riskset ne '') && ($ndpi eq '' && $category eq '') ) { $ndpi = 'all'; }
+
 if( $in{'delete'} ) {
 	# delete rule
 	if( $in{'d'} ) {

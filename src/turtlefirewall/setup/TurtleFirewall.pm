@@ -526,7 +526,7 @@ sub MoveRedirect {
 sub AddRule {
 	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $ratelimit, $port, $time, $target, $active, $log, $description ) = @_;
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
-	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; } elsif( $hostnameset ne '' || $riskset ne '' ) { $attr{NDPI} = 'all'; }
+	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; }
 	if( $category ne '' ) { $attr{CATEGORY} = $category; }
 	if( $hostnameset ne '' ) { $attr{HOSTNAMESET} = $hostnameset; }
 	if( $riskset ne '' ) { $attr{RISKSET} = $riskset; }
@@ -562,7 +562,7 @@ sub MoveRule {
 sub AddConnmarkPreroute {
 	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active ) = @_;
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
-	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; } elsif( $hostnameset ne '' || $riskset ne '' ) { $attr{NDPI} = 'all'; }
+	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; }
 	if( $category ne '' ) { $attr{CATEGORY} = $category; }
 	if( $hostnameset ne '' ) { $attr{HOSTNAMESET} = $hostnameset; }
 	if( $riskset ne '' ) { $attr{RISKSET} = $riskset; }
@@ -595,7 +595,7 @@ sub MoveConnmarkPreroute {
 sub AddConnmark {
 	my ($this, $idx, $src, $dst, $service, $ndpi, $category, $hostnameset, $riskset, $port, $time, $mark, $active ) = @_;
 	my %attr = ( 'SRC'=>$src, 'DST'=>$dst, 'SERVICE'=>$service);
-	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; } elsif( $hostnameset ne '' || $riskset ne '' ) { $attr{NDPI} = 'all'; }
+	if( $ndpi ne '' ) { $attr{NDPI} = $ndpi; }
 	if( $category ne '' ) { $attr{CATEGORY} = $category; }
 	if( $hostnameset ne '' ) { $attr{HOSTNAMESET} = $hostnameset; }
 	if( $riskset ne '' ) { $attr{RISKSET} = $riskset; }

@@ -33,6 +33,8 @@ my $active = $in{'active'};
 my $log = $in{'log'};
 my $description = $in{'description'};
 
+if( ($hostnameset ne '' || $riskset ne '') && ($ndpi eq '' && $category eq '') ) { $ndpi = 'all'; }
+
 if( $in{'delete'} ) {
 	# delete rule
 	if( $in{'d'} ) {
