@@ -1834,6 +1834,9 @@ sub startFirewall {
 	print "ndpi_module: on\n";	
 	$this->command('modprobe xt_ndpi ndpi_enable_flow=1 ndpi_flow_opt=cFR', '/dev/null');
 
+	# Enable Conntrack Events for nDPI.
+	$this->command( 'echo "1"', '/proc/sys/net/netfilter/nf_conntrack_events' );
+
 	# Enable IP forwarding
 	$this->command('echo "1"', '/proc/sys/net/ipv4/ip_forward');
 
@@ -2043,6 +2046,8 @@ sub getIptablesRules {
 	my $chains_raw = '';
 	my $rules_raw = '';
 
+	my $rules_raw_ctevents = '';
+
 	my $chains_raw_conntrackpreroute = '';
 	my $rules_raw_conntrackpreroute = ''; 
 
@@ -2243,6 +2248,12 @@ sub getIptablesRules {
 	$rules .= "-A ICMP-ACC -p icmp --icmp-type time-exceeded -j ACCEPT\n";
 	$rules .= "-A ICMP-ACC -p icmp --icmp-type parameter-problem -j ACCEPT\n";
 	$rules .= "-A ICMP-ACC -j RETURN\n";
+
+	# Application of CTEVENTs
+	# nDPI needs to receive conntrack events regarding the creation and destroying of connections.
+	$rules_raw_ctevents .= "-A PREROUTING -j CT --ctevents new,destroy\n";
+	$rules_raw_ctevents .= "-A OUTPUT -j CT --ctevents new,destroy\n";
+	$rules_raw .= $rules_raw_ctevents;
 
 	# Application of CLAMPMSSPOSTROUTEs
 	my @zone = $this->GetZoneList();
@@ -2458,7 +2469,7 @@ sub getIptablesRules {
 		print "ACCEPT any other connections\n";
 	}
 
-	return	($rules_raw_conntrackpreroute || $rules_raw_conntrack ? $chains_raw.$rules_raw."COMMIT\n" : "*raw\nCOMMIT\n").
+	return	($rules_raw_conntrackpreroute || $rules_raw_conntrack || $rules_raw_ctevents ? $chains_raw.$rules_raw."COMMIT\n" : "*raw\nCOMMIT\n").
 		($rules_mangle_connmarkpreroute || $rules_mangle_connmark || $rules_mangle_clampmss ? $chains_mangle.$rules_mangle."COMMIT\n" : "*mangle\nCOMMIT\n").
 		$chains.$rules."COMMIT\n".$chains_nat.$rules_nat."COMMIT\n";
 }
