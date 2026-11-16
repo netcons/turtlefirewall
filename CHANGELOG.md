@@ -12,6 +12,8 @@
 - Feature : Rework clamp_mss_to_pmtu option from global to per interface.
 - Feature : Add implicit filter action option.
 - Feature : Add service control button.
+- Feature : Rework nDPI clevel rule apply.
+- Feature : Extend nDPI support for Conntrack Events.
 - Theme : Rework item reference.
 - Services : Add udp port 4500 to ipsec service.
 
