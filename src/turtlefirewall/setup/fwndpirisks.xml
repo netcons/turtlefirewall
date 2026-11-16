@@ -51,7 +51,7 @@
 	<ndpirisk id="47" description="HTTP Obsolete Server" severity="Medium"> </ndpirisk>
 	<ndpirisk id="48" description="Periodic Flow" severity="Low"> </ndpirisk>
 	<ndpirisk id="49" description="Minor Issues" severity="Low"> </ndpirisk>
-	<ndpirisk id="50" description="TCP Connection Issues" severity="Medium"> </ndpirisk>
+	<ndpirisk id="50" description="TCP Connection Issues" severity="Low"> </ndpirisk>
 	<ndpirisk id="51" description="Unresolved Hostname" severity="Medium"> </ndpirisk>
 	<ndpirisk id="52" description="ALPN/SNI Mismatch" severity="Medium"> </ndpirisk>
 	<ndpirisk id="53" description="Client Contacted A Malware Host" severity="Severe"> </ndpirisk>
