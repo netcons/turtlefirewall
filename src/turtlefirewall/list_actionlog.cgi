@@ -175,13 +175,13 @@ sub showLog {
 		push(@cols, "<i>".($action eq '' ? "&nbsp;" : "$action")."</i>");
 		push(@cols, "<i>".($in eq '' ? "&nbsp;" : "$in")."</i>");
 		push(@cols, "<i>".($out eq '' ? "&nbsp;" : "$out")."</i>");
-		push(@cols, "<i>".($mac eq '' ? "&nbsp;" : "$mac")."</i>");
 		push(@cols, "<i>".($src eq '' ? "&nbsp;" : "$src")."</i>");
 		push(@cols, "<i>".($dst eq '' ? "&nbsp;" : "$dst")."</i>");
 		push(@cols, "<i>".($proto eq '' ? "&nbsp;" : "$proto")."</i>");
 		push(@cols, "<i>".($spt eq '' ? "&nbsp;" : "$spt")."</i>");
 		push(@cols, "<i>".($dpt eq '' ? "&nbsp;" : "$dpt")."</i>");
-	        print &ui_columns_row(\@cols, \@tds);
+		push(@cols, "<i>".($mac eq '' ? "&nbsp;" : "$mac")."</i>");
+		print &ui_columns_row(\@cols, \@tds);
 	}
 	print &ui_columns_end();
 

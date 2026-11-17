@@ -7,6 +7,7 @@
 - Bug : Remove custom roundbytes function and use UI standard.
 - Bug : Standardize mover function to use UI standard.
 - Bug : Fix backup.cgi restore upload.
+- Bug : Fix list action log item order.
 - Feature : nDPI 6.1 support.
 - Feature : Add Risk Severity info.
 - Feature : Rework clamp_mss_to_pmtu option from global to per interface.
