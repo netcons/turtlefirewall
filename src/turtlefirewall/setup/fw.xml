@@ -30,8 +30,8 @@
 <masquerade src="*" service="all" active="NO" dst="lan"/>
 
 <conntrackpreroute service="tcp" src="lan" dst="*" port="21" helper="ftp"/>
-<conntrackpreroute port="5060" helper="sip" dst="*" service="tcp" src="lan"/>
-<conntrackpreroute dst="*" src="lan" service="udp" helper="sip" port="5060"/>
+<conntrackpreroute port="5060" helper="sip" dst="*" service="tcp" src="lan" active="NO"/>
+<conntrackpreroute dst="*" src="lan" service="udp" helper="sip" port="5060" active="NO"/>
 <conntrackpreroute helper="pptp" port="1723" service="tcp" dst="*" src="lan"/>
 
 <rule target="ACCEPT" description="Allow Firewall to anyware" dst="*" service="all" src="FIREWALL"/>
