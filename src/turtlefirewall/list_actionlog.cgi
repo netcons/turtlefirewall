@@ -168,7 +168,7 @@ sub showLog {
 	$hdpt .= "</select></b>";
 	push(@head, $hdpt );
 
-	my @tds = ( "style=white-space:nowrap", "style=text-align:center", "style=text-align:center", "", "", "", "style=text-align:center", "", "", "" );
+	my @tds = ( "style=white-space:nowrap", "", "", "", "", "", "", "", "", "" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
 	foreach my $l (@buffer) {
