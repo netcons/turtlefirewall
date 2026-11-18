@@ -11,6 +11,7 @@
 require './turtlefirewall-lib.pl';
 &ReadParse();
 use Time::Piece;
+use File::ReadBackwards;
 
 &ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_flowlog'}", $text{'title'}, "" );
 
@@ -26,6 +27,7 @@ sub showLog {
 	my $pag = $in{pag};
 	if( $pag == 0 ) { $pag = 1; }
 	my $count = 0;
+	my $limit = 0;
 	my $pagelen = 20;
 	my @buffer = ();
 
@@ -49,8 +51,8 @@ sub showLog {
 	#my %tlsfp_list = ('*' => undef);
 	#my %risk_list = ('*' => undef);
 
-	open( LOG, "<", $FlowLogFile );
-	while (my $l = <LOG>) {
+	tie *LOG, 'File::ReadBackwards', $FlowLogFile;
+	while ($limit < 10240 && (my $l = <LOG>)) {
 
 			my $stime = '';
 			my $etime = '';
@@ -147,8 +149,9 @@ sub showLog {
 						       	$ja4c, $tlsfp, $risk];
 				}
 			}
+			$limit++;
 	}
-	close( LOG );
+	untie *LOG;
 
 	# Pages index
 	my $urlparam = 'stime='.$in{stime}.'&etime='.$in{etime}.'&l3proto='.$in{l3proto}.'&l4proto='.$in{l4proto}.

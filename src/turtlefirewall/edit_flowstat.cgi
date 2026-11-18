@@ -9,7 +9,6 @@
 #======================================================================
 
 require './turtlefirewall-lib.pl';
-use Tie::File;
 
 &ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_flowstat'}", $text{'title'}, "" );
 

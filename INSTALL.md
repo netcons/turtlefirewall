@@ -41,13 +41,13 @@ Install RHEL.
 ```
 dnf -y install https://github.com/harelba/q/releases/download/v3.1.6/q-text-as-data-3.1.6.x86_64.rpm
 
-dnf -y install perl-XML-Parser perl-Net-CIDR-Lite perl-Text-CSV_XS iptables-nft ipset conntrack-tools rsyslog dos2unix gawk crontabs
+dnf -y install perl-XML-Parser perl-File-ReadBackwards perl-Net-CIDR-Lite perl-Text-CSV_XS iptables-nft ipset conntrack-tools rsyslog dos2unix gawk crontabs
 /usr/libexec/webmin/install-module.pl /tmp/turtlefirewall-master/build/turtlefirewall-*.wbm.gz
 ```
 
 Install Debian.
 ```
-apt-get -y install libxml-parser-perl libnet-cidr-lite-perl libtext-csv-xs-perl iptables ipset conntrack rsyslog dos2unix gawk cron-daemon-common python3-q-text-as-data
+apt-get -y install libxml-parser-perl libfile-readbackwards-perl libnet-cidr-lite-perl libtext-csv-xs-perl iptables ipset conntrack rsyslog dos2unix gawk cron-daemon-common python3-q-text-as-data
 /usr/share/webmin/install-module.pl /tmp/turtlefirewall-master/build/turtlefirewall-*.wbm.gz
 ```
 

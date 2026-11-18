@@ -10,6 +10,7 @@
 
 require './turtlefirewall-lib.pl';
 &ReadParse();
+use File::ReadBackwards;
 
 &ui_print_header( "$icons{ICON}{IMAGE}$text{'index_icon_log'}", $text{'title'}, "" );
 
@@ -24,6 +25,7 @@ sub showLog {
 	my $pag = $in{pag};
 	if( $pag == 0 ) { $pag = 1; }
 	my $count = 0;
+	my $limit = 0;
 	my $pagelen = 20;
 	my @buffer = ();
 
@@ -37,8 +39,8 @@ sub showLog {
 	my %spt_list = ('*' => undef);
 	my %dpt_list = ('*' => undef);
 
-	open( LOG, "<", $SysLogFile );
-	while (my $l = <LOG>) {
+	tie *LOG, 'File::ReadBackwards', $SysLogFile;
+	while ($limit < 10240 && (my $l = <LOG>)) {
 		if( $l =~ /TFW=/ ) {
 
 			my $time = '';
@@ -90,9 +92,10 @@ sub showLog {
 					push @buffer, [$time, $action, $in, $out, $mac, $src, $dst, $proto, $spt, $dpt];
 				}
 			}
+			$limit++;
 		}
 	}
-	close( LOG );
+	untie *LOG;
 
 	# Pages index
 	my $urlparam = 'action='.$in{action}.'&in='.$in{in}.'&out='.$in{out}.'&mac='.$in{mac}.
@@ -135,6 +138,11 @@ sub showLog {
 	$hout .= "</select></b>";
 	push(@head, $hout );
 
+	my $hmac = "<b>MAC<br><select name='mac' size='1'>";
+	foreach $opz (sort keys %mac_list) {$hmac .= "<option".($in{mac} eq $opz ? ' SELECTED' : '').">$opz</option>";}
+	$hmac .= "</select></b>";
+	push(@head, $hmac );
+
 	my $hsrc = "<b>SRC<br><select name='src' size='1'>";
 	foreach $opz (sort keys %src_list) {$hsrc .= "<option".($in{src} eq $opz ? ' SELECTED' : '').">$opz</option>";}
 	$hsrc .= "</select></b>";
@@ -160,11 +168,6 @@ sub showLog {
 	$hdpt .= "</select></b>";
 	push(@head, $hdpt );
 
-	my $hmac = "<b>MAC<br><select name='mac' size='1'>";
-	foreach $opz (sort keys %mac_list) {$hmac .= "<option".($in{mac} eq $opz ? ' SELECTED' : '').">$opz</option>";}
-	$hmac .= "</select></b>";
-	push(@head, $hmac );
-
 	my @tds = ( "style=white-space:nowrap", "style=text-align:center", "style=text-align:center", "", "", "", "style=text-align:center", "", "", "" );
 	print &ui_columns_start(\@head, 100, 0, \@tds);
 
@@ -175,12 +178,12 @@ sub showLog {
 		push(@cols, "<i>".($action eq '' ? "&nbsp;" : "$action")."</i>");
 		push(@cols, "<i>".($in eq '' ? "&nbsp;" : "$in")."</i>");
 		push(@cols, "<i>".($out eq '' ? "&nbsp;" : "$out")."</i>");
+		push(@cols, "<i>".($mac eq '' ? "&nbsp;" : "$mac")."</i>");
 		push(@cols, "<i>".($src eq '' ? "&nbsp;" : "$src")."</i>");
 		push(@cols, "<i>".($dst eq '' ? "&nbsp;" : "$dst")."</i>");
 		push(@cols, "<i>".($proto eq '' ? "&nbsp;" : "$proto")."</i>");
 		push(@cols, "<i>".($spt eq '' ? "&nbsp;" : "$spt")."</i>");
 		push(@cols, "<i>".($dpt eq '' ? "&nbsp;" : "$dpt")."</i>");
-		push(@cols, "<i>".($mac eq '' ? "&nbsp;" : "$mac")."</i>");
 		print &ui_columns_row(\@cols, \@tds);
 	}
 	print &ui_columns_end();

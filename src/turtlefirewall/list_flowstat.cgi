@@ -10,7 +10,6 @@
 
 require './turtlefirewall-lib.pl';
 &ReadParse();
-use Tie::File;
 use Time::Piece;
 
 my $log = $in{'log'};
