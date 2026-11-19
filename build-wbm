@@ -4,4 +4,6 @@ if [ ! -d "build" ]; then
   mkdir build
 fi
 cd ./src
-tar -czvf ../build/turtlefirewall.wbm.gz turtlefirewall
+VERSION=`grep -A1 "sub Version" turtlefirewall/setup/TurtleFirewall.pm | grep return | cut -d "'" -f 2`
+echo $VERSION
+tar -czvf ../build/turtlefirewall-$VERSION.wbm.gz turtlefirewall
