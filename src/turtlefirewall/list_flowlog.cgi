@@ -47,7 +47,7 @@ sub showLog {
 	#my %dstnat_list = ('*' => undef);
 	#my %protocol_list = ('*' => undef);
 	#my %hostname_list = ('*' => undef);
-	#my %ja4c_list = ('*' => undef);
+	#my %ja5c_list = ('*' => undef);
 	#my %tlsfp_list = ('*' => undef);
 	#my %risk_list = ('*' => undef);
 
@@ -72,7 +72,7 @@ sub showLog {
 			my $dstnat = '';
 			my $protocol = '';
 			my $hostname = '';
-			my $ja4c = '';
+			my $ja5c = '';
 			my $tlsfp = '';
 			my $risk = '';
 
@@ -97,7 +97,7 @@ sub showLog {
 			if( $l =~ /DN=(.*?)( |$)/ ) { $dstnat = $1; }
 			if( $l =~ /P=(.*?)( |$)/ ) { $protocol = $1; }
 			if( $l =~ /H=(.*?)( |$)/ && $l !~ /H=\"(.*?)\"( |$)/ ) { $hostname = $1; }
-			if( $l =~ /c=(.*?)( |$)/ ) { $ja4c = $1; }
+			if( $l =~ /j5=(.*?)( |$)/ ) { $ja5c = $1; }
 			if( $l =~ /F=(.*?)( |$)/ ) { $tlsfp = $1; }
 			if( $l =~ /R=(.*?)( |$)/ ) { $risk = $1; }
 
@@ -117,7 +117,7 @@ sub showLog {
 			#if( $dstnat ne '' ) {$dstnat_list{$dstnat} = undef;}
 			#if( $protocol ne '') {$protocol_list{$protocol} = undef;}
 			#if( $hostname ne '') {$hostname_list{$hostname} = undef;}
-			#if( $ja4c ne '') {$ja4c_list{$ja4c} = undef;}
+			#if( $ja5c ne '') {$ja5c_list{$ja5c} = undef;}
 			#if( $tlsfp ne '') {$tlsfp_list{$tlsfp} = undef;}
 			#if( $risk ne '') {$risk_list{$risk} = undef;}
 
@@ -137,7 +137,7 @@ sub showLog {
 			    ($in{dstnat} eq '' || $in{dstnat} eq '*' || $in{dstnat} eq $dstnat) &&
 			    ($in{protocol} eq '' || $in{protocol} eq '*' || $in{protocol} eq $protocol) &&
 			    ($in{hostname} eq '' || $in{hostname} eq '*' || $in{hostname} eq $hostname) &&
-			    ($in{ja4c} eq '' || $in{ja4c} eq '*' || $in{ja4c} eq $ja4c) &&
+			    ($in{ja5c} eq '' || $in{ja5c} eq '*' || $in{ja5c} eq $ja5c) &&
 			    ($in{tlsfp} eq '' || $in{tlsfp} eq '*' || $in{tlsfp} eq $tlsfp) &&
 			    ($in{risk} eq '' || $in{risk} eq '*' || $in{risk} eq $risk) ) {
 				$count++;
@@ -146,7 +146,7 @@ sub showLog {
 					push @buffer, [$stime, $etime, $l3proto, $l4proto, $source, $sport, $destination, $dport,
 					      		$ubytes, $dbytes, $upackets, $dpackets, $ifindex,
 						       	$connmark, $srcnat, $dstnat, $protocol, $hostname,
-						       	$ja4c, $tlsfp, $risk];
+						       	$ja5c, $tlsfp, $risk];
 				}
 			}
 			$limit++;
@@ -158,7 +158,7 @@ sub showLog {
 			'&source='.$in{source}.'&sport='.$in{sport}.'&destination='.$in{destination}.'&dport='.$in{dport}.'&ubytes='.$in{ubytes}.'&dbytes='.$in{dbytes}.
 			'&upackets='.$in{upackets}.'&dpackets='.$in{dpackets}.'&ifindex='.$in{ifindex}.
 			'&connmark='.$in{connmark}.'&srcnat='.$in{srcnat}.'&dstnat='.$in{dstnat}.
-			'&protocol='.$in{protocol}.'&hostname='.$in{hostname}.'&ja4c='.$in{ja4c}.
+			'&protocol='.$in{protocol}.'&hostname='.$in{hostname}.'&ja5c='.$in{ja5c}.
 			'&tlsfp='.$in{tlsfp}.'&risk='.$in{risk};
 	my $pageindex = '';
 	if( $pag > 1 ) {
@@ -241,8 +241,8 @@ sub showLog {
 	my $hdstnat = "<b>dstNAT<br></b>";
 	push(@head, $hdstnat );
 
-	my $hja4c = "<b>ja4cFINGERPRINT<br></b>";
-	push(@head, $hja4c );
+	my $hja5c = "<b>ja5cFINGERPRINT<br></b>";
+	push(@head, $hja5c );
 
 	my $htlsfp = "<b>tlsFINGERPRINT<br></b>";
 	push(@head, $htlsfp );
@@ -278,7 +278,7 @@ sub showLog {
 	foreach my $l (@buffer) {
 		my @cols = ();
 		my ($stime, $etime, $l3proto, $l4proto, $source, $sport, $destination, $dport, $ubytes, $dbytes, $upackets, $dpackets, $ifindex,
-		    $connmark, $srcnat, $dstnat, $protocol, $hostname, $ja4c, $tlsfp, $risk) = @$l;
+		    $connmark, $srcnat, $dstnat, $protocol, $hostname, $ja5c, $tlsfp, $risk) = @$l;
 		$stime = localtime($stime)->strftime('%b %d %X');
 		push(@cols, "<i>".($stime eq '' ? "&nbsp;" : "$stime&nbsp;&nbsp;")."</i>");
 		$etime = localtime($etime)->strftime('%b %d %X');
@@ -311,7 +311,7 @@ sub showLog {
 		push(@cols, "<i>".($connmark eq '' ? "&nbsp;" : "$connmark&nbsp;&nbsp;")."</i>");
 		push(@cols, "<i>".($srcnat eq '' ? "&nbsp;" : "$srcnat&nbsp;&nbsp;")."</i>");
 		push(@cols, "<i>".($dstnat eq '' ? "&nbsp;" : "$dstnat&nbsp;&nbsp;")."</i>");
-		push(@cols, "<i>".($ja4c eq '' ? "&nbsp;" : "$ja4c&nbsp;&nbsp;")."</i>");
+		push(@cols, "<i>".($ja5c eq '' ? "&nbsp;" : "$ja5c&nbsp;&nbsp;")."</i>");
 		push(@cols, "<i>".($tlsfp eq '' ? "&nbsp;" : "$tlsfp&nbsp;&nbsp;")."</i>");
 		push(@cols, "<i>".($risk eq '' ? "&nbsp;" : "$risk&nbsp;&nbsp;")."</i>");
 	        print &ui_columns_row(\@cols, \@tds);

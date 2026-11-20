@@ -18,9 +18,6 @@ item_limit="32768"
 Help () {
  echo "Usage :  sha1_blacklist [OPTION]"
  echo " "
- echo "  -I, --initialise"
- echo "     initialise blacklist firewall item"
- echo " "
  echo "  -f, --flush"
  echo "     flush blacklist firewall item"
  echo " "
@@ -48,26 +45,9 @@ if [ ! -d /proc/net/xt_ndpi ]
 fi
 }
 
-Initialise () {
-echo -e "Initialise : \c"
-cat /proc/net/xt_ndpi/proto | grep -w sha1_blacklist > /dev/null 2>&1
-if [ $? = 0 ]
- then
-  echo -e "SKIP"
- else
-  echo "add_custom sha1_blacklist" > /proc/net/xt_ndpi/proto
-  if [ $? = 0 ]
-   then
-    echo -e "OK"
-  else
-    echo -e "FAIL"
-  fi
-fi
-}
-
 Flush () {
 echo -e "Flush : \c"
-echo "-sha1_blacklist:*" > /proc/net/xt_ndpi/host_proto
+echo "-" > /proc/net/xt_ndpi/hash_sha1
 if [ $? = 0 ]
  then
   echo -e "OK"
@@ -125,7 +105,7 @@ if [ -s $blacklist_file ]
     done < $never_blacklist_file
   fi
 
-  sed "s/^/sha1_blacklist:RISK_SHA1CERT_/" $blacklist_file > /proc/net/xt_ndpi/host_proto
+  sed "s/^/+/;s/.*/\U&/" $blacklist_file > /proc/net/xt_ndpi/hash_sha1 
   count=`wc -l < $blacklist_file`
   if [ $? = 0 ]
    then
@@ -139,13 +119,12 @@ fi
 }
 
 case $1 in
- -I|--initialise) Verify;Initialise;;
  -f|--flush) Verify;Flush;;
  -d|--download) Download;;
  -i|--import) Verify;Import;;
  -h|--help) Help;;
- -x|--exclude-download) Verify;Initialise;Flush;Import;;
- *) Verify;Initialise;Flush;Download;Import;;
+ -x|--exclude-download) Verify;Flush;Import;;
+ *) Verify;Flush;Download;Import;;
 esac
 
 echo

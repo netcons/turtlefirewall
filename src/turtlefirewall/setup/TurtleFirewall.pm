@@ -1832,7 +1832,7 @@ sub startFirewall {
 
 	# PreLoad module for nDPI
 	print "ndpi_module: on\n";	
-	$this->command('modprobe xt_ndpi ndpi_enable_flow=1 ndpi_flow_opt=cFR', '/dev/null');
+	$this->command('modprobe xt_ndpi ndpi_enable_flow=1 ndpi_flow_opt=5FR', '/dev/null');
 
 	# Enable Conntrack Events for nDPI.
 	$this->command( 'echo "1"', '/proc/sys/net/netfilter/nf_conntrack_events' );
@@ -1905,11 +1905,6 @@ sub startFirewall {
 	# Ensure dpi item present for Domain Blacklist
 	if( !defined($this->{fw}{OPTION}{drop_domain_blacklist}) || $this->{fw}{OPTION}{drop_domain_blacklist} ne 'off' ) {
 		$this->command('/usr/lib/turtlefirewall/domain_blacklist -I', '/dev/null');
-	}
-
-	# Ensure dpi item present for SHA1 Blacklist
-	if( !defined($this->{fw}{OPTION}{drop_sha1_blacklist}) || $this->{fw}{OPTION}{drop_sha1_blacklist} ne 'off' ) {
-		$this->command('/usr/lib/turtlefirewall/sha1_blacklist -I', '/dev/null');
 	}
 
 	# Ensure IPsets exist

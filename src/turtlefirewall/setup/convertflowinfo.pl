@@ -71,7 +71,7 @@ sub convert2psv {
 		my $dstnat = '';
 		my $protocol = '';
 		my $hostname = '';
-		my $ja4c = '';
+		my $ja5c = '';
 		my $tlsfp = '';
 		my $risk = '';
 
@@ -96,13 +96,13 @@ sub convert2psv {
 		if( $l =~ /DN=(.*?)( |$)/ ) { $dstnat = $1; }
 		if( $l =~ /P=(.*?)( |$)/ ) { $protocol = $1; }
 		if( $l =~ /H=(.*?)( |$)/ && $l !~ /H=\"(.*?)\"( |$)/ ) { $hostname = $1; }
-		if( $l =~ /c=(.*?)( |$)/ ) { $ja4c = $1; }
+		if( $l =~ /j5=(.*?)( |$)/ ) { $ja5c = $1; }
 		if( $l =~ /F=(.*?)( |$)/ ) { $tlsfp = $1; }
 		if( $l =~ /R=(.*?)( |$)/ ) { $risk = $1; }
 
-		$l = "$stime|$etime|$l3proto|$l4proto|$source|$sport|$destination|$dport|$ubytes|$dbytes|$upackets|$dpackets|$ifindex|$connmark|$srcnat|$dstnat|$protocol|$hostname|$ja4c|$tlsfp|$risk\n";
+		$l = "$stime|$etime|$l3proto|$l4proto|$source|$sport|$destination|$dport|$ubytes|$dbytes|$upackets|$dpackets|$ifindex|$connmark|$srcnat|$dstnat|$protocol|$hostname|$ja5c|$tlsfp|$risk\n";
 	}
-	my $psvheader = 'stime|etime|l3proto|l4proto|source|sport|destination|dport|ubytes|dbytes|upackets|dpackets|ifindex|connmark|srcnat|dstnat|protocol|hostname|ja4c|tlsfp|risk';
+	my $psvheader = 'stime|etime|l3proto|l4proto|source|sport|destination|dport|ubytes|dbytes|upackets|dpackets|ifindex|connmark|srcnat|dstnat|protocol|hostname|ja5c|tlsfp|risk';
 	unshift @log_lines, $psvheader;
 
 	untie @log_lines;
